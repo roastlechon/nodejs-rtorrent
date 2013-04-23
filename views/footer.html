@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/js/socket.io.js"></script>
 <script type="text/javascript" src="/js/ICanHaz.js"></script>
 <script id="torrent" type="text/html">
-<li data-hash="\{{hash}}">
+<li data-hash="\{{hash}}" class="\{{status}}">
 	<h3>\{{name}}</h3>
 	<p><span class="downloaded">\{{downloaded}}</span> of <span class="size">\{{size}}</span> (\{{percent_downloaded}}) - \{{time_remaining}}</span></p>
 	<div class="progressbar"></div>
@@ -36,6 +36,7 @@
 				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.size").text(torrents[i].size);
 				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.dl_speed").text(torrents[i].dl_speed);
 				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.ul_speed").text(torrents[i].ul_speed);
+				$("#torrents li[data-hash='" + torrents[i].hash + "']").removeClass().addClass(torrents[i].status);
 			} else {
 				var html = ich.torrent(torrents[i]);
 				$("#torrents").append(html);
