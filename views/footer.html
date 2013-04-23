@@ -1,0 +1,47 @@
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+	$(document).bind( "mobileinit", function(event) {
+		$.extend($.mobile.zoom, {locked:true,enabled:false});
+	});
+</script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+<script type="text/javascript" src="/js/socket.io.js"></script>
+<script type="text/javascript" src="/js/ICanHaz.js"></script>
+<script id="torrent" type="text/html">
+<li data-hash="\{{hash}}">
+	<h3>\{{name}}</h3>
+	<p><span class="downloaded">\{{downloaded}}</span> of <span class="size">\{{size}}</span> (\{{percent_downloaded}}) - \{{time_remaining}}</span></p>
+	<div class="progressbar"></div>
+	<p>DL: <span class="dl_speed">\{{dl_speed}}</span>, UL: <span class="ul_speed">\{{ul_speed}}</span></p>
+</li>
+</script>
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">
+
+	var hashExists = function(hash) {
+		for (var i = 0; i < $("#torrents").children().length; i++) {
+			if (hash === $("#torrents li").eq(i).data("hash")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	var socket = io.connect("http://192.168.1.122");
+	socket.on("torrents", function(torrents) {
+		for (var i = 0; i < torrents.length; i++) {
+			if (hashExists(torrents[i].hash)) {
+				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.downloaded").text(torrents[i].downloaded);
+				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.size").text(torrents[i].size);
+				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.dl_speed").text(torrents[i].dl_speed);
+				$("#torrents li[data-hash='" + torrents[i].hash + "'] span.ul_speed").text(torrents[i].ul_speed);
+			} else {
+				var html = ich.torrent(torrents[i]);
+				$("#torrents").append(html);
+			}
+		}
+	});
+</script>
+</body>
+</html>

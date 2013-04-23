@@ -1,0 +1,32 @@
+{{>header}}
+<div data-role="page">
+	<div data-role="header"> 
+		<h1>{{page.body.title}}</h1> 
+		<a href="" data-icon="gear" class="ui-btn-right">Options</a>
+	</div> 
+	<div data-role="navbar">
+		<ul>
+			<li><a href="">Upload a Torrent</a></li>
+			<li><a href="">Add a URL</a></li>
+		</ul>
+	</div>
+	<ul data-role="listview" id="torrents">
+		{{#torrents}}
+			{{>torrent}}
+		{{/torrents}}
+	</ul>
+	<div data-role="footer"> 
+		<h4>HDD: {{hd_space_used}} / {{hd_space_available}}</h4> 
+	</div>
+</div>
+<div data-role="page">
+	<div data-role="header"> 
+		<h1>Upload a Torrent</h1>
+	</div>
+	<div>
+		<p></p>
+		<span></span>
+		<button type="submit"></button>
+	</div>
+</div>
+{{>footer}}
