@@ -20,6 +20,8 @@ $ if hash checking, means checking
 # if complete and open, means seeding
 # if complete and not open, means finished
 
+get port xmlrpc 127.0.0.1/RPC2 network.listen.port
+
 
 
 https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference

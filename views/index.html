@@ -1,32 +1,104 @@
 {{>header}}
-<div data-role="page">
+<div data-role="page" id="main">
 	<div data-role="header"> 
+		<a href="#main" data-icon="home" data-iconpos="notext">Home</a>
 		<h1>{{page.body.title}}</h1> 
-		<a href="" data-icon="gear" class="ui-btn-right">Options</a>
+		<a href="#options" data-icon="gear" class="ui-btn-right">Options</a>
 	</div> 
 	<div data-role="navbar">
 		<ul>
-			<li><a href="">Upload a Torrent</a></li>
-			<li><a href="">Add a URL</a></li>
+			<li><a href="#upload-torrent">Upload a Torrent</a></li>
+			<li><a href="#add-url">Add a URL</a></li>
+			<li><a href="#rss-feeds">RSS Feeds</a></li>
 		</ul>
 	</div>
-	<ul data-role="listview" id="torrents">
-		{{#torrents}}
-			{{>torrent}}
-		{{/torrents}}
-	</ul>
+	<div data-role="content">
+		<ul data-role="listview" id="torrents">
+		</ul>
+	</div>
 	<div data-role="footer"> 
-		<h4>HDD: {{hd_space_used}} / {{hd_space_available}}</h4> 
+		<h4>Port {{page.body.rtorrent_port}} is {{page.body.rtorrent_port_status}}</h4> 
 	</div>
 </div>
-<div data-role="page">
+<div data-role="page" id="upload-torrent">
 	<div data-role="header"> 
+		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
 		<h1>Upload a Torrent</h1>
 	</div>
-	<div>
-		<p></p>
-		<span></span>
-		<button type="submit"></button>
+	<div data-role="content">
+		<span class="fileinput-button">
+			<span>Add files...</span>
+			<input id="torrent-upload" type="file" name="files[]" data-url="/upload" multiple data-role="none">
+		</span>
+	</div>
+</div>
+<div data-role="page" id="add-url">
+	<div data-role="header">
+		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
+		<h1>Add a URL</h1>
+	</div>
+	<div data-role="content">
+		<p>Enter in a Magnet link or Torrent link.</p>
+		<label for="torrent-url">Torrent URL:</label>
+		<input type="text" name="torrent-url" id="torrent-url" value=""  />
+		<button type="submit" id="submit-torrent-url">Add Torrent URL</button>
+	</div>
+</div>
+<div data-role="page" id="rss-feeds">
+	<div data-role="header">
+		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
+		<h1>RSS Feeds</h1>
+	</div>
+	<div data-role="navbar">
+		<ul>
+			<li><a href="#add-rss-feed">Add a RSS Feed</a></li>
+		</ul>
+	</div>
+	<div data-role="content">
+		<ul>
+			<li></li>
+		</ul>
+	</div>
+</div>
+<div data-role="page" id="rss-feeds">
+	<div data-role="header">
+		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
+		<h1>Add a RSS Feed</h1>
+	</div>
+	<div data-role="content">
+		<label for="rss-feed-name">RSS Feed Name:</label>
+		<input type="number" name="rss-feed-name" id="rss-feed-name" value="" />
+		<label for="rss-feed-url">RSS Feed URL:</label>
+		<input type="number" name="rss-feed-url" id="rss-feed-url" value=""  />
+		<button type="submit" id="submit-rss-feed">Add RSS Feed</button>
+	</div>
+</div>
+<div data-role="page" id="options">
+	<div data-role="header">
+		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
+		<h1>Options</h1>
+	</div>
+	<div data-role="content">
+		<h3>Listening Port</h3>
+		<label for="listening-port-range">Port range used for incoming connections:</label>
+		<input type="range" name="listening-port-range" id="listening-port-range" value="" />
+		<label><input type="checkbox" name="randomize-listening-port" /> Randomize port each time rTorrent starts.</label>
+		<h3>Bandwidth Settings</h3>
+		<label for="number-upload-slots">Number of upload slots:</label>
+		<input type="number" name="number-upload-slots" id="number-upload-slots" value="" />
+		<label for="min-number-peers">Minimum number of peers:</label>
+		<input type="number" name="min-number-peers" id="min-number-peers" value="" />
+		<label for="max-number-peers">Maximum number of peers:</label>
+		<input type="number" name="max-number-peers" id="max-number-peers" value="" />
+		<label for="min-number-peers-seeding">Minimum number of peers for seeding:</label>
+		<input type="number" name="min-number-peers-seeding" id="min-number-peers-seeding" value="" />
+		<label for="max-number-peers-seeding">Maximum number of peers for seeding:</label>
+		<input type="number" name="max-number-peers-seeding" id="max-number-peers-seeding" value="" />
+		<h3>Bandwidth Limiting</h3>
+		<label for="global-max-upload-rate">Global maximum upload rate:</label>
+		<input type="number" name="global-max-upload-rate" id="global-max-upload-rate" value="" />
+		<label for="global-max-download-rate">Global maximum download rate:</label>
+		<input type="number" name="global-max-download-rate" id="global-max-download-rate" value="" />
 	</div>
 </div>
 {{>footer}}

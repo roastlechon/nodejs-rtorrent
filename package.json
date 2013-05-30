@@ -11,6 +11,8 @@
     "string" : "1.3.0",
     "socket.io" : "0.9.14",
     "xmlrpc" : "1.1.0",
-    "urllib" : "0.3.4"
+    "urllib" : "0.3.4",
+    "jquery-file-upload-middleware" : "0.0.8",
+    "portscanner" : "0.1.3"
   }
 }
