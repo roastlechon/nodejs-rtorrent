@@ -1,0 +1,22 @@
+<div class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Add RSS Feed</h3>
+	</div>
+	<div class="modal-body">
+		<fieldset>
+			<legend>Edit Title</legend>
+			<label for="rss-feed-title">RSS Feed Title:</label>
+			<input type="text" name="rss-feed-title" id="rss-feed-title" value="{{title}}" />
+		</fieldset>
+		<fieldset>
+			<legend>Edit Feed URL</legend>
+			<label for="rss-feed-url">RSS Feed URL:</label>
+			<input type="text" name="rss-feed-url" id="rss-feed-url" value="{{rss}}" />
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<button class="btn close-modal">Close</button>
+		<button class="btn btn-primary save-rss-feed">Add Feed</button>
+	</div>
+</div>

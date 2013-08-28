@@ -22,6 +22,28 @@ $ if hash checking, means checking
 
 get port xmlrpc 127.0.0.1/RPC2 network.listen.port
 
+Check hash after download
+set_check_hash
+get_check_hash 0/1
+
+Default directory for downloads
+get_directory
+set_directory
+
+Number of upload slots
+get_max_uploads
+
+set_min_peers
+set_max_peers
+
+set_min_peers_seed
+set_max_peers_seed
+
+set_priority
+get_priority 0 1 2 3
+
+get_upload_rate
+set_upload_rate
 
 
 https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
@@ -40,3 +62,31 @@ Torrents
 		Tracker
 		General
 		
+
+RSS Feeds
+Add A Feed
+Title and URL
+
+Poll on first load
+Save each torrent name and status - Loaded, RSS
+Load button
+
+feed
+	title
+	rss
+	torrents
+		name
+		url
+		status
+
+var rssFeedSchema = new Schema({
+	title: String,
+	rss: String,
+	torrents: [{
+		name: String,
+		url: String,
+		status: String
+	}]
+});
+
+get rss feeds

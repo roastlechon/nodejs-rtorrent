@@ -1,52 +1,68 @@
-module.exports = function(app) {
-	app.post("/torrent", index);
-}
-
+var urllib = require("urllib");
+var fs = require("fs");
+var crypto = require("crypto");
+var path = require("path");
 var rtorrent = require("../lib/rtorrent");
+var Zombie = require("zombie");
+var logger = require("winston");
+var auth = require("./auth.js")
 
-var startTorrent = function(hash) {
-	rtorrent.startTorrent(hash, function(err, val) {
-		console.log(val);
-	});
-	rtorrent.resumeTorrent(hash, function(err, val) {
-		console.log(val);
+module.exports = function(app, upload) {
+	app.get("/torrent/start/:hash", auth.ensureAuthenticated, start);
+	app.get("/torrent/stop/:hash", auth.ensureAuthenticated, stop);
+	app.get("/torrent/pause/:hash", auth.ensureAuthenticated, pause);
+	app.get("/torrent/remove/:hash", auth.ensureAuthenticated, remove);
+	app.post("/torrent/addlink", auth.ensureAuthenticated, addlink);
+	upload.on("end", uploadfile);
+}
+
+function start(req, res) {
+	rtorrent.startTorrent(req.params.hash, function(err, val) {
+		res.send("success");
 	});
 }
 
-var stopTorrent = function(hash) {
-	rtorrent.stopTorrent(hash, function(err, val) {
-		console.log(val);
+function stop(req, res) {
+	rtorrent.stopTorrent(req.params.hash, function(err, val) {
+		res.send("success");
 	});
 }
 
-var pauseTorrent = function(hash) {
-	rtorrent.pauseTorrent(hash, function(err, val) {
-		console.log(val);
+function pause(req, res) {
+	rtorrent.pauseTorrent(req.params.hash, function(err, val) {
+		res.send("success");
 	});
 }
 
-var removeTorrent = function(hash) {
-	rtorrent.removeTorrent(hash, function(err, val) {
-		console.log(val);
+function remove(req, res) {
+	rtorrent.removeTorrent(req.params.hash, function(err, val) {
+		res.send("success");
 	});
 }
 
-function index(req, res) {
-	console.log(req.body);
-	var hash = req.body.hash;
-	var action = req.body.action;
-	if (action === "play") {
-		console.log("starting torrent");
-		startTorrent(hash);
-	} else if (action === "stop") {
-		console.log("stopping torrent");
-		stopTorrent(hash);
-	} else if (action === "pause") {
-		console.log("pausing torrent");
-		pauseTorrent(hash);
-	} else if (action === "delete") {
-		console.log("removing torrent");
-		removeTorrent(hash);
-	}
-	res.send("ok");
+function addlink(req, res) {
+	rtorrent.loadTorrentUrl(req.body.url, function(err, val) {
+		console.log(val);
+		res.send("ok");
+	});
+}
+
+function uploadfile(fileinfo) {
+	var md5 = crypto.createHash('md5')
+	var filepath = "/home/roastlechon/nodejs-rtorrent/public/uploads";
+	console.log(filepath);
+	var oldpath = path.join(filepath, fileinfo.name);
+	var filename = path.basename(filepath, ".torrent");
+    var newpath = path.join(filepath, md5.update(filename).digest("hex") + ".torrent");
+	
+	fs.rename(oldpath, newpath, function(error) {
+		if (error) {
+			console.log(error);
+		} else {
+			rtorrent.loadTorrentFile(newpath, function(err, val) {
+				console.log(val);
+				console.log("saving success");
+			});
+		}
+	});
 }

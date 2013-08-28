@@ -1,104 +1,65 @@
-{{>header}}
-<div data-role="page" id="main">
-	<div data-role="header"> 
-		<a href="#main" data-icon="home" data-iconpos="notext">Home</a>
-		<h1>{{page.body.title}}</h1> 
-		<a href="#options" data-icon="gear" class="ui-btn-right">Options</a>
-	</div> 
-	<div data-role="navbar">
-		<ul>
-			<li><a href="#upload-torrent">Upload a Torrent</a></li>
-			<li><a href="#add-url">Add a URL</a></li>
-			<li><a href="#rss-feeds">RSS Feeds</a></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>{{head.title}}</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-glyphicons.css">
+	<link rel="stylesheet" href="/css/jquery.fileupload-ui.css" />
+	<style type="text/css">
+	.checking {}
+	.downloading {}
+	.seeding {}
+	.finished {}
+	.stopped {}
+	.tab-content {overflow: inherit;}
+	.torrent-status { margin-top: 10px;}
+	.torrent-status ul li { float: left; margin-right: 10px;}
+	.torrent-status ul li:last-child { margin-right: 0;}
+	
+	</style>
+	<script data-main="js/main" src="/js/libs/require/require.js"></script>
+</head>
+<body>
+<div class="container" id="nodejs-rtorrent">
+	<div class="page-header">
+		<h1>{{body.title}}</h1>
+	</div>
+	<div class="navbar">
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li class="dropdown">
+				<a href="javascript: void(0);" data-toggle="dropdown" class="dropdown-toggle">
+					Torrents
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#torrents">View Torrents</a></li>
+					<li><a href="#torrents-add">Add a Torrent</a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="javascript: void(0);" data-toggle="dropdown" class="dropdown-toggle">
+					RSS Feeds
+					<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#rssfeeds">View RSS Feeds</a></li>
+					<li><a href="#rssfeeds-add">Add RSS Feed</a></li>
+				</ul>
+			</li>
+			<li><a href="#search">Search Torrents</a></li>
+			<li><a href="#options">Options</a></li>
+			
 		</ul>
-	</div>
-	<div data-role="content">
-		<ul data-role="listview" id="torrents">
+		<ul class="nav navbar-nav pull-right login">
+			<li><a href="#login">Login</a></li>
 		</ul>
+		<p class="navbar-text pull-right" style="display: none;">Signed in as <span class="user"></span>. <a href="#logout">Logout?</a></p>
 	</div>
-	<div data-role="footer"> 
-		<h4>Port {{page.body.rtorrent_port}} is {{page.body.rtorrent_port_status}}</h4> 
-	</div>
-</div>
-<div data-role="page" id="upload-torrent">
-	<div data-role="header"> 
-		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
-		<h1>Upload a Torrent</h1>
-	</div>
-	<div data-role="content">
-		<span class="fileinput-button">
-			<span>Add files...</span>
-			<input id="torrent-upload" type="file" name="files[]" data-url="/upload" multiple data-role="none">
-		</span>
+	<div class="tab-content">
 	</div>
 </div>
-<div data-role="page" id="add-url">
-	<div data-role="header">
-		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
-		<h1>Add a URL</h1>
-	</div>
-	<div data-role="content">
-		<p>Enter in a Magnet link or Torrent link.</p>
-		<label for="torrent-url">Torrent URL:</label>
-		<input type="text" name="torrent-url" id="torrent-url" value=""  />
-		<button type="submit" id="submit-torrent-url">Add Torrent URL</button>
-	</div>
-</div>
-<div data-role="page" id="rss-feeds">
-	<div data-role="header">
-		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
-		<h1>RSS Feeds</h1>
-	</div>
-	<div data-role="navbar">
-		<ul>
-			<li><a href="#add-rss-feed">Add a RSS Feed</a></li>
-		</ul>
-	</div>
-	<div data-role="content">
-		<ul>
-			<li></li>
-		</ul>
-	</div>
-</div>
-<div data-role="page" id="rss-feeds">
-	<div data-role="header">
-		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
-		<h1>Add a RSS Feed</h1>
-	</div>
-	<div data-role="content">
-		<label for="rss-feed-name">RSS Feed Name:</label>
-		<input type="number" name="rss-feed-name" id="rss-feed-name" value="" />
-		<label for="rss-feed-url">RSS Feed URL:</label>
-		<input type="number" name="rss-feed-url" id="rss-feed-url" value=""  />
-		<button type="submit" id="submit-rss-feed">Add RSS Feed</button>
-	</div>
-</div>
-<div data-role="page" id="options">
-	<div data-role="header">
-		<a href="#main" data-icon="home" data-iconpos="notext">Back</a>
-		<h1>Options</h1>
-	</div>
-	<div data-role="content">
-		<h3>Listening Port</h3>
-		<label for="listening-port-range">Port range used for incoming connections:</label>
-		<input type="range" name="listening-port-range" id="listening-port-range" value="" />
-		<label><input type="checkbox" name="randomize-listening-port" /> Randomize port each time rTorrent starts.</label>
-		<h3>Bandwidth Settings</h3>
-		<label for="number-upload-slots">Number of upload slots:</label>
-		<input type="number" name="number-upload-slots" id="number-upload-slots" value="" />
-		<label for="min-number-peers">Minimum number of peers:</label>
-		<input type="number" name="min-number-peers" id="min-number-peers" value="" />
-		<label for="max-number-peers">Maximum number of peers:</label>
-		<input type="number" name="max-number-peers" id="max-number-peers" value="" />
-		<label for="min-number-peers-seeding">Minimum number of peers for seeding:</label>
-		<input type="number" name="min-number-peers-seeding" id="min-number-peers-seeding" value="" />
-		<label for="max-number-peers-seeding">Maximum number of peers for seeding:</label>
-		<input type="number" name="max-number-peers-seeding" id="max-number-peers-seeding" value="" />
-		<h3>Bandwidth Limiting</h3>
-		<label for="global-max-upload-rate">Global maximum upload rate:</label>
-		<input type="number" name="global-max-upload-rate" id="global-max-upload-rate" value="" />
-		<label for="global-max-download-rate">Global maximum download rate:</label>
-		<input type="number" name="global-max-download-rate" id="global-max-download-rate" value="" />
-	</div>
-</div>
-{{>footer}}
+
+</body>
+</html>
