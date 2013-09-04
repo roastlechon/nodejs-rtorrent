@@ -1,24 +1,24 @@
 <div class="torrent-status clearfix">
 	<h5 class="name pull-left">{{name}} <span class="label label-success">{{status}}</span></h5>
-	<ul class="list-unstyled pull-right">
-		<li><h5>Peers <span class="badge badge-info">{{peers}} / {{total_peers}}</span></h5></li>
-		<li><h5>Seeds <span class="badge badge-info">{{seeds}} / {{total_seeds}}</span></h5></li>
-		<li><h5>DL <span class="badge badge-info">{{dl_speed}}</span></h5></li>
-		<li><h5>UL <span class="badge badge-info">{{ul_speed}}</span></h5></li>
-	</ul>
+	<div class="btn-toolbar pull-right">
+		<div class="btn-group">
+			<a href="javascript: void(0);" class="btn btn-default btn-small play" data-hash="{{hash}}"><i class="glyphicon glyphicon-play"></i></a>
+			<a href="javascript: void(0);" class="btn btn-default btn-small pause" data-hash="{{hash}}"><i class="glyphicon glyphicon-pause"></i></a>
+			<a href="javascript: void(0);" class="btn btn-default btn-small stop" data-hash="{{hash}}"><i class="glyphicon glyphicon-stop"></i></a>
+			<a href="javascript: void(0);" class="btn btn-default btn-small delete" data-hash="{{hash}}"><i class="glyphicon glyphicon-remove"></i></a>
+		</div>
+	</div>
 </div>
 <div class="progress">
 	<div class="progress-bar" style="width: {{percent_downloaded}}">{{percent_downloaded}}</div>
 </div>
 <div class="torrent-status clearfix">
-	<div class="btn-toolbar pull-left">
-		<div class="btn-group">
-			<a href="#play" class="btn btn-default btn-small play" data-hash="{{hash}}"><i class="glyphicon glyphicon-play"></i></a>
-			<a href="#pause" class="btn btn-default btn-small pause" data-hash="{{hash}}"><i class="glyphicon glyphicon-pause"></i></a>
-			<a href="#stop" class="btn btn-default btn-small stop" data-hash="{{hash}}"><i class="glyphicon glyphicon-stop"></i></a>
-			<a href="#delete" class="btn btn-default btn-small delete" data-hash="{{hash}}"><i class="glyphicon glyphicon-remove"></i></a>
-		</div>
-	</div>
+	<ul class="list-unstyled pull-left">
+		<li><h5>Peers <span class="badge badge-info">{{peers}} / {{total_peers}}</span></h5></li>
+		<li><h5>Seeds <span class="badge badge-info">{{seeds}} / {{total_seeds}}</span></h5></li>
+		<li><h5>DL <span class="badge badge-info">{{dl_speed}}</span></h5></li>
+		<li><h5>UL <span class="badge badge-info">{{ul_speed}}</span></h5></li>
+	</ul>
 	<ul class="list-unstyled pull-right">
 		<li><h5>Downloaded <span class="downloaded">{{downloaded}}</span> of <span class="size">{{size}}</span></h5></li>
 		<li><h5>Time Remaining <span class="time_remaining">{{time_remaining}}</span></h5></li>
