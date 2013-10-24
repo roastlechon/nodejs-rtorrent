@@ -79,6 +79,13 @@ Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to 
 
 ## Notes
 ```
+References
+https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
+http://libtorrent.rakshasa.no/wiki/RTorrentXMLRPCGuide
+http://scratchpad.wikia.com/wiki/RTorrentCommands
+http://www.torrent-invites.com/seedbox-discussions/171584-seedbox-port-range.html
+https://wiki.archlinux.org/index.php/RTorrent
+
 d.start - start/resume
 d.resume - start/resume
 d.stop - pause
