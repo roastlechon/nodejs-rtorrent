@@ -1,6 +1,7 @@
 
 # nodejs-rtorrent
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Async, Passport, Socket.IO. For the front-end, I am using Backbone.js, Underscore, and Twitter Bootstrap. I may end up switching to Angular-JS on the front-end framework though.
+
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 ## Feature To-Do List
@@ -14,8 +15,10 @@ There is some additional functionality that needs to be worked on and this file 
 ## Installation
 To install nodejs-rtorrent, checkout the source: `git clone https://github.com/roastlechon/nodejs-rtorrent.git` and install it yourself.
 
+Make sure to run `npm install` in the root source folder (usually the folder with app.js) to get all the modules needed.
+
 ## Running the application
-To run the application, navigate to the root source folder (usually the folder with app.js), and type in 'nodejs app.js'. You should seed some logs pop up. Before you continue any further though, make sure to configure/seed a user. Follow the steps in the configuration section to seed a user.
+To run the application, navigate to the root source folder, and type in 'nodejs app.js'. You should seed some logs pop up. Before you continue any further though, make sure to configure/seed a user. Follow the steps in the configuration section to seed a user.
 
 Assuming that a user is seeded and additional settings are changed, just navigate now to the the page. It is usually: http://hostname:3000
 
@@ -43,8 +46,11 @@ UserModel.save(function(errors, userSeed) {
 ```
 
 To verify that the user was seeded into the database, open up your MongoDB console. On Linux, it is usually `mongo`. 
+
 Next type in `show dbs` to show all the databases (in case you forgot what you named or created).
+
 Then type 'use dbname' to use the database. As an example, mine is called "nodejs-rtorrent", so I enter in 'use nodejs-rtorrent'
+
 Finally, type in 'db.users.find()' to get the users. You should be able to see one if it worked correctly. The above code also as a log statement in which you can check the console to make sure it worked correctly.
 
 When it is confirmed that the database is seeded, you can go ahead and comment out the seeding code.
