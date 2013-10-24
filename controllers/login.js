@@ -18,7 +18,7 @@ function login(req, res, next) {
 		if (!user) {
 			logger.error("user doesnt exist");
 			req.session.messages = [info.message];
-			return res.send("0");
+			return res.send(401);
 		}
 		req.logIn(user, function(errors) {
 			if (errors) {
@@ -38,5 +38,5 @@ function logout(req, res, next) {
 	logger.info("logging out");
 	req.logout();
 	logger.info("successfully logged out");
-	res.send("0");
+	res.send(401);
 }

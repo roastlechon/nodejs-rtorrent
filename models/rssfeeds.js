@@ -10,7 +10,9 @@ var logger = require("winston");
 var rssFeeds = module.exports = {}
 
 rssFeeds.getRSSFeeds = function(callback) {
-	Feed.find({}).sort({title : "desc"}).exec(function(errors, results) {
+	Feed.find({}).sort({
+		title: "desc"
+	}).exec(function(errors, results) {
 		if (errors) {
 			logger.error("errors occured in rssFeeds.getRSSFeeds", errors);
 		} else {
@@ -34,7 +36,9 @@ rssFeeds.getRSSFeeds = function(callback) {
 
 rssFeeds.getRSSFeed = function(id, callback) {
 	logger.info("checking database if feed exists");
-	Feed.find({"_id" : id}, function(errors, results) {
+	Feed.find({
+		"_id": id
+	}, function(errors, results) {
 		if (errors) {
 			logger.error("errors occured in find");
 			logger.error(errors);
@@ -70,8 +74,8 @@ rssFeeds.updateRSSFeed = function(id, feed, callback) {
 rssFeeds.saveRSSFeed = function(feed, callback) {
 
 	var feed = new Feed({
-		title : feed.title,
-		rss : feed.rss,
+		title: feed.title,
+		rss: feed.rss,
 		torrents: []
 	});
 
@@ -84,10 +88,10 @@ rssFeeds.saveRSSFeed = function(feed, callback) {
 				rssFeeds.getTorrentsFromFeed(feed.rss, function(results) {
 					_.each(results, function(tor) {
 						var torrent = new Torrent({
-							name : tor.name,
-							url : tor.url,
-							status : "RSS",
-							date : tor.date
+							name: tor.name,
+							url: tor.url,
+							status: "RSS",
+							date: tor.date
 						});
 						feed.torrents.push(torrent);
 					});
@@ -116,7 +120,18 @@ rssFeeds.getTorrentsFromFeed = function(rss, callback) {
 
 	var parser = new FeedMe();
 
-	var r = request(rss);
+	logger.info("rss feed is %s", rss);
+
+	var r = request({
+		uri: rss,
+		headers: {
+			'User-Agent': 'NodeJS',
+			'Content-Type': 'text/xml',
+			'Accept': 'text/xml',
+			'Accept-Charset': 'UTF8',
+			'Connection': 'Close'
+		}
+	});
 
 	r.on("response", function(response) {
 		parser.on("error", function(error) {
@@ -147,7 +162,7 @@ rssFeeds.getTorrentsFromFeed = function(rss, callback) {
 					tor.url = item.enclosure["url"];
 				}
 
-			// if item is link
+				// if item is link
 			} else if (item.link) {
 				// console.log(item.link);
 				tor.url = item.link;
@@ -184,7 +199,9 @@ rssFeeds.getTorrentsFromFeed = function(rss, callback) {
 
 rssFeeds.checkFeedExists = function(rss, callback) {
 	logger.info("checking database if feed exists");
-	Feed.find({"rss" : rss}, function(errors, results) {
+	Feed.find({
+		"rss": rss
+	}, function(errors, results) {
 		if (errors) {
 			logger.error("errors occured in checking if feed exists");
 			logger.error(errors);
@@ -198,11 +215,61 @@ rssFeeds.checkFeedExists = function(rss, callback) {
 }
 
 rssFeeds.updateFeeds = function() {
-	// for each rss feed in database, get the feed
-	// loop through the list of torrents and check to see if they are in the database
-	// if not in database, add to feed torrents document
+
 }
 
 rssFeeds.deleteFeed = function(_id, callback) {
-// test
+	Feed.findOne({
+		_id: _id
+	}, function(errors, doc) {
+		if (errors) {
+			logger.error("feed doesnt exist");
+			logger.error(errors);
+			callback(errors, null);
+		} else {
+			logger.info("removing feed %s", _id);
+			doc.remove();
+			callback(null, doc);
+		}
+	});
+}
+
+
+rssFeeds.addTorrentToFeed = function(_id, torrent, callback) {
+	// logger.info("adding torrent to feed " + _id);
+	logger.info(torrent);
+
+	var torrentFeed = new Torrent({
+		name: torrent.name,
+		url: torrent.url,
+		status: "RSS",
+		date: torrent.date
+	});
+
+	Feed.findOne({
+		_id: _id
+	}, function(errors, doc) {
+		if (errors) {
+			logger.error("feed doesnt exist");
+			callback(errors, null);
+		} else {
+			Feed.findOne({
+				"torrents.url": torrent.url
+			}, function(errors, subdoc) {
+				if (errors) {
+					callback(errors, null);
+				} else {
+					if (!subdoc) {
+						logger.info("new torrent");
+						doc.torrents.push(torrentFeed);
+						doc.save();
+						callback(null, doc);
+					} else {
+						// logger.info("torrent exists");
+						callback(null, null);
+					}
+				}
+			});
+		}
+	});
 }

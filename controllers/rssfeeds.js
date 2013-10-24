@@ -8,7 +8,7 @@ module.exports = function(app) {
 	app.get("/rssfeeds/:id", auth.ensureAuthenticated, getRSSFeed);
 	app.post("/rssfeeds", auth.ensureAuthenticated, addRSSFeed);
 	app.put("/rssfeeds/:id", auth.ensureAuthenticated, updateRSSFeed);
-	//app.delete("/rssfeeds/:id", deleteRSSFeed);
+	app.del("/rssfeeds/:id", auth.ensureAuthenticated, deleteRSSFeed);
 }
 
 function getRSSFeeds(req, res) {
@@ -80,6 +80,20 @@ function updateRSSFeed(req, res) {
 		} else {
 			logger.info("successfully updated rss feed");
 			res.json(feed);
+		}
+	});
+}
+
+function deleteRSSFeed(req, res) {
+	logger.info("client's ip address is: %s", req.connection.remoteAddress);
+	logger.info("removing feed: %s", req.params.id);
+	rssfeeds.deleteFeed(req.params.id, function(errors, results) {
+		if (errors) {
+			logger.error("error occured deleting feed");
+			logger.error(errors);
+		} else {
+			logger.info("successfully deleted rss feed");
+			res.json({});
 		}
 	});
 }

@@ -5,7 +5,7 @@ define([
 	"models/RSSFeedModel"
 ], function($, _, Backbone, RSSFeedModel) {
 	var RSSFeedCollection = Backbone.Collection.extend({
-		url: "/rssfeeds",
+		url: "/rssfeeds/",
 		model: RSSFeedModel,
 		initialize: function() {
 		}

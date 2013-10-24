@@ -29,7 +29,6 @@ define([
 				}
 			});
 			this.collection.on("add", this.render, this);
-			this.collection.on("change", this.update, this);
 		},
 		render: function(rssFeed) {
 			var rssFeedView = new RSSFeedView({

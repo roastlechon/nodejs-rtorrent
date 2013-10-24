@@ -3,9 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>{{head.title}}</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/bootstrap-glyphicons.css">
-	<link rel="stylesheet" href="/css/jquery.fileupload-ui.css" />
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/jquery.fileupload-ui.css" rel="stylesheet"/>
 	<style type="text/css">
 	.checking {}
 	.downloading {}
@@ -18,7 +17,8 @@
 	.torrent-status ul li:last-child { margin-right: 0;}
 	.btn-default { background-color: inherit; color: inherit; border-color: transparent;}
 	.btn-default:hover, .btn-default:focus, .btn-default:active { background-color: inherit; border-color: transparent; color: #000;}
-	#torrents .list-group-item {padding: 0; border: 0;}
+	#torrents table { table-layout: fixed;}
+	#torrents table tr th { cursor: pointer;}
 	</style>
 	<script data-main="js/main" src="/js/libs/require/require.js"></script>
 </head>

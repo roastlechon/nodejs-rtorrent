@@ -57,6 +57,9 @@ Torrents
 		Start/Resume
 		Pause
 		Stop
+		Recheck - d.check_hash 8D67FDDFAF05A1E583124DD5FAA26B402B19CE83
+
+
 	Torrent status
 		Transfer
 		Tracker

@@ -30,6 +30,7 @@ define([
 		},
 		close: function() {
 			$(document.body).find(".modal-backdrop").remove();
+			$(document.body).removeClass("modal-open");
 			this.remove();
 			console.log("closing modal");
 			Backbone.history.navigate("#", true);

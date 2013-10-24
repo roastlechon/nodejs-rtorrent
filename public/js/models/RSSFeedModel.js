@@ -6,6 +6,8 @@ define([
 	"views/LoginModalView"
 ], function($, _, Backbone, RSSFeedTorrentCollection, LoginModalView) {
 	var RSSFeedModel = Backbone.Model.extend({
+		urlRoot: "rssfeeds",
+		idAttribute: "_id",
 		initialize: function() {
 			console.log("creating new rss feed model");
 			var torrents = new RSSFeedTorrentCollection(this.get("torrents"));
@@ -48,9 +50,6 @@ define([
 				}
 			});
 			console.log("editing rss feed" + this.get("title"));
-		},
-		removeRssFeed: function() {
-			console.log("removing rss feed" + this.get("title"));
 		},
 		refreshRssFeed: function() {
 			console.log("refreshing rss feed" + this.get("title"));

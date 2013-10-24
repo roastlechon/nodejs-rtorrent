@@ -5,27 +5,31 @@ define([
 	"models/TorrentModel",
 	"views/MainTorrentsView",
 	"views/TorrentView",
-	"views/LoginModalView"
-], function($, _, Backbone, TorrentModel, MainTorrentsView, TorrentView, LoginModalView) {
+	"views/LoginModalView",
+	"collections/TorrentCollection"
+], function($, _, Backbone, TorrentModel, MainTorrentsView, TorrentView, LoginModalView, TorrentCollection) {
 	var TorrentsView = MainTorrentsView.extend({
 		initialize: function(options) {
 			_.bindAll(this);
 
 			this.vent = options.vent;
-			
+			this.hiddenColumns = [];
 			this._initialize();
 
+			this.listenTo(this.collection.filtered, "reset", this.render);
+			options.vent.bind("hideColumn", this.hideColumn);
+			options.vent.bind("showColumn", this.showColumn);
 			options.vent.bind("successAuthentication", this.successAuthentication);
 		},
 		socket_events: {
-			"torrents" : "render",
+			"torrents" : "torrents",
 			"error": "error",
 			"connect": "connect",
 			"connecting": "connecting",
 			"user": "setUserInformation",
 			"connect_failed": "connectFailed"
 		},
-		render: function(torrents) {
+		torrents: function(torrents) {
 			var that = this;
 			var a = [];
 			var b = [];
@@ -57,15 +61,30 @@ define([
 
 					// add model to collection
 					that.collection.add(torrentModel);
-
-					// create new view
-					var torrentView = new TorrentView({
-						model : torrentModel
-					});
-
-					// render element and append to view
-					$(that.el).append(torrentView.render().el);
 				}
+			});
+		},
+		render: function() {
+			var that = this;
+			
+			$(this.el).find("tbody").empty();
+
+			this.collection.filtered.each(function(torrentModel) {
+				var torrentView = new TorrentView({
+					model : torrentModel,
+					hiddenColumns : that.hiddenColumns
+				});
+				$(that.el).find("tbody").append(torrentView.render().el);
+			});
+		},
+		hideColumn: function(column) {
+			console.log(column);
+			this.hiddenColumns.push(column);
+		},
+		showColumn: function(column) {
+			console.log(column);
+			this.hiddenColumns = _.reject(this.hiddenColumns, function(columnName) {
+				return columnName == column;
 			});
 		},
 		setUserInformation: function(data) {

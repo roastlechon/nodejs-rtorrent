@@ -1,11 +1,11 @@
 // Filename: main.js
 require.config({
 	paths: {
-		"jquery": "libs/jquery/jquery",
+		"jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min",
 		"underscore": "libs/underscore/underscore-min",
 		"backbone": "libs/backbone/backbone",
 		"backbone-relational": "libs/backbone/backbone-relational",
-		"bootstrap": "//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min",
+		"bootstrap": "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min",
 		"socket.io": "libs/socket.io/socket.io",
 		"tmpl": "libs/template/tmpl",
 		"mustache": "libs/template/mustache",

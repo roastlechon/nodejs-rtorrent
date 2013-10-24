@@ -9,7 +9,8 @@ define([
 			console.log("opening up socket connection");
 
 			this.socket = io.connect("http://home.roastlechon.com:3000", {
-				"force new connection": true
+				"force new connection" : true,
+				"sync disconnect on unload" : true
 			});
 
 			if (this.socket_events && _.size(this.socket_events) > 0) {

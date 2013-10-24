@@ -41,7 +41,8 @@ define([
 			rssFeedEditModalView.show();
 		},
 		removeRssFeed: function() {
-			this.model.removeRssFeed();
+			this.model.destroy();
+			this.remove();
 		},
 		refreshRssFeed: function() {
 			this.model.refreshRssFeed();
