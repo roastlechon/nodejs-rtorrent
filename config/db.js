@@ -79,7 +79,7 @@ mongoose.model("User", User);
 // 	password: "password"
 // });
 
-// UserModel.save(function(errors, userSeed) {
+// userSeed.save(function(errors, userSeed) {
 // 	if (errors) {
 // 		logger.error("errors occured while saving user");
 // 	} else {
