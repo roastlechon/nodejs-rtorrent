@@ -49,9 +49,9 @@ To verify that the user was seeded into the database, open up your MongoDB conso
 
 Next type in `show dbs` to show all the databases (in case you forgot what you named or created).
 
-Then type 'use dbname' to use the database. As an example, mine is called "nodejs-rtorrent", so I enter in 'use nodejs-rtorrent'
+Then type `use dbname` to use the database. As an example, mine is called "nodejs-rtorrent", so I enter in `use nodejs-rtorrent`
 
-Finally, type in 'db.users.find()' to get the users. You should be able to see one if it worked correctly. The above code also as a log statement in which you can check the console to make sure it worked correctly.
+Finally, type in `db.users.find()` to get the users. You should be able to see one if it worked correctly. The above code also as a log statement in which you can check the console to make sure it worked correctly.
 
 When it is confirmed that the database is seeded, you can go ahead and comment out the seeding code.
 

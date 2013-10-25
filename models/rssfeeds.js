@@ -141,45 +141,7 @@ rssFeeds.getTorrentsFromFeed = function(rss, callback) {
 		});
 
 		parser.on("item", function(item) {
-
-			// temporary object
-			var tor = {};
-
-			//convert item into torrent object
-			if (item.title) {
-				// console.log(item.title);
-				tor.name = item.title;
-			}
-
-			// order enclosure first
-			// if item is enclosure
-			if (item.enclosure) {
-				//console.log(item.enclosure);
-
-				// if item enclosure has url
-				if (item.enclosure["url"]) {
-					// console.log(item.enclosure["url"]);
-					tor.url = item.enclosure["url"];
-				}
-
-				// if item is link
-			} else if (item.link) {
-				// console.log(item.link);
-				tor.url = item.link;
-			}
-
-			// if item has date
-			if (item.pubdate) {
-				// console.log(item.pubdate);
-				tor.date = new Date(item.pubdate);
-			} else if (item.pubDate) {
-				// console.log(item.pubDate);
-				tor.date = new Date(item.pubDate);
-			} else if (item.timestamp) {
-				// console.log(item.timestamp);
-				tor.date = new Date(item.timestamp);
-			}
-
+			var tor = rssFeeds.adaptItemToTorrent(item);
 			results.push(tor);
 		});
 
@@ -208,7 +170,7 @@ rssFeeds.checkFeedExists = function(rss, callback) {
 			callback(errors, null);
 		} else {
 			logger.info("successfully found feed");
-			logger.info(results);
+			logger.info(results);			
 			callback(null, results);
 		}
 	});
@@ -272,4 +234,46 @@ rssFeeds.addTorrentToFeed = function(_id, torrent, callback) {
 			});
 		}
 	});
+}
+
+rssFeeds.adaptItemToTorrent = function(item) {
+	// temporary object
+	var tor = {};
+
+	//convert item into torrent object
+	if (item.title) {
+		// console.log(item.title);
+		tor.name = item.title;
+	}
+
+	// order enclosure first
+	// if item is enclosure
+	if (item.enclosure) {
+		//console.log(item.enclosure);
+
+		// if item enclosure has url
+		if (item.enclosure["url"]) {
+			// console.log(item.enclosure["url"]);
+			tor.url = item.enclosure["url"];
+		}
+
+		// if item is link
+	} else if (item.link) {
+		// console.log(item.link);
+		tor.url = item.link;
+	}
+
+	// if item has date
+	if (item.pubdate) {
+		// console.log(item.pubdate);
+		tor.date = new Date(item.pubdate);
+	} else if (item.pubDate) {
+		// console.log(item.pubDate);
+		tor.date = new Date(item.pubDate);
+	} else if (item.timestamp) {
+		// console.log(item.timestamp);
+		tor.date = new Date(item.timestamp);
+	}
+
+	return tor;
 }
