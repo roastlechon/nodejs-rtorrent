@@ -1,4 +1,3 @@
-
 # nodejs-rtorrent
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Async, Passport, Socket.IO. For the front-end, I am using Backbone.js, Underscore, and Twitter Bootstrap. I may end up switching to Angular-JS on the front-end framework though.
 
@@ -36,7 +35,7 @@ var userSeed = new UserModel({
 	password: "password"
 });
 
-UserModel.save(function(errors, userSeed) {
+userSeed.save(function(errors, userSeed) {
 	if (errors) {
 		logger.error("errors occured while saving user");
 	} else {
