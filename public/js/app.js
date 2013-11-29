@@ -1,18 +1,22 @@
-// Filename: app.js
 define([
-	"jquery",
-	"underscore",
-	"backbone",
-	"views/AppView",
-	"bootstrap"
-], function($, _, Backbone, AppView) {
-	var initialize = function() {
-		var vent = _.extend({}, Backbone.Events);
-		var appView = new AppView({
-			vent: vent
-		});
-	}
-	return {
-		initialize: initialize
-	};
+	"angular",
+	"filters",
+	"services",
+	"directives",
+	"controllers/index",
+	"angularUiRouter",
+	"uiBootstrap",
+	"angularCookies"
+], function(angular) {
+	"use strict";
+
+	return angular.module("app", [
+		"ngCookies",
+		"ui.bootstrap",
+		"ui.router",
+		"nodejs-rtorrent.services",
+		"nodejs-rtorrent.controllers",
+		"nodejs-rtorrent.filters",
+		"nodejs-rtorrent.directives"
+	]);
 });

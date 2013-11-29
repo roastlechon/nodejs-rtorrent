@@ -1,4 +1,5 @@
 var logger = require("winston");
+var rtorrent = require("./lib/rtorrent");
 logger.add(logger.transports.File, { filename: "nodejs-rtorrent.log"});
 logger.exitOnError = false;
 
@@ -83,4 +84,7 @@ require("./controllers/torrent")(app, upload);
 require("./controllers/rss-subscriptions")();
 
 logger.info("listening on port 3000");
+
+rtorrent.init();
+
 server.listen(3000);

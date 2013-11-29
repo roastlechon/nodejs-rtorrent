@@ -24,6 +24,7 @@
     "passport-local" : "0.1.6",
     "bcrypt" : "0.7.6",
     "passport.socketio" : "1.2.1",
-    "session-mongoose" : "0.2.3"
+    "session-mongoose" : "0.2.3",
+    "bower" : "1.2.7"
   }
 }

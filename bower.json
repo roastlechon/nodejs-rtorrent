@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-rtorrent",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.0-rc.1",
+    "angular-scenario": "~1.2.0-rc.1",
+    "angular-route": "~1.2.0-rc.1",
+    "angular-mocks": "~1.2.0-rc.1",
+    "requirejs": "~2.1.8",
+    "requirejs-text": "~2.0.10"
+  },
+  "dependencies": {
+    "angular-bootstrap": "~0.6.0",
+    "angular-resource": "~1.0.8",
+    "angular-cookies": "~1.0.8",
+    "socket.io-client": "~0.9.16",
+    "angular-ui-router": "~0.2.0"
+  }
+}

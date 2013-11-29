@@ -1,0 +1,34 @@
+<accordion close-others="oneAtATime">
+	<accordion-group ng-repeat="feed in feeds" class="clearfix">
+		<accordion-heading>
+			<h4 class="pull-left">{{feed.title}}</h4>
+			<div class="btn-group pull-right">
+				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);">
+					Edit
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="javascript: void(0);" class="edit-rss-feed">Edit</a></li>
+					<li><a href="javascript: void(0);" class="remove-rss-feed">Remove</a></li>
+					<li><a href="javascript: void(0);" class="refresh-rss-feed">Refresh</a></li>
+				</ul>
+			</div>
+		</accordion-heading>
+		<ul class="rss-torrents list-group">
+			<li ng-repeat="torrent in feed.torrents">
+				<div class="rssfeed-torrent-head clearfix">
+					<div class="btn-group">
+						<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" href="javascript: void(0);">
+							{{torrent.name}} ({{torrent.date}})
+							<span class="badge badge-info">{{torrent.status}}</span>
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<li><a href="javascript: void(0);" class="load-torrent">Load Torrent</a></li>
+							<li><a href="javascript: void(0);" class="mark-loaded">Mark as Loaded</a></li>
+						</ul>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</accordion-group>
+</accordion>

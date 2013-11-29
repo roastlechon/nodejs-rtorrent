@@ -1,0 +1,36 @@
+<fieldset>
+	<legend>Listening Port</legend>
+	<div class="form-group">
+		<label for="listening-port-range">Port range used for incoming connections:</label> <input type="number" name="listening-port-range" id="listening-port-range" value="" class="form-control">
+	</div>
+	<div class="checkbox">
+		<label><input type="checkbox" name="randomize-listening-port"> Randomize port each time rTorrent starts.</label>
+	</div>
+</fieldset>
+<fieldset>
+	<legend>Bandwidth Settings</legend>
+	<div class="form-group">
+		<label for="number-upload-slots">Number of upload slots:</label> <input type="number" name="number-upload-slots" id="number-upload-slots" value="" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="min-number-peers">Minimum number of peers:</label> <input type="number" name="min-number-peers" id="min-number-peers" value="" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="max-number-peers">Maximum number of peers:</label> <input type="number" name="max-number-peers" id="max-number-peers" value="" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="min-number-peers-seeding">Minimum number of peers for seeding:</label> <input type="number" name="min-number-peers-seeding" id="min-number-peers-seeding" value="" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="max-number-peers-seeding">Maximum number of peers for seeding:</label> <input type="number" name="max-number-peers-seeding" id="max-number-peers-seeding" value="" class="form-control">
+	</div>
+</fieldset>
+<fieldset>
+	<legend>Bandwidth Limiting</legend>
+	<div class="from-group">
+		<label for="global-max-upload-rate">Global maximum upload rate: (kB/s)</label> <input type="number" name="global-max-upload-rate" id="global-max-upload-rate" value="" class="form-control"> <span class="help-block">0 is unlimited</span>
+	</div>
+	<div class="form-group">
+		<label for="global-max-download-rate">Global maximum download rate: (kB/s)</label> <input type="number" name="global-max-download-rate" id="global-max-download-rate" value="" class="form-control"> <span class="help-block">0 is unlimited</span>
+	</div>
+</fieldset>

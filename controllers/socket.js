@@ -55,5 +55,5 @@ var startTorrentLoop = function() {
 			started = false;
 			clearInterval(interval);
 		}
-	}, 3000);
+	}, 2000);
 }

@@ -8,43 +8,52 @@ var logger = require("winston");
 var auth = require("./auth.js")
 
 module.exports = function(app, upload) {
-	app.get("/torrent/start/:hash", auth.ensureAuthenticated, start);
-	app.get("/torrent/stop/:hash", auth.ensureAuthenticated, stop);
-	app.get("/torrent/pause/:hash", auth.ensureAuthenticated, pause);
-	app.get("/torrent/remove/:hash", auth.ensureAuthenticated, remove);
-	app.post("/torrent/addlink", auth.ensureAuthenticated, addlink);
+	app.post("/torrent", auth.ensureAuthenticated, torrentAction);
 	upload.on("end", uploadfile);
 }
 
-function start(req, res) {
-	rtorrent.startTorrent(req.params.hash, function(err, val) {
-		res.send("success");
-	});
-}
+function torrentAction(req, res) {
+	var request = {
+		hash: req.body.hash,
+		action: req.body.action,
+		url: req.body.url,
+		channel: req.body.channel
+	}
 
-function stop(req, res) {
-	rtorrent.stopTorrent(req.params.hash, function(err, val) {
-		res.send("success");
-	});
-}
-
-function pause(req, res) {
-	rtorrent.pauseTorrent(req.params.hash, function(err, val) {
-		res.send("success");
-	});
-}
-
-function remove(req, res) {
-	rtorrent.removeTorrent(req.params.hash, function(err, val) {
-		res.send("success");
-	});
-}
-
-function addlink(req, res) {
-	rtorrent.loadTorrentUrl(req.body.url, function(err, val) {
-		console.log(val);
-		res.send("ok");
-	});
+	switch (request.action) {
+		case "start":
+			rtorrent.startTorrent(request.hash, function(err, val) {
+				res.send("success");
+			});
+		break;
+		case "stop":
+			rtorrent.stopTorrent(request.hash, function(err, val) {
+				res.send("success");
+			});
+		break;
+		case "pause":
+			rtorrent.pauseTorrent(request.hash, function(err, val) {
+				res.send("success");
+			});
+		break;
+		case "remove":
+			rtorrent.removeTorrent(request.hash, function(err, val) {
+				res.send("success");
+			});
+		break;
+		case "load":
+			rtorrent.loadTorrentUrl(request.url, function(err, val) {
+				console.log(val);
+				res.send("success");
+			});
+		break;
+		case "setChannel":
+			rtorrent.setThrottle(request.hash, request.channel, function(err, val) {
+				console.log(request.channel);
+				res.send("success");
+			});
+		break;
+	}
 }
 
 function uploadfile(fileinfo) {

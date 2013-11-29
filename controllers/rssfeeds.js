@@ -59,7 +59,7 @@ function getRSSFeed(req, res) {
 			res.json(errors);
 		} else {
 			logger.info("successfully retrieved rss feed");
-			res.json(feed);
+			res.json(feed[0]);
 		}
 	});
 

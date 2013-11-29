@@ -38,5 +38,5 @@ function logout(req, res, next) {
 	logger.info("logging out");
 	req.logout();
 	logger.info("successfully logged out");
-	res.send(401);
+	res.send("ok");
 }

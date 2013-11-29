@@ -1,0 +1,24 @@
+<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li><a ui-sref="feeds">Feeds</a></li>
+	<li class="active">{{feed.title}}</li>
+</ol>
+<h2>Torrents under {{feed.title}}</h2>
+<table class="table table-condensed table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Date</th>
+			<th>Status</th>
+			<th>Load</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="torrent in feed.torrents">
+			<td>{{torrent.name}}</td>
+			<td>{{torrent.date | date:"medium"}}</td>
+			<td>{{torrent.status}}</td>
+			<td><a href="javascript: void(0);" ng-click="loadTorrent(torrent)">Load</a></td>
+		</tr>
+	</tbody>
+</table>

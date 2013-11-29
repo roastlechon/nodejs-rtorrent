@@ -1,0 +1,33 @@
+<td>
+	<div class="clearfix" style="position: relative;">
+		<h5 class="pull-left" style="white-space: nowrap; overflow: hidden; width: 90%;">{{name}}</h5>
+		<div style="position: absolute; right: 0;" class="btn-group">
+			<a href="javascript:void(0);" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i></a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="javascript: void(0);" class="play">Play</a></li>
+				<li><a href="javascript: void(0);" class="pause">Pause</a></li>
+				<li><a href="javascript: void(0);" class="stop">Stop</a></li>
+				<li class="divider"></li>
+				<li><a href="javascript: void(0);">Priority</a></li>
+				<li><a href="javascript: void(0);">Set Channel</a></li>
+				<li class="divider"></li>
+				<li><a href="javascript: void(0);" class="delete">Delete</a></li>
+				<li><a href="javascript: void(0);" class="">Details</a></li>
+			</ul>
+		</div>
+	</div>
+</td>
+<td data-column="status">{{status}}</td>
+<td data-column="size">{{size}}</td>
+<td data-column="percent_downloaded">
+	<div class="progress">
+		<div class="progress-bar" style="width: {{percent_downloaded}}">{{percent_downloaded}}</div>
+	</div>
+</td>
+<td data-column="downloaded">{{downloaded}}</td>
+<td data-column="uploaded">{{uploaded}}</td>
+<td data-column="dl_speed">{{dl_speed}}</td>
+<td data-column="ul_speed">{{ul_speed}}</td>
+<td data-column="time_remaining">{{time_remaining}}</td>
+<td data-column="peers">{{peers}} ({{total_peers}})</td>
+<td data-column="seeds">{{seeds}} ({{total_seeds}})</td>
