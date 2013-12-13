@@ -4,7 +4,7 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 ## Feature To-Do List
-* Change frontend framework to Angular JS
+* Change frontend framework to Angular JS - Kinda done
 * Add some frontend validation
 * Refactor backend coding
 * Add in settings page functionality to change rtorrent settings
@@ -137,4 +137,16 @@ get_priority 0 1 2 3
 
 get_upload_rate
 set_upload_rate
+
+xmlrpc 127.0.0.1/RPC2 d.multicall main d.get_hash= d.get_throttle_name=
+throttle_down=up16,10
+
+xmlrpc 127.0.0.1/RPC2 d.get_throttle_name 82E7111FC6E574C976B26EB453460F49D46559F7
+
+setting throttle
+xmlrpc 127.0.0.1/RPC2 d.stop 82E7111FC6E574C976B26EB453460F49D46559F7
+xmlrpc 127.0.0.1/RPC2 d.set_throttle_name 82E7111FC6E574C976B26EB453460F49D46559F7 thr_1   
+
+
+xmlrpc 127.0.0.1/RPC2 throttle_up "thr_10" "20"
 ```
