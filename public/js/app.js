@@ -2,8 +2,9 @@ define([
 	"angular",
 	"filters",
 	"services",
-	"directives",
+	"directives/index",
 	"controllers/index",
+	"angularUpload",
 	"angularUiRouter",
 	"uiBootstrap",
 	"angularCookies"
@@ -13,6 +14,7 @@ define([
 	return angular.module("app", [
 		"ngCookies",
 		"ui.bootstrap",
+		"lr.upload",
 		"ui.router",
 		"nodejs-rtorrent.services",
 		"nodejs-rtorrent.controllers",

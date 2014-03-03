@@ -1,7 +1,7 @@
 var rssfeeds = require("../models/rssfeeds");
-var mongoose = require("mongoose");
 var logger = require("winston");
 var auth = require("./auth.js");
+var Q = require("q");
 
 module.exports = function(app) {
 	app.get("/rssfeeds", auth.ensureAuthenticated, getRSSFeeds);
@@ -12,21 +12,29 @@ module.exports = function(app) {
 }
 
 function getRSSFeeds(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
-	rssfeeds.getRSSFeeds(function(results, errors) {
-		if (errors) {
-			logger.error("errors occured in getRSSFeeds");
-			logger.error(errors);
-			res.json(errors);
-		} else {
-			logger.info("successfully retrieved rss feeds");
-			res.json(results);
-		}
+	rssfeeds.getAll().then(function(data) {
+		logger.info("successfully retrieved rss feeds");
+		res.json(data.map(function(feed) {
+			return {
+				_id: feed._id,
+				title: feed.title,
+				lastChecked: feed.lastChecked,
+				rss: feed.rss,
+				torrents: feed.torrents.sort(function(a, b) {
+					a = a.date;
+					b = b.date;
+					return a > b ? -1 : a < b ? 1 : 0;
+				})
+			};
+		}));
+	}, function(err) {
+		logger.error("errors occured in getRSSFeeds");
+		logger.error(err.message);
+		res.json(err);
 	});
 }
 
 function addRSSFeed(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
 
 	var feed = {
 		title: req.body.title,
@@ -37,63 +45,50 @@ function addRSSFeed(req, res) {
 	//if feed does not exist, create new feedsub
 	//get list of feeds to return to client
 
-	rssfeeds.saveRSSFeed(feed, function(errors, feed) {
-		if (errors) {
-			logger.error("errors occured in saveRSSFeed");
-			logger.error(errors);
-			res.json(errors);
-		} else {
-			logger.info("successfully saved rss feed");
-			res.json(feed);
-		}
+	rssfeeds.add(feed).then(function(data) {
+		logger.info("successfully saved rss feed");
+		res.json(data);
+	}, function(err) {
+		logger.error("errors occured in saveRSSFeed");
+		logger.error(err);
+		res.json(err);
 	});
 }
 
 function getRSSFeed(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
 	logger.info("getting single rss feed: %s", req.params.id);
-	rssfeeds.getRSSFeed(req.params.id, function(errors, feed) {
-		if (errors) {
-			logger.error("errors occured in getRSSFeed");
-			logger.error(errors);
-			res.json(errors);
-		} else {
-			logger.info("successfully retrieved rss feed");
-			res.json(feed[0]);
-		}
-	});
 
+	rssfeeds.get(req.params.id).then(function(data) {
+		logger.info("successfully retrieved rss feed");
+		res.json(data[0]);
+	}, function(err) {
+		logger.error("Error occured: %s", err.message);
+		res.json(err);
+	});
 }
 
 function updateRSSFeed(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
-	logger.info("updating feed: %s %j", req.params.id, req.body);
+	logger.info("Updating feed: %s, with data: %j", req.params.id, req.body);
+	
 	var feed = {
 		title: req.body.title,
 		rss: req.body.rss
 	}
-	rssfeeds.updateRSSFeed(req.params.id, feed, function(errors, feed) {
-		if (errors) {
-			logger.error("errors occured in updateRSSFeed");
-			logger.error(errors);
-			res.json(errors);
-		} else {
-			logger.info("successfully updated rss feed");
-			res.json(feed);
-		}
-	});
+
+	rssfeeds.edit(req.params.id, feed).then(function(data) {
+		res.json(data);
+	}, function(err) {
+		res.json(err);
+	}); 
 }
 
 function deleteRSSFeed(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
-	logger.info("removing feed: %s", req.params.id);
-	rssfeeds.deleteFeed(req.params.id, function(errors, results) {
-		if (errors) {
-			logger.error("error occured deleting feed");
-			logger.error(errors);
-		} else {
-			logger.info("successfully deleted rss feed");
-			res.json({});
-		}
+	logger.info("removing feed");
+	rssfeeds.delete(req.params.id).then(function(data) {
+		logger.info("Successfully deleted feed");
+		res.json(data);
+	}, function(err) {
+		logger.error("Error occurred while deleting feed");
+		res.json(err);
 	});
 }

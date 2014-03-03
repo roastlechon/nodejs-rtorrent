@@ -1,15 +1,21 @@
 # nodejs-rtorrent
-nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Async, Passport, Socket.IO. For the front-end, I am using Backbone.js, Underscore, and Twitter Bootstrap. I may end up switching to Angular-JS on the front-end framework though.
+nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Q (Promises), Passport, Socket.IO. For the front-end, I am using AngularJS, RequireJS, Bower, Underscore, and Twitter Bootstrap.
 
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 ## Feature To-Do List
-* Change frontend framework to Angular JS - Kinda done
+* ~~Change frontend framework to Angular JS - Kinda done~~
 * Add some frontend validation
 * Refactor backend coding
+..* ~~Refactor models/schemas and rssfeeds.js~~
+..* Refactor rtorrent.js
+..* ~~Refactor authentication to use HMAC~~
+..* Add expiration mechanism to authentication
+..* Add config setup json file
 * Add in settings page functionality to change rtorrent settings
 * Add in search page functionality to web scrape torrent search results
 * Add new user registration and admin management
+* Update install instructions
 
 ## Installation
 To install nodejs-rtorrent, checkout the source: `git clone https://github.com/roastlechon/nodejs-rtorrent.git` and install it yourself.

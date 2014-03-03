@@ -1,11 +1,16 @@
-define(["angular", "app"], function(angular, app) {
+define([
+	"angular",
+	"app",
+	"services/AuthenticationInterceptor",
+	"services/AuthenticationFactory"
+], function(angular, app) {
 	"use strict";
 	return app.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
 		function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 			$urlRouterProvider.otherwise("/");
 
 			$stateProvider.state("home", {
-				url: "/home",
+				url: "/",
 				templateUrl: "../partials/index.html",
 				controller: "IndexController"
 			});
@@ -34,6 +39,12 @@ define(["angular", "app"], function(angular, app) {
 				controller: "FeedsController"
 			});
 
+			$stateProvider.state("edit_feed", {
+				url: "/feeds/:id/edit",
+				templateUrl: "../partials/edit_feed.html",
+				controller: "EditFeedController"
+			});
+
 			$stateProvider.state("feed", {
 				url: "/feeds/:id",
 				templateUrl: "../partials/feeds_torrents.html",
@@ -57,6 +68,10 @@ define(["angular", "app"], function(angular, app) {
 				templateUrl: "../partials/login.html",
 				controller: "LoginController"
 			});
+
+			$urlRouterProvider.when("/logout", "/home")
+
+			$httpProvider.interceptors.push("AuthenticationInterceptor");
 		}
 	]);
 });

@@ -1,14 +1,9 @@
 /*global module:false*/
 module.exports = function (grunt) {
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-karma');
-  
+  require('load-grunt-tasks')(grunt);
+  var files = require('./files').files;
+
   // Project configuration.
   grunt.initConfig({
     builddir: 'build',
@@ -25,22 +20,16 @@ module.exports = function (grunt) {
     clean: [ '<%= builddir %>' ],
     concat: {
       options: {
-        banner: '<%= meta.banner %>\n(function (window, angular, undefined) {\n',
+        banner: '<%= meta.banner %>\n\n'+
+                '/* commonjs package manager support (eg componentjs) */\n'+
+                'if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){\n'+
+                '  module.exports = \'ui.router\';\n'+
+                '}\n\n'+
+                '(function (window, angular, undefined) {\n',
         footer: '})(window, window.angular);'
       },
       build: {
-        src: [
-          'src/common.js',
-          'src/resolve.js',
-          'src/templateFactory.js',
-          'src/urlMatcherFactory.js',
-          'src/urlRouter.js',
-          'src/state.js',
-          'src/view.js',
-          'src/viewDirective.js',
-          'src/stateDirectives.js',
-          'src/compat.js'
-        ],
+        src: files.src,
         dest: '<%= builddir %>/<%= pkg.name %>.js'
       }
     },
@@ -78,32 +67,60 @@ module.exports = function (grunt) {
         }
       }
     },
-  karma: {
-    options: {
-      configFile: 'config/karma.js'
+    karma: {
+      options: {
+        configFile: 'config/karma.js',
+        singleRun: true,
+        exclude: [],
+        frameworks: ['jasmine'],
+        reporters: 'dots', // 'dots' || 'progress'
+        port: 8080,
+        colors: true,
+        autoWatch: false,
+        autoWatchInterval: 0,
+        browsers: [ grunt.option('browser') || 'PhantomJS' ]
+      },
+      unit: {
+        browsers: [ grunt.option('browser') || 'PhantomJS' ]
+      },
+      debug: {
+        singleRun: false,
+        background: false,
+        browsers: [ grunt.option('browser') || 'Chrome' ]
+      },
+      past: {
+        configFile: 'config/karma-1.0.8.js'
+      },
+      unstable: {
+        configFile: 'config/karma-1.1.5.js'
+      }
     },
-    unit: {
-      singleRun: true
+    changelog: {
+      options: {
+        dest: 'CHANGELOG.md'
+      }
     },
-    background: {
-      background: true,
-      browsers: [ grunt.option('browser') || 'PhantomJS' ]
+    ngdocs: {
+      options: {
+        dest: 'site',
+        html5Mode: false,
+        title: 'UI Router',
+        startPage: '/api',
+      },
+      api: {
+        src: ['src/**/*.js'],
+        title: 'API Reference'
+      }
     }
-  }
   });
 
+  grunt.registerTask('integrate', ['build', 'jshint', 'karma:unit', 'karma:past', 'karma:unstable']);
   grunt.registerTask('default', ['build', 'jshint', 'karma:unit']);
   grunt.registerTask('build', 'Perform a normal build', ['concat', 'uglify']);
-  grunt.registerTask('dist', 'Perform a clean build and generate documentation', ['clean', 'build', 'jsdoc']);
+  grunt.registerTask('dist', 'Perform a clean build and generate documentation', ['clean', 'build', 'ngdocs']);
   grunt.registerTask('release', 'Tag and perform a release', ['prepare-release', 'dist', 'perform-release']);
-  grunt.registerTask('dev', 'Run dev server and watch for changes', ['build', 'connect', 'karma:background', 'watch']);
+  grunt.registerTask('dev', 'Run dev server and watch for changes', ['build', 'connect:server', 'karma:background', 'watch']);
   grunt.registerTask('sample', 'Run connect server with keepalive:true for sample app development', ['connect:sample']);
-
-  grunt.registerTask('jsdoc', 'Generate documentation', function () {
-    promising(this,
-      system('node_modules/jsdoc/jsdoc -c config/jsdoc.js -d \'' + grunt.config('builddir') + '\'/doc src')
-    );
-  });
 
   grunt.registerTask('publish-pages', 'Publish a clean build, docs, and sample to github.io', function () {
     promising(this,
@@ -124,8 +141,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('prepare-release', function () {
     var bower = grunt.file.readJSON('bower.json'),
+        component = grunt.file.readJSON('component.json'),
         version = bower.version;
     if (version != grunt.config('pkg.version')) throw 'Version mismatch in bower.json';
+    if (version != component.version) throw 'Version mismatch in component.json';
 
     promising(this,
       ensureCleanMaster().then(function () {
@@ -144,7 +163,7 @@ module.exports = function (grunt) {
     var version = grunt.config('pkg.version'), releasedir = grunt.config('builddir');
     promising(this,
       system('git add \'' + releasedir + '\'').then(function () {
-        return system('git commit -m \'release ' + version + '\'');  
+        return system('git commit -m \'release ' + version + '\'');
       }).then(function () {
         return system('git tag \'' + version + '\'');
       })

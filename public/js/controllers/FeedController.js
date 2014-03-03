@@ -1,7 +1,7 @@
 define([
 	"controllers",
-	"services/FeedServices",
-	"services/TorrentServices"
+	"services/FeedFactory",
+	"services/TorrentFactory"
 ], function(controllers) {
 	"use strict";
 	controllers.controller("FeedController", ["$scope", "$stateParams", "FeedFactory", "TorrentFactory",

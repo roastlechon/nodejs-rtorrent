@@ -4,6 +4,7 @@ var torrents = [];
 var connections = 0;
 var started = false;
 var interval = null;
+var nconf = require("nconf");
 
 module.exports = function(io) {
 	io.sockets.on("connection", function(socket) {
@@ -16,11 +17,6 @@ module.exports = function(io) {
 			logger.info("starting torrent loop");
 			startTorrentLoop();
 		}
-
-		socket.emit("user", {
-			_id: socket.handshake.user._id,
-			email: socket.handshake.user.email
-		});
 
 		var getTorrents = function(callback) {
 			socket.emit("torrents", torrents);
@@ -46,8 +42,10 @@ var startTorrentLoop = function() {
 	started = true;
 	interval = setInterval(function() {
 		if (connections > 0) {
-			rtorrent.getAll(function(list) {
-				torrents = list;
+			rtorrent.getTorrents().then(function(data) {
+				torrents = data;
+			}, function(err) {
+
 			});
 		} else {
 			logger.info("stopping torrent loop");
@@ -55,5 +53,5 @@ var startTorrentLoop = function() {
 			started = false;
 			clearInterval(interval);
 		}
-	}, 2000);
+	}, nconf.get("app:rtorrentLoopInterval"));
 }

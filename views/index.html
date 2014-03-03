@@ -8,11 +8,6 @@
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
-.checking {}
-		.downloading {}
-		.seeding {}
-		.finished {}
-		.stopped {}
 		.tab-content {overflow: inherit;}
 		.torrent-status { margin-top: 10px;}
 		.torrent-status ul li { float: left; margin-right: 10px;}
@@ -23,6 +18,10 @@
 		#torrents table tr th { cursor: pointer;}
 		.dropdown-submenu{
     position:relative;
+}
+
+.container-full {
+	padding: 0 15px;
 }
  
 .dropdown-submenu > .dropdown-menu
@@ -72,18 +71,14 @@
 		</style>
 </script>
 	</head>
-	<body>
-		<div class="container" id="nodejs-rtorrent">
+	<body ng-controller="NotificationsController">
+		<div class="container-full" id="nodejs-rtorrent">
+			<notification ng-model="message"></notification>
 			<div class="page-header">
-				<h1>
-					{{body.title}}
-				</h1>
+				<h1><a ui-sref="home">{{body.title}}</a></h1>
 			</div>
 			<div class="navbar" ng-controller="NavigationController">
 				<ul class="nav navbar-nav">
-					<li class="active">
-						<a ui-sref="home">Home</a>
-					</li>
 					<li class="dropdown">
 						<a href="javascript:void(0);" data-toggle="dropdown" class="dropdown-toggle">Torrents</a>
 						<ul class="dropdown-menu">
@@ -118,7 +113,7 @@
 						<a ui-sref="login">Login</a>
 					</li>
 				</ul>
-				<p class="navbar-text pull-right" ng-show="isAuthenticated">Signed in as \{{user.email}}. <a ui-sref="logout" ng-click="logout()">Logout</a></p>
+				<p class="navbar-text pull-right" ng-show="isAuthenticated">Signed in as \{{currentUser.email}}. <a href="javascript: void(0);" ng-click="logout()">Logout</a></p>
 			</div>
 			<div class="page-content" ui-view>
 				

@@ -1,0 +1,25 @@
+{
+	"authentication": {
+		"secret": "123456789"
+	},
+	"express": {
+		"port": 3000
+	},
+	"mongoose": {
+		"prefix": "mongodb://",
+		"uri": "localhost",
+		"port": 27017,
+		"database": "nodejs-rtorrent",
+		"user": "",
+		"pass": ""
+	},
+	"rtorrent": {
+		"host": "",
+		"port": "80",
+		"path": "/RPC2"
+	},
+	"app": {
+		"checkFeedLoopInterval": 300000,
+		"rtorrentLoopInterval": 2000
+	}
+}

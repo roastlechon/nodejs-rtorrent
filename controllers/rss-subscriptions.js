@@ -1,77 +1,42 @@
 var logger = require("winston");
+var nconf = require("nconf");
 var FeedMe = require("feedme");
 var request = require("request");
 var mongoose = require("mongoose");
-var Feed = mongoose.model("Feed");
-var Torrent = mongoose.model("Torrent");
+var Q = require("q");
 var rssfeeds = require("../models/rssfeeds");
+var torrentFeedParser = require("../lib/torrent-feed-parser");
 
 module.exports = function() {
 	setInterval(function() {
 		logger.info("interval loop");
-		rssfeeds.getRSSFeeds(function(results) {
-			results.map(function(resultFeed) {
-				logger.info("feed url: %s", resultFeed.rss);
+		rssfeeds.getAll().then(function(data) {
+			data.map(function(feed) {
+				torrentFeedParser.getTorrents(feed.rss).then(function(torrents) {
+					var addTorrentPromises = torrents.map(function(torrent) {
+						return rssfeeds.addTorrent(feed._id, torrent)
+					});
 
-				// console.log(resultFeed);
-
-				var parser = new FeedMe();
-				var r = request({
-					url: resultFeed.rss,
-					headers: {
-						'User-Agent': 'NodeJS',
-						'Content-Type': 'text/xml',
-						'Accept': 'text/xml',
-						'Accept-Charset': 'UTF8',
-						'Connection': 'Close'
-					},
-					timeout: 5000
-				});
-
-				r.on("response", function(response) {
-					parser.on('item', function(item) {
-
-						var tor = rssfeeds.adaptItemToTorrent(item);
-
-						// logger.info("constructed torrent object from item");
-						// logger.info(tor);
-
-						rssfeeds.addTorrentToFeed(resultFeed._id, tor, function(errors, doc) {
-							if (errors) {
-								logger.error("error occured when adding torrent to feed");
-								logger.error(errors);
+					Q.allSettled(addTorrentPromises).then(function(results) {
+						results.forEach(function(result) {
+							if (result.state === "fulfilled") {
+								logger.info("New torrent saved in feed");
 							} else {
-								if (!doc) {
-									// logger.info("torrent exists");
+								if (result.reason === "Torrent exists in feed already.") {
+
 								} else {
-									logger.info("saved torrent successfully");
-									// logger.info(tor);
-									// logger.info(doc);
+									logger.error(result.reason);	
 								}
 							}
 						});
 					});
-					parser.on("error", function(error) {
-						logger.error("error occured during parsing feed");
-						logger.error(error);
-					});
-
+				}, function(err) {
+					logger.error(err.message);
 				});
+			});			
 
-				r.on("error", function(error) {
-					logger.error("errors occured in stream");
-					logger.error(error);
-				});
-
-				r.pipe(parser);
-
-
-
-			});
-			logger.info("finished getting rss feeds");
+		}, function(err) {
+			logger.error(err.message);
 		});
-	}, 300000);
-	// 300000
-	// end loop
+	}, nconf.get("app:checkFeedLoopInterval"));
 }
-

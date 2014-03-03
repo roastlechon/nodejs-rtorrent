@@ -8,16 +8,18 @@
 		<tr>
 			<th>Title</th>
 			<th>RSS</th>
-			<th>Last Updated</th>
+			<th>Last Checked</th>
 			<th>Edit</th>
+			<th>Delete</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="feed in feeds">
 			<td style="width: 30%;"><a ui-sref="feed({id: feed._id})">{{feed.title}}</a></td>
 			<td>{{feed.rss}}</td>
-			<td>date placeholder</td>
-			<td><a href="#">Edit</a></td>
+			<td>{{feed.lastChecked * 1000 | date:'medium'}}</td>
+			<td><a ui-sref="edit_feed({id: feed._id})">Edit</a></td>
+			<td><a href="javascript: void(0);" ng-click="deleteFeed($index)">Delete</a></td>
 		</tr>
 	</tbody>
 </table>

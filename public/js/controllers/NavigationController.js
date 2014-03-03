@@ -1,23 +1,15 @@
 define([
 	"controllers",
-	"services/AuthenticationServices",
+	"services/AuthenticationFactory",
 	"services/SocketFactory"
 ], function(controllers) {
 	"use strict";
-	controllers.controller("NavigationController", ["$scope", "$rootScope", "AuthenticationFactory", "SocketFactory",
-		function($scope, $rootScope, AuthenticationFactory, SocketFactory) {
+	controllers.controller("NavigationController", ["$scope", "$rootScope", "$state", "AuthenticationFactory", "SocketFactory",
+		function($scope, $rootScope, $state, AuthenticationFactory, SocketFactory) {
 			console.log("navigation controller loaded");
 
-			$scope.$watch(AuthenticationFactory.isAuthenticated, function(newVal, oldVal) {
-				$scope.isAuthenticated = newVal;
-			});
-			
-			$scope.$watch(AuthenticationFactory.currentUser, function(newVal, oldVal) {
-				console.log(newVal);
-				$scope.user = newVal;
-			});
-
 			$scope.logout = function() {
+				console.log("logging out");
 				AuthenticationFactory.logout(
 					function(success) {
 						console.log("successfully logged out");
@@ -28,8 +20,10 @@ define([
 						console.log(error);
 					}
 				);
-				
+
 				SocketFactory.disconnect();
+
+				$state.go("login");
 			}
 		}
 	]);

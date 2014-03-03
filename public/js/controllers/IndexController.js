@@ -1,6 +1,6 @@
 define([
 	"controllers",
-	"services/AuthenticationServices"
+	"services/AuthenticationFactory"
 ], function(controllers) {
 	"use strict";
 	controllers.controller("IndexController", ["$scope", "$rootScope", "AuthenticationFactory",

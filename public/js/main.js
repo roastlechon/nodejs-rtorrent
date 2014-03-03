@@ -1,9 +1,11 @@
 require.config({
 	paths: {
+		jquery: "../bower_components/jquery/jquery",
 		angular: "../bower_components/angular/angular",
 		angularCookies: "../bower_components/angular-cookies/angular-cookies",
 		angularResource: "../bower_components/angular-resource/angular-resource",
 		angularUiRouter: "../bower_components/angular-ui-router/release/angular-ui-router",
+		angularUpload: "../bower_components/angular-upload/angular-upload.min",
 		angularMocks: "../bower_components/angular-mocks/angular-mocks",
 		text: "../bower_components/requirejs-text/text",
 		uiBootstrap: "../bower_components/angular-bootstrap/ui-bootstrap-tpls",
@@ -12,16 +14,19 @@ require.config({
 	baseUrl: "js",
 	shim: {
 		"angular": {
+			deps: ["jquery"],
 			"exports": "angular"
 		},
 		"angularResource": ["angular"],
 		"angularCookies": ["angular"],
 		"angularUiRouter": ["angular"],
+		"angularUpload": ["angular"],
 		"angularMocks": {
 			deps: ["angular"],
 			"exports": "angular.mock"
 		},
 		"uiBootstrap": {
+			deps: ["angular"],
 			"exports": "uiBootstrap"
 		}
 	},

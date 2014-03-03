@@ -1,5 +1,7 @@
 node_modules
+public/bower_components
 tmp
 *.sublime-project
 *.sublime-workspace
 sftp-config.json
+npm-debug.log

@@ -1,7 +1,7 @@
 define([
 	"controllers",
 	"services/SocketFactory",
-	"services/TorrentServices"
+	"services/TorrentFactory"
 ], function(controllers) {
 	"use strict";
 	controllers.controller("TorrentsController", ["$scope", "SocketFactory", "TorrentFactory",
