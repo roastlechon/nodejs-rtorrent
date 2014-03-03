@@ -7,11 +7,11 @@ There is some additional functionality that needs to be worked on and this file 
 * ~~Change frontend framework to Angular JS - Kinda done~~
 * Add some frontend validation
 * Refactor backend coding
-..* ~~Refactor models/schemas and rssfeeds.js~~
-..* Refactor rtorrent.js
-..* ~~Refactor authentication to use HMAC~~
-..* Add expiration mechanism to authentication
-..* Add config setup json file
+	* ~~Refactor models/schemas and rssfeeds.js~~
+	* Refactor rtorrent.js
+	* ~~Refactor authentication to use HMAC~~
+	* Add expiration mechanism to authentication
+	* Add config setup json file
 * Add in settings page functionality to change rtorrent settings
 * Add in search page functionality to web scrape torrent search results
 * Add new user registration and admin management
