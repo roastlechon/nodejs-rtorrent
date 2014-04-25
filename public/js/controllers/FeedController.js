@@ -4,25 +4,27 @@ define([
 	"services/TorrentFactory"
 ], function(controllers) {
 	"use strict";
-	controllers.controller("FeedController", ["$scope", "$stateParams", "FeedFactory", "TorrentFactory",
-		function($scope, $stateParams, FeedFactory, TorrentFactory) {
+	controllers.controller("FeedController", ["$log", "$scope", "$stateParams", "FeedFactory", "TorrentFactory",
+		function($log, $scope, $stateParams, FeedFactory, TorrentFactory) {
 			console.log("feed controller loaded");
-			$scope.feed = FeedFactory.get({
-				id: $stateParams.id
+			
+			FeedFactory.getFeed($stateParams.id).then(function(data) {
+				$scope.feed = data;
+			}, function(err) {
+				$log.error(err);
 			});
+
+			$scope.pageTitle = "Feed";
 			
 			$scope.loadTorrent = function(torrent) {
-				TorrentFactory.action({
-					action: "load",
-					url: torrent.url
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
-				}, function(error) {
-					console.log("error occured");
-					console.log(error);
-				});
 				console.log("loading torrent");
+				TorrentFactory.loadTorrent({
+					"url": torrent.url
+				}).then(function(data) {
+					console.log(data);
+				}, function(err) {
+					console.log(err);
+				});
 			}
 		}
 	]);

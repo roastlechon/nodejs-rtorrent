@@ -1,17 +1,33 @@
 define([
 	"controllers",
 	"services/SocketFactory",
-	"services/TorrentFactory"
+	"services/TorrentFactory",
+	"services/MultiClickService",
 ], function(controllers) {
 	"use strict";
-	controllers.controller("TorrentsController", ["$scope", "SocketFactory", "TorrentFactory",
-		function($scope, SocketFactory, TorrentFactory) {
+	controllers.controller("TorrentsController", ["$log", "$scope", "SocketFactory", "TorrentFactory", "MultiClickService", "$modal",
+		function($log, $scope, SocketFactory, TorrentFactory, MultiClickService, $modal) {
+			$scope.pageTitle = "Torrents";
+
 			$scope.predicate = "name";
 			$scope.reverse = false;
+
+			$scope.status = "";
+
+			$scope.$watch("status", function(newVal, oldVal, scope) {
+				if (newVal) {
+					console.log("resetSelectedList");
+					MultiClickService.resetSelectedList();
+					$scope.torrents_selected = MultiClickService.getSelectedList().length;
+				}
+			});
 
 			$scope.totalItems = 0;
 			$scope.currentPage = 1;
 			$scope.itemsPerPage = 10;
+
+			// for selected items;
+			$scope.torrents_selected = 0;
 
 			$scope.setPage = function (pageNo) {
 				$scope.currentPage = pageNo;
@@ -36,72 +52,78 @@ define([
 				$scope.totalItems = torrents.length;
 			});
 
+			$scope.selectTorrent = function(torrent) {
+				MultiClickService.toggleItem(torrent);
+				$scope.torrents_selected = MultiClickService.getSelectedList().length;
+			}
+
 			$scope.playTorrent = function(torrent) {
 				console.log("starting torrent");
-				TorrentFactory.action({
-					action: "start",
-					hash: torrent.hash
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
+				TorrentFactory.playTorrent(torrent.hash).then(function(data) {
+					console.log(data);
 				}, function(err) {
-					console.log("error occured");
 					console.log(err);
 				});
 			}
 
 			$scope.pauseTorrent = function(torrent) {
 				console.log("pausing torrent");
-				TorrentFactory.action({
-					action: "pause",
-					hash: torrent.hash
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
+				TorrentFactory.pauseTorrent(torrent.hash).then(function(data) {
+					console.log(data);
 				}, function(err) {
-					console.log("error occured");
 					console.log(err);
 				});
 			}
 
 			$scope.stopTorrent = function(torrent) {
 				console.log("stop torrent");
-				TorrentFactory.action({
-					action: "stop",
-					hash: torrent.hash
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
+				TorrentFactory.stopTorrent(torrent.hash).then(function(data) {
+					console.log(data);
 				}, function(err) {
-					console.log("error occured");
 					console.log(err);
 				});
 			}
 
-			$scope.loadTorrent = function() {
-				console.log("loading torrent");
-				TorrentFactory.action({
-					action: "load",
-					url: $scope.torrentUrl
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
+			$scope.addTorrent = function() {
+				$modal.open({
+					templateUrl: "../partials/add_torrent_modal.html",
+					controller: function($scope, $modalInstance) {
+						$scope.torrent = {};
+						$scope.loadTorrent = function() {
+							console.log($scope.torrent.url);
+							$scope.$close($scope.torrent.url);
+						}
+
+						$scope.cancel = function() {
+							$scope.$dismiss("cancel");
+						}
+					}
+				}).result.then(function(data) {
+					TorrentFactory.loadTorrent({
+						"url": data
+					}).then(function(data) {
+						$log.debug(data);
+					}, function(err) {
+						console.log(err);
+					});
 				}, function(err) {
-					console.log("error occured");
-					console.log(err);
+					$log.error(err);
 				});
+
+
+				console.log("loading torrent");
+				
+			}
+
+			$scope.cancelLoadTorrent = function() {
+				$scope.$dismiss();
 			}
 
 			$scope.removeTorrent = function(torrent) {
 				console.log("removing torrent");
-				TorrentFactory.action({
-					action: "remove",
-					hash: torrent.hash
-				}, function(res) {
-					console.log("successful response");
-					console.log(res);
+				TorrentFactory.removeTorrent(torrent.hash).then(function(data) {
+					console.log(data);
 				}, function(err) {
-					console.log("error occured");
 					console.log(err);
 				});
 			}

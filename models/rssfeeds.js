@@ -46,7 +46,7 @@ rssFeeds.edit = function(id, feed) {
 	}, {
 		"title": feed.title,
 		"rss": feed.rss
-	});
+	}).exec();
 }
 
 rssFeeds.add = function(feed) {
@@ -55,18 +55,21 @@ rssFeeds.add = function(feed) {
 	var feedExists = checkFeedExists(feed.rss)
 
 	var torrentsFromFeed = feedExists.then(function(data) {
+		console.log("feed exists");
+		console.log(data);
 		if (data.length === 0) {
-			return torrentFeedParser.getTorrentsFromFeed(feed.rss);
+			return torrentFeedParser.getTorrents(feed.rss);
 		}
 
 		return Q.reject("Feed does not exist");
 
 	}, function(err) {
-		Q.reject(err);
+		return Q.reject(err);
 	});
 
 	var saveFeed = torrentsFromFeed.then(function(data) {
-		var feed = new Feed({
+		console.log("getting torrents from feed");
+		var feedModel = new Feed({
 			title: feed.title,
 			lastChecked: moment().unix(),
 			rss: feed.rss,
@@ -80,16 +83,16 @@ rssFeeds.add = function(feed) {
 				status: "RSS",
 				date: tor.date
 			});
-			feed.torrents.push(torrent);
+			feedModel.torrents.push(torrent);
 		});
 
 		logger.info("feed does not exist");
 		logger.info("saving to database");
 
-		feed.save();
-		return Q(feed);
+		feedModel.save();
+		return Q(feedModel);
 	}, function(err) {
-		Q.reject(err);
+		return Q.reject(err);
 	});
 
 	saveFeed.then(function(data) {

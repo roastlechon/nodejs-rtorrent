@@ -8,7 +8,6 @@ logger.exitOnError = false;
 
 logger.info("initializing app.js");
 
-var consolidate = require("consolidate");
 var mongoose = require("mongoose");
 var express = require("express");
 
@@ -17,7 +16,6 @@ var io = require("socket.io");
 
 var passport = require("passport")
 
-var seed = require("./config/seed");
 var pass = require("./config/pass");
 
 var jwt = require("jwt-simple");
@@ -31,6 +29,15 @@ var io = io.listen(server);
 logger.info("connecting to mongodb://localhost/nodejs-rtorrent");
 var connectionString = nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database");
 mongoose.connect(connectionString);
+
+logger.info("Configuring default user");
+var users = require("./models/users");
+users.add(nconf.get("app:defaultUser")).then(function(data) {
+  logger.info(data);
+  logger.info("Successfully created default user");
+}, function(err) {
+  logger.error(err);
+});
 
 io.configure(function() {
   io.set("log level", 1);
@@ -66,9 +73,6 @@ io.configure(function() {
 
 logger.info("configuring express");
 app.configure(function() {
-	app.engine("html", consolidate.handlebars);
-	app.set("view engine", "html");
-	app.set("views", __dirname + "/views");
 	app.use(express.bodyParser());
   app.use(express.multipart());
   app.use(express.methodOverride());
@@ -78,9 +82,8 @@ app.configure(function() {
 });
 
 require("./controllers/socket")(io);
-require("./controllers/index")(app);
 require("./controllers/login")(app);
-require("./controllers/rssfeeds")(app);
+require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);
 require("./controllers/rss-subscriptions")();
 

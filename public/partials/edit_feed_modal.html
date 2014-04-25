@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h3>{{title}}</h3>
+</div>
+<div class="modal-body">
+	<div class="form-group">
+		<label for="rss-feed-title">Title:</label>
+		<input type="text" class="form-control" id="rss-feed-title" ng-model="feed.title" />
+	</div>
+	<div class="form-group">
+		<label for="rss-feed-url">URL:</label>
+		<input type="text" class="form-control" id="rss-feed-url" ng-model="feed.rss" />
+	</div>
+</div>
+<div class="modal-footer">
+	<div class="form-group">
+		<button type="button" class="btn btn-primary" ng-click="edit(feed)">Save changes</button>
+		<button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

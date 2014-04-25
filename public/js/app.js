@@ -7,15 +7,15 @@ define([
 	"angularUpload",
 	"angularUiRouter",
 	"uiBootstrap",
-	"angularCookies"
+	"restangular"
 ], function(angular) {
 	"use strict";
 
 	return angular.module("app", [
-		"ngCookies",
 		"ui.bootstrap",
 		"lr.upload",
 		"ui.router",
+		"restangular",
 		"nodejs-rtorrent.services",
 		"nodejs-rtorrent.controllers",
 		"nodejs-rtorrent.filters",

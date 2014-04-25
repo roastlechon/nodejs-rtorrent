@@ -1,19 +1,6 @@
-<ol class="breadcrumb">
-	<li><a ui-sref="home">Home</a></li>
-	<li><a ui-sref="feeds">Feeds</a></li>
-	<li class="active">{{feed.title}}</li>
-</ol>
-<h2>Torrents under {{feed.title}}</h2>
-<div class="row">
-	<div class="col-xs-3 col-md-2">
-		<h4>Feed Actions</h4>
-		<ul class="list-unstyled">
-			<li><a ui-sref="edit_feed({id: feed._id})">Edit Feed</a></li>
-			<li><a>Delete Feed</a></li>
-			<li><a>Refresh Feed</a></li>
-		</ul>
-	</div>
-	<div class="col-xs-9 col-md-10">
+<ng:include src="'/partials/header.html'"></ng:include>
+<div class="content" style="position: relative;" ng-style="style()" resize>
+	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;">
 		<table class="table table-condensed table-hover">
 			<thead>
 				<tr>

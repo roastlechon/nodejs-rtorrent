@@ -1,18 +1,30 @@
-var rssfeeds = require("../models/rssfeeds");
+var feeds = require("../models/rssfeeds");
 var logger = require("winston");
 var auth = require("./auth.js");
 var Q = require("q");
 
 module.exports = function(app) {
-	app.get("/rssfeeds", auth.ensureAuthenticated, getRSSFeeds);
-	app.get("/rssfeeds/:id", auth.ensureAuthenticated, getRSSFeed);
-	app.post("/rssfeeds", auth.ensureAuthenticated, addRSSFeed);
-	app.put("/rssfeeds/:id", auth.ensureAuthenticated, updateRSSFeed);
-	app.del("/rssfeeds/:id", auth.ensureAuthenticated, deleteRSSFeed);
+	app.get("/feeds", auth.ensureAuthenticated, getFeeds);
+	app.get("/feeds/:id", auth.ensureAuthenticated, getFeed);
+	app.post("/feeds", auth.ensureAuthenticated, addFeed);
+	app.put("/feeds/:id", auth.ensureAuthenticated, updateFeed);
+	app.del("/feeds/:id", auth.ensureAuthenticated, deleteFeed);
 }
 
-function getRSSFeeds(req, res) {
-	rssfeeds.getAll().then(function(data) {
+function getFeed(req, res) {
+	logger.info("getting single rss feed: %s", req.params.id);
+
+	feeds.get(req.params.id).then(function(data) {
+		logger.info("successfully retrieved rss feed");
+		res.json(data[0]);
+	}, function(err) {
+		logger.error("Error occured: %s", err.message);
+		res.json(err);
+	});
+}
+
+function getFeeds(req, res) {
+	feeds.getAll().then(function(data) {
 		logger.info("successfully retrieved rss feeds");
 		res.json(data.map(function(feed) {
 			return {
@@ -28,13 +40,12 @@ function getRSSFeeds(req, res) {
 			};
 		}));
 	}, function(err) {
-		logger.error("errors occured in getRSSFeeds");
 		logger.error(err.message);
 		res.json(err);
 	});
 }
 
-function addRSSFeed(req, res) {
+function addFeed(req, res) {
 
 	var feed = {
 		title: req.body.title,
@@ -45,7 +56,7 @@ function addRSSFeed(req, res) {
 	//if feed does not exist, create new feedsub
 	//get list of feeds to return to client
 
-	rssfeeds.add(feed).then(function(data) {
+	feeds.add(feed).then(function(data) {
 		logger.info("successfully saved rss feed");
 		res.json(data);
 	}, function(err) {
@@ -55,19 +66,9 @@ function addRSSFeed(req, res) {
 	});
 }
 
-function getRSSFeed(req, res) {
-	logger.info("getting single rss feed: %s", req.params.id);
 
-	rssfeeds.get(req.params.id).then(function(data) {
-		logger.info("successfully retrieved rss feed");
-		res.json(data[0]);
-	}, function(err) {
-		logger.error("Error occured: %s", err.message);
-		res.json(err);
-	});
-}
 
-function updateRSSFeed(req, res) {
+function updateFeed(req, res) {
 	logger.info("Updating feed: %s, with data: %j", req.params.id, req.body);
 	
 	var feed = {
@@ -75,16 +76,16 @@ function updateRSSFeed(req, res) {
 		rss: req.body.rss
 	}
 
-	rssfeeds.edit(req.params.id, feed).then(function(data) {
+	feeds.edit(req.params.id, feed).then(function(data) {
 		res.json(data);
 	}, function(err) {
 		res.json(err);
 	}); 
 }
 
-function deleteRSSFeed(req, res) {
+function deleteFeed(req, res) {
 	logger.info("removing feed");
-	rssfeeds.delete(req.params.id).then(function(data) {
+	feeds.delete(req.params.id).then(function(data) {
 		logger.info("Successfully deleted feed");
 		res.json(data);
 	}, function(err) {

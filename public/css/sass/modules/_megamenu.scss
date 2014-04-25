@@ -1,0 +1,149 @@
+//
+// Megamenu
+// Author: Noel Madali
+// --------------------------------------------------
+
+.menubar {
+	@include gradient-vertical(#343434, #000);
+	@include clearfix();
+	nav {
+		@include clearfix();
+	}
+}
+
+.menubar--logo {
+	margin: 6px 15px 6px 0;
+	float: left;
+
+	> a {
+		
+	}
+}
+
+.menubar--nav {
+	@include clearfix();
+
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+
+	float: left;
+	
+	> li {
+		float: left;
+
+		border-right: 1px dotted #656565;
+
+		> a {
+			display: block;
+			padding: 10px 10px;
+
+			line-height: $line-height-computed;
+
+			font-weight: bold;
+			text-transform: uppercase;
+			color: #fff;
+			
+			&:hover {
+				text-decoration: none;
+				color: #9FCBED;
+			}
+		}
+
+		&:first-child {
+			border-left: 1px dotted #656565;
+		}
+
+		&.is-active {
+			> a {
+				padding-top: 6px;
+				border-top: 4px solid #3A7728;
+				
+				@include gradient-vertical(lighten(#666, 50%), #FFF, 0%, 60%);
+
+				color: #000;
+
+				&:hover {
+					text-decoration: none;
+					color: #000;
+				}
+			}
+		}
+
+		&.is-selected {
+			border-top: none;
+
+			> a {
+				border-top: none;
+				padding-top: 10px;
+				
+				@include gradient-vertical(#999, #F3F3F3, 0%, 30%);
+
+				color: #3A7728;
+
+				&:hover {
+					color: #3A7728;					
+				}
+			}
+
+			> .menubar--nav--dropdown--menu {
+				display: block;
+			}
+		}
+	}
+}
+
+.menubar--secondary-nav {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+
+	float: right;
+
+	> li {
+		float: left;
+
+		> a {
+			display: block;
+			padding: 10px 10px;
+
+			line-height: $line-height-computed;
+
+			font-weight: bold;
+			color: #fff;
+			
+			&:hover {
+				text-decoration: none;
+				color: #9FCBED;
+			}
+		}
+
+		&:last-child {
+			border-left: 1px dotted #656565;
+		}
+	}
+}
+
+.menubar--nav--dropdown {
+	position: relative;
+}
+
+.menubar--nav--dropdown--menu {
+	// Display state is none by default.
+	display: none;
+	position: absolute;
+	top: auto;
+
+	margin-left: -2px;
+	padding: 0 15px 15px;
+
+	border-bottom: 2px solid #002868;
+	border-left: 2px solid #002868;
+	border-right: 2px solid #002868;
+
+	background: #F3F3F3;
+
+	@include box-shadow(2px 3px 3px -2px rgba(0,0,0,.8));
+
+	z-index: 1000;
+}

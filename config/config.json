@@ -19,6 +19,10 @@
 		"path": "/RPC2"
 	},
 	"app": {
+		"defaultUser": {
+			"email": "admin@localhost",
+			"password": "password"
+		},
 		"checkFeedLoopInterval": 300000,
 		"rtorrentLoopInterval": 2000
 	}
