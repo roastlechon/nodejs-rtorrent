@@ -8,83 +8,40 @@ There is some additional functionality that needs to be worked on and this file 
 * Add some frontend validation
 * Refactor backend coding
 	* ~~Refactor models/schemas and rssfeeds.js~~
-	* Refactor rtorrent.js
+	* ~~Refactor rtorrent.js~~
 	* ~~Refactor authentication to use HMAC~~
 	* Add expiration mechanism to authentication
-	* Add config setup json file
+	* ~~Add config setup json file~~
 * Add in settings page functionality to change rtorrent settings
 * Add in search page functionality to web scrape torrent search results
 * Add new user registration and admin management
-* Update install instructions
+* Add grunt/gulp and minification of javascript files 
+* Add docker file for easy container management
+
+## Prerequisites
+Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent,
+
+## Configuration
+Under config/config.json, change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
+
+```
+"defaultUser": {
+	"email": "admin@localhost",
+	"password": "password"
+},
+```
 
 ## Installation
-To install nodejs-rtorrent, checkout the source: `git clone https://github.com/roastlechon/nodejs-rtorrent.git` and install it yourself.
+'mkdir nodejs-rtorrent && cd nodejs-rtorrent'
 
-Make sure to run `npm install` in the root source folder (usually the folder with app.js) to get all the modules needed.
+`git clone https://github.com/roastlechon/nodejs-rtorrent.git`
+
+`npm install`
+
+'npm install -g bower' (in case you do not have bower)
 
 ## Running the application
-To run the application, navigate to the root source folder, and type in 'nodejs app.js'. You should seed some logs pop up. Before you continue any further though, make sure to configure/seed a user. Follow the steps in the configuration section to seed a user.
-
-Assuming that a user is seeded and additional settings are changed, just navigate now to the the page. It is usually: http://hostname:3000
-
-### Configuration
-#### Creating a user
-I haven't gotten as far as creating a settings.js file that can be used to change settings. First thing is to navigate to `config/db.js` and modify `mongoose.connect("mongodb://localhost/nodejs-rtorrent");` to be your MongoDB Database.
-
-The next thing to do is seed a user into the database (I haven't gotten to the part of creating a registration page of some sort also). On first run of the application, put this code into `config/db.js`:
-
-```
-var UserModel = mongoose.model("User");
-
-var userSeed = new UserModel({
-	email: "user@domain.com",
-	password: "password"
-});
-
-userSeed.save(function(errors, userSeed) {
-	if (errors) {
-		logger.error("errors occured while saving user");
-	} else {
-		logger.info("successfully saved user");
-	}
-});
-```
-
-To verify that the user was seeded into the database, open up your MongoDB console. On Linux, it is usually `mongo`. 
-
-Next type in `show dbs` to show all the databases (in case you forgot what you named or created).
-
-Then type `use dbname` to use the database. As an example, mine is called "nodejs-rtorrent", so I enter in `use nodejs-rtorrent`
-
-Finally, type in `db.users.find()` to get the users. You should be able to see one if it worked correctly. The above code also as a log statement in which you can check the console to make sure it worked correctly.
-
-When it is confirmed that the database is seeded, you can go ahead and comment out the seeding code.
-
-#### Changing port of the application
-To change the port of the application, open up `app.js` in the root folder and modify the last lines regarding listening port. Default is 3000.
-
-```
-logger.info("listening on port 3000");
-server.listen(3000);
-```
-
-#### Setting up connection between nodejs-rtorrent and rtorrent itself
-To have nodejs-rtorrent communicate to rtorrent via xmlrpc, we need to modify the `lib/rtorrent.js` file. Look for these lines of code and modify as needed:
-
-```
-var client = xmlrpc.createClient({
-  host: '127.0.0.1',
-  port: '80',
-  path: '/RPC2',
-  headers: {
-    'User-Agent'     : 'NodeJS XML-RPC Client',
-    'Content-Type'   : 'text/xml',
-    'Accept'         : 'text/xml',
-    'Accept-Charset' : 'UTF8',
-    'Connection'     : 'Close'
-  }
-});
-```
+To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
 
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
