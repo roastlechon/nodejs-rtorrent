@@ -5,7 +5,7 @@ There is some additional functionality that needs to be worked on and this file 
 
 Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I like Anime!)
 
-## Feature To-Do List
+### Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
 * Add some frontend validation
 * Refactor backend coding
@@ -20,37 +20,52 @@ Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I li
 * Add grunt/gulp and minification of javascript files 
 * Add docker file for easy container management
 
-## Prerequisites
+### dependables
 Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent
 
-## Ubuntu
+# Installation Guide
+
+### 1. Ubuntu 14.04 LTS or whatever distro you use?!
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
 sudo mkdir -p /data/db
 sudo service mongodb restart
 ```
-## Web Server 
-You have to setup a webserver with RPC 
+### 2. Web Server 
+Now you have to setup a webserver with RPC
 
-apache2:
-httpd.conf
-SCGIMount /RPC2 127.0.0.1:5000
+apache2
+```
+pico /etc/apache2/sites-enabled/yoursite
+insert SCGIMount /RPC2 127.0.0.1:5000
+```
 
 lighttpd
+coming soon
 
+nginx 
+coming soon
 
-## Installation
+standalone
+coming when we know how, got any tips?
+
+### 3. rtorrent Installation
+```
+nano $home/.rtorrent.rc
+scgi_port = localhost:5000
+```
+### 4. nodejs-rtorrent Installation
 ```
 git clone https://github.com/roastlechon/nodejs-rtorrent.git && cd nodejs-rtorrent
-npm install
-npm install bower
+npm install && npm install bower
 node_modules/bower/bin/bower install (select answer 2)
 
 ```
 
-## Configuration
-`nano config/config.json`, change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
+### Configuration
+`nano config/config.json`
+change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
 
 ```
 "defaultUser": {
@@ -58,13 +73,14 @@ node_modules/bower/bin/bower install (select answer 2)
 	"password": "password"
 },
 ```
-## Running the application
+### Running the application
 To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
 
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
 ## Running it in the background aka continuously
 pm2 will help in this regard, install it and set it up with nodejs-rtorrent
+
 https://github.com/Unitech/pm2
 ```
 npm install pm2
