@@ -28,6 +28,7 @@ Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
 sudo mkdir -p /data/db
+sudo service mongodb restart
 ```
 ## Web Server 
 You have to setup a webserver with RPC 
