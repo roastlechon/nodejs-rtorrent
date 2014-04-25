@@ -19,7 +19,7 @@ There is some additional functionality that needs to be worked on and this file 
 * Add docker file for easy container management
 
 ## Prerequisites
-Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent,
+Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent
 
 ## Configuration
 Under `config/config.json`, change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
@@ -32,13 +32,12 @@ Under `config/config.json`, change settings to suit your needs. By default, node
 ```
 
 ## Installation
-`mkdir nodejs-rtorrent && cd nodejs-rtorrent`
-
-`git clone https://github.com/roastlechon/nodejs-rtorrent.git`
-
-`npm install`
-
-`npm install -g bower` (in case you do not have bower)
+```
+mkdir nodejs-rtorrent && cd nodejs-rtorrent
+git clone https://github.com/roastlechon/nodejs-rtorrent.git
+npm install
+bower install
+```
 
 ## Running the application
 To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
