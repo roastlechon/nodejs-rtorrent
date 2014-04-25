@@ -3,6 +3,8 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
+Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I like Anime!)
+
 ## Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
 * Add some frontend validation
