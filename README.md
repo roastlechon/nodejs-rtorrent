@@ -42,7 +42,7 @@ bower install
 ```
 
 ## Running the application
-To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
+To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login at `http://{hostname}:{port}/#/` and get going (By default it is port 3000)!
 
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
