@@ -23,8 +23,33 @@ Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I li
 ## Prerequisites
 Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent
 
+## Ubuntu
+```
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+sudo mkdir -p /data/db
+```
+## Web Server 
+You have to setup a webserver with RPC 
+
+apache2:
+httpd.conf
+SCGIMount /RPC2 127.0.0.1:5000
+
+lighttpd
+
+
+## Installation
+```
+git clone https://github.com/roastlechon/nodejs-rtorrent.git && cd nodejs-rtorrent
+npm install
+npm install bower
+node_modules/bower/bin/bower install (select answer 2)
+
+```
+
 ## Configuration
-Under `config/config.json`, change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
+`nano config/config.json`, change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
 
 ```
 "defaultUser": {
@@ -32,21 +57,30 @@ Under `config/config.json`, change settings to suit your needs. By default, node
 	"password": "password"
 },
 ```
-
-## Installation
-```
-mkdir nodejs-rtorrent && cd nodejs-rtorrent
-git clone https://github.com/roastlechon/nodejs-rtorrent.git
-npm install
-bower install
-```
-
 ## Running the application
-To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login at `http://{hostname}:{port}/#/` and get going (By default it is port 3000)!
+To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
 
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
+## Running it in the background aka continuously
+pm2 will help in this regard, install it and set it up with nodejs-rtorrent
+https://github.com/Unitech/pm2
+```
+npm install pm2
+pm2 start app.js --Name NodeJS-rTorrent
+pm2 list (shows your nodejs processes)
+pm2 restart <number> (to restart process)
+pm2 stop <number> (to stop process)
+
+```
+
+## FAQ
+bower cannot be found
+try running bower like this `node_modules/bower/bin/bower install` inside nodejs-rtorrent directory
+
 ## Notes
+
+
 ```
 References
 https://code.google.com/p/gi-torrent/wiki/rTorrent_XMLRPC_reference
