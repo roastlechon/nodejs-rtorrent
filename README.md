@@ -73,6 +73,9 @@ Now you have to setup a webserver with RPC
 
 apache2
 ```
+sudo apt-get install apache2 libapache2-mod-scgi
+sudo a2enmod scgi
+
 sudo echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/yoursite
 service apache2 restart
 ```
@@ -110,7 +113,7 @@ node_modules/bower/bin/bower install (select answer 2)
 
 ```
 
-### Configuration
+### 5. Configuration
 `nano config/config.json`
 change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
 
@@ -120,7 +123,7 @@ change settings to suit your needs. By default, nodejs-rtorrent listens on port 
 	"password": "password"
 },
 ```
-### Running the application
+### 6. Running the application
 To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
 
 **if it all goes well you will find your very own nodejs-rtorrent @ http://yourip:3000/#/**
@@ -132,18 +135,16 @@ pm2 will help in this regard, install it and set it up with nodejs-rtorrent
 
 https://github.com/Unitech/pm2
 ```
-cd $USER\nodejs-rtorrent
 npm install pm2
-echo "alias pm2='nodejs-rtorrent/node_modules/pm2/bin/pm2'" >> .bashrc
 bash
-pm2 start app.js --Name NodeJS-rTorrent
+node_modules/pm2/bin/pm2 start app.js --name NodeJS-rTorrent
 
 ```
 useful commands
 ```
-pm2 list (shows your nodejs processes)
-pm2 restart <number> (to restart process)
-pm2 stop <number> (to stop process)
+node_modules/pm2/bin/pm2 list (shows your nodejs processes)
+node_modules/pm2/bin/pm2 restart <number> (to restart process)
+node_modules/pm2/bin/pm2 stop <number> (to stop process)
 
 ```
 
