@@ -79,8 +79,8 @@ apache2
 sudo apt-get install apache2 libapache2-mod-scgi
 sudo su
 echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/000-default.conf
-su yourusername
 service apache2 restart
+su yourusername
 ```
 
 lighttpd
