@@ -99,7 +99,7 @@ to run at startup
 cd /etc/init.d/
 wget http://libtorrent.rakshasa.no/raw-attachment/wiki/RTorrentCommonTasks/rtorrentInit.bash
 edit the user and path to /home/user/.rtorrent.rc
-update-rc.d rtorrent defaults
+update-rc.d rtorrentInit.bash defaults
 
 ```
 ### 4. nodejs-rtorrent Installation
