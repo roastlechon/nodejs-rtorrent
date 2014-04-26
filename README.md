@@ -31,12 +31,12 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 #### Version 1.0
 * Settings
 * Search
-* Feeds > Regex
+* Feeds > Basic Regex
 * Feeds > AutoDL
 
 #### Version 2.0 
 * Multi-User
-* Advanced regex
+* Advanced Regex
 * File Manager
 * Torrent Creator
 * HTML5 Media Player
@@ -88,9 +88,17 @@ standalone
 
 ### 3. rtorrent Installation
 ```
-cd
+cd $user
 echo "scgi_port = localhost:5000" >> .rtorrent.rc
 echo "directory = rtorrent-downloads" >> .rtorrent.rc
+
+screen rtorrent
+deattach with ctrl + D
+
+to run at startup
+cd /etc/init.d/
+wget http://libtorrent.rakshasa.no/raw-attachment/wiki/RTorrentCommonTasks/rtorrentInit.bash
+edit the user and path to /home/user/.rtorrent.rc
 
 ```
 ### 4. nodejs-rtorrent Installation
