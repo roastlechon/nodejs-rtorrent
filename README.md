@@ -77,9 +77,9 @@ Now you have to setup a webserver with RPC
 apache2
 ```
 sudo apt-get install apache2 libapache2-mod-scgi
-sudo a2enmod scgi
-
-sudo echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/yoursite
+sudo su
+echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/000-default.conf
+su yourusername
 service apache2 restart
 ```
 
@@ -101,12 +101,6 @@ echo "directory = /home/user/rtorrent-downloads" >> .rtorrent.rc
 
 screen rtorrent
 deattach with ctrl + D
-
-to run at startup
-cd /etc/init.d/
-wget http://libtorrent.rakshasa.no/raw-attachment/wiki/RTorrentCommonTasks/rtorrentInit.bash
-edit the user and path to /home/user/.rtorrent.rc
-update-rc.d rtorrentInit.bash defaults
 
 ```
 ### 4. nodejs-rtorrent Installation
