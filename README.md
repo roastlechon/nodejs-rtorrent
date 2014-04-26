@@ -4,8 +4,9 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I like Anime!)
+Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 
-### Feature To-Do List
+#### Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
 * Add some frontend validation
 * Refactor backend coding
@@ -20,31 +21,69 @@ Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I li
 * Add grunt/gulp and minification of javascript files 
 * Add docker file for easy container management
 
-### dependables
-Nodejs-rtorrent needs NodeJS, NPM (comes with NodeJS), Bower, MongoDB, rtorrent
 
-# Installation Guide
+## Roadmap
+#### blablabla (<we are here<)
+feeds and downloads realy works
+basic username and password works
 
-### 1. Ubuntu 14.04 LTS or whatever distro you use?!
+#### Version 1.0
+Settings
+Search
+Feeds > Regex
+Feeds > AutoDL
+
+#### Version 2.0 
+Multi-User
+Advanced regex
+File Manager
+Torrent Creator
+HTML5 Media Player
+
+
+
+### Depends on
+NodeJS NPM Bower MongoDB rtorrent
+
+## Installation Guide
+
+### 1. Install packages
+
+Ubuntu 14.04 LTS
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+```
+Arch Linux
+```
+pacman -S python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+```
+For other distros
+install these  packages or whatever that is relevant for your distro
+```
+python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+```
+see https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager for nodejs
+
+#### 1.5 Make mongodb smart aka create folder for database
+why mongodb dont do this is anyones guess...
+```
 sudo mkdir -p /data/db
 sudo service mongodb restart
 ```
-### 2. Web Server 
+### 2. Web Server
 Now you have to setup a webserver with RPC
 
 apache2
 ```
-pico /etc/apache2/sites-enabled/yoursite
-insert SCGIMount /RPC2 127.0.0.1:5000
+sudo echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/yoursite
+service apache2 restart
 ```
 
 lighttpd
 coming soon
 
-nginx 
+nginx
 coming soon
 
 standalone
@@ -52,8 +91,10 @@ coming when we know how, got any tips?
 
 ### 3. rtorrent Installation
 ```
-nano $home/.rtorrent.rc
-scgi_port = localhost:5000
+cd
+echo "scgi_port = localhost:5000" >> .rtorrent.rc
+echo "directory = rtorrent-downloads" >> .rtorrent.rc
+
 ```
 ### 4. nodejs-rtorrent Installation
 ```
@@ -76,15 +117,24 @@ change settings to suit your needs. By default, nodejs-rtorrent listens on port 
 ### Running the application
 To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
 
+**if it all goes well you will find your very own nodejs-rtorrent @ http://yourip:3000/#/**
+
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
-## Running it in the background aka continuously
+### Running it in the background aka continuously (Optional)
 pm2 will help in this regard, install it and set it up with nodejs-rtorrent
 
 https://github.com/Unitech/pm2
 ```
+cd $USER\nodejs-rtorrent
 npm install pm2
+echo "alias pm2='nodejs-rtorrent/node_modules/pm2/bin/pm2'" >> .bashrc
+bash
 pm2 start app.js --Name NodeJS-rTorrent
+
+```
+useful commands
+```
 pm2 list (shows your nodejs processes)
 pm2 restart <number> (to restart process)
 pm2 stop <number> (to stop process)
