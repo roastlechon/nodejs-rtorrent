@@ -91,9 +91,10 @@ standalone
 
 ### 3. rtorrent Installation
 ```
-cd $user
+cd $HOME
+mkdir rtorent
 echo "scgi_port = localhost:5000" >> .rtorrent.rc
-echo "directory = rtorrent-downloads" >> .rtorrent.rc
+echo "directory = /home/user/rtorrent-downloads" >> .rtorrent.rc
 
 screen rtorrent
 deattach with ctrl + D
