@@ -44,10 +44,8 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 * Torrent Creator
 * HTML5 Media Player
 
-
-
 ### Depends on
-NodeJS NPM Bower MongoDB rtorrent
+NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
 
 ## Installation Guide
 
@@ -144,6 +142,8 @@ node_modules/pm2/bin/pm2 restart <number> (to restart process)
 node_modules/pm2/bin/pm2 stop <number> (to stop process)
 
 ```
+## Support
+you can submit a ticket or join us on our IRC channel (#nodejs-rtorrent@freenode)
 
 ## FAQ
 bower cannot be found
