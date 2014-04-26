@@ -4,6 +4,7 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 Here are some [screenshots](http://imgur.com/a/OVQoQ) of it in action! (PS. I like Anime!)
+
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 
 #### Feature To-Do List
@@ -24,21 +25,21 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 
 ## Roadmap
 #### blablabla (<we are here<)
-feeds and downloads realy works
-basic username and password works
+* feeds and downloads realy works
+* basic username and password works
 
 #### Version 1.0
-Settings
-Search
-Feeds > Regex
-Feeds > AutoDL
+* Settings
+* Search
+* Feeds > Regex
+* Feeds > AutoDL
 
 #### Version 2.0 
-Multi-User
-Advanced regex
-File Manager
-Torrent Creator
-HTML5 Media Player
+* Multi-User
+* Advanced regex
+* File Manager
+* Torrent Creator
+* HTML5 Media Player
 
 
 
@@ -53,10 +54,6 @@ Ubuntu 14.04 LTS
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
-```
-Arch Linux
-```
-pacman -S python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
 ```
 For other distros
 install these  packages or whatever that is relevant for your distro
@@ -81,13 +78,13 @@ service apache2 restart
 ```
 
 lighttpd
-coming soon
+```coming soon```
 
 nginx
-coming soon
+```coming soon```
 
 standalone
-coming when we know how, got any tips?
+```coming when we know how, got any tips?```
 
 ### 3. rtorrent Installation
 ```
