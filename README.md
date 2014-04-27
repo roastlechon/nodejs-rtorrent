@@ -99,14 +99,12 @@ echo "directory = /home/user/rtorrent-downloads" >> .rtorrent.rc
 
 screen rtorrent
 deattach with ctrl + D
-
 ```
 ### 4. nodejs-rtorrent Installation
 ```
 git clone https://github.com/roastlechon/nodejs-rtorrent.git && cd nodejs-rtorrent
 npm install && npm install bower
 node_modules/bower/bin/bower install (select answer 2)
-
 ```
 
 ### 5. Configuration
