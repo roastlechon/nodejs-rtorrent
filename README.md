@@ -141,6 +141,7 @@ node_modules/pm2/bin/pm2 stop <number> (to stop process)
 ```
 ## Support
 Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
+
 Join us on our IRC channel [#nodejs-rtorrent@freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
