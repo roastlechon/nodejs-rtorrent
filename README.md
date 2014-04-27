@@ -131,14 +131,12 @@ https://github.com/Unitech/pm2
 ```
 npm install pm2
 node_modules/pm2/bin/pm2 start app.js --name NodeJS-rTorrent
-
 ```
 useful commands
 ```
 node_modules/pm2/bin/pm2 list (shows your nodejs processes)
 node_modules/pm2/bin/pm2 restart <number> (to restart process)
 node_modules/pm2/bin/pm2 stop <number> (to stop process)
-
 ```
 ## Support
 you can submit a ticket or join us on our IRC channel (#nodejs-rtorrent@freenode)
