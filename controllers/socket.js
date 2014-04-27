@@ -45,7 +45,7 @@ var startTorrentLoop = function() {
 			rtorrent.getTorrents().then(function(data) {
 				torrents = data;
 			}, function(err) {
-
+				logger.error(err);
 			});
 		} else {
 			logger.info("stopping torrent loop");
