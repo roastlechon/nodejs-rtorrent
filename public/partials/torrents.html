@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;">
-		<table class="table table-condensed table-hover" style="width: 1400px;">
+		<table class="table table-condensed table-hover" style="min-width: 1400px;">
 			<thead>
 				<tr>
 					<th style="width: 30%;">
@@ -65,7 +65,7 @@
 					<th ng-hide="size_col" style="width: 120px;">
 						<a href="" ng-click="predicate='size';reverse=!reverse">Size <i class="fa" ng-class="{'fa-caret-up': predicate==='size' && reverse, 'fa-caret-down': predicate==='size' && !reverse}"></i></a>
 					</th>
-					<th ng-hide="percent_downloaded_col" style="width: 100px;">
+					<th ng-hide="percent_downloaded_col" style="width: 120px;">
 						<a href="" ng-click="predicate='percent_downloaded';reverse=!reverse">Done <i class="fa" ng-class="{'fa-caret-up': predicate==='percent_downloaded' && reverse, 'fa-caret-down': predicate==='percent_downloaded' && !reverse}"></i></a>
 					</th>
 					<th ng-hide="downloaded_col" style="width: 140px;">
@@ -74,10 +74,10 @@
 					<th ng-hide="uploaded_col" style="width: 120px;">
 						<a href="" ng-click="predicate='uploaded';reverse=!reverse">Uploaded <i class="fa" ng-class="{'fa-caret-up': predicate==='uploaded' && reverse, 'fa-caret-down': predicate==='uploaded' && !reverse}"></i></a>
 					</th>
-					<th ng-hide="dl_speed_col" style="width: 60px;">
+					<th ng-hide="dl_speed_col" style="width: 120px;">
 						<a href="" ng-click="predicate='dl_speed';reverse=!reverse">DL <i class="fa" ng-class="{'fa-caret-up': predicate==='dl_speed' && reverse, 'fa-caret-down': predicate==='dl_speed' && !reverse}"></i></a>
 					</th>
-					<th ng-hide="ul_speed_col" style="width: 60px;">
+					<th ng-hide="ul_speed_col" style="width: 120px;">
 						<a href="" ng-click="predicate='ul_speed';reverse=!reverse">UL <i class="fa" ng-class="{'fa-caret-up': predicate==='ul_speed' && reverse, 'fa-caret-down': predicate==='ul_speed' && !reverse}"></i></a>
 					</th>
 					<th ng-hide="time_remaining_col" style="width: 120px;">
@@ -139,7 +139,7 @@
 					<td ng-hide="size_col">{{torrent.size | bytes}}</td>
 					<td ng-hide="percent_downloaded_col">
 						<div class="progress">
-							<div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}">{{torrent.percent_downloaded  | percentage}}</div>
+							<div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{'progress-bar-warning': torrent.status == 'checking', 'progress-bar-success': torrent.status == 'seeding', 'progress-bar-success': torrent.status == 'finished'}">{{torrent.percent_downloaded  | percentage}}</div>
 						</div>
 					</td>
 					<td ng-hide="downloaded_col">{{torrent.downloaded | bytes}}</td>
