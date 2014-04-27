@@ -71,6 +71,7 @@ sudo service mongodb restart
 ```
 ### 2. Web Server
 Now you have to setup a webserver with RPC
+running rpc out in the open can be a security risk, take caution
 
 apache2
 ```
@@ -139,7 +140,8 @@ node_modules/pm2/bin/pm2 restart <number> (to restart process)
 node_modules/pm2/bin/pm2 stop <number> (to stop process)
 ```
 ## Support
-you can submit a ticket or join us on our IRC channel (#nodejs-rtorrent@freenode)
+Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
+Join us on our IRC channel [#nodejs-rtorrent@freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
 bower cannot be found
