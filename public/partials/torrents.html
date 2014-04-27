@@ -52,8 +52,8 @@
 			<a href="" style="display: block; height: 100%;" ng-click="torrentPanel = !torrentPanel"><i class="fa fa-lg" style="padding: 10px 5px;" ng-class="{'fa-caret-right': torrentPanel, 'fa-caret-left': !torrentPanel}"></i></a>
 		</div>
 	</div>
-	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;">
-		<table class="table table-condensed table-hover" multiclick>
+	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;">
+		<table class="table table-condensed table-hover" style="width: 1400px;">
 			<thead>
 				<tr>
 					<th style="width: 30%;">
@@ -95,7 +95,7 @@
 				<tr ng-repeat="torrent in torrents | orderBy:predicate:reverse | filter:{status: status} track by torrent.hash" class="torrent" ng-click="selectTorrent(torrent)">
 					<td>
 						<div class="clearfix" style="position: relative;">
-							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden; width: 60%;">{{torrent.name}}</h5>
+							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden; width: 90%;" title="{{torrent.name}}">{{torrent.name}}</h5>
 							<div style="position: absolute; right: 0;" class="btn-group torrent-menu">
 								<a href="javascript:void(0);" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-ellipsis-v"></i></a>
 								<ul class="dropdown-menu" role="menu">

@@ -35,6 +35,14 @@ define([
 						rss: data.url,
 						title: data.name
 					}).then(function(data) {
+						// success add, need to refresh list
+
+						FeedFactory.getFeeds().then(function(data) {
+							$scope.feeds = data;
+						}, function(err) {
+							$log.error(err);
+						});
+
 						console.log(data);
 					}, function(err) {
 						$log.error(err);
