@@ -6,7 +6,7 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
-Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
+Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 #### Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
@@ -52,20 +52,19 @@ NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
 Ubuntu 14.04 LTS
 ```
 sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git screen
 ```
 For other distros
 install these  packages or whatever that is relevant for your distro
 ```
-python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
+python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git screen
 ```
 see https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager for nodejs
 
 #### 1.5 Make mongodb smart aka create folder for database
 why mongodb dont do this is anyones guess...
 ```
-sudo mkdir -p /data/db
-sudo service mongodb restart
+sudo mkdir -p /data/db && sudo service mongodb restart
 ```
 ### 2. Web Server
 Now you have to setup a webserver with RPC
@@ -73,10 +72,10 @@ running rpc out in the open can be a security risk, take caution
 
 apache2
 ```
-sudo apt-get install apache2 libapache2-mod-scgi
+sudo apt-get install apache2 libapache2-mod-scgi && sudo a2enmod scgi
 sudo su
-echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/000-default.conf
-service apache2 restart
+echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-available/nodejs-rtorrent
+a2ensite nodejs-rtorrent && service apache2 restart
 su yourusername
 ```
 
@@ -91,13 +90,15 @@ standalone
 
 ### 3. rtorrent Installation
 ```
-cd $HOME
-mkdir rtorrent-downloads
-echo "scgi_port = localhost:5000" >> .rtorrent.rc
-echo "directory = /home/user/rtorrent-downloads" >> .rtorrent.rc
+mkdir $HOME/rtorrent-downloads
+echo "scgi_port = localhost:5000" >> .rtorrent.rc && echo "directory = $HOME/rtorrent-downloads" >> .rtorrent.rc
 
 screen rtorrent
 deattach with ctrl + D
+
+to run as daemon
+screen -dmS -X rtorrent
+
 ```
 ### 4. nodejs-rtorrent Installation
 ```
