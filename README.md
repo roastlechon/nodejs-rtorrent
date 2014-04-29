@@ -64,8 +64,7 @@ see https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager f
 #### 1.5 Make mongodb smart aka create folder for database
 why mongodb dont do this is anyones guess...
 ```
-sudo mkdir -p /data/db
-sudo service mongodb restart
+sudo mkdir -p /data/db && sudo service mongodb restart
 ```
 ### 2. Web Server
 Now you have to setup a webserver with RPC
