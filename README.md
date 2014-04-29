@@ -92,11 +92,6 @@ standalone
 ```
 mkdir $HOME/rtorrent-downloads
 echo "scgi_port = localhost:5000" >> .rtorrent.rc && echo "directory = $HOME/rtorrent-downloads" >> .rtorrent.rc
-
-screen rtorrent
-deattach with ctrl + D
-
-to run as daemon
 screen -dmS -X rtorrent
 
 ```
