@@ -1,4 +1,6 @@
 # nodejs-rtorrent
+![h](http://i.imgur.com/WF2ir2R.png)
+
 ![cutout](http://cloudfront.nwgat.net/nodejs-rtorrent-cutout2.png "screenshot")
 
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Q (Promises), Passport, Socket.IO. For the front-end, I am using AngularJS, RequireJS, Bower, Underscore, and Twitter Bootstrap.
