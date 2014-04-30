@@ -83,7 +83,22 @@ su yourusername
 ```
 
 lighttpd
-```coming soon```
+```
+sudo apt-get install lighttpd
+pico /etc/lighttpd/lighttpd.conf
+server.modules += ( "mod_scgi" )
+scgi.server = (
+        "/RPC2" =>
+                ( "127.0.0.1" =>
+                        (                
+                                "host" => "127.0.0.1",
+                                "port" => 5000,
+                                "check-local" => "disable"
+                        )
+                )
+        )
+sudo service lighttpd restart
+```
 
 nginx
 ```coming soon```
