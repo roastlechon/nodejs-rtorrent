@@ -1,4 +1,5 @@
 # nodejs-rtorrent
+![2](http://i.imgur.com/J1fODi0.png)
 ![h](http://i.imgur.com/WF2ir2R.png)
 
 ![cutout](http://cloudfront.nwgat.net/nodejs-rtorrent-cutout2.png "screenshot")
