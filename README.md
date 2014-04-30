@@ -85,7 +85,11 @@ su yourusername
 lighttpd
 ```
 sudo apt-get install lighttpd
+sudo su
 pico /etc/lighttpd/lighttpd.conf
+```
+put this inside lighttpd.conf at the bottom
+```
 server.modules += ( "mod_scgi" )
 scgi.server = (
         "/RPC2" =>
