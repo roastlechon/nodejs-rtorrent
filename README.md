@@ -102,9 +102,10 @@ scgi.server = (
                 )
         )
 ```
-`
-sudo service lighttpd restart`
-nginx
+``sudo service lighttpd restart``
+
+
+*nginx*
 ```coming soon```
 
 standalone
