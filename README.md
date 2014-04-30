@@ -57,6 +57,11 @@ Ubuntu 14.04 LTS
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git screen
 ```
+Fedora
+```
+sudo yum install python g++ make nodejs npm mongodb-server rtorrent libxmlrpc-core-c3-dev git screen
+```
+
 For other distros
 install these  packages or whatever that is relevant for your distro
 ```
@@ -65,7 +70,8 @@ python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git screen
 see https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager for nodejs
 
 #### 1.5 Make mongodb smart aka create folder for database
-why mongodb dont do this is anyones guess...
+why mongodb on ubuntu dont do this is anyones guess...
+not needed on fedora
 ```
 sudo mkdir -p /data/db && sudo service mongodb restart
 ```
@@ -75,7 +81,8 @@ running rpc out in the open can be a security risk, take caution with firewall
 
 apache2
 ```
-sudo apt-get install apache2 libapache2-mod-scgi && sudo a2enmod scgi
+sudo apt-get install apache2 libapache2-mod-scgi && sudo a2enmod scgi (ubuntu)
+sudo yum install apache2 libapache2-mod-scgi && sudo a2enmod scgi (fedora)
 sudo su
 echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-available/000-default.conf
 service apache2 restart
@@ -84,9 +91,11 @@ su yourusername
 
 lighttpd
 ```
-sudo apt-get install lighttpd
+sudo apt-get install lighttpd (ubuntu)
+sudo yum install lighttpd (fedora)
 sudo su
 nano /etc/lighttpd/lighttpd.conf
+
 put this inside lighttpd.conf at the bottom
 
 server.modules += ( "mod_scgi" )
@@ -101,7 +110,10 @@ scgi.server = (
                 )
         )
 
-sudo service lighttpd restart
+sudo service lighttpd restart (ubuntu)
+systemctl restart lighttpd.service (fedora)
+firewall-cmd --add-service=http (fedora)
+su yourusername
 ```
 
 nginx
