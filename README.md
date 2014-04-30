@@ -71,7 +71,7 @@ sudo mkdir -p /data/db && sudo service mongodb restart
 ```
 ### 2. Web Server
 Now you have to setup a webserver with RPC
-running rpc out in the open can be a security risk, take caution
+running rpc out in the open can be a security risk, take caution with firewall
 
 apache2
 ```
@@ -83,10 +83,10 @@ su yourusername
 ```
 
 lighttpd
-
+```
 sudo apt-get install lighttpd
 sudo su
-pico /etc/lighttpd/lighttpd.conf
+nano /etc/lighttpd/lighttpd.conf
 put this inside lighttpd.conf at the bottom
 
 server.modules += ( "mod_scgi" )
@@ -102,7 +102,7 @@ scgi.server = (
         )
 
 sudo service lighttpd restart
-
+```
 
 nginx
 ```coming soon```
