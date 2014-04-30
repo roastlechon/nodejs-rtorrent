@@ -26,7 +26,9 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 
 ## Roadmap
 #### blablabla (<we are here<)
-* feeds and downloads realy works
+* Settings does not work yet
+* Feeds realy works 
+* Torrents realy works
 * basic username and password works
 
 #### Codename Alchemist (v1)
@@ -34,6 +36,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Search
 * Feeds > Basic Regex
 * Feeds > AutoDL
+* HTTPS
 
 #### Codename Unicorn (v2)
 * Multi-User
