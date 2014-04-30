@@ -82,7 +82,7 @@ service apache2 restart
 su yourusername
 ```
 
-*** lighttpd ***
+lighttpd
 ```
 sudo apt-get install lighttpd
 sudo su
@@ -104,7 +104,7 @@ scgi.server = (
 sudo service lighttpd restart```
 
 
-*nginx*
+nginx
 ```coming soon```
 
 standalone
