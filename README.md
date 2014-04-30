@@ -83,7 +83,7 @@ su yourusername
 ```
 
 lighttpd
-```
+
 sudo apt-get install lighttpd
 sudo su
 pico /etc/lighttpd/lighttpd.conf
@@ -101,7 +101,7 @@ scgi.server = (
                 )
         )
 
-sudo service lighttpd restart```
+sudo service lighttpd restart
 
 
 nginx
