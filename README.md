@@ -101,9 +101,9 @@ scgi.server = (
                         )
                 )
         )
-sudo service lighttpd restart
 ```
-
+`
+sudo service lighttpd restart`
 nginx
 ```coming soon```
 
