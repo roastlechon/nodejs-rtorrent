@@ -115,7 +115,6 @@ standalone
 mkdir $HOME/rtorrent-downloads
 echo "scgi_port = localhost:5000" >> .rtorrent.rc && echo "directory = $HOME/rtorrent-downloads" >> .rtorrent.rc
 screen -dmS -X rtorrent
-
 ```
 ### 4. nodejs-rtorrent Installation
 ```
