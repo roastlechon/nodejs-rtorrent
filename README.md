@@ -123,7 +123,9 @@ To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'n
 Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
 
 ### 7. Running it in the background aka continuously (Optional)
+![pm2](http://cloudfront.nwgat.net.s3.amazonaws.com/nodejs-rtorrent-pm2.png)
 pm2 will help in this regard, install it and set it up with nodejs-rtorrent
+
 
 https://github.com/Unitech/pm2
 ```
