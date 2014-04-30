@@ -58,8 +58,7 @@ Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/
 Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
-bower cannot be found
-try running bower like this `node_modules/bower/bin/bower install` inside nodejs-rtorrent directory
+huh?
 
 ## Notes
 
