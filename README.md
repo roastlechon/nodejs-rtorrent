@@ -49,9 +49,10 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
 
 ## Installation Guide
-[Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu)
-[Fedora (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Fedora)
-[Arch Linux (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch)
+* [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu)
+* [Fedora (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Fedora)
+* [Arch Linux (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch)
+
 ## Support
 Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
 
