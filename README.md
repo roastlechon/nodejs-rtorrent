@@ -124,8 +124,8 @@ Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to 
 
 ### 7. Running it in the background aka continuously (Optional)
 ![pm2](http://cloudfront.nwgat.net.s3.amazonaws.com/nodejs-rtorrent-pm2.png)
-pm2 will help in this regard, install it and set it up with nodejs-rtorrent
 
+pm2 will help in this regard, install it and set it up with nodejs-rtorrent
 
 https://github.com/Unitech/pm2
 ```
@@ -141,7 +141,7 @@ node_modules/pm2/bin/pm2 stop <number> (to stop process)
 ## Support
 Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
 
-Join us on our IRC channel [#nodejs-rtorrent@freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
+Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
 bower cannot be found
