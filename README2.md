@@ -49,8 +49,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
 
 ## Installation Guide
-see [here](https://github.com/roastlechon/nodejs-rtorrent/wiki/_pages) for guides for your distro
-https://github.com/roastlechon/nodejs-rtorrent/wiki/_pages
+see [here](https://github.com/roastlechon/nodejs-rtorrent/wiki/_pages) for guides for your favorite distro
 
 ## Support
 Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
