@@ -29,13 +29,13 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * feeds and downloads realy works
 * basic username and password works
 
-#### Version 1.0
+#### Codename Alchemist (v1)
 * Settings
 * Search
 * Feeds > Basic Regex
 * Feeds > AutoDL
 
-#### Version 2.0 
+#### Codename Unicorn (v2)
 * Multi-User
 * Advanced Regex
 * File Manager
@@ -74,8 +74,8 @@ apache2
 ```
 sudo apt-get install apache2 libapache2-mod-scgi && sudo a2enmod scgi
 sudo su
-echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-available/nodejs-rtorrent
-a2ensite nodejs-rtorrent && service apache2 restart
+echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-available/000-default.conf
+service apache2 restart
 su yourusername
 ```
 
