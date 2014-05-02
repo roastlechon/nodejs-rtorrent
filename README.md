@@ -1,12 +1,12 @@
 # nodejs-rtorrent
-![cutout](http://cloudfront.nwgat.net/nodejs-rtorrent-cutout2.png "screenshot")
+![cutout](http://i.imgur.com/h9X7hwU.png "screenshot")
 
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Q (Promises), Passport, Socket.IO. For the front-end, I am using AngularJS, RequireJS, Bower, Underscore, and Twitter Bootstrap.
 
 
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
-Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
+Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 #### Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
@@ -26,16 +26,19 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 
 ## Roadmap
 #### blablabla (<we are here<)
-* feeds and downloads realy works
+* Settings does not work yet
+* Feeds realy works 
+* Torrents realy works
 * basic username and password works
 
-#### Version 1.0
+#### Codename Alchemist (v1)
 * Settings
 * Search
 * Feeds > Basic Regex
 * Feeds > AutoDL
+* HTTPS
 
-#### Version 2.0 
+#### Codename Unicorn (v2)
 * Multi-User
 * Advanced Regex
 * File Manager
@@ -46,105 +49,17 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements :)
 NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
 
 ## Installation Guide
+* [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu)
+* [Fedora (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Fedora)
+* [Arch Linux (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch)
 
-### 1. Install packages
-
-Ubuntu 14.04 LTS
-```
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update && sudo apt-get install python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
-```
-For other distros
-install these  packages or whatever that is relevant for your distro
-```
-python g++ make nodejs mongodb-server rtorrent libxmlrpc-core-c3-dev git
-```
-see https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager for nodejs
-
-#### 1.5 Make mongodb smart aka create folder for database
-why mongodb dont do this is anyones guess...
-```
-sudo mkdir -p /data/db
-sudo service mongodb restart
-```
-### 2. Web Server
-Now you have to setup a webserver with RPC
-running rpc out in the open can be a security risk, take caution
-
-apache2
-```
-sudo apt-get install apache2 libapache2-mod-scgi
-sudo su
-echo "SCGIMount /RPC2 127.0.0.1:5000" >> /etc/apache2/sites-enabled/000-default.conf
-service apache2 restart
-su yourusername
-```
-
-lighttpd
-```coming soon```
-
-nginx
-```coming soon```
-
-standalone
-```coming when we know how, got any tips?```
-
-### 3. rtorrent Installation
-```
-cd $HOME
-mkdir rtorrent-downloads
-echo "scgi_port = localhost:5000" >> .rtorrent.rc
-echo "directory = /home/user/rtorrent-downloads" >> .rtorrent.rc
-
-screen rtorrent
-deattach with ctrl + D
-```
-### 4. nodejs-rtorrent Installation
-```
-git clone https://github.com/roastlechon/nodejs-rtorrent.git && cd nodejs-rtorrent
-npm install && npm install bower
-node_modules/bower/bin/bower install (select answer 2)
-```
-
-### 5. Configuration
-`nano config/config.json`
-change settings to suit your needs. By default, nodejs-rtorrent listens on port 3000. Before running the application, make sure to change the default admin user.
-
-```
-"defaultUser": {
-	"email": "admin@localhost",
-	"password": "password"
-},
-```
-### 6. Running the application
-To run the application, navigate to the `nodejs-rtorrent` folder, and type in 'nodejs app.js'. You should see some logs pop up. You can now login and add torrents and feeds!
-
-**if it all goes well you will find your very own nodejs-rtorrent @ http://yourip:3000/#/**
-
-Since rtorrent was running on the same box, it is using 127.0.0.1. Make sure to double check and connection issues. I have found that using xmlrpc tool on the console helps with debugging. Assuming xmlrpc is installed on the console, you can use this command to test to see if it connects: `xmlrpc 127.0.0.1/RPC2 d.multicall main d.name=`. An array of files will be returned (assuming rtorrent is running and has torrents in the list).
-
-### 7. Running it in the background aka continuously (Optional)
-pm2 will help in this regard, install it and set it up with nodejs-rtorrent
-
-https://github.com/Unitech/pm2
-```
-npm install pm2
-node_modules/pm2/bin/pm2 start app.js --name NodeJS-rTorrent
-```
-useful commands
-```
-node_modules/pm2/bin/pm2 list (shows your nodejs processes)
-node_modules/pm2/bin/pm2 restart <number> (to restart process)
-node_modules/pm2/bin/pm2 stop <number> (to stop process)
-```
 ## Support
 Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
 
-Join us on our IRC channel [#nodejs-rtorrent@freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
+Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
-bower cannot be found
-try running bower like this `node_modules/bower/bin/bower install` inside nodejs-rtorrent directory
+huh?
 
 ## Notes
 
