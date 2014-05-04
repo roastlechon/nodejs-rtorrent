@@ -1,12 +1,56 @@
-# nodejs-rtorrent
-![cutout](http://i.imgur.com/h9X7hwU.png "screenshot")
+# NodeJS-rTorrent
 
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Q (Promises), Passport, Socket.IO. For the front-end, I am using AngularJS, RequireJS, Bower, Underscore, and Twitter Bootstrap.
 
+Screenshot
+![cutout](http://i.imgur.com/h9X7hwU.png "screenshot")
 
 There is some additional functionality that needs to be worked on and this file contains some notes/scratchpad work needed to be done to get some additional features working.
 
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
+
+
+## Roadmap
+#### Alpha  <Currently we are here>
+* NOT PRODUCTION READY
+* Settings does not work yet
+* Feeds (works) 
+* Torrents (works)
+* basic username and password (works)
+
+#### Codename Alchemist (v1)
+
+* Settings
+* Search
+* Feeds > Basic Regex
+* Feeds > AutoDL
+* HTTPS
+* Docker support
+
+#### Codename Unicorn (v2)
+* Multi-User
+* Advanced Regex
+* File Manager
+* Torrent Creator
+* HTML5 Media Player
+
+### Depends on
+NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
+
+## Installation Guide
+* [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu)
+* [Arch Linux](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch)
+* [Arch Linux (ARM)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch-%28ARM%29)
+* [Fedora (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Fedora)
+* [OpenSUSE (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-OpenSUSE)
+
+## Support
+Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
+
+Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
+
+## FAQ
+huh?
 
 #### Feature To-Do List
 * ~~Change frontend framework to Angular JS - Kinda done~~
@@ -22,44 +66,6 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Add new user registration and admin management
 * Add grunt/gulp and minification of javascript files 
 * Add docker file for easy container management
-
-
-## Roadmap
-#### blablabla (<we are here<)
-* Settings does not work yet
-* Feeds realy works 
-* Torrents realy works
-* basic username and password works
-
-#### Codename Alchemist (v1)
-* Settings
-* Search
-* Feeds > Basic Regex
-* Feeds > AutoDL
-* HTTPS
-
-#### Codename Unicorn (v2)
-* Multi-User
-* Advanced Regex
-* File Manager
-* Torrent Creator
-* HTML5 Media Player
-
-### Depends on
-NodeJS NPM Bower MongoDB rtorrent and a webserver with RPC
-
-## Installation Guide
-* [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu)
-* [Fedora (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Fedora)
-* [Arch Linux (work-in-progress)](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Arch)
-
-## Support
-Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
-
-Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
-
-## FAQ
-huh?
 
 ## Notes
 
