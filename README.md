@@ -11,7 +11,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 
 
 ## Roadmap
-#### Alpha  <Currently we are here>
+** Alpha  (currently we are here)** 
 * NOT PRODUCTION READY
 * Settings does not work yet
 * Feeds (works) 
@@ -19,7 +19,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * basic username and password (works)
 
 #### Codename Alchemist (v1)
-
+Release: somewhere in the future 2014
 * Settings
 * Search
 * Feeds > Basic Regex
@@ -28,6 +28,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Docker support
 
 #### Codename Unicorn (v2)
+Before or after the world ends
 * Multi-User
 * Advanced Regex
 * File Manager
