@@ -36,14 +36,14 @@ define([
 				}
 			});
 
-			$stateProvider.state("edit_feed", {
-				url: "/feeds/:id/edit",
-				templateUrl: "../partials/edit_feed.html",
-				controller: "EditFeedController",
-				data: {
-					rule: ["isLoggedIn"]
-				}
-			});
+			// $stateProvider.state("edit_feed", {
+			// 	url: "/feeds/:id/edit",
+			// 	templateUrl: "../partials/edit_feed.html",
+			// 	controller: "EditFeedController",
+			// 	data: {
+			// 		rule: ["isLoggedIn"]
+			// 	}
+			// });
 
 			$stateProvider.state("feed", {
 				url: "/feeds/:id",
