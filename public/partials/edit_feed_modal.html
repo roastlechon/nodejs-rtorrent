@@ -3,12 +3,40 @@
 </div>
 <div class="modal-body">
 	<div class="form-group">
-		<label for="rss-feed-title">Title:</label>
-		<input type="text" class="form-control" id="rss-feed-title" ng-model="feed.title" />
+		<label for="feedName">Title:</label>
+		<input type="text" class="form-control" id="feedName" ng-model="feed.title" />
 	</div>
 	<div class="form-group">
-		<label for="rss-feed-url">URL:</label>
-		<input type="text" class="form-control" id="rss-feed-url" ng-model="feed.rss" />
+		<label for="feedUrl">URL:</label>
+		<p class="form-control-static">{{feed.rss}}</p>
+	</div>
+	<div class="checkbox">
+		<label for="autoDownload"><input type="checkbox" id="autoDownload" ng-model="feed.autoDownload"> Auto Download</label>
+		<p class="help-block">Check box to automatically download torrents when the feed is updated.</p>
+	</div>
+	<div class="checkbox">
+		<label for="regexFilter"><input type="checkbox" id="regexFilter" ng-model="feed.regexFilter"> Add advanced filtering</label>
+		<p class="help-block">Check box to edit regex filters.</p>
+	</div>
+	<div ng-show="feed.regexFilter">
+		<h4>Regex Filters</h4>
+		<div class="form-inline" style="margin-bottom: 10px;">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Regular expression" ng-model="newFilter.regex" style="width: 300px;">
+			</div>
+			<div class="form-group">
+				<label for="filterTypeInclude" class="radio-inline">
+					<input type="radio" id="filterTypeInclude" ng-model="newFilter.type" value="include"> Include
+				</label>
+				<label for="filterTypeExclude" class="radio-inline">
+					<input type="radio" id="filterTypeExclude" ng-model="newFilter.type" value="exclude"> Exclude
+				</label>
+			</div>
+			<button type="button" class="btn" ng-click="addFilter(newFilter)"><i class="fa fa-plus"></i></button>
+		</div>
+		<ul class="list-unstyled">
+			<li ng-repeat="filter in feed.filters track by $index">{{filter.regex}} <span class="badge">{{filter.type}}</span> <a href="javascript: void(0);" ng-click="deleteFilter($index)"><i class="fa fa-times"></i></a></li>
+		</ul>
 	</div>
 </div>
 <div class="modal-footer">

@@ -139,7 +139,7 @@
 					<td ng-hide="size_col">{{torrent.size | bytes}}</td>
 					<td ng-hide="percent_downloaded_col">
 						<div class="progress">
-							<div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{'progress-bar-warning': torrent.status == 'checking', 'progress-bar-success': torrent.status == 'seeding', 'progress-bar-success': torrent.status == 'finished'}">{{torrent.percent_downloaded  | percentage}}</div>
+							<div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{'progress-bar-warning': torrent.status === 'checking', 'progress-bar-success': torrent.status === 'seeding'}">{{torrent.percent_downloaded  | percentage}}</div>
 						</div>
 					</td>
 					<td ng-hide="downloaded_col">{{torrent.downloaded | bytes}}</td>

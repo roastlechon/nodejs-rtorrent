@@ -3980,6 +3980,55 @@ table th[class*="col-"] {
   bottom: -10px;
 }
 
+/* line 7, sass/modules/_badges.scss */
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  line-height: 1;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-align: center;
+  background-color: #999999;
+  border-radius: 10px;
+}
+/* line 22, sass/modules/_badges.scss */
+.badge:empty {
+  display: none;
+}
+/* line 27, sass/modules/_badges.scss */
+.btn .badge {
+  position: relative;
+  top: -1px;
+}
+/* line 31, sass/modules/_badges.scss */
+.btn-xs .badge {
+  top: 0;
+  padding: 1px 5px;
+}
+
+/* line 40, sass/modules/_badges.scss */
+a.badge:hover, a.badge:focus {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* line 49, sass/modules/_badges.scss */
+a.list-group-item.active > .badge,
+.nav-pills > .active > a > .badge {
+  color: #428bca;
+  background-color: white;
+}
+
+/* line 53, sass/modules/_badges.scss */
+.nav-pills > li > a > .badge {
+  margin-left: 3px;
+}
+
 /* line 6, sass/states/_scaffolding_states.scss */
 a:hover, a:focus {
   color: #2a6496;

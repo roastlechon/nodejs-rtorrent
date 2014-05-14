@@ -27,6 +27,7 @@
 					<th>Title</th>
 					<th>RSS</th>
 					<th>Last Checked</th>
+					<th>Auto Download?</th>
 					<th>Refresh</th>
 					<th>Edit</th>
 					<th>Delete</th>
@@ -37,6 +38,7 @@
 					<td style="width: 30%;"><a ui-sref="feed({id: feed._id})">{{feed.title}}</a></td>
 					<td>{{feed.rss}}</td>
 					<td>{{feed.lastChecked * 1000 | date:'medium'}}</td>
+					<td>{{feed.autoDownload}}</td>
 					<td><a href="#">Refresh</a></td>
 					<td><a href="javascript: void(0);" ng-click="editFeed(feed)">Edit</a></td>
 					<td><a href="javascript: void(0);" ng-click="deleteFeed(feed, $index)">Delete</a></td>

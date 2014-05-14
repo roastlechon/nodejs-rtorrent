@@ -9,7 +9,8 @@ require.config({
 		uiBootstrap: "../bower_components/angular-bootstrap/ui-bootstrap-tpls",
 		io: "../bower_components/socket.io-client/dist/socket.io",
 		lodash: "../bower_components/lodash/dist/lodash",
-		restangular: "../bower_components/restangular/dist/restangular"
+		restangular: "../bower_components/restangular/dist/restangular",
+		moment: "../bower_components/moment/moment"
 	},
 	baseUrl: "js",
 	shim: {

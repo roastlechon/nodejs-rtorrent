@@ -6,7 +6,9 @@ define([
 	"use strict";
 	controllers.controller("FeedController", ["$log", "$scope", "$stateParams", "FeedFactory", "TorrentFactory",
 		function($log, $scope, $stateParams, FeedFactory, TorrentFactory) {
-			console.log("feed controller loaded");
+			var logger = $log.getInstance("FeedController");
+
+			logger.debug("FeedController loaded");
 			
 			FeedFactory.getFeed($stateParams.id).then(function(data) {
 				$scope.feed = data;
@@ -17,13 +19,13 @@ define([
 			$scope.pageTitle = "Feed";
 			
 			$scope.loadTorrent = function(torrent) {
-				console.log("loading torrent");
+				logger.info("Loading torrent");
 				TorrentFactory.loadTorrent({
 					"url": torrent.url
 				}).then(function(data) {
-					console.log(data);
+					logger.debug(data);
 				}, function(err) {
-					console.log(err);
+					logger.error(err);
 				});
 			}
 		}

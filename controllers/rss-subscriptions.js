@@ -12,9 +12,10 @@ module.exports = function() {
 		logger.info("interval loop");
 		rssfeeds.getAll().then(function(data) {
 			data.map(function(feed) {
-				torrentFeedParser.getTorrents(feed.rss).then(function(torrents) {
+				torrentFeedParser.getTorrents(feed).then(function(torrents) {
 					var addTorrentPromises = torrents.map(function(torrent) {
-						return rssfeeds.addTorrent(feed._id, torrent)
+
+						return rssfeeds.addTorrent(feed._id, torrent, feed.autoDownload);
 					});
 
 					Q.allSettled(addTorrentPromises).then(function(results) {

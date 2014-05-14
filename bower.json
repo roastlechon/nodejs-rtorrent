@@ -12,6 +12,7 @@
     "angular-ui-router": "0.2.8-bowratic-tedium",
     "jquery": "1.10.2",
     "angular-upload": "~1.0.5",
-    "restangular": "~1.3.1"
+    "restangular": "~1.3.1",
+    "moment": "~2.6.0"
   }
 }

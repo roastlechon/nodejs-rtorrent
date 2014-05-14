@@ -4,7 +4,9 @@ var request = require("request");
 var async = require("async");
 var moment = require("moment");
 var Torrent = require("./schemas/torrent");
+var Filter = require("./schemas/filter");
 var Feed = require("./schemas/feed");
+var rtorrent = require("../lib/rtorrent");
 var torrentFeedParser = require("../lib/torrent-feed-parser");
 var _ = require("underscore");
 var logger = require("winston");
@@ -41,40 +43,65 @@ rssFeeds.get = function(id) {
 }
 
 rssFeeds.edit = function(id, feed) {
-	return Feed.update({
+	var feedExists = Feed.find({
 		"_id": id
-	}, {
-		"title": feed.title,
-		"rss": feed.rss
 	}).exec();
+
+	var saveFeed = feedExists.then(function(data) {
+		
+		// Empty filters if regexFilter is false
+		if (!feed.regexFilter) {
+			feed.filters = [];
+		}
+
+		return Feed.update({
+			"_id": id
+		}, feed).exec();
+	}, function(err) {
+		return Q.reject(err);
+	});
+
+	return saveFeed;
 }
 
 rssFeeds.add = function(feed) {
+	console.log(feed);
 	var deferred = Q.defer();
 
 	var feedExists = checkFeedExists(feed.rss)
 
 	var torrentsFromFeed = feedExists.then(function(data) {
-		console.log("feed exists");
-		console.log(data);
 		if (data.length === 0) {
-			return torrentFeedParser.getTorrents(feed.rss);
+			logger.info("Feed does not exist.");
+			return torrentFeedParser.getTorrents(feed);
 		}
 
-		return Q.reject("Feed does not exist");
-
+		return Q.reject("Feed exists");
 	}, function(err) {
 		return Q.reject(err);
 	});
 
 	var saveFeed = torrentsFromFeed.then(function(data) {
-		console.log("getting torrents from feed");
+		logger.info("Getting torrents from feed.");
 		var feedModel = new Feed({
 			title: feed.title,
 			lastChecked: moment().unix(),
 			rss: feed.rss,
+			regexFilter: feed.regexFilter,
+			autoDownload: feed.autoDownload,
+			filters: [],
 			torrents: []
 		});
+		
+		if (feed.regexFilter) {
+			_.each(feed.filters, function(fil) {
+				var filter = new Filter({
+					regex: fil.regex,
+					type: fil.type
+				});
+				feedModel.filters.push(filter);
+			});
+		}
 
 		_.each(data, function(tor) {
 			var torrent = new Torrent({
@@ -86,8 +113,7 @@ rssFeeds.add = function(feed) {
 			feedModel.torrents.push(torrent);
 		});
 
-		logger.info("feed does not exist");
-		logger.info("saving to database");
+		logger.info("Saving feed to database.");
 
 		feedModel.save();
 		return Q(feedModel);
@@ -112,7 +138,7 @@ rssFeeds.delete = function(_id) {
 }
 
 
-rssFeeds.addTorrent = function(_id, torrent) {
+rssFeeds.addTorrent = function(_id, torrent, autoDownload) {
 	var deferred = Q.defer();
 
 	var torrentFeed = new Torrent({
@@ -142,6 +168,11 @@ rssFeeds.addTorrent = function(_id, torrent) {
 	var saveFeed = findFeed.then(function(data) {
 		if (!data) {
 			return Q.reject("Feed does not exist");
+		}
+
+		// If autoDownload is true, start the torrent automatically
+		if (autoDownload) {
+			rtorrent.loadTorrentUrl(torrent.url);
 		}
 
 		data.torrents.push(torrentFeed);

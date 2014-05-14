@@ -1,13 +1,13 @@
 define([
 	"angular",
 	"app",
+	"moment",
 	"services/AuthenticationInterceptor",
-	"services/AuthenticationFactory"
-], function(angular, app) {
+	"services/AuthenticationFactory",
+], function(angular, app, moment) {
 	"use strict";
-	return app.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
-		function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-			console.log("doing stuff");
+	return app.config(["$logProvider", "$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
+		function($logProvider, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 			
 			$stateProvider.state("torrents", {
 				url: "/torrents",
@@ -78,35 +78,47 @@ define([
 				controller: "LoginController"
 			});
 
-			$urlRouterProvider.when("/logout", "/login").when("/", "torrents");
+
+			// redirects to torrents
+			$urlRouterProvider.otherwise("/torrents");
+
+			$urlRouterProvider.when("/logout", "/login");
 
 			$httpProvider.interceptors.push("AuthenticationInterceptor");
 		}
-	]).run(function($rootScope, AuthenticationFactory, $state) {
+	]).run(["$log", "$rootScope", "AuthenticationFactory", "$state", function($log, $rootScope, AuthenticationFactory, $state) {
+
+		$log.getInstance = function(context) {
+			return {
+				log: enhanceLogging($log.log, context),
+				info: enhanceLogging($log.info, context),
+				warn: enhanceLogging($log.warn, context),
+				debug: enhanceLogging($log.debug, context),
+				error: enhanceLogging($log.error, context)
+			};
+		}
+
+		function enhanceLogging(logFn, context) {
+			return function() {
+				var modifiedArguments = [].slice.call(arguments);
+				modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
+				logFn.apply(null, modifiedArguments);
+			};
+		}
+
 		$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-			console.log("state change start event");
 			if (!toState.data) {
-				console.log("doesnt have data")
+				console.log("State has no data, returning early");
 				return;
 			}
 
 			if (toState.data.rule.indexOf("isLoggedIn") !== -1) {
-				console.log("has isloggedin");
+				console.log("State has rule: isLoggedIn");
 				if (!AuthenticationFactory.isAuthenticated()) {
 					$state.go("login");
 					event.preventDefault();
 				}
 			}
 		});
-
-		$rootScope.$on("$stateChangeSuccess", function(event, toState, toParams, fromState, fromParams) {
-			console.log("state change success");
-			console.log(toState);
-			console.log(fromState);
-			// if (fromState.name === "login") {
-			// 	event.preventDefault();
-			// 	$state.go(toState(""))
-			// }
-		});
-	});
+	}]);
 });

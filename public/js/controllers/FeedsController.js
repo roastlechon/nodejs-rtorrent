@@ -20,8 +20,29 @@ define([
 					templateUrl: "../partials/add_feed_modal.html",
 					controller: function($scope, $modalInstance) {
 						$scope.feed = {};
+						$scope.newFilter = {};
+						$scope.feed.filters = [];
 
-						$scope.addFeed = function() {
+						$scope.addFilter = function(filter) {
+							if (!filter.regex && !filter.type) {
+								return;
+							}
+
+							$scope.feed.filters.push({
+								regex: filter.regex,
+								type: filter.type
+							});
+							$scope.newFilter = {
+								regex: "",
+								type: ""
+							};	
+						}
+
+						$scope.deleteFilter = function(index) {
+							$scope.feed.filters.splice(index, 1);
+						}
+
+						$scope.addRssFeed = function() {
 							console.log($scope.feed);
 							$scope.$close($scope.feed);
 						}
@@ -33,7 +54,10 @@ define([
 				}).result.then(function(data) {
 					FeedFactory.addFeed({
 						rss: data.url,
-						title: data.name
+						title: data.name,
+						filters: data.filters,
+						regexFilter: data.regexFilter,
+						autoDownload: data.autoDownload
 					}).then(function(data) {
 						// success add, need to refresh list
 
@@ -58,7 +82,29 @@ define([
 					templateUrl: "partials/edit_feed_modal.html",
 					controller: function($scope, $modalInstance, feed) {
 						$scope.feed = feed;
+						$scope.newFilter = {};
+
 						$scope.title = "Edit \"" + feed.title + "\"";
+
+						$scope.deleteFilter = function(index) {
+							$scope.feed.filters.splice(index, 1);
+						}
+
+						$scope.addFilter = function(filter) {
+							if (!filter.regex && !filter.type) {
+								return;
+							}
+
+							$scope.feed.filters.push({
+								regex: filter.regex,
+								type: filter.type
+							});
+							$scope.newFilter = {
+								regex: "",
+								type: ""
+							};	
+						}
+
 						$scope.edit = function(feed) {
 							$modalInstance.close(feed);
 						}

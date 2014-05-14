@@ -32,6 +32,9 @@ function getFeeds(req, res) {
 				title: feed.title,
 				lastChecked: feed.lastChecked,
 				rss: feed.rss,
+				regexFilter: feed.regexFilter,
+				autoDownload: feed.autoDownload,
+				filters: feed.filters,
 				torrents: feed.torrents.sort(function(a, b) {
 					a = a.date;
 					b = b.date;
@@ -49,7 +52,10 @@ function addFeed(req, res) {
 
 	var feed = {
 		title: req.body.title,
-		rss: req.body.rss
+		rss: req.body.rss,
+		autoDownload: req.body.autoDownload,
+		regexFilter: req.body.regexFilter,
+		filters: req.body.filters
 	};
 
 	//check database if feed exists
@@ -57,10 +63,9 @@ function addFeed(req, res) {
 	//get list of feeds to return to client
 
 	feeds.add(feed).then(function(data) {
-		logger.info("successfully saved rss feed");
+		logger.info("Successfully saved feed.");
 		res.json(data);
 	}, function(err) {
-		logger.error("errors occured in saveRSSFeed");
 		logger.error(err);
 		res.json(err);
 	});
@@ -73,7 +78,9 @@ function updateFeed(req, res) {
 	
 	var feed = {
 		title: req.body.title,
-		rss: req.body.rss
+		autoDownload: req.body.autoDownload,
+		regexFilter: req.body.regexFilter,
+		filters: req.body.filters
 	}
 
 	feeds.edit(req.params.id, feed).then(function(data) {
