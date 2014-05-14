@@ -16,7 +16,7 @@
 		"path": "/RPC2"
 	},
 	"app": {
-		"hostname": "home.roastlechon.com",
+		"hostname": "localhost.tld",
 		"port": 3000,
 		"defaultUser": {
 			"email": "admin@localhost",
