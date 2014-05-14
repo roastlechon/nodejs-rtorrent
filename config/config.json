@@ -2,9 +2,6 @@
 	"authentication": {
 		"secret": "123456789"
 	},
-	"express": {
-		"port": 3000
-	},
 	"mongoose": {
 		"prefix": "mongodb://",
 		"uri": "localhost",
@@ -19,6 +16,8 @@
 		"path": "/RPC2"
 	},
 	"app": {
+		"hostname": "home.roastlechon.com",
+		"port": 3000,
 		"defaultUser": {
 			"email": "admin@localhost",
 			"password": "password"

@@ -40,12 +40,13 @@ users.add(nconf.get("app:defaultUser")).then(function(data) {
 });
 
 io.configure(function() {
+  io.set("origins", nconf.get("app:hostname") + ":" + nconf.get("app:port"));
   io.set("log level", 1);
   io.set("authorization", function(handshakeData, callback) {
     var queryToken = handshakeData.query.token;
     if (!queryToken) {
-      logger.error("authorization token does not exist");
-      return callback("authorization token does not exist");
+      logger.error("Authorization token does not exist.");
+      return callback("Authorization token does not exist.");
     }
 
     var authenticationHeaderArray = queryToken.split(":");
@@ -60,10 +61,10 @@ io.configure(function() {
     }, secret);
 
     if (token === clientToken) {
-      logger.info("authenticated via token");
+      logger.info("Successfully authenticated via token.");
       return callback(null, true);
     } else {
-      logger.error("authentication token does not match");
+      logger.error("Authentication token does not match.");
       return callback(null, false);
     }
 
@@ -71,7 +72,7 @@ io.configure(function() {
 });
 
 
-logger.info("configuring express");
+logger.info("Configuring express.");
 app.configure(function() {
 	app.use(express.bodyParser());
   app.use(express.multipart());
@@ -87,8 +88,8 @@ require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);
 require("./controllers/rss-subscriptions")();
 
-logger.info("listening on port " + nconf.get("express:port"));
+logger.info("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
 
 rtorrent.init();
 
-server.listen(nconf.get("express:port"));
+server.listen(nconf.get("app:port"));

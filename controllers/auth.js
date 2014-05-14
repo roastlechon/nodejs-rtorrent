@@ -7,8 +7,6 @@ module.exports = {
 		logger.info("Client's IP Address is: %s", req.connection.remoteAddress);
 		logger.info("Checking if authenticated.");
 
-		console.log(req.headers);
-
 		if (!req.headers.authorization) {
 			logger.error("Authorization Header does not exist.");
 			return res.send(401);

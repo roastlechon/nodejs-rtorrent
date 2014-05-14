@@ -1,4 +1,4 @@
-var feeds = require("../models/rssfeeds");
+var feeds = require("../models/feeds");
 var logger = require("winston");
 var auth = require("./auth.js");
 var Q = require("q");
@@ -77,13 +77,14 @@ function updateFeed(req, res) {
 	logger.info("Updating feed: %s, with data: %j", req.params.id, req.body);
 	
 	var feed = {
+		_id: req.params.id,
 		title: req.body.title,
 		autoDownload: req.body.autoDownload,
 		regexFilter: req.body.regexFilter,
 		filters: req.body.filters
 	}
 
-	feeds.edit(req.params.id, feed).then(function(data) {
+	feeds.edit(feed).then(function(data) {
 		res.json(data);
 	}, function(err) {
 		res.json(err);

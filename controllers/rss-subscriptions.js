@@ -3,19 +3,19 @@ var nconf = require("nconf");
 var FeedMe = require("feedme");
 var request = require("request");
 var mongoose = require("mongoose");
+var moment = require("moment");
 var Q = require("q");
-var rssfeeds = require("../models/rssfeeds");
+var feeds = require("../models/feeds");
 var torrentFeedParser = require("../lib/torrent-feed-parser");
 
 module.exports = function() {
 	setInterval(function() {
-		logger.info("interval loop");
-		rssfeeds.getAll().then(function(data) {
+		feeds.getAll().then(function(data) {
 			data.map(function(feed) {
 				torrentFeedParser.getTorrents(feed).then(function(torrents) {
 					var addTorrentPromises = torrents.map(function(torrent) {
 
-						return rssfeeds.addTorrent(feed._id, torrent, feed.autoDownload);
+						return feeds.addTorrent(feed._id, torrent, feed.autoDownload);
 					});
 
 					Q.allSettled(addTorrentPromises).then(function(results) {
@@ -24,17 +24,19 @@ module.exports = function() {
 								logger.info("New torrent saved in feed");
 							} else {
 								if (result.reason === "Torrent exists in feed already.") {
-
+									// No need to log here, since it
+									// would be very verbose
 								} else {
 									logger.error(result.reason);	
 								}
 							}
 						});
+
 					});
 				}, function(err) {
 					logger.error(err.message);
 				});
-			});			
+			});
 
 		}, function(err) {
 			logger.error(err.message);

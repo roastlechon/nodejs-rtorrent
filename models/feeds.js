@@ -13,7 +13,7 @@ var logger = require("winston");
 var Q = require("q");
 
 
-var rssFeeds = module.exports = {}
+var feeds = module.exports = {}
 
 function checkFeedExists(rss) {
 	return Feed.find({
@@ -30,21 +30,21 @@ function updateLastChecked(_id, time) {
 	}).exec();
 }
 
-rssFeeds.getAll = function() {
+feeds.getAll = function() {
 	return Feed.find({}).sort({
 		"title": "ascending"
 	}).exec();
 }
 
-rssFeeds.get = function(id) {
+feeds.get = function(id) {
 	return Feed.find({
 		"_id": id
 	}).exec();
 }
 
-rssFeeds.edit = function(id, feed) {
+feeds.edit = function(feed) {
 	var feedExists = Feed.find({
-		"_id": id
+		"_id": feed._id
 	}).exec();
 
 	var saveFeed = feedExists.then(function(data) {
@@ -55,7 +55,7 @@ rssFeeds.edit = function(id, feed) {
 		}
 
 		return Feed.update({
-			"_id": id
+			"_id": feed._id
 		}, feed).exec();
 	}, function(err) {
 		return Q.reject(err);
@@ -64,7 +64,7 @@ rssFeeds.edit = function(id, feed) {
 	return saveFeed;
 }
 
-rssFeeds.add = function(feed) {
+feeds.add = function(feed) {
 	console.log(feed);
 	var deferred = Q.defer();
 
@@ -131,14 +131,14 @@ rssFeeds.add = function(feed) {
 }
 
 
-rssFeeds.delete = function(_id) {
+feeds.delete = function(_id) {
 	return Feed.findOneAndRemove({
 		"_id": _id
 	}).exec();
 }
 
 
-rssFeeds.addTorrent = function(_id, torrent, autoDownload) {
+feeds.addTorrent = function(_id, torrent, autoDownload) {
 	var deferred = Q.defer();
 
 	var torrentFeed = new Torrent({
