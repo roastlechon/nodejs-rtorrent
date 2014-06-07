@@ -1,0 +1,28 @@
+{
+	"authentication": {
+		"secret": "123456789"
+	},
+	"mongoose": {
+		"prefix": "mongodb://",
+		"uri": "localhost",
+		"port": 27017,
+		"database": "nodejs-rtorrent",
+		"user": "",
+		"pass": ""
+	},
+	"rtorrent": {
+		"host": "",
+		"port": "80",
+		"path": "/RPC2"
+	},
+	"app": {
+		"hostname": "home.roastlechon.com",
+		"port": 3000,
+		"defaultUser": {
+			"email": "admin@localhost",
+			"password": "password"
+		},
+		"checkFeedLoopInterval": 300000,
+		"rtorrentLoopInterval": 2000
+	}
+}
