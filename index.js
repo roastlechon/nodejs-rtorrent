@@ -1,5 +1,5 @@
 try {
-  process.chdir('server');
+  process.chdir('app/server');
 } catch (err) {
   console.log(err);
 }
