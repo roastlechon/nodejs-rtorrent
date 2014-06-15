@@ -1,0 +1,156 @@
+<ng:include src="'/partials/header.html'"></ng:include>
+<div class="content" style="position: relative;" ng-style="style()" resize>
+	<div style="position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; ">
+		<div style="overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;" ng-hide="torrentPanel">
+			<h3>Actions</h3>
+			<ul class="list-unstyled">
+				<li><a href="" ng-click="addTorrent()">Add Torrent</a></li>
+			</ul>
+			<h4>Filter by Status</h4>
+			<ul class="list-unstyled">
+				<li><a href="" ng-click="status=''">All <i ng-class="{'fa fa-check': status===''}" ng-init="status=''"></i></a></li>
+				<li><a href="" ng-click="status='downloading'">Downloading <i ng-class="{'fa fa-check': status==='downloading'}"></i></a></li>
+				<li><a href="" ng-click="status='finished'">Finished <i ng-class="{'fa fa-check': status==='finished'}"></i></a></li>
+				<li><a href="" ng-click="status='stopped'">Stopped <i ng-class="{'fa fa-check': status==='stopped'}"></i></a></li>
+				<li><a href="" ng-click="status='seeding'">Seeding <i ng-class="{'fa fa-check': status==='seeding'}"></i></a></li>
+			</ul>
+			<h4>Hide Columns</h4>
+			<div class="form-group">
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="status_col=!status_col" checked> Status</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="size_col=!size_col" checked> Size</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="percent_downloaded_col=!percent_downloaded_col" checked> Done</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="downloaded_col=!downloaded_col" checked> Downloaded</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="uploaded_col=!uploaded_col" checked> Uploaded</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="dl_speed_col=!dl_speed_col" checked> DL Speed</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="ul_speed_col=!ul_speed_col" checked> UL Speed</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="time_remaining_col=!time_remaining_col" checked> ETA</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="peers_col=!peers_col" checked> Peers</label>
+				</div>
+				<div class="checkbox">
+					<label><input type="checkbox" ng-click="seeds_col=!seeds_col" checked> Seeds</label>
+				</div>
+			</div>
+		</div>
+		<div style="width: 20px; height: 100%; float: left;">
+			<a href="" style="display: block; height: 100%;" ng-click="torrentPanel = !torrentPanel"><i class="fa fa-lg" style="padding: 10px 5px;" ng-class="{'fa-caret-right': torrentPanel, 'fa-caret-left': !torrentPanel}"></i></a>
+		</div>
+	</div>
+	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;">
+		<table class="table table-condensed table-hover" style="min-width: 1400px;">
+			<thead>
+				<tr>
+					<th style="width: 30%;">
+						<a href="" ng-click="predicate='name';reverse=!reverse">Name <i class="fa" ng-class="{'fa-caret-up': predicate==='name' && reverse, 'fa-caret-down': predicate==='name' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="status_col" style="width: 120px;">
+						<a href="" ng-click="predicate='status';reverse=!reverse">Status <i class="fa" ng-class="{'fa-caret-up': predicate==='status' && reverse, 'fa-caret-down': predicate==='status' && !reverse}"></i></i></a>
+					</th>
+					<th ng-hide="size_col" style="width: 120px;">
+						<a href="" ng-click="predicate='size';reverse=!reverse">Size <i class="fa" ng-class="{'fa-caret-up': predicate==='size' && reverse, 'fa-caret-down': predicate==='size' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="percent_downloaded_col" style="width: 120px;">
+						<a href="" ng-click="predicate='percent_downloaded';reverse=!reverse">Done <i class="fa" ng-class="{'fa-caret-up': predicate==='percent_downloaded' && reverse, 'fa-caret-down': predicate==='percent_downloaded' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="downloaded_col" style="width: 140px;">
+						<a href="" ng-click="predicate='downloaded';reverse=!reverse">Downloaded <i class="fa" ng-class="{'fa-caret-up': predicate==='downloaded' && reverse, 'fa-caret-down': predicate==='downloaded' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="uploaded_col" style="width: 120px;">
+						<a href="" ng-click="predicate='uploaded';reverse=!reverse">Uploaded <i class="fa" ng-class="{'fa-caret-up': predicate==='uploaded' && reverse, 'fa-caret-down': predicate==='uploaded' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="dl_speed_col" style="width: 120px;">
+						<a href="" ng-click="predicate='dl_speed';reverse=!reverse">DL <i class="fa" ng-class="{'fa-caret-up': predicate==='dl_speed' && reverse, 'fa-caret-down': predicate==='dl_speed' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="ul_speed_col" style="width: 120px;">
+						<a href="" ng-click="predicate='ul_speed';reverse=!reverse">UL <i class="fa" ng-class="{'fa-caret-up': predicate==='ul_speed' && reverse, 'fa-caret-down': predicate==='ul_speed' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="time_remaining_col" style="width: 120px;">
+						<a href="" ng-click="predicate='time_remaining';reverse=!reverse">ETA <i class="fa" ng-class="{'fa-caret-up': predicate==='time_remaining' && reverse, 'fa-caret-down': predicate==='time_remaining' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="peers_col" style="width: 120px;">
+						<a href="" ng-click="predicate='peers';reverse=!reverse">Peers <i class="fa" ng-class="{'fa-caret-up': predicate==='peers' && reverse, 'fa-caret-down': predicate==='peers' && !reverse}"></i></a>
+					</th>
+					<th ng-hide="seeds_col" style="width: 120px;">
+						<a href="" ng-click="predicate='seeds';reverse=!reverse">Seeds <i class="fa" ng-class="{'fa-caret-up': predicate==='seeds' && reverse, 'fa-caret-down': predicate==='seeds' && !reverse}"></i></a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="torrent in torrents | orderBy:predicate:reverse | filter:{status: status} track by torrent.hash" class="torrent" ng-click="selectTorrent(torrent)">
+					<td>
+						<div class="clearfix" style="position: relative;">
+							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden; width: 90%;" title="{{torrent.name}}">{{torrent.name}}</h5>
+							<div style="position: absolute; right: 0;" class="btn-group torrent-menu">
+								<a href="javascript:void(0);" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lg fa-ellipsis-v"></i></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="" ng-click="playTorrent(torrent)">Play</a></li>
+									<li><a href="" ng-click="pauseTorrent(torrent)">Pause</a></li>
+									<li><a href="" ng-click="stopTorrent(torrent)">Stop</a></li>
+									<li class="divider"></li>
+									<li class="dropdown-submenu">
+										<a href="javascript: void(0);">Priority</a>
+										<ul class="dropdown-menu">
+											<li><a href="">High</a></li>
+											<li><a href="">Medium</a></li>
+											<li><a href="">Low</a></li>
+											<li><a href="">Don't Download</a></li>
+										</ul>
+									</li>
+									<li class="dropdown-submenu">
+										<a href="javascript: void(0);">Set Channel</a>
+										<ul class="dropdown-menu">
+											<li><a href="" ng-click="setChannel(torrent.hash, '')">No Channel</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'up_4')">Up16</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'up_3')">Up32</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'up_2')">Up64</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'up_1')">Up128</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'up_0')">Up256</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'down_4')">Down16</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'down_3')">Down32</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'down_2')">Down64</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'down_1')">Down128</a></li>
+											<li><a href="" ng-click="setChannel(torrent.hash, 'down_0')">Down256</a></li>
+										</ul>
+									</li>
+									<li class="divider"></li>
+									<li><a href="" ng-click="removeTorrent(torrent)">Remove</a></li>
+									<li><a href="" ng-click="">Details</a></li>
+								</ul>
+							</div>
+						</div>
+					</td>
+					<td ng-hide="status_col">{{torrent.status}}</td>
+					<td ng-hide="size_col">{{torrent.size | bytes}}</td>
+					<td ng-hide="percent_downloaded_col">
+						<div class="progress">
+							<div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{'progress-bar-warning': torrent.status === 'checking', 'progress-bar-success': torrent.status === 'seeding'}">{{torrent.percent_downloaded  | percentage}}</div>
+						</div>
+					</td>
+					<td ng-hide="downloaded_col">{{torrent.downloaded | bytes}}</td>
+					<td ng-hide="uploaded_col">{{torrent.uploaded | bytes}}</td>
+					<td ng-hide="dl_speed_col">{{torrent.dl_speed | dataTransferRate}}</td>
+					<td ng-hide="ul_speed_col">{{torrent.ul_speed | dataTransferRate}}</td>
+					<td ng-hide="time_remaining_col">{{torrent.time_remaining | time}}</td>
+					<td ng-hide="peers_col">{{torrent.peers}} ({{torrent.total_peers}})</td>
+					<td ng-hide="seeds_col">{{torrent.seeds}} ({{torrent.total_seeds}})</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

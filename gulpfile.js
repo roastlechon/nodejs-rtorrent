@@ -1,5 +1,7 @@
 var gulp = require('gulp');
+var bump = require('gulp-bump');
 var bower = require('gulp-bower');
+var zip = require('gulp-zip');
 var browserify  = require('gulp-browserify');
 var replace = require('gulp-replace');
 var spawn = require('child_process').spawn;
@@ -7,41 +9,16 @@ var es = require('event-stream');
 var sass = require('gulp-ruby-sass');
 var clean = require('gulp-clean');
 
+// General error handling function
 var handleError = function (err) {
   console.log(err.name, ' in ', err.plugin, ': ', err.message);
   this.emit('end');
 };
 
-gulp.task('bump-version', function () {
-  spawn('git', ['rev-parse', '--abbrev-ref', 'HEAD']).stdout.on('data', function (data) {
-
-    // Get current branch name
-    var branch = data.toString();
-
-    // Verify we're on a release branch
-    if (/^release\/.*/.test(branch)) {
-      var newVersion = branch.split('/')[1].trim();
-
-      var updateJson = function (file) {
-        gulp.src(file)
-          .pipe(replace(/("version" *: *")([^"]*)(",)/g, '$1' + newVersion + '$3'))
-          .pipe(gulp.dest('./'));
-      };
-
-      updateJson('./bower.json');
-      updateJson('./package.json');
-
-      console.log('Successfully bumped to ' + newVersion);
-    } else {
-      console.error('This task should be executed on a release branch!');
-    }
-  });
-});
-
 // Clean
 gulp.task('clean', function() {
   return es.concat(
-    gulp.src('dist', {
+    gulp.src('app', {
       read: false
     })
       .pipe(clean()),
@@ -62,19 +39,16 @@ gulp.task('copy', ['bower'], function () {
   return es.concat(
     // update index.html to work when built
     gulp.src(['src/client/index.html'])
-      .pipe(gulp.dest('dist/client')),
+      .pipe(gulp.dest('app/client')),
     // copy template files
     gulp.src(['src/client/partials/**/*.html'])
-      .pipe(gulp.dest('dist/client/partials')),
+      .pipe(gulp.dest('app/client/partials')),
     // copy assets
     gulp.src(['src/assets/**/*'])
-      .pipe(gulp.dest('dist/client')),
+      .pipe(gulp.dest('app/client')),
     // copy server
     gulp.src(['src/server/**/*'])
-      .pipe(gulp.dest('dist/server')),
-    // copy index.js
-    gulp.src(['src/index.js'])
-      .pipe(gulp.dest('dist'))
+      .pipe(gulp.dest('app/server'))
   );
 });
 
@@ -84,7 +58,7 @@ gulp.task('sass', ['copy'], function() {
     .pipe(sass({
       style: 'compressed'
     }).on('error', handleError))
-    .pipe(gulp.dest('dist/client/css'));
+    .pipe(gulp.dest('app/client/css'));
 });
 
 // Scripts
@@ -113,7 +87,14 @@ gulp.task('scripts', ['sass'], function() {
         }
       }
     }))
-    .pipe(gulp.dest('dist/client/js'));
+    .pipe(gulp.dest('app/client/js'));
+});
+
+// Update bower, component, npm at once:
+gulp.task('bump', function() {
+  return gulp.src(['./bower.json', './package.json'])
+    .pipe(bump())
+    .pipe(gulp.dest('./'));
 });
 
 // Default

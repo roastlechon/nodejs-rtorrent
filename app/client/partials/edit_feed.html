@@ -1,0 +1,22 @@
+<ol class="breadcrumb">
+	<li><a ui-sref="home">Home</a></li>
+	<li><a ui-sref="feeds">Feeds</a></li>
+	<li><a ui-sref="feed({id: feed._id})">{{feed.title}}</a></li>
+	<li class="active">Edit</li>
+</ol>
+<h2>Editing Feed - {{feed.title}}</h2>
+<fieldset>
+	<legend>Edit RSS Feed</legend>
+	<div class="form-group">
+		<label for="rss-feed-title">Title:</label>
+		<input type="text" class="form-control" id="rss-feed-title" ng-model="feed.title" />
+	</div>
+	<div class="form-group">
+		<label for="rss-feed-url">URL:</label>
+		<input type="text" class="form-control" id="rss-feed-url" ng-model="feed.rss" />
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary" ng-click="editFeed()">Save changes</button>
+		<button class="btn btn-default">Cancel</button>
+	</div>
+</fieldset>
