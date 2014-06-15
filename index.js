@@ -4,4 +4,4 @@ try {
   console.log(err);
 }
 
-require('./server/app');
+require('./app/server/app');

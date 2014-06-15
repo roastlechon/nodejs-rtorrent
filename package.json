@@ -1,7 +1,7 @@
 {
   "name": "nodejs-rtorrent",
   "description": "nodejs gui for rtorrent",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Noel Madali <amadali@gmail.com",
   "private": true,
   "dependencies": {
@@ -46,6 +46,10 @@
     "tiny-lr": "latest",
     "underscore": "latest",
     "debowerify": "latest",
-    "browserify-shim": "latest"
+    "browserify-shim": "latest",
+    "gulp-bump": "latest"
+  },
+  "scripts": {
+    "start": "node index"
   }
 }
