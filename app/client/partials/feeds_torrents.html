@@ -1,0 +1,23 @@
+<ng:include src="'/partials/header.html'"></ng:include>
+<div class="content" style="position: relative;" ng-style="style()" resize>
+	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;">
+		<table class="table table-condensed table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Load</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="torrent in feed.torrents">
+					<td>{{torrent.name}}</td>
+					<td>{{torrent.date | date:"medium"}}</td>
+					<td>{{torrent.status}}</td>
+					<td><a href="javascript: void(0);" ng-click="loadTorrent(torrent)">Load</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
