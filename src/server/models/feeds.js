@@ -60,7 +60,7 @@ feeds.edit = function(feed) {
 		}
 
 		return Feed.update({
-			"_id": _id;
+			"_id": _id
 		}, feed).exec();
 	}, function(err) {
 		return Q.reject(err);
