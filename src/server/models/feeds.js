@@ -47,7 +47,7 @@ feeds.edit = function(feed) {
 	delete feed._id;
 
 	var feedExists = Feed.find({
-		"_id": _id;
+		"_id": _id
 	}).exec();
 
 	var saveFeed = feedExists.then(function(data) {
@@ -60,7 +60,7 @@ feeds.edit = function(feed) {
 		}
 
 		return Feed.update({
-			"_id": _id;
+			"_id": _id
 		}, feed).exec();
 	}, function(err) {
 		return Q.reject(err);
