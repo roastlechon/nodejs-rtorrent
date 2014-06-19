@@ -43,19 +43,24 @@ feeds.get = function(id) {
 }
 
 feeds.edit = function(feed) {
+	var _id = feed._id;
+	delete feed._id;
+
 	var feedExists = Feed.find({
-		"_id": feed._id
+		"_id": _id;
 	}).exec();
 
 	var saveFeed = feedExists.then(function(data) {
 		
+
+
 		// Empty filters if regexFilter is false
 		if (!feed.regexFilter) {
 			feed.filters = [];
 		}
 
 		return Feed.update({
-			"_id": feed._id
+			"_id": _id;
 		}, feed).exec();
 	}, function(err) {
 		return Q.reject(err);
