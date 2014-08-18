@@ -1,11 +1,11 @@
 var logger = require("winston");
-var auth = require("./auth.js");
+var auth = require("./auth");
+var settings = require("./models/settings");
 
 module.exports = function(app) {
 	app.get("/settings", auth.ensureAuthenticated, getSettings);
 }
 
 function getSettings(req, res) {
-	logger.info("client's ip address is: %s", req.connection.remoteAddress);
 	res.json({});
 }
