@@ -253,6 +253,7 @@ rtorrent.setPriority = function(priority) {
 	return methodCall("d.set_priority", [hash, priority]);
 }
 
+// change to use nconf
 rtorrent.getPortStatus = function(port) {
 	var deferred = Q.defer();
 
@@ -273,4 +274,59 @@ rtorrent.getScrapeIncomplete = function(hash) {
 
 rtorrent.getScrapeComplete = function(hash) {
 	return methodCall("t.multicall", [hash, "d.get_hash=", "t.get_scrape_complete="]);
+}
+
+// get_port_range
+// returns string of port range
+rtorrent.getPortRange = function() {
+	return methodCall('get_port_range', []);
+}
+
+// get_port_open
+// returns 1 or 0
+// Opens listening port
+rtorrent.getPortOpen = function() {
+	return methodCall('get_port_open', []);
+}
+
+rtorrent.getUploadSlots = function() {
+	return methodCall('get_max_uploads', []);
+}
+
+rtorrent.getUploadSlotsGlobal = function() {
+	return methodCall('get_max_uploads_global', []);
+}
+
+// get_port_random
+// returns 1 or 0
+// Randomize port each time rTorrent starts
+rtorrent.getPortRandom = function() {
+	return methodCall('get_port_random', []);
+}
+
+// get_download_rate
+// returns value in bytes
+//
+rtorrent.getGlobalMaximumDownloadRate = function() {
+	return methodCall('get_download_rate', []);
+}
+
+// set_download_rate
+// requires value in bytes
+//
+rtorrent.setGlobalMaximumDownloadRate = function(value) {
+	return methodCall('set_download_rate', [value]);
+}
+
+// get_upload_rate
+// returns value in bytes
+//
+rtorrent.getGlobalMaximumUploadRate = function() {
+	return methodCall('get_upload_rate', []);
+}
+
+// set_upload_rate
+// requires value in bytes
+rtorrent.setGlobalMaximumUploadRate = function(value) {
+	return methodCall('set_upload_rate', [value]);
 }
