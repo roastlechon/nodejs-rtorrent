@@ -1,36 +1,30 @@
 var controllersModule = require("../controllers");
-controllersModule.controller("LoginController", ["$scope", "$rootScope", "$location", "$window", "AuthenticationFactory", "SocketFactory", "$state",
-	function($scope, $rootScope, $location, $window, AuthenticationFactory, SocketFactory, $state) {
-		console.log("login controller loaded");
+controllersModule.controller("LoginController", ["$log", "AuthenticationFactory", "SocketFactory", "$previousState",
+    function($log, AuthenticationFactory, SocketFactory, $previousState) {
+        
+        var logger = $log.getInstance("LoginController");
 
-		$scope.user = AuthenticationFactory.currentUser();
+        logger.debug("LoginController loaded");
 
-		$scope.login = function() {
-			AuthenticationFactory.login({
-					email: $scope.email,
-					password: $scope.password
-				}, function(response) {
-					console.log("callback from logging in");
+        var vm = this;
 
-					console.log(response);
-					console.log("logged in");
-					SocketFactory.reconnect();
-					$state.go("torrents");
-				}, function(error) {
-					console.log(error);
-					$rootScope.error = "Failed to login";
-				}
-			);
-		}
+        vm.close = function() {
+            $previousState.go("modalInvoker"); // return to previous state
+        };
 
-		$scope.logout = function() {
-			AuthenticationFactory.logout(function(response) {
-					console.log("callback from logging out");
-					console.log(response);
-					$state.go("login");
-				}, function(error) {
-					console.log(error);
-				});
-		}
-	}
+        vm.user = AuthenticationFactory.currentUser();
+
+        vm.login = function() {
+            AuthenticationFactory.login({
+                email: vm.email,
+                password: vm.password
+            }).then(function(data) {
+                logger.info(data);
+                SocketFactory.reconnect();
+                $previousState.go("modalInvoker");
+            }, function(err) {
+                logger.error(err);
+            });
+        }
+    }
 ]);

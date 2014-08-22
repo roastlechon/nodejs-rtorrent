@@ -9,7 +9,19 @@
 		</style>
 	</head>
 	<body>
-		<div ui-view></div>
+		<ng:include src="'/partials/header.html'"></ng:include>
+		<div ui-view="home"></div>
+		
+		<!-- @if NODE_ENV='development' -->
+		<script type="text/javascript" src="vendor/underscore/underscore.js"></script>
+		<script type="text/javascript" src="vendor/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="vendor/angular/angular.js"></script>
 		<script src="js/app.js"></script>
+		<!-- @endif -->
+
+		<!-- @if NODE_ENV='production' -->
+		<script src="js/app.js"></script>
+		<!-- @endif -->
+
 	</body>
 </html>

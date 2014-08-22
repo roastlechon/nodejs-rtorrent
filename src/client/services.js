@@ -6,3 +6,4 @@ require("./services/FeedFactory");
 require("./services/MultiClickService");
 require("./services/SocketFactory");
 require("./services/TorrentFactory");
+require("./services/SessionService");

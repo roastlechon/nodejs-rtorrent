@@ -1,4 +1,4 @@
-var io = require("socket.io-client/dist/socket.io");
+var io = require("socket-io");
 var serviceModule = require("../services");
 
 serviceModule.factory("SocketFactory", function($rootScope, $window) {

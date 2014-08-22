@@ -22,7 +22,7 @@
     "winston": "0.7.2",
     "passport": "0.1.17",
     "passport-local": "0.1.6",
-    "bcrypt": "0.7.6",
+    "bcrypt": "0.7.8",
     "bower": "1.2.7",
     "jwt-simple": "0.1.0",
     "q": "0.9.7",
@@ -39,17 +39,41 @@
     "gulp-protractor": "latest",
     "gulp-replace": "latest",
     "gulp-bower": "latest",
-    "gulp-browserify": "latest",
+    "browserify": "5.5.0",
     "gulp-ruby-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "tiny-lr": "latest",
     "underscore": "latest",
     "debowerify": "latest",
-    "browserify-shim": "latest",
-    "gulp-bump": "latest"
+    "browserify-shim": "^3.6.0",
+    "gulp-bump": "latest",
+    "gulp-preprocess": "~1.1.1",
+    "vinyl-source-stream": "latest",
+    "watchify": "1.0.2",
+    "chokidar": "0.8.4"
   },
   "scripts": {
     "start": "node index"
+  },
+  "browser": {
+    "jquery": "./src/vendor/jquery/dist/jquery.js",
+    "underscore": "./src/vendor/underscore/underscore.js",
+    "angular": "./src/vendor/angular/angular.js",
+    "angular-ui-bootstrap": "./src/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
+    "angular-ui-router": "./src/vendor/angular-ui-router/release/angular-ui-router.js",
+    "ui-router-extras": "./src/vendor/ui-router-extras/release/ct-ui-router-extras.js",
+    "restangular": "./src/vendor/restangular/dist/restangular.js",
+    "socket-io": "./src/vendor/socket.io-client/dist/socket.io.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "underscore": "_",
+    "jquery": "$",
+    "angular": "angular"
   }
 }

@@ -1,6 +1,6 @@
 var serviceModule = require("../services");
 
-serviceModule.factory("AuthenticationFactory", function($http, $rootScope, $state, $window) {
+serviceModule.factory("AuthenticationFactory", function($http, $rootScope, $state, $window, Restangular, SessionService, $q) {
 	var isAuthenticated = false;
 	var currentUser = {
 		email: $window.sessionStorage.email,
@@ -24,20 +24,36 @@ serviceModule.factory("AuthenticationFactory", function($http, $rootScope, $stat
 	});
 
 	return {
-		login: function(user, success, error) {
-			console.log(user);
-			$http.post("/login", user).success(function(res) {
-				currentUser.token = $window.sessionStorage.token = res.token;
-				currentUser.expire = $window.sessionStorage.expires = res.expires;
-				currentUser._id = $window.sessionStorage._id = res._id;
-				currentUser.email = $window.sessionStorage.email = user.email;
-				isAuthenticated = true;
+		login: function(user) {
+			var deferred = $q.defer();
 
-				$rootScope.currentUser = currentUser;
-				$rootScope.isAuthenticated = isAuthenticated;
+			$http.post("/login", user).then(function(data) {
+				var userSession = {
+					token: data.token,
+					expires: data.expires,
+					_id: data._id,
+					email: data.email
+				}
+				SessionService.setUserSession(userSession);
+				
+				deferred.resolve(userSession);
+			}, function(err) {
+				deferred.reject(new Error(err.statusText));
+			});
 
-				success(res);
-			}).error(error);
+			return deferred.promise;
+			// success(function(res) {
+			// 	currentUser.token = $window.sessionStorage.token = res.token;
+			// 	currentUser.expire = $window.sessionStorage.expires = res.expires;
+			// 	currentUser._id = $window.sessionStorage._id = res._id;
+			// 	currentUser.email = $window.sessionStorage.email = user.email;
+				
+
+			// 	$rootScope.currentUser = currentUser;
+			// 	$rootScope.isAuthenticated = isAuthenticated;
+
+			// 	success(res);
+			// }).error(error);
 		}, logout: function(success, error) {
 			$window.sessionStorage.clear();
 			isAuthenticated = false;
