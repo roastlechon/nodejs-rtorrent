@@ -7,3 +7,5 @@ sftp-config.json
 npm-debug.log
 .idea
 .sass-cache
+.vagrant
+package.box
