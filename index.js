@@ -1,7 +1,7 @@
 try {
-  process.chdir('app/server');
+  process.chdir('src/node');
 } catch (err) {
   console.log(err);
 }
 
-require('./app/server/app');
+require('./src/node/app');

@@ -2,114 +2,99 @@ var gulp = require('gulp');
 var bump = require('gulp-bump');
 var browserify = require('browserify');
 var watchify = require('watchify');
-
+var stringify = require('stringify');
+var partialify = require('partialify');
 var source = require('vinyl-source-stream');
 var replace = require('gulp-replace');
 var spawn = require('child_process').spawn;
 var es = require('event-stream');
 var sass = require('gulp-ruby-sass');
-var clean = require('gulp-clean');
+var rimraf = require('gulp-rimraf');
 var preprocess = require('gulp-preprocess');
+var gutil = require('gulp-util');
+var templateCache = require('gulp-angular-templatecache');
+var minifyHTML = require('gulp-minify-html');
 
-// General error handling function
-var handleError = function(err) {
-	console.log(err.name, ' in ', err.plugin, ': ', err.message);
-	this.emit('end');
-};
+var nodemon = require('gulp-nodemon');
+
+var watch = require('gulp-watch');
 
 // Clean
 gulp.task('clean', function() {
-	return gulp.src('app', {
-		read: false
-	}).pipe(clean());
+	return gulp.src('dist', {
+			read: false
+		})
+		.pipe(rimraf());
 });
 
 // Copy
-gulp.task('copy', ['clean'], function() {
-	return es.concat(
-		// copy template files
-		gulp.src('src/client/partials/**/*.html')
-		.pipe(gulp.dest('app/client/partials')),
-		// copy assets
-		gulp.src('src/assets/**/*')
-		.pipe(gulp.dest('app/client')),
-		// copy server
-		gulp.src('src/server/**/*')
-		.pipe(gulp.dest('app/server'))
-	);
-});
-
-gulp.task('preprocess_dev', ['copy'], function() {
-	return es.concat(
-		gulp.src('src/client/index.html')
-		.pipe(preprocess({
-			context: {
-				NODE_ENV: 'development'
-			}
-		}))
-		.pipe(gulp.dest('app/client')),
-		gulp.src('src/vendor/underscore/underscore.js')
-		.pipe(gulp.dest('app/client/vendor/underscore')),
-		gulp.src('src/vendor/jquery/dist/jquery.js')
-		.pipe(gulp.dest('app/client/vendor/jquery/dist')),
-		gulp.src('src/vendor/angular/angular.js')
-		.pipe(gulp.dest('app/client/vendor/angular'))
-	);
-});
-
-gulp.task('preprocess_prod', ['copy'], function() {
-	return gulp.src('src/client/index.html')
-		.pipe(preprocess({
-			context: {
-				NODE_ENV: 'production'
-			}
-		}))
-		.pipe(gulp.dest('app/client'));
+gulp.task('assets', ['clean'], function() {
+	return gulp.src('src/assets/**/*')
+		.pipe(gulp.dest('dist'))
 });
 
 // Sass
-gulp.task('sass', ['copy'], function() {
+gulp.task('sass', ['clean'], function() {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
 			style: 'compressed'
-		}).on('error', handleError))
-		.pipe(gulp.dest('app/client/css'));
+		}).on('error', gutil.log))
+		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('watch_index.html', function() {
+	watch('src/client/index.html', function(file) {
+		return file.pipe(gulp.dest('dist'));
+	});
+	watch(['src/client/**/*.html', '!src/client/index.html'], function() {
+		gulp.start('copy_html');
+	})
+});
+
+gulp.task('copy_html', function() {
+	gulp.src([
+		'src/client/**/*.html',
+		'!src/client/index.html'
+		])
+		.pipe(minifyHTML({
+			quotes: true,
+			empty: true
+		}))
+		.pipe(templateCache({
+			standalone: true
+		}))
+		.pipe(gulp.dest('src/client'));
 });
 
 // Scripts
-gulp.task('scripts_prod', ['sass', 'preprocess_prod'], function() {
+gulp.task('scripts_prod', ['sass', 'assets', 'copy_html'], function() {
 	return browserify({
 			entries: './src/client/app.js'
 		})
+		.transform(stringify(['.html']))
 		.bundle()
 		.pipe(source('app.js'))
-		.pipe(gulp.dest('app/client/js'));
+		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts_dev', ['sass', 'preprocess_prod'], function() {
-	var b = browserify({
-    cache: {},
-    packageCache: {},
-    fullPaths: true,
-    entries: './src/client/app.js'
-  });
+gulp.task('scripts_dev', ['sass', 'assets', 'copy_html', 'watch_index.html'], function() {
+	var w = watchify(browserify({
+		cache: {},
+		packageCache: {},
+		fullPaths: true
+	})).add('./src/client/app.js');
 
-  var w = watchify(b);
+	w.on('update', function(ids) {
+		gutil.log('[watchify] rebundling files: ', ids);
+		return w.bundle()
+			.on('error', gutil.log)
+			.pipe(source('app.js'))
+			.pipe(gulp.dest('./dist/js'));
+	});
 
-	w.on('update', rebundle);
-
-	function rebundle(ids) {
-    console.log(ids)
-		var stream = w.bundle()
-    stream.on('error', handleError);
-
-    return stream
-      .pipe(source('app.js'))
-			.pipe(gulp.dest('./app/client/js'));
-	}
-
-  rebundle();
-
+	return w.bundle()
+		.pipe(source('app.js'))
+		.pipe(gulp.dest('./dist/js'));
 });
 
 // Update bower, component, npm at once:
