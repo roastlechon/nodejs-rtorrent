@@ -10,3 +10,4 @@ npm-debug.log
 .vagrant
 package.box
 Vagrantfile
+nodejs-rtorrent.log
