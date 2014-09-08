@@ -1,136 +1,56 @@
-require("jquery");
-require("angular");
-require("angular-bootstrap/ui-bootstrap-tpls");
-require("angular-ui-router/release/angular-ui-router");
-require("underscore/underscore");
-require("restangular/dist/restangular");
+require('jquery');
+require('angular');
+require('angular-ui-bootstrap');
+require('angular-ui-router');
+require('ui-router-extras');
+require('ng-context-menu');
+require('underscore');
+require('restangular');
+var moment = require('moment');
 
-var moment = require("moment");
+require('./templates');
 
-require("./services");
-require("./controllers");
-require("./filters");
-require("./directives");
+var modal = require('./modal/modal');
+var session = require('./session/session');
+var authentication = require('./authentication/authentication');
+var home = require('./home/home');
+var login = require('./login/login');
+var socket = require('./socket/socket');
+var torrents = require('./torrents/torrents');
+var torrentsAdd = require('./torrents.add/torrents.add');
+var feeds = require('./feeds/feeds');
+var feed = require('./feed/feed');
+var feedsAdd = require('./feeds.add/feeds.add');
+var feedsEdit = require('./feeds.edit/feeds.edit');
+var feedsDelete = require('./feeds.delete/feeds.delete');
 
-angular.module("app", [
-	"ui.bootstrap",
-	"ui.router",
-	"restangular",
-	"nodejs-rtorrent.services",
-	"nodejs-rtorrent.controllers",
-	"nodejs-rtorrent.filters",
-	"nodejs-rtorrent.directives"
-]).config(["$logProvider", "$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider", 
-	function($logProvider, $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {		
-		$stateProvider.state("torrents", {
-			url: "/torrents",
-			templateUrl: "../partials/torrents.html",
-			controller: "TorrentsController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
+angular.module('app', [
+	'ui.bootstrap',
+	'ui.router',
+	'ct.ui.router.extras',
+	'restangular',
+	'ng-context-menu',
+	'templates',
+	modal.name,
+	home.name,
+	login.name,
+	session.name,
+	authentication.name,
+	socket.name,
+	torrents.name,
+	torrentsAdd.name,
+	feeds.name,
+	feed.name,
+	feedsAdd.name,
+	feedsEdit.name,
+	feedsDelete.name
+]).config(function($urlRouterProvider, $stickyStateProvider) {
+	$stickyStateProvider.enableDebug(true);
+	$urlRouterProvider.otherwise('/');
+});
 
-		$stateProvider.state("feeds", {
-			url: "/feeds",
-			templateUrl: "../partials/feeds.html",
-			controller: "FeedsController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
-
-		$stateProvider.state("add_feed", {
-			url: "/feeds/add",
-			templateUrl: "../partials/add_feed.html",
-			controller: "FeedsController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
-
-		// $stateProvider.state("edit_feed", {
-		// 	url: "/feeds/:id/edit",
-		// 	templateUrl: "../partials/edit_feed.html",
-		// 	controller: "EditFeedController",
-		// 	data: {
-		// 		rule: ["isLoggedIn"]
-		// 	}
-		// });
-
-		$stateProvider.state("feed", {
-			url: "/feeds/:id",
-			templateUrl: "../partials/feeds_torrents.html",
-			controller: "FeedController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
-
-		$stateProvider.state("search", {
-			url: "/search",
-			templateUrl: "../partials/search.html",
-			controller: "SearchController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
-
-		$stateProvider.state("settings", {
-			url: "/settings",
-			templateUrl: "../partials/settings.html",
-			controller: "SettingsController",
-			data: {
-				rule: ["isLoggedIn"]
-			}
-		});
-
-		$stateProvider.state("login", {
-			url: "/login",
-			templateUrl: "../partials/login.html",
-			controller: "LoginController"
-		});
-
-
-		// redirects to torrents
-		$urlRouterProvider.otherwise("/torrents");
-
-		$urlRouterProvider.when("/logout", "/login");
-
-		$httpProvider.interceptors.push("AuthenticationInterceptor");
-	}
-]).run(["$log", "$rootScope", "AuthenticationFactory", "$state", function($log, $rootScope, AuthenticationFactory, $state) {
-
-	$log.getInstance = function(context) {
-		return {
-			log: enhanceLogging($log.log, context),
-			info: enhanceLogging($log.info, context),
-			warn: enhanceLogging($log.warn, context),
-			debug: enhanceLogging($log.debug, context),
-			error: enhanceLogging($log.error, context)
-		};
-	}
-
-	function enhanceLogging(logFn, context) {
-		return function() {
-			var modifiedArguments = [].slice.call(arguments);
-			modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
-			logFn.apply(null, modifiedArguments);
-		};
-	}
-
-	$rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-		if (!toState.data) {
-			console.log("State has no data, returning early");
-			return;
-		}
-
-		if (toState.data.rule.indexOf("isLoggedIn") !== -1) {
-			console.log("State has rule: isLoggedIn");
-			if (!AuthenticationFactory.isAuthenticated()) {
-				$state.go("login");
-				event.preventDefault();
-			}
-		}
-	});
-}]);
+require('./filters/bytes-filter');
+require('./filters/datatransferrate-filter');
+require('./filters/percentage-filter');
+require('./filters/time-filter');
+require('./directives/resize-directive');

@@ -1,7 +1,7 @@
 {
   "name": "nodejs-rtorrent",
   "description": "nodejs gui for rtorrent",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": "Noel Madali <amadali@gmail.com",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
     "winston": "0.7.2",
     "passport": "0.1.17",
     "passport-local": "0.1.6",
-    "bcrypt": "0.7.6",
+    "bcrypt": "0.7.8",
     "bower": "1.2.7",
     "jwt-simple": "0.1.0",
     "q": "0.9.7",
@@ -30,26 +30,56 @@
     "moment": "latest"
   },
   "devDependencies": {
+    "browserify": "5.5.0",
+    "browserify-shim": "^3.6.0",
+    "debowerify": "latest",
     "event-stream": "latest",
     "gulp": "latest",
+    "gulp-angular-templatecache": "^1.3.0",
     "gulp-autoprefixer": "latest",
+    "gulp-bower": "latest",
+    "gulp-bump": "latest",
     "gulp-karma": "latest",
-    "gulp-clean": "latest",
     "gulp-livereload": "latest",
+    "gulp-minify-html": "^0.1.5",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-preprocess": "~1.1.1",
     "gulp-protractor": "latest",
     "gulp-replace": "latest",
-    "gulp-bower": "latest",
-    "gulp-browserify": "latest",
+    "gulp-rimraf": "^0.1.0",
     "gulp-ruby-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
+    "gulp-watch": "^0.7.0",
+    "partialify": "^3.1.1",
+    "stringify": "^2.2.0",
     "tiny-lr": "latest",
     "underscore": "latest",
-    "debowerify": "latest",
-    "browserify-shim": "latest",
-    "gulp-bump": "latest"
+    "vinyl-source-stream": "latest",
+    "watchify": "1.0.2"
   },
   "scripts": {
     "start": "node index"
+  },
+  "browser": {
+    "jquery": "./src/vendor/jquery/dist/jquery.js",
+    "underscore": "./src/vendor/underscore/underscore.js",
+    "angular": "./src/vendor/angular/angular.js",
+    "angular-ui-bootstrap": "./src/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
+    "angular-ui-router": "./src/vendor/angular-ui-router/release/angular-ui-router.js",
+    "ui-router-extras": "./src/vendor/ui-router-extras/release/ct-ui-router-extras.js",
+    "restangular": "./src/vendor/restangular/dist/restangular.js",
+    "socket-io": "./src/vendor/socket.io-client/dist/socket.io.js",
+    "ng-context-menu": "./src/vendor/ng-context-menu/dist/ng-context-menu.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "underscore": "_",
+    "jquery": "$",
+    "angular": "angular"
   }
 }
