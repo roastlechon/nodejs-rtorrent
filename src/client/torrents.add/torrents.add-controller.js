@@ -8,7 +8,7 @@ module.exports = angular
 			var vm = this;
 
 			vm.loadTorrent = function(url) {
-				Torrents.loadTorrent({
+				Torrents.load({
 					'url': url
 				}).then(function(data) {
 					logger.debug(data);
