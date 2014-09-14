@@ -7,11 +7,11 @@
 			</ul>
 			<h4>Filter by Status</h4>
 			<ul class="list-unstyled">
-				<li><a href="" ng-click="torrents.status=''">All <i ng-class="{'fa fa-check': torrents.status===''}" ng-init="torrents.status=''"></i></a></li>
-				<li><a href="" ng-click="torrents.status='downloading'">Downloading <i ng-class="{'fa fa-check': torrents.status==='downloading'}"></i></a></li>
-				<li><a href="" ng-click="torrents.status='finished'">Finished <i ng-class="{'fa fa-check': torrents.status==='finished'}"></i></a></li>
-				<li><a href="" ng-click="torrents.status='stopped'">Stopped <i ng-class="{'fa fa-check': torrents.status==='stopped'}"></i></a></li>
-				<li><a href="" ng-click="torrents.status='seeding'">Seeding <i ng-class="{'fa fa-check': torrents.status==='seeding'}"></i></a></li>
+				<li><a href="" ng-click="torrentsCtrl.status=''">All <i ng-class="{'fa fa-check': torrentsCtrl.status===''}" ng-init="torrentsCtrl.status=''"></i></a></li>
+				<li><a href="" ng-click="torrentsCtrl.status='downloading'">Downloading <i ng-class="{'fa fa-check': torrentsCtrl.status==='downloading'}"></i></a></li>
+				<li><a href="" ng-click="torrentsCtrl.status='finished'">Finished <i ng-class="{'fa fa-check': torrentsCtrl.status==='finished'}"></i></a></li>
+				<li><a href="" ng-click="torrentsCtrl.status='stopped'">Stopped <i ng-class="{'fa fa-check': torrentsCtrl.status==='stopped'}"></i></a></li>
+				<li><a href="" ng-click="torrentsCtrl.status='seeding'">Seeding <i ng-class="{'fa fa-check': torrentsCtrl.status==='seeding'}"></i></a></li>
 			</ul>
 			<h4>Hide Columns</h4>
 			<div class="form-group">
@@ -53,54 +53,67 @@
 	</div>
 	<div style="position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;">
 		<table class="table table-condensed table-hover" style="min-width: 1400px;">
+			<colgroup>
+				<col style="width: 30%;">
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+			</colgroup>
 			<thead>
 				<tr>
 					<th style="width: 30%;">
-						<a href="" ng-click="torrents.predicate='name';torrents.reverse=!torrents.reverse">Name <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='name' && torrents.reverse, 'fa-caret-down': torrents.predicate==='name' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='name';torrentsCtrl.reverse=!torrentsCtrl.reverse">Name <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='name' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='name' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="status_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='status';torrents.reverse=!torrents.reverse">Status <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='status' && torrents.reverse, 'fa-caret-down': torrents.predicate==='status' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='status';torrentsCtrl.reverse=!torrentsCtrl.reverse">Status <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='status' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='status' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="size_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='size';torrents.reverse=!torrents.reverse">Size <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='size' && torrents.reverse, 'fa-caret-down': torrents.predicate==='size' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='size';torrentsCtrl.reverse=!torrentsCtrl.reverse">Size <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='size' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='size' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="percent_downloaded_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='percent_downloaded';torrents.reverse=!torrents.reverse">Done <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='percent_downloaded' && torrents.reverse, 'fa-caret-down': torrents.predicate==='percent_downloaded' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='percent_downloaded';torrentsCtrl.reverse=!torrentsCtrl.reverse">Done <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='percent_downloaded' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='percent_downloaded' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="downloaded_col" style="width: 140px;">
-						<a href="" ng-click="torrents.predicate='downloaded';torrents.reverse=!torrents.reverse">Downloaded <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='downloaded' && torrents.reverse, 'fa-caret-down': torrents.predicate==='downloaded' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='downloaded';torrentsCtrl.reverse=!torrentsCtrl.reverse">Downloaded <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='downloaded' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='downloaded' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="uploaded_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='uploaded';torrents.reverse=!torrents.reverse">Uploaded <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='uploaded' && torrents.reverse, 'fa-caret-down': torrents.predicate==='uploaded' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='uploaded';torrentsCtrl.reverse=!torrentsCtrl.reverse">Uploaded <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='uploaded' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='uploaded' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="dl_speed_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='dl_speed';torrents.reverse=!torrents.reverse">DL <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='dl_speed' && torrents.reverse, 'fa-caret-down': torrents.predicate==='dl_speed' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='dl_speed';torrentsCtrl.reverse=!torrentsCtrl.reverse">DL <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='dl_speed' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='dl_speed' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="ul_speed_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='ul_speed';torrents.reverse=!torrents.reverse">UL <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='ul_speed' && torrents.reverse, 'fa-caret-down': torrents.predicate==='ul_speed' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='ul_speed';torrentsCtrl.reverse=!torrentsCtrl.reverse">UL <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='ul_speed' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='ul_speed' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="time_remaining_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='time_remaining';torrents.reverse=!torrents.reverse">ETA <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='time_remaining' && torrents.reverse, 'fa-caret-down': torrents.predicate==='time_remaining' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='time_remaining';torrentsCtrl.reverse=!torrentsCtrl.reverse">ETA <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='time_remaining' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='time_remaining' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="peers_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='peers';torrents.reverse=!torrents.reverse">Peers <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='peers' && torrents.reverse, 'fa-caret-down': torrents.predicate==='peers' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='peers';torrentsCtrl.reverse=!torrentsCtrl.reverse">Peers <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='peers' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='peers' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 					<th ng-hide="seeds_col" style="width: 120px;">
-						<a href="" ng-click="torrents.predicate='seeds';torrents.reverse=!torrents.reverse">Seeds <i class="fa" ng-class="{'fa-caret-up': torrents.predicate==='seeds' && torrents.reverse, 'fa-caret-down': torrents.predicate==='seeds' && !torrents.reverse}"></i></a>
+						<a href="" ng-click="torrentsCtrl.predicate='seeds';torrentsCtrl.reverse=!torrentsCtrl.reverse">Seeds <i class="fa" ng-class="{'fa-caret-up': torrentsCtrl.predicate==='seeds' && torrentsCtrl.reverse, 'fa-caret-down': torrentsCtrl.predicate==='seeds' && !torrentsCtrl.reverse}"></i></a>
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="torrent in torrents.torrents | orderBy:torrents.predicate:torrents.reverse | filter:{status: torrents.status} track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
+				<tr ng-repeat="torrent in torrentsCtrl.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
 					<td>
 						<div class="clearfix" style="position: relative;">
 							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden;" title="{{torrent.name}}">{{torrent.name}}</h5>
 						</div>
 						<div class="dropdown position-fixed" id="menu-{{$index}}">
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="" ng-click="torrents.t.start(torrent.hash)">Play</a></li>
-								<li><a href="" ng-click="torrents.t.pause(torrent.hash)">Pause</a></li>
-								<li><a href="" ng-click="torrents.t.stop(torrent.hash)">Stop</a></li>
+								<li><a href="" ng-click="torrentsCtrl.t.start(torrent.hash)">Play</a></li>
+								<li><a href="" ng-click="torrentsCtrl.t.pause(torrent.hash)">Pause</a></li>
+								<li><a href="" ng-click="torrentsCtrl.t.stop(torrent.hash)">Stop</a></li>
 								<li class="divider"></li>
 								<li class="dropdown-submenu">
 									<a href="javascript: void(0);">Priority</a>
@@ -114,21 +127,21 @@
 								<li class="dropdown-submenu">
 									<a href="javascript: void(0);">Set Channel</a>
 									<ul class="dropdown-menu">
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, '')">No Channel</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'up_4')">Up16</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'up_3')">Up32</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'up_2')">Up64</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'up_1')">Up128</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'up_0')">Up256</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'down_4')">Down16</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'down_3')">Down32</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'down_2')">Down64</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'down_1')">Down128</a></li>
-										<li><a href="" ng-click="torrents.t.setChannel(torrent.hash, 'down_0')">Down256</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, '')">No Channel</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'up_4')">Up16</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'up_3')">Up32</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'up_2')">Up64</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'up_1')">Up128</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'up_0')">Up256</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'down_4')">Down16</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'down_3')">Down32</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'down_2')">Down64</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'down_1')">Down128</a></li>
+										<li><a href="" ng-click="torrentsCtrl.t.setChannel(torrent.hash, 'down_0')">Down256</a></li>
 									</ul>
 								</li>
 								<li class="divider"></li>
-								<li><a href="" ng-click="torrents.t.remove(torrent.hash)">Remove</a></li>
+								<li><a href="" ng-click="torrentsCtrl.t.remove(torrent.hash)">Remove</a></li>
 								<li><a href="" ng-click="">Details</a></li>
 							</ul>
 						</div>

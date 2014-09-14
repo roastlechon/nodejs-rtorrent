@@ -24,9 +24,9 @@
 					<li><a ui-sref="settings">Settings</a></li>
 				</ul>	
 			</nav>
-			<ul class="header-secondary-nav-list" ng-controller="AuthenticationController as auth">
-				<li ng-if="auth.Authentication.isAuthenticated()">Logged in as {{auth.Authentication.getCurrentUser().email}}. <a href="javascript: void(0);" ng-click="auth.Authentication.logout()">Logout</a></li>
-				<li ng-if="!auth.Authentication.isAuthenticated()"><a ui-sref="login">Login</a></li>
+			<ul class="header-secondary-nav-list" ng-controller="AuthenticationCtrl as authenticationCtrl">
+				<li ng-if="authenticationCtrl.Authentication.isAuthenticated()" ng-cloak>Logged in as {{authenticationCtrl.Authentication.getCurrentUser().email}}. <a href="javascript: void(0);" ng-click="authenticationCtrl.Authentication.logout()">Logout</a></li>
+				<li ng-if="!authenticationCtrl.Authentication.isAuthenticated()" ng-cloak><a ui-sref="login">Login</a></li>
 			</ul>
 		</div>
 

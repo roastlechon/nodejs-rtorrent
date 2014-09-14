@@ -1,26 +1,24 @@
 module.exports = angular
 	.module('torrents.add')
-	.controller('TorrentsAddController', ['njrtLog', '$previousState', 'Torrents',
-		function(njrtLog, $previousState, Torrents) {
-			var logger = njrtLog.getInstance('TorrentsAddController');
-			logger.debug('TorrentsAddController loaded');
+	.controller('TorrentsAddCtrl', function(njrtLog, $previousState, Torrents) {
 
-			var vm = this;
+		var logger = njrtLog.getInstance('torrents.add.TorrentsAddCtrl');
 
-			vm.loadTorrent = function(url) {
-				Torrents.loadTorrent({
-					'url': url
-				}).then(function(data) {
-					logger.debug(data);
-					$previousState.go('modalInvoker');
-				}, function(err) {
-					logger.error(err);
-				});
-			}
+		logger.debug('TorrentsAddCtrl loaded.');
 
-			vm.cancel = function() {
+		var vm = this;
+
+		vm.loadTorrent = function(url) {
+			Torrents.loadTorrent(url).then(function(data) {
+				logger.debug(data);
 				$previousState.go('modalInvoker');
-			}
-
+			}, function(err) {
+				logger.error(err);
+			});
 		}
-	]);
+
+		vm.cancel = function() {
+			$previousState.go('modalInvoker');
+		}
+
+	});

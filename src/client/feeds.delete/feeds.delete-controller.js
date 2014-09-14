@@ -4,7 +4,7 @@ module.exports = angular
 
 		var logger = njrtLog.getInstance('feeds.delete.FeedsDeleteCtrl');
 
-		logger.debug('FeedsDeleteCtrl loaded');
+		logger.debug('FeedsDeleteCtrl loaded.');
 
 		var vm = this;
 		

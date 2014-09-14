@@ -4,13 +4,13 @@
 <div class="modal-body">
 	<div class="form-group">
 		<label for="torrent-url">URL:</label>
-		<input type="text" id="torrent-url" class="form-control" placeholder="Torrent URL or Magnet Link" ng-model="torrentsAdd.url">
+		<input type="text" id="torrent-url" class="form-control" placeholder="Torrent URL or Magnet Link" ng-model="torrentsAddCtrl.url">
 		<span class="help-block">Enter in a Magnet link or Torrent link.</span>
 	</div>
 </div>
 <div class="modal-footer">
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary" ng-click="torrentsAdd.loadTorrent(torrentsAdd.url)">Add Link</button>
-		<button type="button" class="btn btn-default" ng-click="torrentsAdd.cancel()">Cancel</button>
+		<button type="submit" class="btn btn-primary" ng-click="torrentsAddCtrl.loadTorrent(torrentsAddCtrl.url)">Add Link</button>
+		<button type="button" class="btn btn-default" ng-click="torrentsAddCtrl.cancel()">Cancel</button>
 	</div>
 </div>

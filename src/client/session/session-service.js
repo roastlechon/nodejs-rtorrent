@@ -2,7 +2,9 @@ module.exports = angular
 	.module('session')
 	.service('SessionService', function(njrtLog, $window, Restangular) {
 
-			var logger = njrtLog.getInstance('SessionService');
+			var logger = njrtLog.getInstance('session.SessionService');
+
+			logger.debug('SessionService loaded.');
 
 			var userSession = {};
 

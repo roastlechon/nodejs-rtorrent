@@ -1,6 +1,10 @@
 module.exports = angular
 	.module('authentication')
-	.factory('Authentication', function($http, $rootScope, $state, $window, Restangular, SessionService, $q) {
+	.factory('Authentication', function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q) {
+
+		var logger = njrtLog.getInstance('authentication.Authentication');
+
+		logger.debug('Authentication loaded.');
 		
 		var Authentication = {};
 

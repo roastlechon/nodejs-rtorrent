@@ -1,8 +1,10 @@
 module.exports = angular
 	.module('torrents')
-	.controller('TorrentsController', function(njrtLog, $state, Torrents, Socket) {
-		var logger = njrtLog.getInstance('TorrentsController');
-		logger.debug('TorrentsController loaded');
+	.controller('TorrentsCtrl', function(njrtLog, $state, Torrents, Socket) {
+		
+		var logger = njrtLog.getInstance('torrents.TorrentsCtrl');
+		
+		logger.debug('TorrentsCtrl loaded.');
 
 		var vm = this;
 

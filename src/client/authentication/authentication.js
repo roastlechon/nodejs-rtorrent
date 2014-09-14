@@ -7,7 +7,10 @@ module.exports = angular
 		log.name
 	])
 	.run(function($rootScope, SessionService, $state, njrtLog, Restangular) {
+
 		var logger = njrtLog.getInstance('authentication');
+
+		logger.debug('Authentication module loaded.');
 
 		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
