@@ -91,7 +91,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="torrent in torrents.torrents | orderBy:torrents.predicate:torrents.reverse | filter:{status: torrents.status} track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
+				<tr ng-repeat="torrent in torrents.torrents | orderBy:torrents.predicate:torrents.reverse | filter:{status: torrents.status} | filter:search track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
 					<td>
 						<div class="clearfix" style="position: relative;">
 							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden;" title="{{torrent.name}}">{{torrent.name}}</h5>
