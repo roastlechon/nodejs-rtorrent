@@ -14,7 +14,7 @@ module.exports = angular
 			views: {
 				'modal@': {
 					templateUrl: 'login/login.tpl.html',
-					controller: 'LoginController as login'
+					controller: 'LoginCtrl as loginCtrl'
 				}
 			},
 			isModal: true

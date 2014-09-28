@@ -28,13 +28,13 @@ gulp.task('clean', function() {
 });
 
 // Copy
-gulp.task('assets', ['clean'], function() {
+gulp.task('assets', function() {
 	return gulp.src('src/assets/**/*')
 		.pipe(gulp.dest('dist'))
 });
 
 // Sass
-gulp.task('sass', ['clean'], function() {
+gulp.task('sass', function() {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
 			style: 'compressed'
@@ -48,11 +48,14 @@ gulp.task('watch_index.html', function() {
 	});
 	watch(['src/client/**/*.html', '!src/client/index.html'], function() {
 		gulp.start('copy_html');
-	})
+	});
+	watch('src/sass/**/*.scss', function() {
+		gulp.start('sass');
+	});
 });
 
 gulp.task('copy_html', function() {
-	gulp.src([
+	return gulp.src([
 		'src/client/**/*.html',
 		'!src/client/index.html'
 		])
@@ -77,7 +80,7 @@ gulp.task('scripts_prod', ['sass', 'assets', 'copy_html'], function() {
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts_dev', ['sass', 'assets', 'copy_html', 'watch_index.html'], function() {
+gulp.task('scripts_dev', ['sass', 'assets', 'copy_html'], function() {
 	var w = watchify(browserify({
 		cache: {},
 		packageCache: {},
@@ -91,6 +94,8 @@ gulp.task('scripts_dev', ['sass', 'assets', 'copy_html', 'watch_index.html'], fu
 			.pipe(source('app.js'))
 			.pipe(gulp.dest('./dist/js'));
 	});
+
+	gulp.start('watch_index.html');
 
 	return w.bundle()
 		.pipe(source('app.js'))

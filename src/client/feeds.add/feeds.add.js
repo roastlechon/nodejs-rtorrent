@@ -13,7 +13,7 @@ module.exports = angular
 			views: {
 				'modal@': {
 					templateUrl: 'feeds.add/feeds.add.tpl.html',
-					controller: 'FeedsAddController as feedsAdd'
+					controller: 'FeedsAddCtrl as feedsAddCtrl'
 				}
 			},
 			isModal: true

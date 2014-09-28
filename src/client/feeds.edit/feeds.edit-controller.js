@@ -1,9 +1,10 @@
 module.exports = angular
 	.module('feeds.edit')
-	.controller('FeedsEditController', function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
-		var logger = njrtLog.getInstance('feeds.edit');
+	.controller('FeedsEditCtrl', function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
+		
+		var logger = njrtLog.getInstance('feeds.edit.FeedsEditCtrl');
 
-		logger.debug('FeedsEditController loaded');
+		logger.debug('FeedsEditCtrl loaded.');
 
 		var vm = this;
 

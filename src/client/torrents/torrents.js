@@ -1,3 +1,4 @@
+var log = require('../log/log');
 var socket = require('../socket/socket');
 var session = require('../session/session');
 
@@ -5,6 +6,7 @@ module.exports = angular
 	.module('torrents', [
 		'ui.router',
 		'restangular',
+		log.name,
 		socket.name,
 		session.name
 	])
@@ -13,7 +15,7 @@ module.exports = angular
 			url: 'torrents',
 			views: {
 				'home@': {
-					controller: 'TorrentsController as torrents',
+					controller: 'TorrentsCtrl as torrentsCtrl',
 					templateUrl: 'torrents/torrents.tpl.html'
 				}
 			},

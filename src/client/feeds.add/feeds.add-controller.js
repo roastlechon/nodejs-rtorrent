@@ -1,10 +1,10 @@
 module.exports = angular
 	.module('feeds.add')
-	.controller('FeedsAddController', function(njrtLog, $state, $scope, Feeds) {
+	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds) {
 
-		var logger = njrtLog.getInstance('feeds.add');
+		var logger = njrtLog.getInstance('feeds.add.FeedsAddCtrl');
 
-		logger.debug('FeedsAddController loaded');
+		logger.debug('FeedsAddCtrl loaded.');
 
 		var vm = this;
 

@@ -4,7 +4,7 @@ module.exports = angular
 
 		var logger = njrtLog.getInstance('feeds.Feeds');
 
-		logger.debug('Feeds loaded');
+		logger.debug('Feeds loaded.');
 
 		var Feeds = {};
 

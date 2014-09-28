@@ -1,13 +1,18 @@
 var log = require('../log/log');
 var session = require('../session/session');
+var socket = require('../socket/socket');
 
 module.exports = angular
 	.module('authentication', [
 		session.name,
-		log.name
+		log.name,
+		socket.name
 	])
 	.run(function($rootScope, SessionService, $state, njrtLog, Restangular) {
+
 		var logger = njrtLog.getInstance('authentication');
+
+		logger.debug('Authentication module loaded.');
 
 		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 

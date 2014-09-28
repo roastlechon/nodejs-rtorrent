@@ -1,5 +1,5 @@
-var session = require('../session/session');
 var log = require('../log/log');
+var session = require('../session/session');
 
 module.exports = angular
 	.module('feeds', [
