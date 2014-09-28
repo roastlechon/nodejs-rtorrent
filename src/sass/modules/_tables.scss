@@ -233,9 +233,15 @@ table {
 }
 
 .content {
-  .table {
-    tbody tr td, th {
-      padding: 5px 15px;
-    }
-  }
+	.table {
+		tbody tr td, th {
+			padding: 5px 15px;
+			vertical-align: middle;
+			
+			.progress {
+				margin-bottom: 0px;
+			}
+
+		}
+	}
 }
