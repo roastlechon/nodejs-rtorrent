@@ -55,7 +55,7 @@ require('./filters/datatransferrate-filter');
 require('./filters/percentage-filter');
 require('./filters/time-filter');
 require('./directives/resize-directive');
-},{"./authentication/authentication":"/vagrant/src/client/authentication/authentication.js","./directives/resize-directive":"/vagrant/src/client/directives/resize-directive.js","./feed/feed":"/vagrant/src/client/feed/feed.js","./feeds.add/feeds.add":"/vagrant/src/client/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/vagrant/src/client/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/vagrant/src/client/feeds.edit/feeds.edit.js","./feeds/feeds":"/vagrant/src/client/feeds/feeds.js","./filters/bytes-filter":"/vagrant/src/client/filters/bytes-filter.js","./filters/datatransferrate-filter":"/vagrant/src/client/filters/datatransferrate-filter.js","./filters/percentage-filter":"/vagrant/src/client/filters/percentage-filter.js","./filters/time-filter":"/vagrant/src/client/filters/time-filter.js","./home/home":"/vagrant/src/client/home/home.js","./login/login":"/vagrant/src/client/login/login.js","./modal/modal":"/vagrant/src/client/modal/modal.js","./session/session":"/vagrant/src/client/session/session.js","./socket/socket":"/vagrant/src/client/socket/socket.js","./templates":"/vagrant/src/client/templates.js","./torrents.add/torrents.add":"/vagrant/src/client/torrents.add/torrents.add.js","./torrents/torrents":"/vagrant/src/client/torrents/torrents.js","angular":"/vagrant/src/vendor/angular/angular.js","angular-ui-bootstrap":"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/vagrant/src/vendor/jquery/dist/jquery.js","moment":"/vagrant/node_modules/moment/moment.js","ng-context-menu":"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/vagrant/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/vagrant/src/vendor/underscore/underscore.js"}],"/vagrant/node_modules/moment/moment.js":[function(require,module,exports){
+},{"./authentication/authentication":"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication.js","./directives/resize-directive":"/home/ingrid/gitstuff/nrtorrent/src/client/directives/resize-directive.js","./feed/feed":"/home/ingrid/gitstuff/nrtorrent/src/client/feed/feed.js","./feeds.add/feeds.add":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.edit/feeds.edit.js","./feeds/feeds":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js","./filters/bytes-filter":"/home/ingrid/gitstuff/nrtorrent/src/client/filters/bytes-filter.js","./filters/datatransferrate-filter":"/home/ingrid/gitstuff/nrtorrent/src/client/filters/datatransferrate-filter.js","./filters/percentage-filter":"/home/ingrid/gitstuff/nrtorrent/src/client/filters/percentage-filter.js","./filters/time-filter":"/home/ingrid/gitstuff/nrtorrent/src/client/filters/time-filter.js","./home/home":"/home/ingrid/gitstuff/nrtorrent/src/client/home/home.js","./login/login":"/home/ingrid/gitstuff/nrtorrent/src/client/login/login.js","./modal/modal":"/home/ingrid/gitstuff/nrtorrent/src/client/modal/modal.js","./session/session":"/home/ingrid/gitstuff/nrtorrent/src/client/session/session.js","./socket/socket":"/home/ingrid/gitstuff/nrtorrent/src/client/socket/socket.js","./templates":"/home/ingrid/gitstuff/nrtorrent/src/client/templates.js","./torrents.add/torrents.add":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents.add/torrents.add.js","./torrents/torrents":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents.js","angular":"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular/angular.js","angular-ui-bootstrap":"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/home/ingrid/gitstuff/nrtorrent/src/vendor/jquery/dist/jquery.js","moment":"/home/ingrid/gitstuff/nrtorrent/node_modules/moment/moment.js","ng-context-menu":"/home/ingrid/gitstuff/nrtorrent/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/home/ingrid/gitstuff/nrtorrent/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/home/ingrid/gitstuff/nrtorrent/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/home/ingrid/gitstuff/nrtorrent/src/vendor/underscore/underscore.js"}],"/home/ingrid/gitstuff/nrtorrent/node_modules/moment/moment.js":[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.3
@@ -2915,7 +2915,7 @@ require('./directives/resize-directive');
 }).call(this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/vagrant/src/client/authentication/authentication-controller.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('authentication')
 	.controller('AuthenticationController', function(njrtLog, Authentication, $previousState) {
@@ -2929,7 +2929,7 @@ module.exports = angular
 		vm.Authentication = Authentication;
 
 	});
-},{}],"/vagrant/src/client/authentication/authentication-factory.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('authentication')
 	.factory('Authentication', function($http, $rootScope, $state, $window, Restangular, SessionService, $q) {
@@ -2979,7 +2979,7 @@ module.exports = angular
 
 		return Authentication;
 	});
-},{}],"/vagrant/src/client/authentication/authentication.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication.js":[function(require,module,exports){
 var log = require('../log/log');
 var session = require('../session/session');
 
@@ -3032,7 +3032,7 @@ module.exports = angular
 
 require('./authentication-factory');
 require('./authentication-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","./authentication-controller":"/vagrant/src/client/authentication/authentication-controller.js","./authentication-factory":"/vagrant/src/client/authentication/authentication-factory.js"}],"/vagrant/src/client/directives/resize-directive.js":[function(require,module,exports){
+},{"../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","../session/session":"/home/ingrid/gitstuff/nrtorrent/src/client/session/session.js","./authentication-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication-controller.js","./authentication-factory":"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication-factory.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/directives/resize-directive.js":[function(require,module,exports){
 module.exports = angular
 	.module('app')
 	.directive('resize', ['$window',
@@ -3057,7 +3057,7 @@ module.exports = angular
 			};
 		}
 	]);
-},{}],"/vagrant/src/client/feed/feed-controller.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feed/feed-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feed')
 	.controller('FeedCtrl', function(njrtLog, $state, $scope, feed, Torrents) {
@@ -3081,7 +3081,7 @@ module.exports = angular
 		}
 
 	});
-},{}],"/vagrant/src/client/feed/feed.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feed/feed.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 var torrents = require('../torrents/torrents');
@@ -3116,7 +3116,7 @@ module.exports = angular
 	});
 
 require('./feed-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./feed-controller":"/vagrant/src/client/feed/feed-controller.js"}],"/vagrant/src/client/feeds.add/feeds.add-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js","../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","../torrents/torrents":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents.js","./feed-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/feed/feed-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.add/feeds.add-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.add')
 	.controller('FeedsAddController', function(njrtLog, $state, $scope, Feeds) {
@@ -3193,7 +3193,7 @@ module.exports = angular
 			$state.go('home.feeds');
 		}
 	});
-},{}],"/vagrant/src/client/feeds.add/feeds.add.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.add/feeds.add.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3217,7 +3217,7 @@ module.exports = angular
 	});
 
 require('./feeds.add-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.add-controller":"/vagrant/src/client/feeds.add/feeds.add-controller.js"}],"/vagrant/src/client/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js","../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./feeds.add-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.add/feeds.add-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.delete')
 	.controller('FeedsDeleteCtrl', function(njrtLog, $state, feed, $modal, Feeds) {
@@ -3246,7 +3246,7 @@ module.exports = angular
 
 		
 	});
-},{}],"/vagrant/src/client/feeds.delete/feeds.delete.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.delete/feeds.delete.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3278,7 +3278,7 @@ module.exports = angular
 	});
 
 require('./feeds.delete-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.delete-controller":"/vagrant/src/client/feeds.delete/feeds.delete-controller.js"}],"/vagrant/src/client/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js","../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./feeds.delete-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.delete/feeds.delete-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.edit')
 	.controller('FeedsEditController', function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
@@ -3350,7 +3350,7 @@ module.exports = angular
 		}
 
 	});
-},{}],"/vagrant/src/client/feeds.edit/feeds.edit.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.edit/feeds.edit.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3384,7 +3384,7 @@ module.exports = angular
 	});
 
 require('./feeds.edit-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.edit-controller":"/vagrant/src/client/feeds.edit/feeds.edit-controller.js"}],"/vagrant/src/client/feeds/feeds-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js","../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./feeds.edit-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds.edit/feeds.edit-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds')
 	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds) {
@@ -3398,7 +3398,7 @@ module.exports = angular
 		vm.Feeds = Feeds;
 		
 	});
-},{}],"/vagrant/src/client/feeds/feeds-factory.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds')
 	.factory('Feeds', function(njrtLog, Restangular, $q) {
@@ -3503,7 +3503,7 @@ module.exports = angular
 		return Feeds;
 
 	});
-},{}],"/vagrant/src/client/feeds/feeds.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds.js":[function(require,module,exports){
 var session = require('../session/session');
 var log = require('../log/log');
 
@@ -3536,7 +3536,7 @@ module.exports = angular
 
 require('./feeds-factory');
 require('./feeds-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","./feeds-controller":"/vagrant/src/client/feeds/feeds-controller.js","./feeds-factory":"/vagrant/src/client/feeds/feeds-factory.js"}],"/vagrant/src/client/filters/bytes-filter.js":[function(require,module,exports){
+},{"../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","../session/session":"/home/ingrid/gitstuff/nrtorrent/src/client/session/session.js","./feeds-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds-controller.js","./feeds-factory":"/home/ingrid/gitstuff/nrtorrent/src/client/feeds/feeds-factory.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/filters/bytes-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('bytes', function() {
 		return function(bytes, precision) {
@@ -3548,7 +3548,7 @@ module.exports = angular.module('app')
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
 		}
 	});
-},{}],"/vagrant/src/client/filters/datatransferrate-filter.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/filters/datatransferrate-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('dataTransferRate', function() {
 		return function(dataTransferRate, precision) {
@@ -3560,7 +3560,7 @@ module.exports = angular.module('app')
 			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
 		}
 	});
-},{}],"/vagrant/src/client/filters/percentage-filter.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/filters/percentage-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('percentage', function() {
 		return function(input) {
@@ -3572,7 +3572,7 @@ module.exports = angular.module('app')
 			return percentage;
 		};
 	});
-},{}],"/vagrant/src/client/filters/time-filter.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/filters/time-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('time', function() {
 		return function(value) {
@@ -3596,7 +3596,7 @@ module.exports = angular.module('app')
 			}
 		}
 	})
-},{}],"/vagrant/src/client/home/home.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/home/home.js":[function(require,module,exports){
 module.exports = angular
 	.module('home', [
 		'ui.router'
@@ -3616,7 +3616,7 @@ module.exports = angular
 			// }
 		});
 	});
-},{}],"/vagrant/src/client/log/log.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js":[function(require,module,exports){
 var moment = require('moment');
 
 module.exports = angular
@@ -3647,7 +3647,7 @@ module.exports = angular
 			return $log.getInstance(context);
 		}
 	});
-},{"moment":"/vagrant/node_modules/moment/moment.js"}],"/vagrant/src/client/login/login-controller.js":[function(require,module,exports){
+},{"moment":"/home/ingrid/gitstuff/nrtorrent/node_modules/moment/moment.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/login/login-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('login')
 	.controller('LoginController', function(njrtLog, Authentication, $state) {
@@ -3675,7 +3675,7 @@ module.exports = angular
 			});
 		};
 	});
-},{}],"/vagrant/src/client/login/login.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/login/login.js":[function(require,module,exports){
 var log = require('../log/log');
 var authentication = require('../authentication/authentication');
 
@@ -3700,7 +3700,7 @@ module.exports = angular
 	});
 
 require('./login-controller');
-},{"../authentication/authentication":"/vagrant/src/client/authentication/authentication.js","../log/log":"/vagrant/src/client/log/log.js","./login-controller":"/vagrant/src/client/login/login-controller.js"}],"/vagrant/src/client/modal/modal.js":[function(require,module,exports){
+},{"../authentication/authentication":"/home/ingrid/gitstuff/nrtorrent/src/client/authentication/authentication.js","../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./login-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/login/login-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/modal/modal.js":[function(require,module,exports){
 module.exports = angular
 	.module('modal', [
 		'ui.bootstrap',
@@ -3760,7 +3760,7 @@ module.exports = angular
 
 		});
 	});
-},{}],"/vagrant/src/client/session/session-service.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/session/session-service.js":[function(require,module,exports){
 module.exports = angular
 	.module('session')
 	.service('SessionService', function(njrtLog, $window, Restangular) {
@@ -3829,7 +3829,7 @@ module.exports = angular
 			loadExistingSession();
 
 		});
-},{}],"/vagrant/src/client/session/session.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/session/session.js":[function(require,module,exports){
 var log = require('../log/log');
 
 module.exports = angular
@@ -3838,7 +3838,7 @@ module.exports = angular
 	]);
 
 require('./session-service');
-},{"../log/log":"/vagrant/src/client/log/log.js","./session-service":"/vagrant/src/client/session/session-service.js"}],"/vagrant/src/client/socket/socket-factory.js":[function(require,module,exports){
+},{"../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./session-service":"/home/ingrid/gitstuff/nrtorrent/src/client/session/session-service.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/socket/socket-factory.js":[function(require,module,exports){
 var io = require('socket-io');
 
 module.exports = angular
@@ -3898,7 +3898,7 @@ module.exports = angular
 		return Socket;
 
 	});
-},{"socket-io":"/vagrant/src/vendor/socket.io-client/dist/socket.io.js"}],"/vagrant/src/client/socket/socket.js":[function(require,module,exports){
+},{"socket-io":"/home/ingrid/gitstuff/nrtorrent/src/vendor/socket.io-client/dist/socket.io.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/socket/socket.js":[function(require,module,exports){
 var log = require('../log/log');
 
 module.exports = angular
@@ -3907,7 +3907,7 @@ module.exports = angular
 	]);
 
 require('./socket-factory');
-},{"../log/log":"/vagrant/src/client/log/log.js","./socket-factory":"/vagrant/src/client/socket/socket-factory.js"}],"/vagrant/src/client/templates.js":[function(require,module,exports){
+},{"../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","./socket-factory":"/home/ingrid/gitstuff/nrtorrent/src/client/socket/socket-factory.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/templates.js":[function(require,module,exports){
 angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("feed/feed.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Name</th><th>Date</th><th>Status</th><th>Load</th></tr></thead><tbody><tr ng-repeat=\"torrent in feedCtrl.feed.torrents\"><td>{{torrent.name}}</td><td>{{torrent.date | date:\"medium\"}}</td><td>{{torrent.status}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedCtrl.loadTorrent(torrent)\">Load</a></td></tr></tbody></table></div></div>");
 $templateCache.put("feeds/feeds.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"feedPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.feeds.add\">Add Feed</a></li></ul><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>RSS</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>Last Checked</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"feedPanel = !feedPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': feedPanel, \'fa-caret-left\': !feedPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Title</th><th>RSS</th><th>Last Checked</th><th>Auto Download?</th><th>Refresh</th><th>Edit</th><th>Delete</th></tr></thead><tbody><tr ng-repeat=\"feed in feedsCtrl.Feeds.feeds\"><td style=\"width: 30%;\"><a ui-sref=\"home.feeds.view({id: feed._id})\">{{feed.title}}</a></td><td>{{feed.rss}}</td><td>{{feed.lastChecked * 1000 | date:\'medium\'}}</td><td>{{feed.autoDownload}}</td><td><a href=\"#\">Refresh</a></td><td><a ui-sref=\"home.feeds.edit({id: feed._id})\">Edit</a></td><td><a ui-sref=\"home.feeds.delete({id: feed._id})\">Delete</a></td></tr></tbody></table></div></div>");
 $templateCache.put("feeds.add/feeds.add.tpl.html","<form name=\"addFeed\" novalidate><div class=\"modal-header\"><h3>Add Feed</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Name (Required):</label><input type=\"text\" id=\"feedName\" name=\"feedName\" class=\"form-control\" ng-model=\"feedsAdd.feed.name\" required><p class=\"help-block\" ng-show=\"addFeed.feedName.$error.required\">Please enter in a name.</p></div><div class=\"form-group\"><label for=\"feedUrl\">URL (Required):</label><input type=\"text\" id=\"feedUrl\" name=\"feedUrl\" class=\"form-control\" ng-model=\"feedsAdd.feed.url\" required><p class=\"help-block\" ng-show=\"addFeed.feedUrl.$error.required\">Please enter in a URL.</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsAdd.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsAdd.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to add regex filters.</p></div><div ng-if=\"feedsAdd.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsAdd.newFilter.regex\" style=\"width: 300px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsAdd.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsAdd.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn\" ng-click=\"feedsAdd.addFilter(feedsAdd.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled\"><li ng-repeat=\"filter in feedsAdd.feed.filters track by $index\">{{filter.regex}} <span class=\"badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsAdd.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"feedsAdd.checkDisabled()\" ng-click=\"feedsAdd.addRssFeed()\">Add Feed</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAdd.cancel()\">Cancel</button></div></div></form>");
@@ -3918,7 +3918,7 @@ $templateCache.put("login/login.tpl.html","<form ng-submit=\"login.login()\"><di
 $templateCache.put("settings/settings.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div class=\"col-xs-12\"><fieldset><legend>Listening Port</legend><div class=\"form-group\"><label for=\"listening-port-range\">Port range used for incoming connections:</label><input type=\"number\" name=\"listening-port-range\" id=\"listening-port-range\" value class=\"form-control\"></div><div class=\"checkbox\"><label><input type=\"checkbox\" name=\"randomize-listening-port\">Randomize port each time rTorrent starts.</label></div></fieldset><fieldset><legend>Bandwidth Settings</legend><div class=\"form-group\"><label for=\"number-upload-slots\">Number of upload slots:</label><input type=\"number\" name=\"number-upload-slots\" id=\"number-upload-slots\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers\">Minimum number of peers:</label><input type=\"number\" name=\"min-number-peers\" id=\"min-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers\">Maximum number of peers:</label><input type=\"number\" name=\"max-number-peers\" id=\"max-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers-seeding\">Minimum number of peers for seeding:</label><input type=\"number\" name=\"min-number-peers-seeding\" id=\"min-number-peers-seeding\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers-seeding\">Maximum number of peers for seeding:</label><input type=\"number\" name=\"max-number-peers-seeding\" id=\"max-number-peers-seeding\" value class=\"form-control\"></div></fieldset><fieldset><legend>Bandwidth Limiting</legend><div class=\"from-group\"><label for=\"global-max-upload-rate\">Global maximum upload rate: (kB/s)</label><input type=\"number\" name=\"global-max-upload-rate\" id=\"global-max-upload-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div><div class=\"form-group\"><label for=\"global-max-download-rate\">Global maximum download rate: (kB/s)</label><input type=\"number\" name=\"global-max-download-rate\" id=\"global-max-download-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div></fieldset></div></div>");
 $templateCache.put("torrents/torrents.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"torrentPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.torrents.add\">Add Torrent</a></li></ul><h4>Filter by Status</h4><ul class=\"list-unstyled\"><li><a href ng-click=\"torrents.status=\'\'\">All <i ng-class=\"{\'fa fa-check\': torrents.status===\'\'}\" ng-init=\"torrents.status=\'\'\"></i></a></li><li><a href ng-click=\"torrents.status=\'downloading\'\">Downloading <i ng-class=\"{\'fa fa-check\': torrents.status===\'downloading\'}\"></i></a></li><li><a href ng-click=\"torrents.status=\'finished\'\">Finished <i ng-class=\"{\'fa fa-check\': torrents.status===\'finished\'}\"></i></a></li><li><a href ng-click=\"torrents.status=\'stopped\'\">Stopped <i ng-class=\"{\'fa fa-check\': torrents.status===\'stopped\'}\"></i></a></li><li><a href ng-click=\"torrents.status=\'seeding\'\">Seeding <i ng-class=\"{\'fa fa-check\': torrents.status===\'seeding\'}\"></i></a></li></ul><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"status_col=!status_col\" checked>Status</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"size_col=!size_col\" checked>Size</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"percent_downloaded_col=!percent_downloaded_col\" checked>Done</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"downloaded_col=!downloaded_col\" checked>Downloaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"uploaded_col=!uploaded_col\" checked>Uploaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"dl_speed_col=!dl_speed_col\" checked>DL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"ul_speed_col=!ul_speed_col\" checked>UL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"time_remaining_col=!time_remaining_col\" checked>ETA</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"peers_col=!peers_col\" checked>Peers</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"seeds_col=!seeds_col\" checked>Seeds</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"torrentPanel = !torrentPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': torrentPanel, \'fa-caret-left\': !torrentPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;\"><table class=\"table table-condensed table-hover\" style=\"min-width: 1400px;\"><thead><tr><th style=\"width: 30%;\"><a href ng-click=\"torrents.predicate=\'name\';torrents.reverse=!torrents.reverse\">Name <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'name\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'name\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"status_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'status\';torrents.reverse=!torrents.reverse\">Status <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'status\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'status\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"size_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'size\';torrents.reverse=!torrents.reverse\">Size <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'size\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'size\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"percent_downloaded_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'percent_downloaded\';torrents.reverse=!torrents.reverse\">Done <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'percent_downloaded\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'percent_downloaded\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"downloaded_col\" style=\"width: 140px;\"><a href ng-click=\"torrents.predicate=\'downloaded\';torrents.reverse=!torrents.reverse\">Downloaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'downloaded\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'downloaded\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"uploaded_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'uploaded\';torrents.reverse=!torrents.reverse\">Uploaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'uploaded\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'uploaded\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"dl_speed_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'dl_speed\';torrents.reverse=!torrents.reverse\">DL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'dl_speed\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'dl_speed\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"ul_speed_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'ul_speed\';torrents.reverse=!torrents.reverse\">UL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'ul_speed\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'ul_speed\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"time_remaining_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'time_remaining\';torrents.reverse=!torrents.reverse\">ETA <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'time_remaining\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'time_remaining\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"peers_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'peers\';torrents.reverse=!torrents.reverse\">Peers <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'peers\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'peers\' && !torrents.reverse}\"></i></a></th><th ng-hide=\"seeds_col\" style=\"width: 120px;\"><a href ng-click=\"torrents.predicate=\'seeds\';torrents.reverse=!torrents.reverse\">Seeds <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrents.predicate===\'seeds\' && torrents.reverse, \'fa-caret-down\': torrents.predicate===\'seeds\' && !torrents.reverse}\"></i></a></th></tr></thead><tbody><tr ng-repeat=\"torrent in torrents.torrents | orderBy:torrents.predicate:torrents.reverse | filter:{status: torrents.status} track by torrent.hash\" class=\"torrent\" context-menu data-target=\"menu-{{$index}}\"><td><div class=\"clearfix\" style=\"position: relative;\"><h5 class=\"pull-left\" style=\"white-space: nowrap; overflow: hidden;\" title=\"{{torrent.name}}\">{{torrent.name}}</h5></div><div class=\"dropdown position-fixed\" id=\"menu-{{$index}}\"><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"torrents.t.start(torrent.hash)\">Play</a></li><li><a href ng-click=\"torrents.t.pause(torrent.hash)\">Pause</a></li><li><a href ng-click=\"torrents.t.stop(torrent.hash)\">Stop</a></li><li class=\"divider\"></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Priority</a><ul class=\"dropdown-menu\"><li><a href>High</a></li><li><a href>Medium</a></li><li><a href>Low</a></li><li><a href>Don\'t Download</a></li></ul></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Set Channel</a><ul class=\"dropdown-menu\"><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'\')\">No Channel</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'up_4\')\">Up16</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'up_3\')\">Up32</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'up_2\')\">Up64</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'up_1\')\">Up128</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'up_0\')\">Up256</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'down_4\')\">Down16</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'down_3\')\">Down32</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'down_2\')\">Down64</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'down_1\')\">Down128</a></li><li><a href ng-click=\"torrents.t.setChannel(torrent.hash, \'down_0\')\">Down256</a></li></ul></li><li class=\"divider\"></li><li><a href ng-click=\"torrents.t.remove(torrent.hash)\">Remove</a></li><li><a href ng-click>Details</a></li></ul></div></td><td ng-hide=\"status_col\">{{torrent.status}}</td><td ng-hide=\"size_col\">{{torrent.size | bytes}}</td><td ng-hide=\"percent_downloaded_col\"><div class=\"progress\"><div class=\"progress-bar\" style=\"width: {{torrent.percent_downloaded | percentage}}\" ng-class=\"{\'progress-bar-warning\': torrent.status === \'checking\', \'progress-bar-success\': torrent.status === \'seeding\'}\">{{torrent.percent_downloaded | percentage}}</div></div></td><td ng-hide=\"downloaded_col\">{{torrent.downloaded | bytes}}</td><td ng-hide=\"uploaded_col\">{{torrent.uploaded | bytes}}</td><td ng-hide=\"dl_speed_col\">{{torrent.dl_speed | dataTransferRate}}</td><td ng-hide=\"ul_speed_col\">{{torrent.ul_speed | dataTransferRate}}</td><td ng-hide=\"time_remaining_col\">{{torrent.time_remaining | time}}</td><td ng-hide=\"peers_col\">{{torrent.peers}} ({{torrent.total_peers}})</td><td ng-hide=\"seeds_col\">{{torrent.seeds}} ({{torrent.total_seeds}})</td></tr></tbody></table></div></div>");
 $templateCache.put("torrents.add/torrents.add.tpl.html","<div class=\"modal-header\"><h3>Add Torrent</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"torrent-url\">URL:</label><input type=\"text\" id=\"torrent-url\" class=\"form-control\" placeholder=\"Torrent URL or Magnet Link\" ng-model=\"torrentsAdd.url\"><span class=\"help-block\">Enter in a Magnet link or Torrent link.</span></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary\" ng-click=\"torrentsAdd.loadTorrent(torrentsAdd.url)\">Add Link</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"torrentsAdd.cancel()\">Cancel</button></div></div>");}]);
-},{}],"/vagrant/src/client/torrents.add/torrents.add-controller.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/torrents.add/torrents.add-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents.add')
 	.controller('TorrentsAddController', ['njrtLog', '$previousState', 'Torrents',
@@ -3945,7 +3945,7 @@ module.exports = angular
 
 		}
 	]);
-},{}],"/vagrant/src/client/torrents.add/torrents.add.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/torrents.add/torrents.add.js":[function(require,module,exports){
 var log = require('../log/log');
 var torrents = require('../torrents/torrents');
 
@@ -3969,7 +3969,7 @@ module.exports = angular
 	});
 
 require('./torrents.add-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./torrents.add-controller":"/vagrant/src/client/torrents.add/torrents.add-controller.js"}],"/vagrant/src/client/torrents/torrents-controller.js":[function(require,module,exports){
+},{"../log/log":"/home/ingrid/gitstuff/nrtorrent/src/client/log/log.js","../torrents/torrents":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents.js","./torrents.add-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents.add/torrents.add-controller.js"}],"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents')
 	.controller('TorrentsController', function(njrtLog, $state, Torrents, Socket) {
@@ -4009,7 +4009,7 @@ module.exports = angular
 			vm.torrents = data;
 		});
 	});
-},{}],"/vagrant/src/client/torrents/torrents-factory.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents')
 	.factory('Torrents', function (Restangular) {
@@ -4052,7 +4052,7 @@ module.exports = angular
 
 		return Torrents;
 	});
-},{}],"/vagrant/src/client/torrents/torrents.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents.js":[function(require,module,exports){
 var socket = require('../socket/socket');
 var session = require('../session/session');
 
@@ -4080,7 +4080,7 @@ module.exports = angular
 
 	require('./torrents-factory');
 	require('./torrents-controller');
-},{"../session/session":"/vagrant/src/client/session/session.js","../socket/socket":"/vagrant/src/client/socket/socket.js","./torrents-controller":"/vagrant/src/client/torrents/torrents-controller.js","./torrents-factory":"/vagrant/src/client/torrents/torrents-factory.js"}],"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
+},{"../session/session":"/home/ingrid/gitstuff/nrtorrent/src/client/session/session.js","../socket/socket":"/home/ingrid/gitstuff/nrtorrent/src/client/socket/socket.js","./torrents-controller":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents-controller.js","./torrents-factory":"/home/ingrid/gitstuff/nrtorrent/src/client/torrents/torrents-factory.js"}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -7759,7 +7759,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
     "</ul>");
 }]);
 
-},{}],"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular-ui-router/release/angular-ui-router.js":[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.11
@@ -11419,11 +11419,11 @@ angular.module('ui.router.state')
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
 
-},{}],"/vagrant/src/vendor/angular/angular.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/angular/angular.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /**
- * @license AngularJS v1.2.23
+ * @license AngularJS v1.2.25
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11492,7 +11492,7 @@ function minErr(module) {
       return match;
     });
 
-    message = message + '\nhttp://errors.angularjs.org/1.2.23/' +
+    message = message + '\nhttp://errors.angularjs.org/1.2.25/' +
       (module ? module + '/' : '') + code;
     for (i = 2; i < arguments.length; i++) {
       message = message + (i == 2 ? '?' : '&') + 'p' + (i-2) + '=' +
@@ -13411,11 +13411,11 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.2.23',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.2.25',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 2,
-  dot: 23,
-  codeName: 'superficial-malady'
+  dot: 25,
+  codeName: 'hypnotic-gesticulation'
 };
 
 
@@ -16005,6 +16005,13 @@ function Browser(window, document, $log, $sniffer) {
     urlChangeListeners.push(callback);
     return callback;
   };
+
+  /**
+   * Checks whether the url has changed outside of Angular.
+   * Needs to be exported to be able to check for changes that have been done in sync,
+   * as hashchange/popstate events fire in async.
+   */
+  self.$$checkUrlChange = fireUrlChange;
 
   //////////////////////////////////////////////////////////////
   // Misc API
@@ -19831,7 +19838,7 @@ function $HttpProvider() {
           if (isObject(v)) {
             if (isDate(v)){
               v = v.toISOString();
-            } else if (isObject(v)) {
+            } else {
               v = toJson(v);
             }
           }
@@ -20281,7 +20288,7 @@ function $InterpolateProvider() {
      * @description
      * Symbol to denote the start of expression in the interpolated string. Defaults to `{{`.
      *
-     * Use {@link ng.$interpolateProvider#startSymbol $interpolateProvider#startSymbol} to change
+     * Use {@link ng.$interpolateProvider#startSymbol `$interpolateProvider.startSymbol`} to change
      * the symbol.
      *
      * @returns {string} start symbol.
@@ -20297,7 +20304,7 @@ function $InterpolateProvider() {
      * @description
      * Symbol to denote the end of expression in the interpolated string. Defaults to `}}`.
      *
-     * Use {@link ng.$interpolateProvider#endSymbol $interpolateProvider#endSymbol} to change
+     * Use {@link ng.$interpolateProvider#endSymbol `$interpolateProvider.endSymbol`} to change
      * the symbol.
      *
      * @returns {string} end symbol.
@@ -20887,17 +20894,16 @@ LocationHashbangInHtml5Url.prototype =
    * Change path, search and hash, when called with parameter and return `$location`.
    *
    * @param {string=} url New url without base prefix (e.g. `/path?a=b#hash`)
-   * @param {string=} replace The path that will be changed
    * @return {string} url
    */
-  url: function(url, replace) {
+  url: function(url) {
     if (isUndefined(url))
       return this.$$url;
 
     var match = PATH_MATCH.exec(url);
     if (match[1]) this.path(decodeURIComponent(match[1]));
     if (match[2] || match[1]) this.search(match[3] || '');
-    this.hash(match[5] || '', replace);
+    this.hash(match[5] || '');
 
     return this;
   },
@@ -20955,10 +20961,11 @@ LocationHashbangInHtml5Url.prototype =
    * Note: Path should always begin with forward slash (/), this method will add the forward slash
    * if it is missing.
    *
-   * @param {string=} path New path
+   * @param {(string|number)=} path New path
    * @return {string} path
    */
   path: locationGetterSetter('$$path', function(path) {
+    path = path ? path.toString() : '';
     return path.charAt(0) == '/' ? path : '/' + path;
   }),
 
@@ -20994,7 +21001,7 @@ LocationHashbangInHtml5Url.prototype =
    * If the argument is a hash object containing an array of values, these values will be encoded
    * as duplicate search parameters in the url.
    *
-   * @param {(string|Array<string>|boolean)=} paramValue If `search` is a string, then `paramValue`
+   * @param {(string|Number|Array<string>|boolean)=} paramValue If `search` is a string or number, then `paramValue`
    * will override only a single search property.
    *
    * If `paramValue` is an array, it will override the property of the `search` component of
@@ -21013,7 +21020,8 @@ LocationHashbangInHtml5Url.prototype =
       case 0:
         return this.$$search;
       case 1:
-        if (isString(search)) {
+        if (isString(search) || isNumber(search)) {
+          search = search.toString();
           this.$$search = parseKeyValue(search);
         } else if (isObject(search)) {
           // remove object undefined or null properties
@@ -21050,10 +21058,12 @@ LocationHashbangInHtml5Url.prototype =
    *
    * Change hash fragment when called with parameter and return `$location`.
    *
-   * @param {string=} hash New hash fragment
+   * @param {(string|number)=} hash New hash fragment
    * @return {string} hash
    */
-  hash: locationGetterSetter('$$hash', identity),
+  hash: locationGetterSetter('$$hash', function(hash) {
+    return hash ? hash.toString() : '';
+  }),
 
   /**
    * @ngdoc method
@@ -22248,7 +22258,7 @@ Parser.prototype = {
       var context = contextGetter ? contextGetter(scope, locals) : scope;
 
       for (var i = 0; i < argsFn.length; i++) {
-        args.push(argsFn[i](scope, locals));
+        args.push(ensureSafeObject(argsFn[i](scope, locals), parser.text));
       }
       var fnPtr = fn(scope, locals, context) || noop;
 
@@ -22336,13 +22346,15 @@ Parser.prototype = {
 //////////////////////////////////////////////////
 
 function setter(obj, path, setValue, fullExp, options) {
+  ensureSafeObject(obj, fullExp);
+
   //needed?
   options = options || {};
 
   var element = path.split('.'), key;
   for (var i = 0; element.length > 1; i++) {
     key = ensureSafeMemberName(element.shift(), fullExp);
-    var propertyObj = obj[key];
+    var propertyObj = ensureSafeObject(obj[key], fullExp);
     if (!propertyObj) {
       propertyObj = {};
       obj[key] = propertyObj;
@@ -22362,7 +22374,6 @@ function setter(obj, path, setValue, fullExp, options) {
     }
   }
   key = ensureSafeMemberName(element.shift(), fullExp);
-  ensureSafeObject(obj, fullExp);
   ensureSafeObject(obj[key], fullExp);
   obj[key] = setValue;
   return setValue;
@@ -23426,10 +23437,26 @@ function $RootScopeProvider(){
     /**
      * @ngdoc property
      * @name $rootScope.Scope#$id
-     * @returns {number} Unique scope ID (monotonically increasing alphanumeric sequence) useful for
-     *   debugging.
+     *
+     * @description
+     * Unique scope ID (monotonically increasing) useful for debugging.
      */
 
+     /**
+      * @ngdoc property
+      * @name $rootScope.Scope#$parent
+      *
+      * @description
+      * Reference to the parent scope.
+      */
+
+      /**
+       * @ngdoc property
+       * @name $rootScope.Scope#$root
+       *
+       * @description
+       * Reference to the root scope.
+       */
 
     Scope.prototype = {
       constructor: Scope,
@@ -23441,9 +23468,8 @@ function $RootScopeProvider(){
        * @description
        * Creates a new child {@link ng.$rootScope.Scope scope}.
        *
-       * The parent scope will propagate the {@link ng.$rootScope.Scope#$digest $digest()} and
-       * {@link ng.$rootScope.Scope#$digest $digest()} events. The scope can be removed from the
-       * scope hierarchy using {@link ng.$rootScope.Scope#$destroy $destroy()}.
+       * The parent scope will propagate the {@link ng.$rootScope.Scope#$digest $digest()} event.
+       * The scope can be removed from the scope hierarchy using {@link ng.$rootScope.Scope#$destroy $destroy()}.
        *
        * {@link ng.$rootScope.Scope#$destroy $destroy()} must be called on a scope when it is
        * desired for the scope and its child scopes to be permanently detached from the parent and
@@ -23896,6 +23922,8 @@ function $RootScopeProvider(){
             logIdx, logMsg, asyncTask;
 
         beginPhase('$digest');
+        // Check for changes to browser url that happened in sync before the call to $digest
+        $browser.$$checkUrlChange();
 
         lastDirtyWatch = null;
 
@@ -25949,16 +25977,6 @@ function $WindowProvider(){
  * For more information about how angular filters work, and how to create your own filters, see
  * {@link guide/filter Filters} in the Angular Developer Guide.
  */
-/**
- * @ngdoc method
- * @name $filterProvider#register
- * @description
- * Register filter factory function.
- *
- * @param {String} name Name of the filter.
- * @param {Function} fn The filter factory function which is injectable.
- */
-
 
 /**
  * @ngdoc service
@@ -25997,7 +26015,7 @@ function $FilterProvider($provide) {
 
   /**
    * @ngdoc method
-   * @name $controllerProvider#register
+   * @name $filterProvider#register
    * @param {string|Object} name Name of the filter function, or an object map of filters where
    *    the keys are the filter names and the values are the filter factories.
    * @returns {Object} Registered filter instance, or if a map of filters was provided then a map
@@ -26070,7 +26088,9 @@ function $FilterProvider($provide) {
  *     which have property `name` containing "M" and property `phone` containing "1". A special
  *     property name `$` can be used (as in `{$:"text"}`) to accept a match against any
  *     property of the object. That's equivalent to the simple substring match with a `string`
- *     as described above.
+ *     as described above. The predicate can be negated by prefixing the string with `!`.
+ *     For Example `{name: "!M"}` predicate will return an array of items which have property `name`
+ *     not containing "M".
  *
  *   - `function(value)`: A predicate function can be used to write arbitrary filters. The function is
  *     called for each element of `array`. The final result is an array of those elements that
@@ -26419,6 +26439,10 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
     number = +(Math.round(+(number.toString() + 'e' + fractionSize)).toString() + 'e' + -fractionSize);
 
+    if (number === 0) {
+      isNegative = false;
+    }
+
     var fraction = ('' + number).split(DECIMAL_SEP);
     var whole = fraction[0];
     fraction = fraction[1] || '';
@@ -26588,8 +26612,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
  *   * `'mediumTime'`: equivalent to `'h:mm:ss a'` for en_US locale (e.g. 12:05:08 pm)
  *   * `'shortTime'`: equivalent to `'h:mm a'` for en_US locale (e.g. 12:05 pm)
  *
- *   `format` string can contain literal values. These need to be quoted with single quotes (e.g.
- *   `"h 'in the morning'"`). In order to output single quote, use two single quotes in a sequence
+ *   `format` string can contain literal values. These need to be escaped by surrounding with single quotes (e.g.
+ *   `"h 'in the morning'"`). In order to output a single quote, escape it - i.e., two single quotes in a sequence
  *   (e.g. `"h 'o''clock'"`).
  *
  * @param {(Date|number|string)} date Date to format either as Date object, milliseconds (string or
@@ -26609,6 +26633,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
           <span>{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><br>
        <span ng-non-bindable>{{1288323623006 | date:'MM/dd/yyyy @ h:mma'}}</span>:
           <span>{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><br>
+       <span ng-non-bindable>{{1288323623006 | date:"MM/dd/yyyy 'at' h:mma"}}</span>:
+          <span>{{'1288323623006' | date:"MM/dd/yyyy 'at' h:mma"}}</span><br>
      </file>
      <file name="protractor.js" type="protractor">
        it('should format date', function() {
@@ -26618,6 +26644,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMdHhmsaZE']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|d+
             toMatch(/2010\-10\-2\d \d{2}:\d{2}:\d{2} (\-|\+)?\d{4}/);
          expect(element(by.binding("'1288323623006' | date:'MM/dd/yyyy @ h:mma'")).getText()).
             toMatch(/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/);
+         expect(element(by.binding("'1288323623006' | date:\"MM/dd/yyyy 'at' h:mma\"")).getText()).
+            toMatch(/10\/2\d\/2010 at \d{1,2}:\d{2}(AM|PM)/);
        });
      </file>
    </example>
@@ -26979,7 +27007,7 @@ function limitToFilter(){
 orderByFilter.$inject = ['$parse'];
 function orderByFilter($parse){
   return function(array, sortPredicate, reverseOrder) {
-    if (!isArray(array)) return array;
+    if (!(isArrayLike(array))) return array;
     if (!sortPredicate) return array;
     sortPredicate = isArray(sortPredicate) ? sortPredicate: [sortPredicate];
     sortPredicate = map(sortPredicate, function(predicate){
@@ -27566,8 +27594,9 @@ function FormController(element, attrs, $scope, $animate) {
   // convenience method for easy toggling of classes
   function toggleValidCss(isValid, validationErrorKey) {
     validationErrorKey = validationErrorKey ? '-' + snake_case(validationErrorKey, '-') : '';
-    $animate.removeClass(element, (isValid ? INVALID_CLASS : VALID_CLASS) + validationErrorKey);
-    $animate.addClass(element, (isValid ? VALID_CLASS : INVALID_CLASS) + validationErrorKey);
+    $animate.setClass(element,
+      (isValid ? VALID_CLASS : INVALID_CLASS) + validationErrorKey,
+      (isValid ? INVALID_CLASS : VALID_CLASS) + validationErrorKey);
   }
 
   /**
@@ -27782,8 +27811,6 @@ function FormController(element, attrs, $scope, $animate) {
  * hitting enter in any of the input fields will trigger the click handler on the *first* button or
  * input[type=submit] (`ngClick`) *and* a submit handler on the enclosing form (`ngSubmit`)
  *
- * @param {string=} name Name of the form. If specified, the form controller will be published into
- *                       related scope, under this name.
  *
  * ## Animation Hooks
  *
@@ -27861,6 +27888,8 @@ function FormController(element, attrs, $scope, $animate) {
       </file>
     </example>
  *
+ * @param {string=} name Name of the form. If specified, the form controller will be published into
+ *                       related scope, under this name.
  */
 var formDirectiveFactory = function(isNgForm) {
   return ['$timeout', function($timeout) {
@@ -28444,7 +28473,7 @@ function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
     // a row.
     var revalidate = validity && ctrl.$$hasNativeValidators;
     if (ctrl.$viewValue !== value || (value === '' && revalidate)) {
-      if (scope.$$phase) {
+      if (scope.$root.$$phase) {
         ctrl.$setViewValue(value);
       } else {
         scope.$apply(function() {
@@ -30486,7 +30515,9 @@ var ngControllerDirective = [function() {
       <button ng-click="count = count + 1" ng-init="count=0">
         Increment
       </button>
-      count: {{count}}
+      <span>
+        count: {{count}}
+      <span>
      </file>
      <file name="protractor.js" type="protractor">
        it('should check ng-click', function() {
@@ -30504,19 +30535,32 @@ var ngControllerDirective = [function() {
  * Events that are handled via these handler are always configured not to propagate further.
  */
 var ngEventDirectives = {};
+
+// For events that might fire synchronously during DOM manipulation
+// we need to execute their event handlers asynchronously using $evalAsync,
+// so that they are not executed in an inconsistent state.
+var forceAsyncEvents = {
+  'blur': true,
+  'focus': true
+};
 forEach(
   'click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' '),
-  function(name) {
-    var directiveName = directiveNormalize('ng-' + name);
-    ngEventDirectives[directiveName] = ['$parse', function($parse) {
+  function(eventName) {
+    var directiveName = directiveNormalize('ng-' + eventName);
+    ngEventDirectives[directiveName] = ['$parse', '$rootScope', function($parse, $rootScope) {
       return {
         compile: function($element, attr) {
           var fn = $parse(attr[directiveName]);
           return function ngEventHandler(scope, element) {
-            element.on(lowercase(name), function(event) {
-              scope.$apply(function() {
+            element.on(eventName, function(event) {
+              var callback = function() {
                 fn(scope, {$event:event});
-              });
+              };
+              if (forceAsyncEvents[eventName] && $rootScope.$$phase) {
+                scope.$evalAsync(callback);
+              } else {
+                scope.$apply(callback);
+              }
             });
           };
         }
@@ -30833,6 +30877,10 @@ forEach(
  * @description
  * Specify custom behavior on focus event.
  *
+ * Note: As the `focus` event is executed synchronously when calling `input.focus()`
+ * AngularJS executes the expression using `scope.$evalAsync` if the event is fired
+ * during an `$apply` to ensure a consistent state.
+ *
  * @element window, input, select, textarea, a
  * @priority 0
  * @param {expression} ngFocus {@link guide/expression Expression} to evaluate upon
@@ -30848,6 +30896,14 @@ forEach(
  *
  * @description
  * Specify custom behavior on blur event.
+ *
+ * A [blur event](https://developer.mozilla.org/en-US/docs/Web/Events/blur) fires when
+ * an element has lost focus.
+ *
+ * Note: As the `blur` event is executed synchronously also during DOM manipulations
+ * (e.g. removing a focussed input),
+ * AngularJS executes the expression using `scope.$evalAsync` if the event is fired
+ * during an `$apply` to ensure a consistent state.
  *
  * @element window, input, select, textarea, a
  * @priority 0
@@ -31929,8 +31985,9 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
                if (block && block.scope) lastBlockMap[block.id] = block;
              });
              // This is a duplicate and we need to throw an error
-             throw ngRepeatMinErr('dupes', "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys. Repeater: {0}, Duplicate key: {1}",
-                                                                                                                                                    expression,       trackById);
+             throw ngRepeatMinErr('dupes',
+                  "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys. Repeater: {0}, Duplicate key: {1}, Duplicate value: {2}",
+                  expression, trackById, toJson(value));
            } else {
              // new never before seen block
              nextBlockOrder[index] = { id: trackById };
@@ -32021,8 +32078,8 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  *
  * @description
  * The `ngShow` directive shows or hides the given HTML element based on the expression
- * provided to the ngShow attribute. The element is shown or hidden by removing or adding
- * the `ng-hide` CSS class onto the element. The `.ng-hide` CSS class is predefined
+ * provided to the `ngShow` attribute. The element is shown or hidden by removing or adding
+ * the `.ng-hide` CSS class onto the element. The `.ng-hide` CSS class is predefined
  * in AngularJS and sets the display style to none (using an !important flag).
  * For CSP mode please add `angular-csp.css` to your html file (see {@link ng.directive:ngCsp ngCsp}).
  *
@@ -32034,8 +32091,8 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  * <div ng-show="myValue" class="ng-hide"></div>
  * ```
  *
- * When the ngShow expression evaluates to false then the ng-hide CSS class is added to the class attribute
- * on the element causing it to become hidden. When true, the ng-hide CSS class is removed
+ * When the `ngShow` expression evaluates to false then the `.ng-hide` CSS class is added to the class attribute
+ * on the element causing it to become hidden. When true, the `.ng-hide` CSS class is removed
  * from the element causing the element not to appear hidden.
  *
  * <div class="alert alert-warning">
@@ -32045,7 +32102,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  *
  * ## Why is !important used?
  *
- * You may be wondering why !important is used for the .ng-hide CSS class. This is because the `.ng-hide` selector
+ * You may be wondering why !important is used for the `.ng-hide` CSS class. This is because the `.ng-hide` selector
  * can be easily overridden by heavier selectors. For example, something as simple
  * as changing the display style on a HTML list item would make hidden elements appear visible.
  * This also becomes a bigger issue when dealing with CSS frameworks.
@@ -32054,7 +32111,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
  * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
  *
- * ### Overriding .ng-hide
+ * ### Overriding `.ng-hide`
  *
  * By default, the `.ng-hide` class will style the element with `display:none!important`. If you wish to change
  * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
@@ -32072,7 +32129,7 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  *
  * By default you don't need to override in CSS anything and the animations will work around the display style.
  *
- * ## A note about animations with ngShow
+ * ## A note about animations with `ngShow`
  *
  * Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
  * is true and false. This system works like the animation system present with ngClass except that
@@ -32097,8 +32154,8 @@ var ngRepeatDirective = ['$parse', '$animate', function($parse, $animate) {
  * property to block during animation states--ngAnimate will handle the style toggling automatically for you.
  *
  * @animations
- * addClass: .ng-hide - happens after the ngShow expression evaluates to a truthy value and the just before contents are set to visible
- * removeClass: .ng-hide - happens after the ngShow expression evaluates to a non truthy value and just before the contents are set to hidden
+ * addClass: `.ng-hide` - happens after the `ngShow` expression evaluates to a truthy value and the just before contents are set to visible
+ * removeClass: `.ng-hide` - happens after the `ngShow` expression evaluates to a non truthy value and just before the contents are set to hidden
  *
  * @element ANY
  * @param {expression} ngShow If the {@link guide/expression expression} is truthy
@@ -32178,7 +32235,7 @@ var ngShowDirective = ['$animate', function($animate) {
  *
  * @description
  * The `ngHide` directive shows or hides the given HTML element based on the expression
- * provided to the ngHide attribute. The element is shown or hidden by removing or adding
+ * provided to the `ngHide` attribute. The element is shown or hidden by removing or adding
  * the `ng-hide` CSS class onto the element. The `.ng-hide` CSS class is predefined
  * in AngularJS and sets the display style to none (using an !important flag).
  * For CSP mode please add `angular-csp.css` to your html file (see {@link ng.directive:ngCsp ngCsp}).
@@ -32191,8 +32248,8 @@ var ngShowDirective = ['$animate', function($animate) {
  * <div ng-hide="myValue"></div>
  * ```
  *
- * When the ngHide expression evaluates to true then the .ng-hide CSS class is added to the class attribute
- * on the element causing it to become hidden. When false, the ng-hide CSS class is removed
+ * When the `.ngHide` expression evaluates to true then the `.ng-hide` CSS class is added to the class attribute
+ * on the element causing it to become hidden. When false, the `.ng-hide` CSS class is removed
  * from the element causing the element not to appear hidden.
  *
  * <div class="alert alert-warning">
@@ -32202,7 +32259,7 @@ var ngShowDirective = ['$animate', function($animate) {
  *
  * ## Why is !important used?
  *
- * You may be wondering why !important is used for the .ng-hide CSS class. This is because the `.ng-hide` selector
+ * You may be wondering why !important is used for the `.ng-hide` CSS class. This is because the `.ng-hide` selector
  * can be easily overridden by heavier selectors. For example, something as simple
  * as changing the display style on a HTML list item would make hidden elements appear visible.
  * This also becomes a bigger issue when dealing with CSS frameworks.
@@ -32211,7 +32268,7 @@ var ngShowDirective = ['$animate', function($animate) {
  * specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
  * styling to change how to hide an element then it is just a matter of using !important in their own CSS code.
  *
- * ### Overriding .ng-hide
+ * ### Overriding `.ng-hide`
  *
  * By default, the `.ng-hide` class will style the element with `display:none!important`. If you wish to change
  * the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the `.ng-hide`
@@ -32229,7 +32286,7 @@ var ngShowDirective = ['$animate', function($animate) {
  *
  * By default you don't need to override in CSS anything and the animations will work around the display style.
  *
- * ## A note about animations with ngHide
+ * ## A note about animations with `ngHide`
  *
  * Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
  * is true and false. This system works like the animation system present with ngClass, except that the `.ng-hide`
@@ -32253,8 +32310,8 @@ var ngShowDirective = ['$animate', function($animate) {
  * property to block during animation states--ngAnimate will handle the style toggling automatically for you.
  *
  * @animations
- * removeClass: .ng-hide - happens after the ngHide expression evaluates to a truthy value and just before the contents are set to hidden
- * addClass: .ng-hide - happens after the ngHide expression evaluates to a non truthy value and just before the contents are set to visible
+ * removeClass: `.ng-hide` - happens after the `ngHide` expression evaluates to a truthy value and just before the contents are set to hidden
+ * addClass: `.ng-hide` - happens after the `ngHide` expression evaluates to a non truthy value and just before the contents are set to visible
  *
  * @element ANY
  * @param {expression} ngHide If the {@link guide/expression expression} is truthy then
@@ -33107,6 +33164,19 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
         ctrl.$render = render;
 
         scope.$watchCollection(valuesFn, render);
+        scope.$watchCollection(function () {
+          var locals = {},
+              values = valuesFn(scope);
+          if (values) {
+            var toDisplay = new Array(values.length);
+            for (var i = 0, ii = values.length; i < ii; i++) {
+              locals[valueName] = values[i];
+              toDisplay[i] = displayFn(scope, locals);
+            }
+            return toDisplay;
+          }
+        }, render);
+
         if ( multiple ) {
           scope.$watchCollection(function() { return ctrl.$modelValue; }, render);
         }
@@ -33381,7 +33451,7 @@ var styleDirective = valueFn({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/vagrant/src/vendor/jquery/dist/jquery.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/jquery/dist/jquery.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -42580,9 +42650,10 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/ng-context-menu/dist/ng-context-menu.js":[function(require,module,exports){
 /**
- * ng-context-menu - v0.1.6 - An AngularJS directive to display a context menu when a right-click event is triggered
+ * ng-context-menu - v0.1.7 - An AngularJS directive to display a context menu
+ * when a right-click event is triggered
  *
  * @author Ian Kennington Walter (http://ianvonwalter.com)
  */
@@ -42594,103 +42665,114 @@ angular
       menuElement: null
     };
   })
-  .directive('contextMenu', ['$document', 'ContextMenuService', function($document, ContextMenuService) {
-    return {
-      restrict: 'A',
-      scope: {
-        'callback': '&contextMenu',
-        'disabled': '&contextMenuDisabled'
-      },
-      link: function($scope, $element, $attrs) {
-        var opened = false;
+  .directive('contextMenu', [
+    '$document',
+    'ContextMenuService',
+    function($document, ContextMenuService) {
+      return {
+        restrict: 'A',
+        scope: {
+          'callback': '&contextMenu',
+          'disabled': '&contextMenuDisabled'
+        },
+        link: function($scope, $element, $attrs) {
+          var opened = false;
 
-        function open(event, menuElement) {
-          menuElement.addClass('open');
+          function open(event, menuElement) {
+            menuElement.addClass('open');
 
-          var doc = $document[0].documentElement;
-          var docLeft = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0),
-            docTop = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0),
-            elementWidth = menuElement[0].scrollWidth,
-            elementHeight = menuElement[0].scrollHeight;
-          var docWidth = doc.clientWidth + docLeft,
-            docHeight = doc.clientHeight + docTop,
-            totalWidth = elementWidth + event.pageX,
-            totalHeight = elementHeight + event.pageY,
-            left = Math.max(event.pageX - docLeft, 0),
-            top = Math.max(event.pageY - docTop, 0);
+            var doc = $document[0].documentElement;
+            var docLeft = (window.pageXOffset || doc.scrollLeft) -
+                          (doc.clientLeft || 0),
+                docTop = (window.pageYOffset || doc.scrollTop) -
+                         (doc.clientTop || 0),
+                elementWidth = menuElement[0].scrollWidth,
+                elementHeight = menuElement[0].scrollHeight;
+            var docWidth = doc.clientWidth + docLeft,
+              docHeight = doc.clientHeight + docTop,
+              totalWidth = elementWidth + event.pageX,
+              totalHeight = elementHeight + event.pageY,
+              left = Math.max(event.pageX - docLeft, 0),
+              top = Math.max(event.pageY - docTop, 0);
 
-          if (totalWidth > docWidth) {
-            left = left - (totalWidth - docWidth);
-          }
-
-          if (totalHeight > docHeight) {
-            top = top - (totalHeight - docHeight);
-          }
-
-          menuElement.css('top', top + 'px');
-          menuElement.css('left', left + 'px');
-          opened = true;
-        }
-
-        function close(menuElement) {
-          menuElement.removeClass('open');
-          opened = false;
-        }
-
-        $element.bind('contextmenu', function(event) {
-          if (!$scope.disabled()) {
-            if (ContextMenuService.menuElement !== null) {
-              close(ContextMenuService.menuElement);
+            if (totalWidth > docWidth) {
+              left = left - (totalWidth - docWidth);
             }
-            ContextMenuService.menuElement = angular.element(document.getElementById($attrs.target));
-            ContextMenuService.element = event.target;
-            //console.log('set', ContextMenuService.element);
 
-            event.preventDefault();
-            event.stopPropagation();
-            $scope.$apply(function() {
-              $scope.callback({ $event: event });
-              open(event, ContextMenuService.menuElement);
-            });
-          }
-        });
+            if (totalHeight > docHeight) {
+              top = top - (totalHeight - docHeight);
+            }
 
-        function handleKeyUpEvent(event) {
-          //console.log('keyup');
-          if (!$scope.disabled() && opened && event.keyCode === 27) {
-            $scope.$apply(function() {
-              close(ContextMenuService.menuElement);
-            });
+            menuElement.css('top', top + 'px');
+            menuElement.css('left', left + 'px');
+            opened = true;
           }
+
+          function close(menuElement) {
+            menuElement.removeClass('open');
+            opened = false;
+          }
+
+          $element.bind('contextmenu', function(event) {
+            if (!$scope.disabled()) {
+              if (ContextMenuService.menuElement !== null) {
+                close(ContextMenuService.menuElement);
+              }
+              ContextMenuService.menuElement = angular.element(
+                document.getElementById($attrs.target)
+              );
+              ContextMenuService.element = event.target;
+              //console.log('set', ContextMenuService.element);
+
+              event.preventDefault();
+              event.stopPropagation();
+              $scope.$apply(function() {
+                $scope.callback({ $event: event });
+              });
+              $scope.$apply(function() {
+                open(event, ContextMenuService.menuElement);
+              });
+            }
+          });
+
+          function handleKeyUpEvent(event) {
+            //console.log('keyup');
+            if (!$scope.disabled() && opened && event.keyCode === 27) {
+              $scope.$apply(function() {
+                close(ContextMenuService.menuElement);
+              });
+            }
+          }
+
+          function handleClickEvent(event) {
+            if (!$scope.disabled() &&
+              opened &&
+              (event.button !== 2 ||
+               event.target !== ContextMenuService.element)) {
+              $scope.$apply(function() {
+                close(ContextMenuService.menuElement);
+              });
+            }
+          }
+
+          $document.bind('keyup', handleKeyUpEvent);
+          // Firefox treats a right-click as a click and a contextmenu event
+          // while other browsers just treat it as a contextmenu event
+          $document.bind('click', handleClickEvent);
+          $document.bind('contextmenu', handleClickEvent);
+
+          $scope.$on('$destroy', function() {
+            //console.log('destroy');
+            $document.unbind('keyup', handleKeyUpEvent);
+            $document.unbind('click', handleClickEvent);
+            $document.unbind('contextmenu', handleClickEvent);
+          });
         }
+      };
+    }
+  ]);
 
-        function handleClickEvent(event) {
-          if (!$scope.disabled() &&
-            opened &&
-            (event.button !== 2 || event.target !== ContextMenuService.element)) {
-            $scope.$apply(function() {
-              close(ContextMenuService.menuElement);
-            });
-          }
-        }
-
-        $document.bind('keyup', handleKeyUpEvent);
-        // Firefox treats a right-click as a click and a contextmenu event while other browsers
-        // just treat it as a contextmenu event
-        $document.bind('click', handleClickEvent);
-        $document.bind('contextmenu', handleClickEvent);
-
-        $scope.$on('$destroy', function() {
-          //console.log('destroy');
-          $document.unbind('keyup', handleKeyUpEvent);
-          $document.unbind('click', handleClickEvent);
-          $document.unbind('contextmenu', handleClickEvent);
-        });
-      }
-    };
-  }]);
-
-},{}],"/vagrant/src/vendor/restangular/dist/restangular.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/restangular/dist/restangular.js":[function(require,module,exports){
 /**
  * Restful Resources service for AngularJS apps
  * @version v1.3.1 - 2014-01-29 * @link https://github.com/mgonto/restangular
@@ -43963,7 +44045,7 @@ module.provider('Restangular', function() {
 
 })();
 
-},{}],"/vagrant/src/vendor/socket.io-client/dist/socket.io.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/socket.io-client/dist/socket.io.js":[function(require,module,exports){
 /*! Socket.IO.js build:0.9.17, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -47837,7 +47919,7 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}],"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/ui-router-extras/release/ct-ui-router-extras.js":[function(require,module,exports){
 /**
  * UI-Router Extras: Sticky states, Future States, Deep State Redirect, Transition promise
  * @version v0.0.10
@@ -49166,7 +49248,7 @@ angular.module("ct.ui.router.extras").config( [ "$provide",  function ($provide)
 );
 
 })(window, window.angular);
-},{}],"/vagrant/src/vendor/underscore/underscore.js":[function(require,module,exports){
+},{}],"/home/ingrid/gitstuff/nrtorrent/src/vendor/underscore/underscore.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.6.0
