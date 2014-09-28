@@ -1,4 +1,4 @@
-var log = require('log/log');
+var log = require('../log/log');
 var socket = require('../socket/socket');
 var session = require('../session/session');
 

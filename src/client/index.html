@@ -13,7 +13,7 @@
 
 		</style>
 	</head>
-	<body>
+	<body style="position: relative;">
 		<div class="header">
 			<h1 style="margin: 0;" class="pull-left">nodejs-rtorrent <small>{{pageTitle}}</small></h1>
 			<nav>
@@ -31,6 +31,9 @@
 		</div>
 
 		<div ui-view="home"></div>
+		<div class="notifications" ng-controller="NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 5;">
+			<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="notification.type" close="notificationCtrl.Notification.remove($index)">{{notification.msg}}</alert>
+		</div>
 		<script src="js/app.js"></script>
 	</body>
 </html>

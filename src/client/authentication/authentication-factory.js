@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('authentication')
-	.factory('Authentication', function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q) {
+	.factory('Authentication', function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q, Socket) {
 
 		var logger = njrtLog.getInstance('authentication.Authentication');
 
@@ -22,6 +22,9 @@ module.exports = angular
 					email: user.email
 				}
 				SessionService.setUserSession(userSession);
+
+				// Connect to socket
+				Socket.connect();
 				
 				deferred.resolve(userSession);
 			}, function(err) {
@@ -34,6 +37,8 @@ module.exports = angular
 		
 		Authentication.logout = function() {
 			SessionService.clearSession();
+
+			Socket.disconnect();
 			$state.go('home');
 		};
 		

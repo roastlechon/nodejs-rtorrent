@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('torrents')
-	.factory('Torrents', function (njrtLog, Restangular, Socket) {
+	.factory('Torrents', function (njrtLog, Restangular, Socket, Notification, $state, SessionService) {
 
 		var logger = njrtLog.getInstance('torrents.Torrents');
 
@@ -10,8 +10,40 @@ module.exports = angular
 
 		Torrents.torrents = [];
 
+		Socket.on('connect', function() {
+			logger.debug('Connected to socket.');
+		});
+
+		Socket.on('connecting', function() {
+			logger.debug('Connecting to socket.');
+		});
+
+		Socket.on('connect_failed', function() {
+			logger.error('Connection to socket failed');
+			Notification.add('danger', 'Failed to connect to server via web sockets');
+		});
+
+		Socket.on('error', function(err) {
+			if (err === 'handshake unauthorized') {
+				Notification.add('danger', 'Handshake unauthorized. Please login.');
+				
+				// Clear session
+				SessionService.clearSession();
+
+				// Redirect to login
+				$state.go('login');
+			}
+			logger.error(err);
+		});
+
+		Socket.on('torrents', function(data) {
+			Torrents.torrents = data;
+		});
+
 		Torrents.getTorrents = function () {
 			logger.debug('Getting torrents');
+
+			// Initial REST call to get torrents on resolve.
 		}
 
 		/**
@@ -23,7 +55,12 @@ module.exports = angular
 			logger.debug('Starting torrent from hash', hash);
 			return Restangular
 				.one('torrents', hash)
-				.post('start', {});
+				.post('start', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent started.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to start.');
+				});
 		}
 
 		/**
@@ -35,7 +72,12 @@ module.exports = angular
 			logger.debug('Pausing torrent from hash', hash);
 			return Restangular
 				.one('torrents', hash)
-				.post('pause', {});
+				.post('pause', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent paused.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to pause.');
+				});
 		}
 
 		/**
@@ -47,7 +89,12 @@ module.exports = angular
 			logger.debug('Stopping torrent from hash', hash);
 			return Restangular
 				.one('torrents', hash)
-				.post('stop', {});
+				.post('stop', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent stopped.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to stop.');
+				});
 		}
 
 		/**
@@ -59,7 +106,12 @@ module.exports = angular
 			logger.debug('Removing torrent from hash', hash);
 			return Restangular
 				.one('torrents', hash)
-				.post('remove', {});	
+				.post('remove', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent removed.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be removed.');
+				});
 		}
 
 		/**
@@ -73,7 +125,12 @@ module.exports = angular
 				.all('torrents')
 				.customPOST({
 					'url': url
-				}, 'load');
+				}, 'load')
+				.then(function () {
+					return Notification.add('success', 'Torrent loaded.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to load.');
+				});
 		}
 
 		/**
@@ -88,6 +145,11 @@ module.exports = angular
 				.one('torrents', hash)
 				.post('channel', {
 					'channel': channel
+				})
+				.then(function () {
+					return Notification.add('success', 'Torrent throttle channel set.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be throttled.');
 				});
 		}
 

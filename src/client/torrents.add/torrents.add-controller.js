@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('torrents.add')
-	.controller('TorrentsAddCtrl', function(njrtLog, $previousState, Torrents) {
+	.controller('TorrentsAddCtrl', function(njrtLog, $state, Torrents) {
 
 		var logger = njrtLog.getInstance('torrents.add.TorrentsAddCtrl');
 
@@ -9,16 +9,17 @@ module.exports = angular
 		var vm = this;
 
 		vm.loadTorrent = function(url) {
-			Torrents.loadTorrent(url).then(function(data) {
-				logger.debug(data);
-				$previousState.go('modalInvoker');
-			}, function(err) {
-				logger.error(err);
-			});
+			Torrents.load(url)
+				.then(function(data) {
+					logger.debug(data);
+					$state.go('home.torrents');
+				}, function(err) {
+					logger.error(err);
+				});
 		}
 
 		vm.cancel = function() {
-			$previousState.go('modalInvoker');
+			$state.go('home.torrents');
 		}
 
 	});
