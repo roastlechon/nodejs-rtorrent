@@ -11,7 +11,7 @@
 		"pass": ""
 	},
 	"rtorrent": {
-		"host": "home.roastlechon.com",
+		"host": "localhost",
 		"port": "80",
 		"path": "/RPC2"
 	},
