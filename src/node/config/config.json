@@ -11,9 +11,16 @@
 		"pass": ""
 	},
 	"rtorrent": {
-		"host": "localhost",
-		"port": "80",
-		"path": "/RPC2"
+		"option": "scgi",
+		"scgi": {
+			"host": "localhost",
+			"port": "5000"
+		},
+		"xmlrpc": {
+			"host": "localhost",
+			"port": "80",
+			"path": "/RPC2"
+		}
 	},
 	"app": {
 		"hostname": "localhost",
