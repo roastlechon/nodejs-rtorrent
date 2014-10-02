@@ -2,7 +2,7 @@
 <html lang="en" ng-app="app">
 	<head>
 		<meta charset="utf-8">
-		<title>{{pageTitle}}</title>
+		<title ng-cloak>nodejs-rtorrent</title>
 		<link href="css/styles.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			.container { max-width: none !important; width: 1350px;}
@@ -15,7 +15,7 @@
 	</head>
 	<body style="position: relative;">
 		<div class="header">
-			<h1 style="margin: 0;" class="pull-left">nodejs-rtorrent <small>{{pageTitle}}</small></h1>
+			<h1 style="margin: 0;" class="pull-left">nodejs-rtorrent</h1>
 			<nav>
 				<ul class="header-nav-list">
 					<li><a ui-sref="home.torrents">Torrents</a></li>
@@ -31,7 +31,7 @@
 		</div>
 
 		<div ui-view="home"></div>
-		<div class="notifications" ng-controller="NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 5;">
+		<div class="notifications" ng-controller="NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 5;" ng-cloak>
 			<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="notification.type" close="notificationCtrl.Notification.remove($index)">{{notification.msg}}</alert>
 		</div>
 		<script src="js/app.js"></script>
