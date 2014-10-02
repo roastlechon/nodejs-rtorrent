@@ -23,10 +23,18 @@ var app = express();
 var server = http.createServer(app);
 var io = io.listen(server);
 
-logger.info("connecting to " + nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database"));
+logger.info("Connecting to " + nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database"));
 
 var connectionString = nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database");
-mongoose.connect(connectionString);
+mongoose.connect(connectionString, function (err) {
+  if (err) {
+    logger.error(err);
+    throw err;
+  }
+
+  logger.info('Connected successfully to database.');
+  
+});
 
 logger.info("Configuring default user");
 var users = require("./models/users");

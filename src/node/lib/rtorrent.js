@@ -8,11 +8,27 @@ var _ = require("underscore");
 var async = require("async");
 var Q = require("q");
 var nconf = require("nconf");
+var net = require('net');
+var Deserializer = require('./rtorrent/deserializer');
+
+function htmlspecialchars(str) {
+	return str.replace(/\&/ig,"&amp;").replace(/\"/ig,"&quot;").replace(/\'/ig,"&#039;").replace(/\</ig,"&lt;").replace(/\>/ig,"&gt;");
+}
+
+if (!(nconf.get('rtorrent:option') === 'scgi' || nconf.get('rtorrent:option') === 'xmlrpc')) {
+	var err = new Error('Config for rtorrent option is not valid. Please check config.json rtorrent.option property.');
+	logger.error(err.message);
+	throw err;
+}
+
+logger.info('Connect to rtorrent via', nconf.get('rtorrent:option'));
+
+// need something to test connection to rtorrent first...
 
 var client = xmlrpc.createClient({
-	host: nconf.get("rtorrent:host"),
-	port: nconf.get("rtorrent:port"),
-	path: nconf.get("rtorrent:path"),
+	host: nconf.get("rtorrent:xmlrpc:host"),
+	port: nconf.get("rtorrent:xmlrpc:port"),
+	path: nconf.get("rtorrent:xmlrpc:path"),
 	headers: {
 		"User-Agent": "NodeJS XML-RPC Client",
 		"Content-Type": "text/xml",
@@ -22,21 +38,95 @@ var client = xmlrpc.createClient({
 	}
 });
 
-var rtorrent = module.exports = {}
+function scgiMethodCall(api, array) {
+	var stream = net.connect(nconf.get("rtorrent:scgi:port"), nconf.get("rtorrent:scgi:host"));
+	stream.setEncoding('UTF8');
 
-var upload_throttles = [];
-var download_throttles = [];
-var throttle_settings = [];
-
-function methodCall(api, array) {
 	var deferred = Q.defer();
+
+	var content = '<methodCall>';
+	content += '<methodName>';
+	content += api;
+	content += '</methodName>';
+
+	if (array.length > 0) {
+		content += '<params>';
+		for (var i = 0; i < array.length; i++) {
+			content += '<param>';
+			content += '<value>';
+			content += htmlspecialchars(array[i]);
+			content += '</value>';
+			content += '</param>';
+		};
+		content += '</params>';
+	}
+
+	content += '</methodCall>';
+
+
+	// length of data to transmit
+	var length = 0;
+
+	var head = [
+		'CONTENT_LENGTH' + String.fromCharCode(0) + content.length + String.fromCharCode(0),
+		'SCGI' + String.fromCharCode(0) + '1' + String.fromCharCode(0)
+	];
+
+	head.forEach(function (item) {
+		length += item.length;
+	});
+
+	stream.write(length + ':');
+
+	head.forEach(function (item) {
+		stream.write(item);
+	});
+
+	stream.write(',');
+	stream.write(content);
+
+	var deserializer = new Deserializer('utf8');
+	deserializer.deserializeMethodResponse(stream, function (err, data) {
+		if (err) {
+			return deferred.reject(err);
+		}
+		return deferred.resolve(data);
+	});
+
+	return deferred.promise;
+}
+
+function xmlrpcMethodCall (api, array) {
+	var deferred = Q.defer();
+
 	client.methodCall(api, array, function(err, data) {
 		if (err) {
 			return deferred.reject(err);
 		}
 		return deferred.resolve(data);
 	});
+
 	return deferred.promise;
+}
+
+
+var rtorrent = module.exports = {}
+
+var upload_throttles = [];
+var download_throttles = [];
+var throttle_settings = [];
+
+
+
+function methodCall (api, array) {
+
+	if (nconf.get("rtorrent:option") === 'xmlrpc') {
+		return xmlrpcMethodCall(api, array);
+	}
+
+	if (nconf.get("rtorrent:option") === 'scgi') {
+		return scgiMethodCall(api, array);
+	}
 }
 
 function initThrottle() {
@@ -146,23 +236,26 @@ rtorrent.init = function() {
 }
 
 rtorrent.setThrottle = function(hash, throttle_name) {
+	var deferred = Q.defer();
 	var pauseTorrent = rtorrent.pauseTorrent(hash);
 	var setThrottle = pauseTorrent.then(function(data) {
 		return rtorrent.setThrottleName(hash, throttle_name);
 	}, function(err) {
-		return Q.reject(err);
+		deferred.reject(err);
 	});
 	var startTorrent = setThrottle.then(function(data) {
 		return rtorrent.startTorrent(hash);
 	}, function(err) {
-		return Q.reject(err);
+		deferred.reject(err);
 	});
 
 	startTorrent.then(function(data) {
-		return Q.resolve(data);
+		deferred.resolve(data);
 	}, function(err) {
-		return Q.reject(err);
+		deferred.reject(err);
 	});
+
+	return deferred.promise;
 }
 
 rtorrent.throttleUp = function(name, value) {
