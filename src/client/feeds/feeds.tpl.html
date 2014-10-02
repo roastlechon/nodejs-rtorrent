@@ -5,6 +5,8 @@
 			<ul class="list-unstyled">
 				<li><a ui-sref="home.feeds.add">Add Feed</a></li>
 			</ul>
+			<h4>Filter by Text</h4>
+			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter list" class="form-control">
 			<h4>Hide Columns</h4>
 			<div class="form-group">
 				<div class="checkbox">
@@ -33,7 +35,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="feed in feedsCtrl.Feeds.feeds">
+				<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | filter:feedsCtrl.searchText">
 					<td style="width: 30%;"><a ui-sref="home.feeds.view({id: feed._id})">{{feed.title}}</a></td>
 					<td>{{feed.rss}}</td>
 					<td>{{feed.lastChecked * 1000 | date:'medium'}}</td>

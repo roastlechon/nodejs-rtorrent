@@ -1,10 +1,12 @@
 <div class="content" style="position: relative;" ng-style="style()" resize>
-	<div style="position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; ">
-		<div style="overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;" ng-hide="torrentPanel">
+	<div style="position: absolute; bottom: 20px; left: -1px; height: 300px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; ">
+		<div style="overflow-y: scroll; width: 200px; height: 100%; float: left; padding: 10px;" ng-hide="torrentPanel">
 			<h3>Actions</h3>
 			<ul class="list-unstyled">
 				<li><a ui-sref="home.torrents.add">Add Torrent</a></li>
 			</ul>
+			<h4>Filter by Text</h4>
+			<input type="text" ng-model="torrentsCtrl.searchText" placeholder="Filter list" class="form-control">
 			<h4>Filter by Status</h4>
 			<ul class="list-unstyled">
 				<li><a href="" ng-click="torrentsCtrl.status=''">All <i ng-class="{'fa fa-check': torrentsCtrl.status===''}" ng-init="torrentsCtrl.status=''"></i></a></li>
@@ -104,7 +106,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="torrent in torrentsCtrl.Torrents.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
+				<tr ng-repeat="torrent in torrentsCtrl.Torrents.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} | filter:torrentsCtrl.searchText track by torrent.hash" class="torrent" context-menu data-target="menu-{{$index}}">
 					<td>
 						<div class="clearfix" style="position: relative;">
 							<h5 class="pull-left" style="white-space: nowrap; overflow: hidden;" title="{{torrent.name}}">{{torrent.name}}</h5>
