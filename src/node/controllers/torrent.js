@@ -1,7 +1,3 @@
-var urllib = require("urllib");
-var fs = require("fs");
-var crypto = require("crypto");
-var path = require("path");
 var rtorrent = require("../lib/rtorrent");
 var logger = require("winston");
 var auth = require("./auth.js")

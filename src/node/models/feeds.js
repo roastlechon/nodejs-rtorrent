@@ -1,14 +1,12 @@
 var mongoose = require("mongoose");
 var FeedMe = require("feedme");
 var request = require("request");
-var async = require("async");
 var moment = require("moment");
 var Torrent = require("./schemas/torrent");
 var Filter = require("./schemas/filter");
 var Feed = require("./schemas/feed");
 var rtorrent = require("../lib/rtorrent");
 var torrentFeedParser = require("../lib/torrent-feed-parser");
-var _ = require("underscore");
 var logger = require("winston");
 var Q = require("q");
 
@@ -99,16 +97,16 @@ feeds.add = function(feed) {
 		});
 		
 		if (feed.regexFilter) {
-			_.each(feed.filters, function(fil) {
+			feed.filters.forEach(function (fil) {
 				var filter = new Filter({
 					regex: fil.regex,
 					type: fil.type
 				});
 				feedModel.filters.push(filter);
-			});
+			})
 		}
 
-		_.each(data, function(tor) {
+		data.forEach(function (tor) {
 			var torrent = new Torrent({
 				name: tor.name,
 				url: tor.url,

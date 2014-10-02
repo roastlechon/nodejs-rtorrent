@@ -1,11 +1,6 @@
-var fs = require("fs")
-var path = require("path")
-var crypto = require("crypto")
 var xmlrpc = require("xmlrpc")
 var portscanner = require("portscanner");
 var logger = require("winston");
-var _ = require("underscore");
-var async = require("async");
 var Q = require("q");
 var nconf = require("nconf");
 var net = require('net');
@@ -350,7 +345,7 @@ rtorrent.setPriority = function(priority) {
 rtorrent.getPortStatus = function(port) {
 	var deferred = Q.defer();
 
-	portscanner.checkPortStatus(port, "home.roastlechon.com", function(err, data) {
+	portscanner.checkPortStatus(port, "localhost", function(err, data) {
 		if (err) {
 			return deferred.reject(err);
 		}
