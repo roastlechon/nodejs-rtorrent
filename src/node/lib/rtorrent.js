@@ -54,7 +54,7 @@ function scgiMethodCall(api, array) {
 		for (var i = 0; i < array.length; i++) {
 			content += '<param>';
 			content += '<value>';
-			content += htmlspecialchars(array[i]);
+			content += htmlspecialchars('' + array[i]);
 			content += '</value>';
 			content += '</param>';
 		};

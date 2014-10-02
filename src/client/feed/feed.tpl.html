@@ -14,7 +14,7 @@
 					<td>{{torrent.name}}</td>
 					<td>{{torrent.date | date:"medium"}}</td>
 					<td>{{torrent.status}}</td>
-					<td><a href="javascript: void(0);" ng-click="feedCtrl.loadTorrent(torrent)">Load</a></td>
+					<td><a href="javascript: void(0);" ng-click="feedCtrl.loadTorrent(torrent.url)">Load</a></td>
 				</tr>
 			</tbody>
 		</table>
