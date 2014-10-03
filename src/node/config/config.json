@@ -2,7 +2,7 @@
 	"authentication": {
 		"secret": "123456789"
 	},
-	"mongoose": {
+	"mongodb": {
 		"prefix": "mongodb://",
 		"uri": "localhost",
 		"port": 27017,
@@ -30,6 +30,7 @@
 			"password": "password"
 		},
 		"checkFeedLoopInterval": 300000,
-		"rtorrentLoopInterval": 2000
+		"rtorrentLoopInterval": 2000,
+		"database": "tingodb"
 	}
 }
