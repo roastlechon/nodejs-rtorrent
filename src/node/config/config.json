@@ -13,11 +13,11 @@
 	"rtorrent": {
 		"option": "scgi",
 		"scgi": {
-			"host": "home.roastlechon.com",
+			"host": "localhost",
 			"port": "5000"
 		},
 		"xmlrpc": {
-			"host": "home.roastlechon.com",
+			"host": "localhost",
 			"port": "80",
 			"path": "/RPC2"
 		}
