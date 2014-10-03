@@ -32,7 +32,7 @@
 					<input type="radio" id="filterTypeExclude" ng-model="feedsEditCtrl.newFilter.type" value="exclude"> Exclude
 				</label>
 			</div>
-			<button type="button" class="btn" ng-click="feedsEditCtrl.addFilter(newFilter)"><i class="fa fa-plus"></i></button>
+			<button type="button" class="btn" ng-click="feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)"><i class="fa fa-plus"></i></button>
 		</div>
 		<ul class="list-unstyled">
 			<li ng-repeat="filter in feedsEditCtrl.feed.filters track by $index">{{filter.regex}} <span class="badge">{{filter.type}}</span> <a href="javascript: void(0);" ng-click="feedsEditCtrl.deleteFilter($index)"><i class="fa fa-times"></i></a></li>

@@ -10,7 +10,6 @@ module.exports = angular
 
 		vm.feed = Restangular.copy(feed);
 		vm.newFilter = {};
-		vm.feed.filters = [];
 
 		vm.checkDisabled = function() {
 			// if form is invalid, but filters are added

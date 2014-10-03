@@ -59,6 +59,8 @@ function addFeed(req, res) {
 		filters: req.body.filters
 	};
 
+	console.log(feed);
+
 	//check database if feed exists
 	//if feed does not exist, create new feedsub
 	//get list of feeds to return to client
@@ -67,7 +69,8 @@ function addFeed(req, res) {
 		logger.info('Successfully saved feed.');
 		res.json(data);
 	}, function(err) {
-		logger.error(err);
+		console.log(err);
+		logger.error(err.message);
 		res.status(500).send(err.message);
 	});
 }
@@ -75,7 +78,7 @@ function addFeed(req, res) {
 
 
 function updateFeed(req, res) {
-	logger.info('Updating feed: %s, with data: %j', req.params.id, req.body);
+	logger.info('Updating feed', req.params.id);
 	
 	var feed = {
 		_id: req.params.id,
@@ -94,13 +97,13 @@ function updateFeed(req, res) {
 }
 
 function deleteFeed(req, res) {
-	logger.info('removing feed');
-	feeds.delete(req.params.id).then(function(data) {
+	logger.info('Removing feed', req.params.id);
+	feeds.deleteFeed(req.params.id).then(function(data) {
 		logger.info('Successfully deleted feed');
 		res.json(data);
 	}, function(err) {
-		logger.error('Error occurred while deleting feed');
-		res.json(err);
+		logger.error(err.message);
+		res.status(500).send(err);
 	});
 }
 

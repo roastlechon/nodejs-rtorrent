@@ -13,7 +13,6 @@ module.exports = angular
 		vm.deleteFeed = function (feed) {
 			Feeds.deleteFeed(feed)
 				.then(function(data) {
-					console.log(data);
 					$state.go('home.feeds');
 				}, function(err) {
 					logger.error(err);
