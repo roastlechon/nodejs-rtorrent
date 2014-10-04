@@ -6,9 +6,6 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 Torrents 
 ![cutout](http://i.imgur.com/gwVmwAu.png "screenshot")
 
-Feeds
-![cutout](http://i.imgur.com/g1sX08z.png "screenshot2")
-
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 
@@ -23,7 +20,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Feeds > Basic Regex (works)
 * Feeds > AutoDL (works)
 * fcgi Direct Connection (works)
-* Docker support (????
+* Docker support (????)
 
 ### Features that are not yet completed
 * Settings (not complete)
@@ -34,16 +31,16 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Feeds > Custom Max Size (not started)
 * Embedded database support (not started)
 * Search (not started)
-* Multi-User
-* File Manager
-* Torrent Creator
-* HTML5 Media Player
+* Multi-User (not started)
+* File Manager (not started)
+* Torrent Creator (not started)
+* HTML5 Media Player (not started)
 
 Codename Alchemist
 this is our dev branch, the bleeding edge, might brake so hold on
 
 Codename Unicorn
-this is our master branch, the most stable
+this is our master branch, the most stable yet beta
 
 ### Depends on
 NodeJS NPM Bower MongoDB rtorrent
@@ -52,8 +49,8 @@ NodeJS NPM Bower MongoDB rtorrent
 * [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu-(direct-scgi-connection))
 
 ## Support
-Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
-Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
+* Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
+* Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
 huh?
