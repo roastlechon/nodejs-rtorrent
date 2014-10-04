@@ -9,7 +9,7 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 ## Team
-* roastlechon, Developer
+* roastlechon, Creator, Developer
 * rendom, Developer
 * nwgat, Docs, Testing, Community 
 
