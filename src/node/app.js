@@ -1,5 +1,6 @@
 var logger = require("winston");
 var nconf = require("nconf");
+var fs = require("fs");
 nconf.env().argv().file("./config/config.json");
 
 var rtorrent = require("./lib/rtorrent");
@@ -15,7 +16,6 @@ if (nconf.get("app:database") === "tingodb") {
 var mongoose = require("mongoose");
 var express = require("express");
 
-var http = require("http");
 var io = require("socket.io");
 
 var passport = require("passport")
@@ -23,8 +23,20 @@ require("./config/passport-strategy");
 
 var socketAuthorization = require('./config/socket-authorization');
 
+
+// Setup server options
+var serverOptions = {};
+if( nconf.get("app:ssl") ) {
+	serverOptions.cert	= fs.readFileSync( nconf.get("app:ssl:cert"), 'utf-8');
+	serverOptions.key	= fs.readFileSync( nconf.get("app:ssl:key"), 'utf-8');
+	var http = require('https');
+	console.log(serverOptions);
+} else {
+	var http = require("http");
+}
+
 var app = express();
-var server = http.createServer(app);
+var server = http.createServer(serverOptions);
 var io = io.listen(server);
 
 // Check for config setting if app database is tingodb.
