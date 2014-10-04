@@ -22,21 +22,21 @@ var passport = require("passport")
 require("./config/passport-strategy");
 
 var socketAuthorization = require('./config/socket-authorization');
-
+var app = express();
 
 // Setup server options
-var serverOptions = {};
 if( nconf.get("app:ssl") ) {
+	var serverOptions = {};
 	serverOptions.cert	= fs.readFileSync( nconf.get("app:ssl:cert"), 'utf-8');
 	serverOptions.key	= fs.readFileSync( nconf.get("app:ssl:key"), 'utf-8');
+	
 	var http = require('https');
-	console.log(serverOptions);
+	var server = http.createServer(serverOptions, app);
 } else {
 	var http = require("http");
+	var server = http.createServer(app);
 }
 
-var app = express();
-var server = http.createServer(serverOptions);
 var io = io.listen(server);
 
 // Check for config setting if app database is tingodb.

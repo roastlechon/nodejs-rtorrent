@@ -25,10 +25,7 @@
 	"app": {
 		"hostname": "localhost",
 		"port": 3000,
-		"ssl": {
-			"key": "/tmp/server.key",
-			"cert": "/tmp/server.crt"
-		},
+		"ssl":false,
 		"defaultUser": {
 			"email": "admin@localhost",
 			"password": "password"
