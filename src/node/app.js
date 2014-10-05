@@ -27,8 +27,8 @@ var app = express();
 // Setup server options
 if( nconf.get("app:ssl") ) {
 	var serverOptions = {};
-	serverOptions.cert	= fs.readFileSync( nconf.get("app:ssl:cert"), 'utf-8');
-	serverOptions.key	= fs.readFileSync( nconf.get("app:ssl:key"), 'utf-8');
+	serverOptions.cert	= fs.readFileSync( nconf.get("ssl:cert"), 'utf-8');
+	serverOptions.key	= fs.readFileSync( nconf.get("ssl:key"), 'utf-8');
 	
 	var http = require('https');
 	var server = http.createServer(serverOptions, app);
