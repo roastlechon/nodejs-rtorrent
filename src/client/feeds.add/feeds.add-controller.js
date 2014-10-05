@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('feeds.add')
-	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds) {
+	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds, Notification) {
 
 		var logger = njrtLog.getInstance('feeds.add.FeedsAddCtrl');
 
@@ -8,9 +8,16 @@ module.exports = angular
 
 		var vm = this;
 
-		vm.feed = {};
+		vm.feed = {
+			rss: '',
+			title: '',
+			regexFilter: false,
+			autoDownload: false,
+			filters: []
+		};
 		vm.newFilter = {};
-		vm.feed.filters = [];
+
+		vm.error = false;
 
 		vm.checkDisabled = function() {
 			// if form is invalid, but filters are added
@@ -55,6 +62,11 @@ module.exports = angular
 			vm.feed.filters.splice(index, 1);
 		}
 
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
 		vm.addRssFeed = function() {
 			Feeds.addFeed({
 				rss: vm.feed.url,
@@ -63,14 +75,21 @@ module.exports = angular
 				regexFilter: vm.feed.regexFilter,
 				autoDownload: vm.feed.autoDownload
 			}).then(function(data) {
-				console.log(data);
 				$state.go('home.feeds');
 			}, function(err) {
-				logger.error(err);
+				handleError(err);
+				logger.error(err.data);
 			});
 		}
 
 		vm.cancel = function() {
 			$state.go('home.feeds');
+		}
+
+		function handleError (err) {
+			console.log(err);
+			if (err.data === 'Feed exists') {
+				vm.error = 'Feed exists. Please enter in a unique URL.';
+			}
 		}
 	});

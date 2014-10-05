@@ -40,7 +40,7 @@
 					<td>{{feed.rss}}</td>
 					<td>{{feed.lastChecked * 1000 | date:'medium'}}</td>
 					<td>{{feed.autoDownload}}</td>
-					<td><a href="#">Refresh</a></td>
+					<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>
 					<td><a ui-sref="home.feeds.edit({id: feed._id})">Edit</a></td>
 					<td><a ui-sref="home.feeds.delete({id: feed._id})">Delete</a></td>
 				</tr>

@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('feeds')
-	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds) {
+	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds, feeds) {
 
 		var logger = njrtLog.getInstance('feeds.FeedsCtrl');
 

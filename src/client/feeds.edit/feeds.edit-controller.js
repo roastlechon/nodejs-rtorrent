@@ -54,10 +54,14 @@ module.exports = angular
 			vm.feed.filters.splice(index, 1);
 		}
 
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
 		vm.editFeed = function (feed) {
 			Feeds.updateFeed(feed)
 				.then(function(data) {
-					console.log(data);
 					$state.go('home.feeds');
 				}, function(err) {
 					logger.error(err);

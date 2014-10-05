@@ -14,7 +14,7 @@ var Q = require("q");
 var feeds = module.exports = {}
 
 function checkFeedExists(rss) {
-	return Feed.find({
+	return Feed.findOne({
 		"rss": rss
 	}).exec();
 }
@@ -35,7 +35,7 @@ feeds.getAll = function() {
 }
 
 feeds.get = function(id) {
-	return Feed.find({
+	return Feed.findOne({
 		"_id": id
 	}).exec();
 }
@@ -44,22 +44,38 @@ feeds.edit = function(feed) {
 	var _id = feed._id;
 	delete feed._id;
 
-	var feedExists = Feed.find({
+	var feedExists = Feed.findOne({
 		"_id": _id
 	}).exec();
 
 	var saveFeed = feedExists.then(function(data) {
-		
 
+		// need this to reparse
+		feed.rss = data.rss;
 
-		// Empty filters if regexFilter is false
-		if (!feed.regexFilter) {
-			feed.filters = [];
-		}
+		// Update feed by reparsing data
+		return torrentFeedParser.getTorrents(feed)
+			.then(function (data) {
+				feed.torrents = [];
+				for (var i = 0; i < data.length; i++) {
+					var torrent = new Torrent({
+						name: data[i].name,
+						url: data[i].url,
+						status: "RSS",
+						date: data[i].date
+					});
+					feed.torrents.push(torrent);
+				};
 
-		return Feed.update({
-			"_id": _id
-		}, feed).exec();
+				// Empty filters if regexFilter is false
+				if (!feed.regexFilter) {
+					feed.filters = [];
+				}
+
+				return Feed.update({
+					"_id": _id
+				}, feed).exec();
+			});
 	}, function(err) {
 		return Q.reject(err);
 	});
@@ -68,18 +84,18 @@ feeds.edit = function(feed) {
 }
 
 feeds.add = function(feed) {
-	var deferred = Q.defer();
 
-	checkFeedExists(feed.rss)
+	return checkFeedExists(feed.rss)
 		.then(function(data) {
-			if (data.length === 0) {
+
+			// if data doesn't exist, then feed does not exist
+			if (!data) {
 				logger.info("Feed does not exist.");
 				return torrentFeedParser.getTorrents(feed);
 			}
 
+			// throw error if feed exists
 			throw new Error('Feed exists');
-		}, function(err) {
-			deferred.reject(err);
 		})
 		.then(function(data) {
 			logger.info("Getting torrents from feed.");
@@ -117,28 +133,51 @@ feeds.add = function(feed) {
 
 			logger.info("Saving feed to database.");
 
-			feedModel.save(function (err, data) {
-				if (err) {
-					deferred.reject(err);
-				}
-
-				console.log(data);
-
-				deferred.resolve(data);
-			});
-
-		}, function(err) {
-			deferred.reject(err);
+			return Feed.create(feedModel);
 		});
+}
 
-	return deferred.promise;
+feeds.refreshFeed = function (_id) {
+	return Feed.findOne({
+		"_id": _id
+	}).exec().then(function (feed) {
+		if (!feed) {
+			throw new Error('Cannot find feed');
+		}
+
+		return torrentFeedParser.getTorrents(feed)
+
+			.then(function (data) {
+				var refreshedFeed = {
+					torrents: []
+				};
+				
+				for (var i = 0; i < data.length; i++) {
+					var torrent = new Torrent({
+						name: data[i].name,
+						url: data[i].url,
+						status: "RSS",
+						date: data[i].date
+					});
+					refreshedFeed.torrents.push(torrent);
+				};
+
+				return Feed.update({
+					"_id": _id
+				}, refreshedFeed).exec();
+			});
+	});
 }
 
 
 feeds.deleteFeed = function (_id) {
-	return Feed.find({
+	return Feed.findOne({
 		"_id": _id
 	}).exec().then(function (data) {
+		if (!data) {
+			throw new Error('Cannot find feed');
+		}
+
 		return Feed.remove({
 			"_id": _id
 		}).exec();

@@ -35,12 +35,12 @@ module.exports = angular
 				if (res.status == 401) {
 					logger.error(res.status, res.statusText, ':', res.data);
 					$state.go('login');
+					return false; // stop the promise chain
 				} else if (res.status == 404) {
 					logger.error(res.status, res.statusText, ':', res.data);
-				} else {
-					logger.error(res.status, res.statusText, ':', res.data);
-				}
-				return false; // stop the promise chain
+					return false; // stop the promise chain
+				} 
+				return true;
 			});
 
 		Restangular.setRestangularFields({

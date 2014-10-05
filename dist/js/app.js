@@ -57,7 +57,7 @@ require('./filters/datatransferrate-filter');
 require('./filters/percentage-filter');
 require('./filters/time-filter');
 require('./directives/resize-directive');
-},{"./authentication/authentication":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication.js","./directives/resize-directive":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/directives/resize-directive.js","./feed/feed":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feed/feed.js","./feeds.add/feeds.add":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.edit/feeds.edit.js","./feeds/feeds":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js","./filters/bytes-filter":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/bytes-filter.js","./filters/datatransferrate-filter":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/datatransferrate-filter.js","./filters/percentage-filter":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/percentage-filter.js","./filters/time-filter":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/time-filter.js","./home/home":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/home/home.js","./login/login":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/login/login.js","./modal/modal":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/modal/modal.js","./notification/notification":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification.js","./session/session":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session.js","./socket/socket":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket.js","./templates":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/templates.js","./torrents.add/torrents.add":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents.add/torrents.add.js","./torrents/torrents":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents.js","angular":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular/angular.js","angular-ui-bootstrap":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/jquery/dist/jquery.js","moment":"/Users/roastlechon/Projects/nodejs-rtorrent/node_modules/moment/moment.js","ng-context-menu":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/underscore/underscore.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/node_modules/moment/moment.js":[function(require,module,exports){
+},{"./authentication/authentication":"/vagrant/src/client/authentication/authentication.js","./directives/resize-directive":"/vagrant/src/client/directives/resize-directive.js","./feed/feed":"/vagrant/src/client/feed/feed.js","./feeds.add/feeds.add":"/vagrant/src/client/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/vagrant/src/client/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/vagrant/src/client/feeds.edit/feeds.edit.js","./feeds/feeds":"/vagrant/src/client/feeds/feeds.js","./filters/bytes-filter":"/vagrant/src/client/filters/bytes-filter.js","./filters/datatransferrate-filter":"/vagrant/src/client/filters/datatransferrate-filter.js","./filters/percentage-filter":"/vagrant/src/client/filters/percentage-filter.js","./filters/time-filter":"/vagrant/src/client/filters/time-filter.js","./home/home":"/vagrant/src/client/home/home.js","./login/login":"/vagrant/src/client/login/login.js","./modal/modal":"/vagrant/src/client/modal/modal.js","./notification/notification":"/vagrant/src/client/notification/notification.js","./session/session":"/vagrant/src/client/session/session.js","./socket/socket":"/vagrant/src/client/socket/socket.js","./templates":"/vagrant/src/client/templates.js","./torrents.add/torrents.add":"/vagrant/src/client/torrents.add/torrents.add.js","./torrents/torrents":"/vagrant/src/client/torrents/torrents.js","angular":"/vagrant/src/vendor/angular/angular.js","angular-ui-bootstrap":"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/vagrant/src/vendor/jquery/dist/jquery.js","moment":"/vagrant/node_modules/moment/moment.js","ng-context-menu":"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/vagrant/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/vagrant/src/vendor/underscore/underscore.js"}],"/vagrant/node_modules/moment/moment.js":[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.3
@@ -2917,7 +2917,7 @@ require('./directives/resize-directive');
 }).call(this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication-controller.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/authentication/authentication-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('authentication')
 	.controller('AuthenticationCtrl', function(njrtLog, Authentication, $previousState) {
@@ -2931,7 +2931,7 @@ module.exports = angular
 		vm.Authentication = Authentication;
 
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication-factory.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/authentication/authentication-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('authentication')
 	.factory('Authentication', function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q, Socket) {
@@ -2990,7 +2990,7 @@ module.exports = angular
 
 		return Authentication;
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/authentication/authentication.js":[function(require,module,exports){
 var log = require('../log/log');
 var session = require('../session/session');
 var socket = require('../socket/socket');
@@ -3028,12 +3028,12 @@ module.exports = angular
 				if (res.status == 401) {
 					logger.error(res.status, res.statusText, ':', res.data);
 					$state.go('login');
+					return false; // stop the promise chain
 				} else if (res.status == 404) {
 					logger.error(res.status, res.statusText, ':', res.data);
-				} else {
-					logger.error(res.status, res.statusText, ':', res.data);
-				}
-				return false; // stop the promise chain
+					return false; // stop the promise chain
+				} 
+				return true;
 			});
 
 		Restangular.setRestangularFields({
@@ -3048,7 +3048,7 @@ module.exports = angular
 
 require('./authentication-factory');
 require('./authentication-controller');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","../session/session":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session.js","../socket/socket":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket.js","./authentication-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication-controller.js","./authentication-factory":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication-factory.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/directives/resize-directive.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","../socket/socket":"/vagrant/src/client/socket/socket.js","./authentication-controller":"/vagrant/src/client/authentication/authentication-controller.js","./authentication-factory":"/vagrant/src/client/authentication/authentication-factory.js"}],"/vagrant/src/client/directives/resize-directive.js":[function(require,module,exports){
 module.exports = angular
 	.module('app')
 	.directive('resize', ['$window',
@@ -3073,7 +3073,7 @@ module.exports = angular
 			};
 		}
 	]);
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feed/feed-controller.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feed/feed-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feed')
 	.controller('FeedCtrl', function(njrtLog, $state, $scope, feed, Torrents) {
@@ -3097,7 +3097,7 @@ module.exports = angular
 		}
 
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feed/feed.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feed/feed.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 var torrents = require('../torrents/torrents');
@@ -3123,19 +3123,17 @@ module.exports = angular
 			},
 			resolve: {
 				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeeds().then(function(data) {
-						return Feeds.getFeed($stateParams.id);
-					});
+					return Feeds.getFeed($stateParams.id);
 				}
 			}
 		});
 	});
 
 require('./feed-controller');
-},{"../feeds/feeds":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js","../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","../torrents/torrents":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents.js","./feed-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feed/feed-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.add/feeds.add-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./feed-controller":"/vagrant/src/client/feed/feed-controller.js"}],"/vagrant/src/client/feeds.add/feeds.add-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.add')
-	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds) {
+	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds, Notification) {
 
 		var logger = njrtLog.getInstance('feeds.add.FeedsAddCtrl');
 
@@ -3143,9 +3141,16 @@ module.exports = angular
 
 		var vm = this;
 
-		vm.feed = {};
+		vm.feed = {
+			rss: '',
+			title: '',
+			regexFilter: false,
+			autoDownload: false,
+			filters: []
+		};
 		vm.newFilter = {};
-		vm.feed.filters = [];
+
+		vm.error = false;
 
 		vm.checkDisabled = function() {
 			// if form is invalid, but filters are added
@@ -3190,6 +3195,11 @@ module.exports = angular
 			vm.feed.filters.splice(index, 1);
 		}
 
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
 		vm.addRssFeed = function() {
 			Feeds.addFeed({
 				rss: vm.feed.url,
@@ -3198,18 +3208,25 @@ module.exports = angular
 				regexFilter: vm.feed.regexFilter,
 				autoDownload: vm.feed.autoDownload
 			}).then(function(data) {
-				console.log(data);
 				$state.go('home.feeds');
 			}, function(err) {
-				logger.error(err);
+				handleError(err);
+				logger.error(err.data);
 			});
 		}
 
 		vm.cancel = function() {
 			$state.go('home.feeds');
 		}
+
+		function handleError (err) {
+			console.log(err);
+			if (err.data === 'Feed exists') {
+				vm.error = 'Feed exists. Please enter in a unique URL.';
+			}
+		}
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.add/feeds.add.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feeds.add/feeds.add.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3233,7 +3250,7 @@ module.exports = angular
 	});
 
 require('./feeds.add-controller');
-},{"../feeds/feeds":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js","../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./feeds.add-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.add/feeds.add-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.add-controller":"/vagrant/src/client/feeds.add/feeds.add-controller.js"}],"/vagrant/src/client/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.delete')
 	.controller('FeedsDeleteCtrl', function(njrtLog, $state, feed, $modal, Feeds) {
@@ -3261,7 +3278,7 @@ module.exports = angular
 
 		
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.delete/feeds.delete.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feeds.delete/feeds.delete.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3293,7 +3310,7 @@ module.exports = angular
 	});
 
 require('./feeds.delete-controller');
-},{"../feeds/feeds":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js","../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./feeds.delete-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.delete/feeds.delete-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.delete-controller":"/vagrant/src/client/feeds.delete/feeds.delete-controller.js"}],"/vagrant/src/client/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds.edit')
 	.controller('FeedsEditCtrl', function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
@@ -3350,10 +3367,14 @@ module.exports = angular
 			vm.feed.filters.splice(index, 1);
 		}
 
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
 		vm.editFeed = function (feed) {
 			Feeds.updateFeed(feed)
 				.then(function(data) {
-					console.log(data);
 					$state.go('home.feeds');
 				}, function(err) {
 					logger.error(err);
@@ -3365,7 +3386,7 @@ module.exports = angular
 		}
 
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.edit/feeds.edit.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feeds.edit/feeds.edit.js":[function(require,module,exports){
 var log = require('../log/log');
 var feeds = require('../feeds/feeds');
 
@@ -3390,19 +3411,17 @@ module.exports = angular
 			},
 			resolve: {
 				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeeds().then(function(data) {
-						return Feeds.getFeed($stateParams.id);
-					});
+					return Feeds.getFeed($stateParams.id);
 				}
 			}
 		});
 	});
 
 require('./feeds.edit-controller');
-},{"../feeds/feeds":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js","../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./feeds.edit-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds.edit/feeds.edit-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds-controller.js":[function(require,module,exports){
+},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.edit-controller":"/vagrant/src/client/feeds.edit/feeds.edit-controller.js"}],"/vagrant/src/client/feeds/feeds-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds')
-	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds) {
+	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds, feeds) {
 
 		var logger = njrtLog.getInstance('feeds.FeedsCtrl');
 
@@ -3413,7 +3432,7 @@ module.exports = angular
 		vm.Feeds = Feeds;
 		
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds-factory.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feeds/feeds-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('feeds')
 	.factory('Feeds', function(njrtLog, Restangular, $q) {
@@ -3427,64 +3446,43 @@ module.exports = angular
 		Feeds.feeds = [];
 
 		Feeds.getFeeds = function() {
-			var deferred = $q.defer();
-
-			Restangular.all("feeds").getList().
-				then(function(data) {
+			return Restangular.all('feeds').getList()
+				.then(function (data) {
 					Feeds.feeds = data;
-					deferred.resolve(data);
-				}, function(err) {
-					console.error(err);
-					deferred.reject(err);
+					return Feeds.feeds;
 				});
-
-			return deferred.promise;
 		}
 
 		Feeds.getFeed = function(id) {
-			var deferred = $q.defer();
-
-			var feed = _.findWhere(Feeds.feeds, {
-				_id: id
-			});
-
-			if (feed) {
-				deferred.resolve(feed);
-			} else {
-				deferred.reject(new Error('Feed doesn\'t exist.'));
-			}
-
-			return deferred.promise;
+			return Restangular.one('feeds', id).get();
 		}
 
 		Feeds.addFeed = function(feed) {
-			var deferred = $q.defer();
-
-			Feeds.feeds.post(feed)
+			return Restangular.all('feeds').post(feed)
 				.then(function (data) {
 					Feeds.feeds.push(data);
-					deferred.resolve(feed);
-				}, function (err) {
-					logger.error(err.status, err.statusText, ':', err.data);
-					deferred.reject(err);
+					return data;
 				});
-			return deferred.promise;
+		}
+
+		Feeds.refreshFeed = function(id) {
+			return Restangular.one('feeds', id).post('refresh', {})
+				.then(function (data) {
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
+						});
+				});
 		}
 
 		Feeds.updateFeed = function(feed) {
-			var deferred = $q.defer();
-
-			feed.put()
+			return feed.put()
 				.then(function (data) {
-					Feeds.getFeeds()
-						.then(function() {
-							deferred.resolve(data);
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
 						});
-				}, function (err) {
-					logger.error(err.status, err.statusText, ':', err.data);
-					deferred.reject(err);
 				});
-			return deferred.promise;
 		}
 
 		Feeds.deleteFeed = function(feed) {
@@ -3518,7 +3516,7 @@ module.exports = angular
 		return Feeds;
 
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/feeds/feeds.js":[function(require,module,exports){
 var log = require('../log/log');
 var session = require('../session/session');
 
@@ -3551,7 +3549,7 @@ module.exports = angular
 
 require('./feeds-factory');
 require('./feeds-controller');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","../session/session":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session.js","./feeds-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds-controller.js","./feeds-factory":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/feeds/feeds-factory.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/bytes-filter.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","./feeds-controller":"/vagrant/src/client/feeds/feeds-controller.js","./feeds-factory":"/vagrant/src/client/feeds/feeds-factory.js"}],"/vagrant/src/client/filters/bytes-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('bytes', function() {
 		return function(bytes, precision) {
@@ -3563,7 +3561,7 @@ module.exports = angular.module('app')
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
 		}
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/datatransferrate-filter.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/filters/datatransferrate-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('dataTransferRate', function() {
 		return function(dataTransferRate, precision) {
@@ -3575,7 +3573,7 @@ module.exports = angular.module('app')
 			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
 		}
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/percentage-filter.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/filters/percentage-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('percentage', function() {
 		return function(input) {
@@ -3587,7 +3585,7 @@ module.exports = angular.module('app')
 			return percentage;
 		};
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/filters/time-filter.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/filters/time-filter.js":[function(require,module,exports){
 module.exports = angular.module('app')
 	.filter('time', function() {
 		return function(value) {
@@ -3611,7 +3609,7 @@ module.exports = angular.module('app')
 			}
 		}
 	})
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/home/home.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/home/home.js":[function(require,module,exports){
 module.exports = angular
 	.module('home', [
 		'ui.router'
@@ -3631,7 +3629,7 @@ module.exports = angular
 			// }
 		});
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/log/log.js":[function(require,module,exports){
 var moment = require('moment');
 
 module.exports = angular
@@ -3662,7 +3660,7 @@ module.exports = angular
 			return $log.getInstance(context);
 		}
 	});
-},{"moment":"/Users/roastlechon/Projects/nodejs-rtorrent/node_modules/moment/moment.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/login/login-controller.js":[function(require,module,exports){
+},{"moment":"/vagrant/node_modules/moment/moment.js"}],"/vagrant/src/client/login/login-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('login')
 	.controller('LoginCtrl', function(njrtLog, Authentication, $state) {
@@ -3690,7 +3688,7 @@ module.exports = angular
 			});
 		};
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/login/login.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/login/login.js":[function(require,module,exports){
 var log = require('../log/log');
 var authentication = require('../authentication/authentication');
 
@@ -3715,7 +3713,7 @@ module.exports = angular
 	});
 
 require('./login-controller');
-},{"../authentication/authentication":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/authentication/authentication.js","../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./login-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/login/login-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/modal/modal.js":[function(require,module,exports){
+},{"../authentication/authentication":"/vagrant/src/client/authentication/authentication.js","../log/log":"/vagrant/src/client/log/log.js","./login-controller":"/vagrant/src/client/login/login-controller.js"}],"/vagrant/src/client/modal/modal.js":[function(require,module,exports){
 module.exports = angular
 	.module('modal', [
 		'ui.bootstrap',
@@ -3775,7 +3773,7 @@ module.exports = angular
 
 		});
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification-controller.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/notification/notification-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('notification')
 	.controller('NotificationCtrl', function(njrtLog, Notification) {
@@ -3788,7 +3786,7 @@ module.exports = angular
 
 		vm.Notification = Notification;
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification-factory.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/notification/notification-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('notification')
 	.factory('Notification', function ($q, $timeout) {
@@ -3823,7 +3821,7 @@ module.exports = angular
 
 		return Notification;
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/notification/notification.js":[function(require,module,exports){
 module.exports = angular
 	.module('notification', [
 		
@@ -3831,7 +3829,7 @@ module.exports = angular
 
 require('./notification-factory');
 require('./notification-controller');
-},{"./notification-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification-controller.js","./notification-factory":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/notification/notification-factory.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session-service.js":[function(require,module,exports){
+},{"./notification-controller":"/vagrant/src/client/notification/notification-controller.js","./notification-factory":"/vagrant/src/client/notification/notification-factory.js"}],"/vagrant/src/client/session/session-service.js":[function(require,module,exports){
 module.exports = angular
 	.module('session')
 	.service('SessionService', function(njrtLog, $window, Restangular) {
@@ -3902,7 +3900,7 @@ module.exports = angular
 			loadExistingSession();
 
 		});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/session/session.js":[function(require,module,exports){
 var log = require('../log/log');
 
 module.exports = angular
@@ -3911,7 +3909,7 @@ module.exports = angular
 	]);
 
 require('./session-service');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./session-service":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session-service.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket-factory.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","./session-service":"/vagrant/src/client/session/session-service.js"}],"/vagrant/src/client/socket/socket-factory.js":[function(require,module,exports){
 var io = require('socket-io');
 
 module.exports = angular
@@ -3972,7 +3970,7 @@ module.exports = angular
 		return Socket;
 
 	});
-},{"socket-io":"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/socket.io-client/dist/socket.io.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket.js":[function(require,module,exports){
+},{"socket-io":"/vagrant/src/vendor/socket.io-client/dist/socket.io.js"}],"/vagrant/src/client/socket/socket.js":[function(require,module,exports){
 var log = require('../log/log');
 
 module.exports = angular
@@ -3981,18 +3979,18 @@ module.exports = angular
 	]);
 
 require('./socket-factory');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","./socket-factory":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket-factory.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/templates.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","./socket-factory":"/vagrant/src/client/socket/socket-factory.js"}],"/vagrant/src/client/templates.js":[function(require,module,exports){
 angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("feed/feed.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Name</th><th>Date</th><th>Status</th><th>Load</th></tr></thead><tbody><tr ng-repeat=\"torrent in feedCtrl.feed.torrents\"><td>{{torrent.name}}</td><td>{{torrent.date | date:\"medium\"}}</td><td>{{torrent.status}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedCtrl.loadTorrent(torrent.url)\">Load</a></td></tr></tbody></table></div></div>");
-$templateCache.put("feeds/feeds.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"feedPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.feeds.add\">Add Feed</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"feedsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>RSS</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>Last Checked</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"feedPanel = !feedPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': feedPanel, \'fa-caret-left\': !feedPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Title</th><th>RSS</th><th>Last Checked</th><th>Auto Download?</th><th>Refresh</th><th>Edit</th><th>Delete</th></tr></thead><tbody><tr ng-repeat=\"feed in feedsCtrl.Feeds.feeds | filter:feedsCtrl.searchText\"><td style=\"width: 30%;\"><a ui-sref=\"home.feeds.view({id: feed._id})\">{{feed.title}}</a></td><td>{{feed.rss}}</td><td>{{feed.lastChecked * 1000 | date:\'medium\'}}</td><td>{{feed.autoDownload}}</td><td><a href=\"#\">Refresh</a></td><td><a ui-sref=\"home.feeds.edit({id: feed._id})\">Edit</a></td><td><a ui-sref=\"home.feeds.delete({id: feed._id})\">Delete</a></td></tr></tbody></table></div></div>");
-$templateCache.put("feeds.add/feeds.add.tpl.html","<form name=\"addFeed\" novalidate><div class=\"modal-header\"><h3>Add Feed</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Name (Required):</label><input type=\"text\" id=\"feedName\" name=\"feedName\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.name\" required><p class=\"help-block\" ng-show=\"addFeed.feedName.$error.required\">Please enter in a name.</p></div><div class=\"form-group\"><label for=\"feedUrl\">URL (Required):</label><input type=\"text\" id=\"feedUrl\" name=\"feedUrl\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.url\" required><p class=\"help-block\" ng-show=\"addFeed.feedUrl.$error.required\">Please enter in a URL.</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsAddCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsAddCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to add regex filters.</p></div><div ng-if=\"feedsAddCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsAddCtrl.newFilter.regex\" style=\"width: 300px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn\" ng-click=\"feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled\"><li ng-repeat=\"filter in feedsAddCtrl.feed.filters track by $index\">{{filter.regex}} <span class=\"badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-default\" ng-disabled>Test Feed</button><button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"feedsAddCtrl.checkDisabled()\" ng-click=\"feedsAddCtrl.addRssFeed()\">Add Feed</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.cancel()\">Cancel</button></div></div></form>");
+$templateCache.put("feeds/feeds.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"feedPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.feeds.add\">Add Feed</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"feedsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>RSS</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>Last Checked</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"feedPanel = !feedPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': feedPanel, \'fa-caret-left\': !feedPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Title</th><th>RSS</th><th>Last Checked</th><th>Auto Download?</th><th>Refresh</th><th>Edit</th><th>Delete</th></tr></thead><tbody><tr ng-repeat=\"feed in feedsCtrl.Feeds.feeds | filter:feedsCtrl.searchText\"><td style=\"width: 30%;\"><a ui-sref=\"home.feeds.view({id: feed._id})\">{{feed.title}}</a></td><td>{{feed.rss}}</td><td>{{feed.lastChecked * 1000 | date:\'medium\'}}</td><td>{{feed.autoDownload}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.Feeds.refreshFeed(feed._id);\">Refresh</a></td><td><a ui-sref=\"home.feeds.edit({id: feed._id})\">Edit</a></td><td><a ui-sref=\"home.feeds.delete({id: feed._id})\">Delete</a></td></tr></tbody></table></div></div>");
+$templateCache.put("feeds.add/feeds.add.tpl.html","<form name=\"addFeed\" novalidate><div class=\"modal-header\"><h3>Add Feed</h3></div><div class=\"modal-body\"><p ng-show=\"feedsAddCtrl.error\" class=\"bg-danger\" ng-cloak><strong>Error:</strong>{{feedsAddCtrl.error}}</p><div class=\"form-group\"><label for=\"feedName\">Name (Required):</label><input type=\"text\" id=\"feedName\" name=\"feedName\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.name\" required><p class=\"help-block\" ng-show=\"addFeed.feedName.$error.required\">Please enter in a name.</p></div><div class=\"form-group\"><label for=\"feedUrl\">URL (Required):</label><input type=\"text\" id=\"feedUrl\" name=\"feedUrl\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.url\" required><p class=\"help-block\" ng-show=\"addFeed.feedUrl.$error.required\">Please enter in a URL.</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsAddCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsAddCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to add regex filters.</p></div><div ng-if=\"feedsAddCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsAddCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsAddCtrl.feed.filters track by $index\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-default\" ng-disabled>Test Feed</button><button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"feedsAddCtrl.checkDisabled()\" ng-click=\"feedsAddCtrl.addRssFeed()\">Add Feed</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.cancel()\">Cancel</button></div></div></form>");
 $templateCache.put("feeds.delete/feeds.delete.tpl.html","<div class=\"modal-header\"><h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3></div><div class=\"modal-body\"><p>Deleting will remove the feed from the list.</p></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)\">Delete</button><button class=\"btn btn-default\" ng-click=\"feedsDeleteCtrl.cancel()\">Cancel</button></div>");
-$templateCache.put("feeds.edit/feeds.edit.tpl.html","<div class=\"modal-header\"><h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Title:</label><input type=\"text\" class=\"form-control\" id=\"feedName\" ng-model=\"feedsEditCtrl.feed.title\"></div><div class=\"form-group\"><label for=\"feedUrl\">URL:</label><p class=\"form-control-static\">{{feedsEditCtrl.feed.rss}}</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsEditCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsEditCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to edit regex filters.</p></div><div ng-if=\"feedsEditCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsEditCtrl.newFilter.regex\" style=\"width: 300px;\"></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"include\">Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"exclude\">Exclude</label></div><button type=\"button\" class=\"btn\" ng-click=\"feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled\"><li ng-repeat=\"filter in feedsEditCtrl.feed.filters track by $index\">{{filter.regex}} <span class=\"badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-primary\" ng-click=\"feedsEditCtrl.editFeed(feedsEditCtrl.feed)\">Save changes</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.cancel()\">Cancel</button></div></div>");
+$templateCache.put("feeds.edit/feeds.edit.tpl.html","<div class=\"modal-header\"><h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Title:</label><input type=\"text\" class=\"form-control\" id=\"feedName\" ng-model=\"feedsEditCtrl.feed.title\"></div><div class=\"form-group\"><label for=\"feedUrl\">URL:</label><p class=\"form-control-static\">{{feedsEditCtrl.feed.rss}}</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsEditCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsEditCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to edit regex filters.</p></div><div ng-if=\"feedsEditCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsEditCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsEditCtrl.feed.filters track by $index\" class=\"filter\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-primary\" ng-click=\"feedsEditCtrl.editFeed(feedsEditCtrl.feed)\">Save changes</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.cancel()\">Cancel</button></div></div>");
 $templateCache.put("home/home.tpl.html","");
 $templateCache.put("login/login.tpl.html","<form ng-submit=\"loginCtrl.login()\"><div class=\"modal-header\"><h3>Login</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label class=\"control-label\" for=\"email\">Email</label><input type=\"text\" id=\"email\" class=\"form-control\" placeholder=\"Email\" ng-model=\"loginCtrl.email\"></div><div class=\"form-group\"><label class=\"control-label\" for=\"password\">Password</label><input type=\"password\" id=\"password\" class=\"form-control\" placeholder=\"Password\" ng-model=\"loginCtrl.password\"></div></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" ng-click=\"loginCtrl.close()\">Cancel</button><button type=\"submit\" class=\"btn btn-primary\">Sign in</button></div></form>");
 $templateCache.put("settings/settings.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div class=\"col-xs-12\"><fieldset><legend>Listening Port</legend><div class=\"form-group\"><label for=\"listening-port-range\">Port range used for incoming connections:</label><input type=\"number\" name=\"listening-port-range\" id=\"listening-port-range\" value class=\"form-control\"></div><div class=\"checkbox\"><label><input type=\"checkbox\" name=\"randomize-listening-port\">Randomize port each time rTorrent starts.</label></div></fieldset><fieldset><legend>Bandwidth Settings</legend><div class=\"form-group\"><label for=\"number-upload-slots\">Number of upload slots:</label><input type=\"number\" name=\"number-upload-slots\" id=\"number-upload-slots\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers\">Minimum number of peers:</label><input type=\"number\" name=\"min-number-peers\" id=\"min-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers\">Maximum number of peers:</label><input type=\"number\" name=\"max-number-peers\" id=\"max-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers-seeding\">Minimum number of peers for seeding:</label><input type=\"number\" name=\"min-number-peers-seeding\" id=\"min-number-peers-seeding\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers-seeding\">Maximum number of peers for seeding:</label><input type=\"number\" name=\"max-number-peers-seeding\" id=\"max-number-peers-seeding\" value class=\"form-control\"></div></fieldset><fieldset><legend>Bandwidth Limiting</legend><div class=\"from-group\"><label for=\"global-max-upload-rate\">Global maximum upload rate: (kB/s)</label><input type=\"number\" name=\"global-max-upload-rate\" id=\"global-max-upload-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div><div class=\"form-group\"><label for=\"global-max-download-rate\">Global maximum download rate: (kB/s)</label><input type=\"number\" name=\"global-max-download-rate\" id=\"global-max-download-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div></fieldset></div></div>");
 $templateCache.put("torrents/torrents.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 300px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 100%; float: left; padding: 10px;\" ng-hide=\"torrentPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.torrents.add\">Add Torrent</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"torrentsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Filter by Status</h4><ul class=\"list-unstyled\"><li><a href ng-click=\"torrentsCtrl.status=\'\'\">All <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'\'}\" ng-init=\"torrentsCtrl.status=\'\'\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'downloading\'\">Downloading <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'downloading\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'finished\'\">Finished <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'finished\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'stopped\'\">Stopped <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'stopped\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'seeding\'\">Seeding <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'seeding\'}\"></i></a></li></ul><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"status_col=!status_col\" checked>Status</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"size_col=!size_col\" checked>Size</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"percent_downloaded_col=!percent_downloaded_col\" checked>Done</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"downloaded_col=!downloaded_col\" checked>Downloaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"uploaded_col=!uploaded_col\" checked>Uploaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"dl_speed_col=!dl_speed_col\" checked>DL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"ul_speed_col=!ul_speed_col\" checked>UL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"time_remaining_col=!time_remaining_col\" checked>ETA</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"peers_col=!peers_col\" checked>Peers</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"seeds_col=!seeds_col\" checked>Seeds</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"torrentPanel = !torrentPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': torrentPanel, \'fa-caret-left\': !torrentPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;\"><table class=\"table table-condensed table-hover\" style=\"min-width: 1400px;\"><colgroup><col style=\"width: 30%;\"><col style=\"width: 120px;\"><col style=\"width: 160px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"></colgroup><thead><tr><th><a href ng-click=\"torrentsCtrl.predicate=\'name\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Name <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'name\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'name\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"status_col\"><a href ng-click=\"torrentsCtrl.predicate=\'status\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Status <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'status\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'status\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"size_col\"><a href ng-click=\"torrentsCtrl.predicate=\'size\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Size <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'size\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'size\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"percent_downloaded_col\"><a href ng-click=\"torrentsCtrl.predicate=\'percent_downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Done <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'percent_downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'percent_downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"downloaded_col\"><a href ng-click=\"torrentsCtrl.predicate=\'downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Downloaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"uploaded_col\"><a href ng-click=\"torrentsCtrl.predicate=\'uploaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Uploaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'uploaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'uploaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"dl_speed_col\"><a href ng-click=\"torrentsCtrl.predicate=\'dl_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">DL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'dl_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'dl_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"ul_speed_col\"><a href ng-click=\"torrentsCtrl.predicate=\'ul_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">UL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'ul_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'ul_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"time_remaining_col\"><a href ng-click=\"torrentsCtrl.predicate=\'time_remaining\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">ETA <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'time_remaining\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'time_remaining\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"peers_col\"><a href ng-click=\"torrentsCtrl.predicate=\'peers\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Peers <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'peers\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'peers\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"seeds_col\"><a href ng-click=\"torrentsCtrl.predicate=\'seeds\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Seeds <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'seeds\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'seeds\' && !torrentsCtrl.reverse}\"></i></a></th></tr></thead><tbody><tr ng-repeat=\"torrent in torrentsCtrl.Torrents.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} | filter:torrentsCtrl.searchText track by torrent.hash\" class=\"torrent\" context-menu data-target=\"menu-{{$index}}\"><td><div class=\"clearfix\" style=\"position: relative;\"><h5 class=\"pull-left\" style=\"white-space: nowrap; overflow: hidden;\" title=\"{{torrent.name}}\">{{torrent.name}}</h5></div><div class=\"dropdown position-fixed\" id=\"menu-{{$index}}\"><ul class=\"dropdown-menu\" role=\"menu\"><li><a href ng-click=\"torrentsCtrl.Torrents.start(torrent.hash)\">Play</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.pause(torrent.hash)\">Pause</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.stop(torrent.hash)\">Stop</a></li><li class=\"divider\"></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Priority</a><ul class=\"dropdown-menu\"><li><a href>High</a></li><li><a href>Medium</a></li><li><a href>Low</a></li><li><a href>Don\'t Download</a></li></ul></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Set Channel</a><ul class=\"dropdown-menu\"><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'\')\">No Channel</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_4\')\">Up16</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_3\')\">Up32</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_2\')\">Up64</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_1\')\">Up128</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_0\')\">Up256</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_4\')\">Down16</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_3\')\">Down32</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_2\')\">Down64</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_1\')\">Down128</a></li><li><a href ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_0\')\">Down256</a></li></ul></li><li class=\"divider\"></li><li><a href ng-click=\"torrentsCtrl.Torrents.remove(torrent.hash)\">Remove</a></li><li><a href ng-click>Details</a></li></ul></div></td><td ng-hide=\"status_col\">{{torrent.status}}</td><td ng-hide=\"size_col\">{{torrent.size | bytes}}</td><td ng-hide=\"percent_downloaded_col\"><div class=\"progress\"><div class=\"progress-bar\" style=\"width: {{torrent.percent_downloaded | percentage}}\" ng-class=\"{\'progress-bar-warning\': torrent.status === \'checking\', \'progress-bar-success\': torrent.status === \'seeding\'}\">{{torrent.percent_downloaded | percentage}}</div></div></td><td ng-hide=\"downloaded_col\">{{torrent.downloaded | bytes}}</td><td ng-hide=\"uploaded_col\">{{torrent.uploaded | bytes}}</td><td ng-hide=\"dl_speed_col\">{{torrent.dl_speed | dataTransferRate}}</td><td ng-hide=\"ul_speed_col\">{{torrent.ul_speed | dataTransferRate}}</td><td ng-hide=\"time_remaining_col\">{{torrent.time_remaining | time}}</td><td ng-hide=\"peers_col\">{{torrent.peers}} ({{torrent.total_peers}})</td><td ng-hide=\"seeds_col\">{{torrent.seeds}} ({{torrent.total_seeds}})</td></tr></tbody></table></div></div>");
 $templateCache.put("torrents.add/torrents.add.tpl.html","<div class=\"modal-header\"><h3>Add Torrent</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"torrent-url\">URL:</label><input type=\"text\" id=\"torrent-url\" class=\"form-control\" placeholder=\"Torrent URL or Magnet Link\" ng-model=\"torrentsAddCtrl.url\"><span class=\"help-block\">Enter in a Magnet link or Torrent link.</span></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary\" ng-click=\"torrentsAddCtrl.loadTorrent(torrentsAddCtrl.url)\">Add Link</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"torrentsAddCtrl.cancel()\">Cancel</button></div></div>");}]);
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents.add/torrents.add-controller.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/torrents.add/torrents.add-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents.add')
 	.controller('TorrentsAddCtrl', function(njrtLog, $state, Torrents) {
@@ -4019,7 +4017,7 @@ module.exports = angular
 
 	});
 
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents.add/torrents.add.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/torrents.add/torrents.add.js":[function(require,module,exports){
 var log = require('../log/log');
 var torrents = require('../torrents/torrents');
 
@@ -4043,7 +4041,7 @@ module.exports = angular
 	});
 
 require('./torrents.add-controller');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","../torrents/torrents":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents.js","./torrents.add-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents.add/torrents.add-controller.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents-controller.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./torrents.add-controller":"/vagrant/src/client/torrents.add/torrents.add-controller.js"}],"/vagrant/src/client/torrents/torrents-controller.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents')
 	.controller('TorrentsCtrl', function(njrtLog, $state, Torrents, Socket) {
@@ -4060,7 +4058,7 @@ module.exports = angular
 		vm.reverse = false;
 		vm.status = '';
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents-factory.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/torrents/torrents-factory.js":[function(require,module,exports){
 module.exports = angular
 	.module('torrents')
 	.factory('Torrents', function (njrtLog, Restangular, Socket, Notification, $state, SessionService) {
@@ -4218,7 +4216,7 @@ module.exports = angular
 
 		return Torrents;
 	});
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents.js":[function(require,module,exports){
+},{}],"/vagrant/src/client/torrents/torrents.js":[function(require,module,exports){
 var log = require('../log/log');
 var socket = require('../socket/socket');
 var session = require('../session/session');
@@ -4248,7 +4246,7 @@ module.exports = angular
 
 	require('./torrents-factory');
 	require('./torrents-controller');
-},{"../log/log":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/log/log.js","../session/session":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/session/session.js","../socket/socket":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/socket/socket.js","./torrents-controller":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents-controller.js","./torrents-factory":"/Users/roastlechon/Projects/nodejs-rtorrent/src/client/torrents/torrents-factory.js"}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
+},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","../socket/socket":"/vagrant/src/client/socket/socket.js","./torrents-controller":"/vagrant/src/client/torrents/torrents-controller.js","./torrents-factory":"/vagrant/src/client/torrents/torrents-factory.js"}],"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -7927,7 +7925,7 @@ angular.module("template/typeahead/typeahead-popup.html", []).run(["$templateCac
     "</ul>");
 }]);
 
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular-ui-router/release/angular-ui-router.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js":[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.11
@@ -11587,7 +11585,7 @@ angular.module('ui.router.state')
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
 
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/angular/angular.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/angular/angular.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /**
@@ -33619,7 +33617,7 @@ var styleDirective = valueFn({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/jquery/dist/jquery.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/jquery/dist/jquery.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -42818,7 +42816,7 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/ng-context-menu/dist/ng-context-menu.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js":[function(require,module,exports){
 /**
  * ng-context-menu - v0.1.7 - An AngularJS directive to display a context menu
  * when a right-click event is triggered
@@ -42940,7 +42938,7 @@ angular
     }
   ]);
 
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/restangular/dist/restangular.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/restangular/dist/restangular.js":[function(require,module,exports){
 /**
  * Restful Resources service for AngularJS apps
  * @version v1.3.1 - 2014-01-29 * @link https://github.com/mgonto/restangular
@@ -44213,7 +44211,7 @@ module.provider('Restangular', function() {
 
 })();
 
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/socket.io-client/dist/socket.io.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/socket.io-client/dist/socket.io.js":[function(require,module,exports){
 /*! Socket.IO.js build:0.9.17, development. Copyright(c) 2011 LearnBoost <dev@learnboost.com> MIT Licensed */
 
 var io = ('undefined' === typeof module ? {} : module.exports);
@@ -48087,7 +48085,7 @@ if (typeof define === "function" && define.amd) {
   define([], function () { return io; });
 }
 })();
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/ui-router-extras/release/ct-ui-router-extras.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js":[function(require,module,exports){
 /**
  * UI-Router Extras: Sticky states, Future States, Deep State Redirect, Transition promise
  * @version v0.0.10
@@ -49416,7 +49414,7 @@ angular.module("ct.ui.router.extras").config( [ "$provide",  function ($provide)
 );
 
 })(window, window.angular);
-},{}],"/Users/roastlechon/Projects/nodejs-rtorrent/src/vendor/underscore/underscore.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/underscore/underscore.js":[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.6.0

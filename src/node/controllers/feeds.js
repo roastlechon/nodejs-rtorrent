@@ -10,23 +10,24 @@ module.exports = function(app) {
 	app.put('/feeds/:id', auth.ensureAuthenticated, updateFeed);
 	app.del('/feeds/:id', auth.ensureAuthenticated, deleteFeed);
 	app.post('/feeds/test', auth.ensureAuthenticated, testFeed);
+	app.post('/feeds/:id/refresh', auth.ensureAuthenticated, refreshFeed);
 }
 
 function getFeed(req, res) {
-	logger.info('getting single rss feed: %s', req.params.id);
+	logger.info('Getting feed', req.params.id);
 
 	feeds.get(req.params.id).then(function(data) {
-		logger.info('successfully retrieved rss feed');
-		res.json(data[0]);
+		logger.info('Successfully retrieved rss feed', data._id);
+		res.json(data);
 	}, function(err) {
-		logger.error('Error occured: %s', err.message);
-		res.json(err);
+		logger.error(err.message);
+		res.status(500).send(err.message);
 	});
 }
 
 function getFeeds(req, res) {
 	feeds.getAll().then(function(data) {
-		logger.info('successfully retrieved rss feeds');
+		logger.info('Successfully retrieved rss feeds');
 		res.json(data.map(function(feed) {
 			return {
 				_id: feed._id,
@@ -45,27 +46,20 @@ function getFeeds(req, res) {
 		}));
 	}, function(err) {
 		logger.error(err.message);
-		res.json(err);
+		res.status(500).send(err.message);
 	});
 }
 
 function addFeed(req, res) {
+	logger.info('Adding feed', req.body.rss);
 
-	var feed = {
+	feeds.add({
 		title: req.body.title,
 		rss: req.body.rss,
 		autoDownload: req.body.autoDownload,
 		regexFilter: req.body.regexFilter,
 		filters: req.body.filters
-	};
-
-	console.log(feed);
-
-	//check database if feed exists
-	//if feed does not exist, create new feedsub
-	//get list of feeds to return to client
-
-	feeds.add(feed).then(function(data) {
+	}).then(function(data) {
 		logger.info('Successfully saved feed.');
 		res.json(data);
 	}, function(err) {
@@ -79,20 +73,18 @@ function addFeed(req, res) {
 
 function updateFeed(req, res) {
 	logger.info('Updating feed', req.params.id);
-	
-	var feed = {
+
+	feeds.edit({
 		_id: req.params.id,
 		title: req.body.title,
 		autoDownload: req.body.autoDownload,
 		regexFilter: req.body.regexFilter,
 		filters: req.body.filters
-	}
-
-	feeds.edit(feed).then(function(data) {
+	}).then(function(data) {
 		res.json(data);
 	}, function(err) {
-		logger.error(err);
-		res.status(500).send(err);
+		logger.error(err.message);
+		res.status(500).send(err.message);
 	}); 
 }
 
@@ -104,6 +96,17 @@ function deleteFeed(req, res) {
 	}, function(err) {
 		logger.error(err.message);
 		res.status(500).send(err);
+	});
+}
+
+function refreshFeed (req, res) {
+	logger.info('Refreshing feed', req.params.id);
+	feeds.refreshFeed(req.params.id).then(function (data) {
+		logger.info('Successfully refreshed feed');
+		res.json(data);
+	}, function (err) {
+		logger.error(err.message);
+		req.status(500).send(err);
 	});
 }
 
