@@ -25,6 +25,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Feeds > AutoDL (works)
 * fcgi Direct Connection (works)
 * HTTPS support (by rendom, works)
+* Embedded database support (works)
 
 ### Features being worked on
 * Settings (not complete, rendom is working on it)
@@ -35,7 +36,6 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Torrents > Batch (not started)
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
-* Embedded database support (not started)
 * Search (not started)
 * Multi-User (not started)
 * File Manager (not started)
