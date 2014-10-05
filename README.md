@@ -32,7 +32,6 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Settings (not complete, rendom is working on it)
 * Settings > Pushover support (not started)
 * Torrents > Batch (not started)
-
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
 * Embedded database support (not started)
