@@ -25,13 +25,14 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Feeds > Basic Regex (works)
 * Feeds > AutoDL (works)
 * fcgi Direct Connection (works)
+* HTTPS support (by rendom, works)
 * Docker support (????)
 
 ### Features that are not yet completed
-* Settings (not complete)
+* Settings (not complete, rendom is working on it)
 * Settings > Pushover support (not started)
 * Torrents > Batch (not started)
-* HTTPS support (not started)
+
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
 * Embedded database support (not started)
