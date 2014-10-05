@@ -26,10 +26,12 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Feeds > AutoDL (works)
 * fcgi Direct Connection (works)
 * HTTPS support (by rendom, works)
-* Docker support (????)
 
-### Features that are not yet completed
+### Features being worked on
 * Settings (not complete, rendom is working on it)
+
+### Features not started
+* Docker support (????)
 * Settings > Pushover support (not started)
 * Torrents > Batch (not started)
 * First Time Setup (not started)
