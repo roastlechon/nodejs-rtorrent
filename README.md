@@ -15,8 +15,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * nwgat, Docs, Testing, Community 
 
 ## Roadmap
-** Current  (Dev Beta..) ** 
-* NOT PRODUCTION READY
+** Current  (Dev Beta..) **  * NOT PRODUCTION READY
 
 ### Features that are working
 * Feeds (works) 
@@ -43,10 +42,11 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Torrent Creator (not started)
 * HTML5 Media Player (not started)
 
-Codename Alchemist
+### Branches ###
+*Codename Alchemist*
 this is our dev branch, the bleeding edge, might brake so hold on
 
-Codename Unicorn
+*Codename Unicorn*
 this is our master branch, the most stable yet beta
 
 ### Depends on
