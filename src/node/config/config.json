@@ -25,6 +25,7 @@
 	"app": {
 		"hostname": "localhost",
 		"port": 3000,
+		"ssl":false,
 		"defaultUser": {
 			"email": "admin@localhost",
 			"password": "password"
