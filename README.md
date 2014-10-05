@@ -5,7 +5,7 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 
  Screenshot
  
-![cutout](http://i.imgur.com/gwVmwAu.png "screenshot")
+![cutout](https://camo.githubusercontent.com/e38d456dab6214a6f9fe98deea596ec5eaf90877/687474703a2f2f692e696d6775722e636f6d2f683958376877552e706e67 "screenshot")
 
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
