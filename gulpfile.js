@@ -15,6 +15,8 @@ var gutil = require('gulp-util');
 var templateCache = require('gulp-angular-templatecache');
 var minifyHTML = require('gulp-minify-html');
 
+var packageJson = require('./package.json');
+
 var nodemon = require('gulp-nodemon');
 
 var watch = require('gulp-watch');
@@ -44,7 +46,12 @@ gulp.task('sass', function() {
 
 gulp.task('watch_index.html', function() {
 	watch('src/client/index.html', function(file) {
-		return file.pipe(gulp.dest('dist'));
+		return file.pipe(preprocess({
+				context: {
+					VERSION: packageJson.version
+				}
+			}))
+			.pipe(gulp.dest('dist'));
 	});
 	watch(['src/client/**/*.html', '!src/client/index.html'], function() {
 		gulp.start('copy_html');

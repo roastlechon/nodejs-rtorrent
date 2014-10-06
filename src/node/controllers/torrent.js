@@ -57,7 +57,7 @@ function loadTorrent(req, res) {
 }
 
 function setTorrentChannel(req, res) {
-	rtorrent.setThrottle(req.params.hash, request.channel).then(function(data) {
+	rtorrent.setThrottle(req.params.hash, req.channel).then(function(data) {
 		res.send("success");
 	}, function(err) {
 		logger.error(err);
