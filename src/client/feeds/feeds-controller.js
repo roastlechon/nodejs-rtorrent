@@ -9,5 +9,8 @@ module.exports = angular
 		var vm = this;
 
 		vm.Feeds = Feeds;
+
+		vm.reverse = false;
+		vm.predicate = 'lastChecked';
 		
 	});
