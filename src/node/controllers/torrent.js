@@ -47,6 +47,10 @@ function removeTorrent(req, res) {
 	});
 }
 
+function deleteTorrentData(req, res) {
+	
+}
+
 function loadTorrent(req, res) {
 	rtorrent.loadTorrentUrl(req.body.url).then(function(data) {
 		res.send("success");

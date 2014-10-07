@@ -4,7 +4,9 @@ var logger = require('winston');
 var Q = require('q');
 var nconf = require('nconf');
 var net = require('net');
+var rimraf = require('rimraf');
 var Deserializer = require('./rtorrent/deserializer');
+var Serializer = require('./rtorrent/serializer');
 
 function htmlspecialchars(str) {
 	return str.replace(/\&/ig,'&amp;').replace(/\'/ig,'&quot;').replace(/\'/ig,'&#039;').replace(/\</ig,'&lt;').replace(/\>/ig,'&gt;');
@@ -26,31 +28,13 @@ function scgiMethodCall(api, array) {
 
 	var deferred = Q.defer();
 
-	var content = '<methodCall>';
-	content += '<methodName>';
-	content += api;
-	content += '</methodName>';
-
-	if (array.length > 0) {
-		content += '<params>';
-		for (var i = 0; i < array.length; i++) {
-			content += '<param>';
-			content += '<value>';
-			content += htmlspecialchars('' + array[i]);
-			content += '</value>';
-			content += '</param>';
-		};
-		content += '</params>';
-	}
-
-	content += '</methodCall>';
-
+	var xml = Serializer.serializeMethodCall(api, array);
 
 	// length of data to transmit
 	var length = 0;
 
 	var head = [
-		'CONTENT_LENGTH' + String.fromCharCode(0) + content.length + String.fromCharCode(0),
+		'CONTENT_LENGTH' + String.fromCharCode(0) + xml.length + String.fromCharCode(0),
 		'SCGI' + String.fromCharCode(0) + '1' + String.fromCharCode(0)
 	];
 
@@ -65,11 +49,13 @@ function scgiMethodCall(api, array) {
 	});
 
 	stream.write(',');
-	stream.write(content);
+	stream.write(xml);
 
 	var deserializer = new Deserializer('utf8');
 	deserializer.deserializeMethodResponse(stream, function (err, data) {
+
 		if (err) {
+			console.log(err);
 			return deferred.reject(err);
 		}
 		return deferred.resolve(data);
@@ -264,33 +250,58 @@ rtorrent.getTorrents = function () {
 				return adaptTorrentArray(torrent);
 			});
 
-			// Map torrents and get total peers and seeds and assign to
-			// associated torrent as promise.
-			var torrentsPromises = torrents.map(function (torrent) {
-				return rtorrent.getTotalPeers(torrent.hash)
-						.then(function (data) {
-							torrent.total_peers = data;
-							return rtorrent.getTotalSeeds(torrent.hash)
-								.then(function (data) {
-									torrent.total_seeds = data;
-									return torrent;
-								});
-						});
+			// Declare multical array specifically for getting torrent data
+			var systemMultiCallArray = [];
+
+			// Loop through torrents from main call and push method call to get peers and seeds
+			// Note: The order in which it is pushed matters. The returned array from rtorrent will be
+			// an array of array of array of array of values
+			torrents.forEach(function (torrent) {
+
+				// Push peers first for the torrent
+				systemMultiCallArray.push({
+					methodName: 't.multicall', 
+					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_incomplete=']
+				});
+
+				// Push seeds second for the torrent
+				systemMultiCallArray.push({
+					methodName: 't.multicall', 
+					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_complete=']
+				});
 			});
 
-			// Return promise when all torrents and total peers/seeds are resolved
-			return Q.allSettled(torrentsPromises)
-				.then(function (results) {
-					var torrents = [];
-					results.forEach(function (result) {
-						if (result.state === 'fulfilled') {
-							torrents.push(result.value);
-						} else {
-							logger.error(result.reason);
-						}
-					});
-					return torrents;
+			// Do the system.multicall and return promise
+			// Inside the resolve function, we loop through the array
+			return methodCall('system.multicall', [systemMultiCallArray]).then(function(data) {
+				var numberArray = [];
+				
+				// The length of data should be equal to the length of systemMultiCallArray
+				data.forEach(function(item) {
+					// Each item in the array has an array of arrays
+					 item.forEach(function(itemagain) {
+					 	// Map and reduce the array to get the number
+						var number = itemagain.map(function (value) {
+								return parseInt(value, 10);
+							})
+							.reduce(function (a, b) {
+								return a + b;
+							}, 0);
+						// Push the number to a clean array so that we can place it correctly back into
+						// the torrent object to return to client
+						numberArray.push(number);
+					});				
 				});
+
+				// Map torrents and shift from numberArray to get the correct order
+				// Peers is first, followed by seeds.
+				// Return each torrent and finally return torrents back to caller.
+				return torrents.map(function (torrent) {
+					torrent.total_peers = numberArray.shift();
+					torrent.total_seeds = numberArray.shift();
+					return torrent;
+				});
+			});
 		});
 }
 
@@ -319,6 +330,24 @@ rtorrent.pauseTorrent = function (hash) {
 
 rtorrent.removeTorrent = function (hash) {
 	return methodCall('d.erase', [hash]);
+}
+
+rtorrent.deleteTorrentData = function (hash) {
+	// check if multifile
+	// if yes, get basepath and delete
+	// if no, get name and delete
+}
+
+rtorrent.getBasePath = function (hash) {
+	return methodCall('d.get_base_path', [hash]);
+}
+
+rtorrent.isMultiFile = function (hash) {
+	return methodCall('d.is_multi_file', [hash]);
+}
+
+rtorrent.getDirectory = function (hash) {
+	return methodCall('d.get_directory', [hash]);
 }
 
 rtorrent.getNetworkListenPort = function () {
