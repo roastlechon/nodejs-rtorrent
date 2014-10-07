@@ -11,10 +11,10 @@ module.exports = function(io) {
 		
 		connections++;
 
-		logger.info("successfully connected to socket");
+		logger.info("Successfully connected to socket.");
 
 		if (!started) {
-			logger.info("starting torrent loop");
+			logger.info("Starting torrent loop.");
 			startTorrentLoop();
 		}
 
@@ -31,7 +31,7 @@ module.exports = function(io) {
 		continueEmitting();
 
 		socket.on("disconnect", function(socket) {
-			logger.info("user disconnected");
+			logger.info("Client disconnected.");
 			connections--;
 		});
 	});
@@ -48,8 +48,8 @@ var startTorrentLoop = function() {
 				logger.error(err.message);
 			});
 		} else {
-			logger.info("stopping torrent loop");
-			logger.info("waiting on connection");
+			logger.info("Stopping torrent loop.");
+			logger.info("Waiting on connection from client.");
 			started = false;
 			clearInterval(interval);
 		}
