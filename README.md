@@ -36,11 +36,14 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Torrents > Batch (not started)
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
+* Feeds Import & Export (not started)
 * Search (not started)
 * Multi-User (not started)
 * File Manager (not started)
 * Torrent Creator (not started)
 * HTML5 Media Player (not started)
+* Keyboard Shortcuts (not started)
+* Stats Page (not started)
 
 ### Branches ###
 *Codename Alchemist*
