@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./src/client/app.js":[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./.tmp/app.js":[function(require,module,exports){
 require('jquery');
 require('angular');
 require('angular-ui-bootstrap');
@@ -47,17 +47,1393 @@ angular.module('app', [
 	feedsAdd.name,
 	feedsEdit.name,
 	feedsDelete.name
-]).config(function($urlRouterProvider, $stickyStateProvider) {
-	$stickyStateProvider.enableDebug(true);
+]).config(["$urlRouterProvider", "$stickyStateProvider", function($urlRouterProvider, $stickyStateProvider) {
 	$urlRouterProvider.otherwise('/');
-});
+}]);
 
 require('./filters/bytes-filter');
 require('./filters/datatransferrate-filter');
 require('./filters/percentage-filter');
 require('./filters/time-filter');
 require('./directives/resize-directive');
-},{"./authentication/authentication":"/vagrant/src/client/authentication/authentication.js","./directives/resize-directive":"/vagrant/src/client/directives/resize-directive.js","./feed/feed":"/vagrant/src/client/feed/feed.js","./feeds.add/feeds.add":"/vagrant/src/client/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/vagrant/src/client/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/vagrant/src/client/feeds.edit/feeds.edit.js","./feeds/feeds":"/vagrant/src/client/feeds/feeds.js","./filters/bytes-filter":"/vagrant/src/client/filters/bytes-filter.js","./filters/datatransferrate-filter":"/vagrant/src/client/filters/datatransferrate-filter.js","./filters/percentage-filter":"/vagrant/src/client/filters/percentage-filter.js","./filters/time-filter":"/vagrant/src/client/filters/time-filter.js","./home/home":"/vagrant/src/client/home/home.js","./login/login":"/vagrant/src/client/login/login.js","./modal/modal":"/vagrant/src/client/modal/modal.js","./notification/notification":"/vagrant/src/client/notification/notification.js","./session/session":"/vagrant/src/client/session/session.js","./socket/socket":"/vagrant/src/client/socket/socket.js","./templates":"/vagrant/src/client/templates.js","./torrents.add/torrents.add":"/vagrant/src/client/torrents.add/torrents.add.js","./torrents/torrents":"/vagrant/src/client/torrents/torrents.js","angular":"/vagrant/src/vendor/angular/angular.js","angular-ui-bootstrap":"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/vagrant/src/vendor/jquery/dist/jquery.js","moment":"/vagrant/node_modules/moment/moment.js","ng-context-menu":"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/vagrant/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/vagrant/src/vendor/underscore/underscore.js"}],"/vagrant/node_modules/moment/moment.js":[function(require,module,exports){
+},{"./authentication/authentication":"/vagrant/.tmp/authentication/authentication.js","./directives/resize-directive":"/vagrant/.tmp/directives/resize-directive.js","./feed/feed":"/vagrant/.tmp/feed/feed.js","./feeds.add/feeds.add":"/vagrant/.tmp/feeds.add/feeds.add.js","./feeds.delete/feeds.delete":"/vagrant/.tmp/feeds.delete/feeds.delete.js","./feeds.edit/feeds.edit":"/vagrant/.tmp/feeds.edit/feeds.edit.js","./feeds/feeds":"/vagrant/.tmp/feeds/feeds.js","./filters/bytes-filter":"/vagrant/.tmp/filters/bytes-filter.js","./filters/datatransferrate-filter":"/vagrant/.tmp/filters/datatransferrate-filter.js","./filters/percentage-filter":"/vagrant/.tmp/filters/percentage-filter.js","./filters/time-filter":"/vagrant/.tmp/filters/time-filter.js","./home/home":"/vagrant/.tmp/home/home.js","./login/login":"/vagrant/.tmp/login/login.js","./modal/modal":"/vagrant/.tmp/modal/modal.js","./notification/notification":"/vagrant/.tmp/notification/notification.js","./session/session":"/vagrant/.tmp/session/session.js","./socket/socket":"/vagrant/.tmp/socket/socket.js","./templates":"/vagrant/.tmp/templates.js","./torrents.add/torrents.add":"/vagrant/.tmp/torrents.add/torrents.add.js","./torrents/torrents":"/vagrant/.tmp/torrents/torrents.js","angular":"/vagrant/src/vendor/angular/angular.js","angular-ui-bootstrap":"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js","angular-ui-router":"/vagrant/src/vendor/angular-ui-router/release/angular-ui-router.js","jquery":"/vagrant/src/vendor/jquery/dist/jquery.js","moment":"/vagrant/node_modules/moment/moment.js","ng-context-menu":"/vagrant/src/vendor/ng-context-menu/dist/ng-context-menu.js","restangular":"/vagrant/src/vendor/restangular/dist/restangular.js","ui-router-extras":"/vagrant/src/vendor/ui-router-extras/release/ct-ui-router-extras.js","underscore":"/vagrant/src/vendor/underscore/underscore.js"}],"/vagrant/.tmp/authentication/authentication-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('authentication')
+	.controller('AuthenticationCtrl', ["njrtLog", "Authentication", "$previousState", function(njrtLog, Authentication, $previousState) {
+
+		var logger = njrtLog.getInstance('authentication.AuthenticationCtrl');
+
+		logger.debug('AuthenticationCtrl loaded.');
+
+		var vm = this;
+
+		vm.Authentication = Authentication;
+
+	}]);
+},{}],"/vagrant/.tmp/authentication/authentication-factory.js":[function(require,module,exports){
+module.exports = angular
+	.module('authentication')
+	.factory('Authentication', ["njrtLog", "$http", "$rootScope", "$state", "$window", "Restangular", "SessionService", "$q", "Socket", function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q, Socket) {
+
+		var logger = njrtLog.getInstance('authentication.Authentication');
+
+		logger.debug('Authentication loaded.');
+		
+		var Authentication = {};
+
+		Authentication.login = function(user) {
+			var deferred = $q.defer();
+
+			$http.post("/login", user).then(function(data) {
+
+				data = data.data;
+
+				var userSession = {
+					token: data.token,
+					expires: data.expires,
+					_id: data._id,
+					email: user.email
+				}
+				SessionService.setUserSession(userSession);
+
+				// Connect to socket
+				Socket.connect();
+				
+				deferred.resolve(userSession);
+			}, function(err) {
+				SessionService.clearSession();
+				deferred.reject(new Error(err.statusText));
+			});
+
+			return deferred.promise;
+		};
+		
+		Authentication.logout = function() {
+			SessionService.clearSession();
+
+			Socket.disconnect();
+			$state.go('home');
+		};
+		
+		Authentication.isAuthenticated = function() {
+			if (SessionService.isCurrentSessionValid()) {
+				return true;
+			}
+
+			return false;
+		};
+		
+		Authentication.getCurrentUser = function() {
+			return SessionService.getUserSession();
+		};
+
+		return Authentication;
+	}]);
+},{}],"/vagrant/.tmp/authentication/authentication.js":[function(require,module,exports){
+var log = require('../log/log');
+var session = require('../session/session');
+var socket = require('../socket/socket');
+
+module.exports = angular
+	.module('authentication', [
+		session.name,
+		log.name,
+		socket.name
+	])
+	.run(["$rootScope", "SessionService", "$state", "njrtLog", "Restangular", function($rootScope, SessionService, $state, njrtLog, Restangular) {
+
+		var logger = njrtLog.getInstance('authentication');
+
+		logger.debug('Authentication module loaded.');
+
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+			if (!toState.data) {
+				logger.debug('State has no data, returning early');
+				return;
+			}
+
+			if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
+				logger.debug(toState.name, 'state has rule: isLoggedIn');
+				if (!SessionService.isCurrentSessionValid()) {
+					$state.go('login');
+					event.preventDefault();
+				}
+			}
+		});
+
+		Restangular.setErrorInterceptor(
+			function(res) {
+				if (res.status == 401) {
+					logger.error(res.status, res.statusText, ':', res.data);
+					$state.go('login');
+					return false; // stop the promise chain
+				} else if (res.status == 404) {
+					logger.error(res.status, res.statusText, ':', res.data);
+					return false; // stop the promise chain
+				} 
+				return true;
+			});
+
+		Restangular.setRestangularFields({
+			id: "_id"
+		});
+
+		Restangular.setDefaultHeaders({
+			Authorization: SessionService.getAuthorizationHeader()
+		});
+
+	}]);
+
+require('./authentication-factory');
+require('./authentication-controller');
+},{"../log/log":"/vagrant/.tmp/log/log.js","../session/session":"/vagrant/.tmp/session/session.js","../socket/socket":"/vagrant/.tmp/socket/socket.js","./authentication-controller":"/vagrant/.tmp/authentication/authentication-controller.js","./authentication-factory":"/vagrant/.tmp/authentication/authentication-factory.js"}],"/vagrant/.tmp/directives/resize-directive.js":[function(require,module,exports){
+module.exports = angular
+	.module('app')
+	.directive('resize', ['$window',
+		function($window) {
+			return function(scope, element) {
+				var w = angular.element($window);
+				scope.$watch(function() {
+					return {
+						'h': w.height()
+					}
+				}, function(newValue, oldValue) {
+					scope.style = function() {
+						return {
+							'height': newValue.h - element.offset().top + 'px'
+						}
+					}
+				}, true);
+
+				w.bind('resize', function() {
+					scope.$apply();
+				});
+			};
+		}
+	]);
+},{}],"/vagrant/.tmp/feed/feed-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('feed')
+	.controller('FeedCtrl', ["njrtLog", "$state", "$scope", "feed", "Torrents", function(njrtLog, $state, $scope, feed, Torrents) {
+
+		var logger = njrtLog.getInstance('feed.FeedCtrl');
+
+		logger.debug('FeedCtrl loaded.');
+
+		var vm = this;
+
+		vm.feed = feed;
+
+		vm.loadTorrent = function (url) {
+			Torrents.load(url);
+		}
+
+	}]);
+},{}],"/vagrant/.tmp/feed/feed.js":[function(require,module,exports){
+var log = require('../log/log');
+var feeds = require('../feeds/feeds');
+var torrents = require('../torrents/torrents');
+
+module.exports = angular
+	.module('feed', [
+		'ui.router',
+		log.name,
+		feeds.name,
+		torrents.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.feeds.view', {
+			url: '/:id/view',
+			views: {
+				'home@': {
+					templateUrl: 'feed/feed.tpl.html',
+					controller: 'FeedCtrl as feedCtrl'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feed: ["Feeds", "$stateParams", function (Feeds, $stateParams) {
+					return Feeds.getFeed($stateParams.id);
+				}]
+			}
+		});
+	}]);
+
+require('./feed-controller');
+},{"../feeds/feeds":"/vagrant/.tmp/feeds/feeds.js","../log/log":"/vagrant/.tmp/log/log.js","../torrents/torrents":"/vagrant/.tmp/torrents/torrents.js","./feed-controller":"/vagrant/.tmp/feed/feed-controller.js"}],"/vagrant/.tmp/feeds.add/feeds.add-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('feeds.add')
+	.controller('FeedsAddCtrl', ["njrtLog", "$state", "$scope", "Feeds", "Notification", function(njrtLog, $state, $scope, Feeds, Notification) {
+
+		var logger = njrtLog.getInstance('feeds.add.FeedsAddCtrl');
+
+		logger.debug('FeedsAddCtrl loaded.');
+
+		var vm = this;
+
+		vm.feed = {
+			rss: '',
+			title: '',
+			regexFilter: false,
+			autoDownload: false,
+			filters: []
+		};
+		vm.newFilter = {};
+
+		vm.error = false;
+
+		vm.checkDisabled = function() {
+			// if form is invalid, but filters are added
+			// return false to enable submit button
+			if ($scope.addFeed.$invalid) {
+				
+				if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
+					return false;
+				}
+
+				return true;
+			}
+
+			// if form is valid because of filter options being 
+			// entered in, but not added, do an additional check
+			if (!$scope.addFeed.$invalid) {
+
+				// if regexFilter option is true
+				// and no filters were added
+				// return true to disable submit button
+				if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		vm.addFilter = function(filter) {
+			
+			vm.feed.filters.push({
+				regex: filter.regex,
+				type: filter.type
+			});
+			vm.newFilter = {
+				regex: "",
+				type: ""
+			};
+		}
+
+		vm.deleteFilter = function(index) {
+			vm.feed.filters.splice(index, 1);
+		}
+
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
+		vm.addRssFeed = function() {
+			Feeds.addFeed({
+				rss: vm.feed.url,
+				title: vm.feed.name,
+				filters: vm.feed.filters,
+				regexFilter: vm.feed.regexFilter,
+				autoDownload: vm.feed.autoDownload
+			}).then(function(data) {
+				$state.go('home.feeds');
+			}, function(err) {
+				handleError(err);
+				logger.error(err.data);
+			});
+		}
+
+		vm.cancel = function() {
+			$state.go('home.feeds');
+		}
+
+		function handleError (err) {
+			console.log(err);
+			if (err.data === 'Feed exists') {
+				vm.error = 'Feed exists. Please enter in a unique URL.';
+			}
+		}
+	}]);
+},{}],"/vagrant/.tmp/feeds.add/feeds.add.js":[function(require,module,exports){
+var log = require('../log/log');
+var feeds = require('../feeds/feeds');
+
+module.exports = angular
+	.module('feeds.add', [
+		'ui.router',
+		log.name,
+		feeds.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.feeds.add', {
+			url: '/add',
+			views: {
+				'modal@': {
+					templateUrl: 'feeds.add/feeds.add.tpl.html',
+					controller: 'FeedsAddCtrl as feedsAddCtrl'
+				}
+			},
+			isModal: true
+		});
+	}]);
+
+require('./feeds.add-controller');
+},{"../feeds/feeds":"/vagrant/.tmp/feeds/feeds.js","../log/log":"/vagrant/.tmp/log/log.js","./feeds.add-controller":"/vagrant/.tmp/feeds.add/feeds.add-controller.js"}],"/vagrant/.tmp/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('feeds.delete')
+	.controller('FeedsDeleteCtrl', ["njrtLog", "$state", "feed", "$modal", "Feeds", function(njrtLog, $state, feed, $modal, Feeds) {
+
+		var logger = njrtLog.getInstance('feeds.delete.FeedsDeleteCtrl');
+
+		logger.debug('FeedsDeleteCtrl loaded.');
+
+		var vm = this;
+		
+		vm.feed = feed;
+
+		vm.deleteFeed = function (feed) {
+			Feeds.deleteFeed(feed)
+				.then(function(data) {
+					$state.go('home.feeds');
+				}, function(err) {
+					logger.error(err);
+				});
+		}
+
+		vm.cancel = function () {
+			$state.go('home.feeds');
+		}
+
+		
+	}]);
+},{}],"/vagrant/.tmp/feeds.delete/feeds.delete.js":[function(require,module,exports){
+var log = require('../log/log');
+var feeds = require('../feeds/feeds');
+
+module.exports = angular
+	.module('feeds.delete', [
+		'ui.router',
+		log.name,
+		feeds.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.feeds.delete', {
+			url: '/:id/delete',
+			views: {
+				'modal@': {
+					templateUrl: 'feeds.delete/feeds.delete.tpl.html',
+					controller: 'FeedsDeleteCtrl as feedsDeleteCtrl'
+				}
+			},
+			isModal: true,
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feed: ["Feeds", "$stateParams", function (Feeds, $stateParams) {
+					return Feeds.getFeed($stateParams.id);
+				}]
+			}
+		});
+	}]);
+
+require('./feeds.delete-controller');
+},{"../feeds/feeds":"/vagrant/.tmp/feeds/feeds.js","../log/log":"/vagrant/.tmp/log/log.js","./feeds.delete-controller":"/vagrant/.tmp/feeds.delete/feeds.delete-controller.js"}],"/vagrant/.tmp/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('feeds.edit')
+	.controller('FeedsEditCtrl', ["njrtLog", "$state", "$scope", "feed", "Feeds", "Restangular", function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
+		
+		var logger = njrtLog.getInstance('feeds.edit.FeedsEditCtrl');
+
+		logger.debug('FeedsEditCtrl loaded.');
+
+		var vm = this;
+
+		vm.feed = Restangular.copy(feed);
+		vm.newFilter = {};
+
+		vm.checkDisabled = function() {
+			// if form is invalid, but filters are added
+			// return false to enable submit button
+			if ($scope.addFeed.$invalid) {
+				
+				if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
+					return false;
+				}
+
+				return true;
+			}
+
+			// if form is valid because of filter options being 
+			// entered in, but not added, do an additional check
+			if (!$scope.addFeed.$invalid) {
+
+				// if regexFilter option is true
+				// and no filters were added
+				// return true to disable submit button
+				if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		vm.addFilter = function(filter) {
+			
+			vm.feed.filters.push({
+				regex: filter.regex,
+				type: filter.type
+			});
+			vm.newFilter = {
+				regex: "",
+				type: ""
+			};
+		}
+
+		vm.deleteFilter = function(index) {
+			vm.feed.filters.splice(index, 1);
+		}
+
+		vm.editFilter = function (index) {
+			vm.newFilter = vm.feed.filters[index];
+			vm.feed.filters.splice(index, 1);
+		}
+
+		vm.editFeed = function (feed) {
+			Feeds.updateFeed(feed)
+				.then(function(data) {
+					$state.go('home.feeds');
+				}, function(err) {
+					logger.error(err);
+				});
+		}
+
+		vm.cancel = function () {
+			$state.go('home.feeds');
+		}
+
+	}]);
+},{}],"/vagrant/.tmp/feeds.edit/feeds.edit.js":[function(require,module,exports){
+var log = require('../log/log');
+var feeds = require('../feeds/feeds');
+
+module.exports = angular
+	.module('feeds.edit', [
+		'ui.router',
+		log.name,
+		feeds.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.feeds.edit', {
+			url: '/:id/edit',
+			views: {
+				'modal@': {
+					templateUrl: 'feeds.edit/feeds.edit.tpl.html',
+					controller: 'FeedsEditCtrl as feedsEditCtrl'
+				}
+			},
+			isModal: true,
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feed: ["Feeds", "$stateParams", function (Feeds, $stateParams) {
+					return Feeds.getFeed($stateParams.id);
+				}]
+			}
+		});
+	}]);
+
+require('./feeds.edit-controller');
+},{"../feeds/feeds":"/vagrant/.tmp/feeds/feeds.js","../log/log":"/vagrant/.tmp/log/log.js","./feeds.edit-controller":"/vagrant/.tmp/feeds.edit/feeds.edit-controller.js"}],"/vagrant/.tmp/feeds/feeds-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('feeds')
+	.controller('FeedsCtrl', ["njrtLog", "$previousState", "$modal", "Feeds", "feeds", function(njrtLog, $previousState, $modal, Feeds, feeds) {
+
+		var logger = njrtLog.getInstance('feeds.FeedsCtrl');
+
+		logger.debug('FeedsCtrl loaded.');
+
+		var vm = this;
+
+		vm.Feeds = Feeds;
+
+		vm.reverse = false;
+		vm.predicate = 'lastChecked';
+		
+	}]);
+},{}],"/vagrant/.tmp/feeds/feeds-factory.js":[function(require,module,exports){
+module.exports = angular
+	.module('feeds')
+	.factory('Feeds', ["njrtLog", "Restangular", "$q", function(njrtLog, Restangular, $q) {
+
+		var logger = njrtLog.getInstance('feeds.Feeds');
+
+		logger.debug('Feeds loaded.');
+
+		var Feeds = {};
+
+		Feeds.feeds = [];
+
+		Feeds.getFeeds = function() {
+			return Restangular.all('feeds').getList()
+				.then(function (data) {
+					Feeds.feeds = data;
+					return Feeds.feeds;
+				});
+		}
+
+		Feeds.getFeed = function(id) {
+			return Restangular.one('feeds', id).get();
+		}
+
+		Feeds.addFeed = function(feed) {
+			return Restangular.all('feeds').post(feed)
+				.then(function (data) {
+					Feeds.feeds.push(data);
+					return data;
+				});
+		}
+
+		Feeds.refreshFeed = function(id) {
+			return Restangular.one('feeds', id).post('refresh', {})
+				.then(function (data) {
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
+						});
+				});
+		}
+
+		Feeds.updateFeed = function(feed) {
+			return feed.put()
+				.then(function (data) {
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
+						});
+				});
+		}
+
+		Feeds.deleteFeed = function(feed) {
+			var deferred = $q.defer();
+
+			// delete from server
+			feed.remove()
+				.then(function () {
+					var item = _.findWhere(Feeds.feeds, {
+						_id: feed._id
+					});
+
+					var index = Feeds.feeds.indexOf(item);
+					
+					// delete from collection
+					if (index > -1) {
+						Feeds.feeds.splice(index, 1);
+					}
+
+					deferred.resolve('deleted');
+				}, function (err) {
+					console.error(err);
+					deferred.reject(err);
+				});
+
+			return deferred.promise;
+		}
+
+		
+
+		return Feeds;
+
+	}]);
+},{}],"/vagrant/.tmp/feeds/feeds.js":[function(require,module,exports){
+var log = require('../log/log');
+var session = require('../session/session');
+
+module.exports = angular
+	.module('feeds', [
+		'ui.router',
+		'ct.ui.router.extras',
+		session.name,
+		log.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.feeds', {
+			url: 'feeds',
+			views: {
+				'home@': {
+					controller: 'FeedsCtrl as feedsCtrl',
+					templateUrl: 'feeds/feeds.tpl.html'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feeds: ["Feeds", function (Feeds) {
+					return Feeds.getFeeds();
+				}]
+			}
+		});
+	}]);
+
+require('./feeds-factory');
+require('./feeds-controller');
+},{"../log/log":"/vagrant/.tmp/log/log.js","../session/session":"/vagrant/.tmp/session/session.js","./feeds-controller":"/vagrant/.tmp/feeds/feeds-controller.js","./feeds-factory":"/vagrant/.tmp/feeds/feeds-factory.js"}],"/vagrant/.tmp/filters/bytes-filter.js":[function(require,module,exports){
+module.exports = angular.module('app')
+	.filter('bytes', function() {
+		return function(bytes, precision) {
+			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+			if (bytes === 0) return '-';
+			if (typeof precision === 'undefined') precision = 1;
+			var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+				number = Math.floor(Math.log(bytes) / Math.log(1024));
+			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+		}
+	});
+},{}],"/vagrant/.tmp/filters/datatransferrate-filter.js":[function(require,module,exports){
+module.exports = angular.module('app')
+	.filter('dataTransferRate', function() {
+		return function(dataTransferRate, precision) {
+			if (isNaN(parseFloat(dataTransferRate)) || !isFinite(dataTransferRate)) return '-';
+			if (dataTransferRate === 0) return '-';
+			if (typeof precision === 'undefined') precision = 1;
+			var units = ['bytes/s', 'kB/s', 'MB/s', 'GB/s', 'TB/s', 'PB/s'],
+				number = Math.floor(Math.log(dataTransferRate) / Math.log(1024));
+			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+		}
+	});
+},{}],"/vagrant/.tmp/filters/percentage-filter.js":[function(require,module,exports){
+module.exports = angular.module('app')
+	.filter('percentage', function() {
+		return function(input) {
+			var rounded = Math.round(input * 10000) / 100;
+			if (rounded == NaN) {
+				return '';
+			}
+			var percentage = '' + rounded + '%';
+			return percentage;
+		};
+	});
+},{}],"/vagrant/.tmp/filters/time-filter.js":[function(require,module,exports){
+module.exports = angular.module('app')
+	.filter('time', function() {
+		return function(value) {
+			if (isNaN(parseFloat(value)) || !isFinite(value)) return '-';
+			var suffix = "s",
+				day = 86400,
+				hr = 3600,
+				min = 60;
+			var seconds = parseInt(value, 10);
+			var days = Math.floor(seconds / day);
+			var hours = Math.floor((seconds - (days * day)) / hr);
+			var minutes = Math.floor((seconds - (days * day) - (hours * hr)) / min);
+			var seconds = seconds - (days * day) - (hours * hr) - (minutes * min);
+
+			if (value >= min && value <= hr) {
+				return [minutes, "m ", seconds, "s"].join("");
+			} else if (value >= hr && value <= day) {
+				return [hours, "h ", minutes, "m ", seconds, "s"].join("");
+			} else if (value >= day) {
+				return [days, "d ", hours, "h ", minutes, "m ", seconds, "s"].join("");
+			}
+		}
+	})
+},{}],"/vagrant/.tmp/home/home.js":[function(require,module,exports){
+module.exports = angular
+	.module('home', [
+		'ui.router'
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home', {
+			url: '/',
+			views: {
+				'home@': {
+					templateUrl: 'home/home.tpl.html'
+				}
+			},
+			sticky: true
+			// ,
+			// data: {
+			// 	rule: ['isLoggedIn']
+			// }
+		});
+	}]);
+},{}],"/vagrant/.tmp/log/log.js":[function(require,module,exports){
+var moment = require('moment');
+
+module.exports = angular
+	.module('njrt.log', [
+
+	])
+	.run(['$log', function ($log) {
+		$log.getInstance = function(context) {
+			return {
+				log: enhanceLogging($log.log, context),
+				info: enhanceLogging($log.info, context),
+				warn: enhanceLogging($log.warn, context),
+				debug: enhanceLogging($log.debug, context),
+				error: enhanceLogging($log.error, context)
+			};
+		}
+
+		function enhanceLogging(logFn, context) {
+			return function() {
+				var modifiedArguments = [].slice.call(arguments);
+				modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
+				logFn.apply(null, modifiedArguments);
+			};
+		}
+	}])
+	.service('njrtLog', ["$log", function($log) {
+		this.getInstance = function(context) {
+			return $log.getInstance(context);
+		}
+	}]);
+},{"moment":"/vagrant/node_modules/moment/moment.js"}],"/vagrant/.tmp/login/login-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('login')
+	.controller('LoginCtrl', ["njrtLog", "Authentication", "$state", function(njrtLog, Authentication, $state) {
+
+		var logger = njrtLog.getInstance('login.LoginCtrl');
+
+		logger.debug('LoginCtrl loaded.');
+
+		var vm = this;
+
+		vm.close = function() {
+			$state.go('home'); // return to previous state
+		};
+
+
+		vm.login = function() {
+			Authentication.login({
+				email: vm.email,
+				password: vm.password
+			}).then(function(data) {
+				logger.info(data);
+				$state.go('home');
+			}, function(err) {
+				logger.error(err);
+			});
+		};
+	}]);
+},{}],"/vagrant/.tmp/login/login.js":[function(require,module,exports){
+var log = require('../log/log');
+var authentication = require('../authentication/authentication');
+
+module.exports = angular
+	.module('login', [
+		log.name,
+		authentication.name,
+		'ui.router',
+		'ct.ui.router.extras'
+	])
+	.config(["$stateProvider", function ($stateProvider) {
+		$stateProvider.state('login', {
+			url: '/login',
+			views: {
+				'modal@': {
+					templateUrl: 'login/login.tpl.html',
+					controller: 'LoginCtrl as loginCtrl'
+				}
+			},
+			isModal: true
+		});
+	}]);
+
+require('./login-controller');
+},{"../authentication/authentication":"/vagrant/.tmp/authentication/authentication.js","../log/log":"/vagrant/.tmp/log/log.js","./login-controller":"/vagrant/.tmp/login/login-controller.js"}],"/vagrant/.tmp/modal/modal.js":[function(require,module,exports){
+module.exports = angular
+	.module('modal', [
+		'ui.bootstrap',
+		'ui.router',
+		'ct.ui.router.extras'
+	])
+	.run(["$rootScope", "$modal", "$previousState", function($rootScope, $modal, $previousState) {
+
+		var stateBehindModal = {};
+		var modalInstance = null;
+
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+			// Implementing 'isModal':
+			// perform the required action to transitions between 'modal states' and 'non-modal states'.
+			//
+
+			if (!fromState.isModal && toState.isModal) {
+				//
+				// Non-modal state ---> modal state
+				//
+
+				stateBehindModal = {
+					state: fromState,
+					params: fromParams
+				};
+
+				$previousState.memo('modalInvoker');
+
+				// Open up modal
+				modalInstance = $modal.open({
+					template: '<div ui-view="modal"></div>',
+					backdrop: 'static'
+				});
+
+				modalInstance.result.finally(function() {
+					// Reset instance to mark that the modal has been dismissed.
+					modalInstance = null
+
+					// Go to previous state
+					$state.go(stateBehindModal.state, stateBehindModal.params);
+				});
+
+			} else if (fromState.isModal && !toState.isModal) {
+				//
+				// Modal state ---> non-modal state
+				//
+
+				// Directly return if the instance is already dismissed.
+				if (!modalInstance) {
+					return;
+				}
+
+				// Dismiss the modal, triggering the reset of modalInstance
+				modalInstance.dismiss();
+			}
+
+		});
+	}]);
+},{}],"/vagrant/.tmp/notification/notification-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('notification')
+	.controller('NotificationCtrl', ["njrtLog", "Notification", "Socket", function(njrtLog, Notification, Socket) {
+
+		var logger = njrtLog.getInstance('notification.NotificationCtrl');
+
+		logger.debug('NotificationCtrl loaded.');
+
+		var vm = this;
+
+		vm.Notification = Notification;
+
+		Socket.on('notifications', function (data) {
+			Notification.add(data.type, data.message);
+		});
+	}]);
+},{}],"/vagrant/.tmp/notification/notification-factory.js":[function(require,module,exports){
+module.exports = angular
+	.module('notification')
+	.factory('Notification', ["$q", "$timeout", function ($q, $timeout) {
+
+		var Notification = {};
+
+		Notification.notifications = [];
+
+		Notification.add = function (type, message) {
+			var deferred = $q.defer();
+			
+			var notification = {
+				type: type,
+				msg: message
+			}
+
+			Notification.notifications.push(notification);
+
+			// need to add animation
+			$timeout(function () {
+				Notification.notifications.splice(0, 1);
+			}, 3000);
+
+			deferred.resolve(notification);
+
+			return deferred.promise;
+		}
+
+		Notification.remove = function (index) {
+			Notification.notifications.splice(index, 1);
+		}
+
+		return Notification;
+	}]);
+},{}],"/vagrant/.tmp/notification/notification.js":[function(require,module,exports){
+module.exports = angular
+	.module('notification', [
+		
+	]);
+
+require('./notification-factory');
+require('./notification-controller');
+},{"./notification-controller":"/vagrant/.tmp/notification/notification-controller.js","./notification-factory":"/vagrant/.tmp/notification/notification-factory.js"}],"/vagrant/.tmp/session/session-service.js":[function(require,module,exports){
+module.exports = angular
+	.module('session')
+	.service('SessionService', ["njrtLog", "$window", "Restangular", function(njrtLog, $window, Restangular) {
+
+			var logger = njrtLog.getInstance('session.SessionService');
+
+			logger.debug('SessionService loaded.');
+
+			var userSession = {};
+
+			// expects token, expires, id, email
+			this.setUserSession = function(data) {
+				userSession = data;
+
+				$window.sessionStorage.email = data.email;
+				$window.sessionStorage._id = data._id;
+				$window.sessionStorage.token = data.token;
+				$window.sessionStorage.expires = data.expires;
+
+				Restangular.setDefaultHeaders({
+					Authorization: this.getAuthorizationHeader()
+				});
+			}
+
+			this.getUserSession = function() {
+				return userSession;
+			}
+
+			this.clearSession = function() {
+				$window.sessionStorage.clear();
+				userSession = {};
+			}
+
+			this.isCurrentSessionValid = function() {
+				if (!_.isEmpty(userSession)) {
+					return true;
+				}
+
+				return false;
+			}
+
+			this.getAuthorizationHeader = function() {
+				var authorizationHeader = 'Bearer ' + userSession._id + ':' + userSession.expires + ':' + userSession.token;
+				logger.debug('Authorization header:', authorizationHeader);
+				//config.headers.Authorization = 'Bearer ' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token;
+				return authorizationHeader;
+			}
+
+			function loadExistingSession() {
+
+				if ($window.sessionStorage.length > 0 &&
+					$window.sessionStorage.token) {
+					logger.debug('Session exists.');
+					logger.debug('Saving window session to session service.');
+
+					userSession.email = $window.sessionStorage.email;
+					userSession._id = $window.sessionStorage._id;
+					userSession.token = $window.sessionStorage.token;
+					userSession.expires = $window.sessionStorage.expires;
+
+				} else {
+					logger.info('Session doesn\'t exist');
+				}
+
+			}
+
+			// Load existing window session if it exists
+			loadExistingSession();
+
+		}]);
+},{}],"/vagrant/.tmp/session/session.js":[function(require,module,exports){
+var log = require('../log/log');
+
+module.exports = angular
+	.module('session', [
+		log.name
+	]);
+
+require('./session-service');
+},{"../log/log":"/vagrant/.tmp/log/log.js","./session-service":"/vagrant/.tmp/session/session-service.js"}],"/vagrant/.tmp/socket/socket-factory.js":[function(require,module,exports){
+var io = require('socket-io');
+
+module.exports = angular
+	.module('socket')
+	.factory('Socket', ["njrtLog", "$rootScope", "$window", function(njrtLog, $rootScope, $window) {
+
+		var logger = njrtLog.getInstance('socket.Socket');
+		
+		logger.debug('Socket loaded.');
+
+		var socket = connect();
+
+		var Socket = {};
+
+		Socket.connect = function() {
+			logger.debug('Connecting to socket.');
+			socket = connect();
+		}
+
+		Socket.reconnect = function() {
+			logger.debug('Reconnecting to socket.');
+			socket = connect();
+		}
+
+		Socket.disconnect = function() {
+			logger.debug('Disconnecting from socket.')
+			socket.disconnect();
+		}
+
+		Socket.on = function(eventName, callback) {
+			socket.on(eventName, function () {  
+				var args = arguments;
+				$rootScope.$apply(function () {
+					callback.apply(socket, args);
+				});
+			});
+		}
+
+		Socket.emit = function() {
+			socket.emit(eventName, data, function () {
+				var args = arguments;
+				$rootScope.$apply(function () {
+					if (callback) {
+						callback.apply(socket, args);
+					}
+				});
+			});
+		}
+
+		function connect() {
+			logger.debug('Initializing connection to socket.');
+			return io.connect('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
+				'force new connection': true,
+				'sync disconnect on unload': true
+			});
+		}
+
+		return Socket;
+
+	}]);
+},{"socket-io":"/vagrant/src/vendor/socket.io-client/dist/socket.io.js"}],"/vagrant/.tmp/socket/socket.js":[function(require,module,exports){
+var log = require('../log/log');
+
+module.exports = angular
+	.module('socket', [
+		log.name
+	]);
+
+require('./socket-factory');
+},{"../log/log":"/vagrant/.tmp/log/log.js","./socket-factory":"/vagrant/.tmp/socket/socket-factory.js"}],"/vagrant/.tmp/templates.js":[function(require,module,exports){
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("feed/feed.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Name</th><th>Date</th><th>Status</th><th>Load</th></tr></thead><tbody><tr ng-repeat=\"torrent in feedCtrl.feed.torrents\"><td>{{torrent.name}}</td><td>{{torrent.date | date:\"medium\"}}</td><td>{{torrent.status}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedCtrl.loadTorrent(torrent.url)\">Load</a></td></tr></tbody></table></div></div>");
+$templateCache.put("feeds/feeds.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"feedPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.feeds.add\">Add Feed</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"feedsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>RSS</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>Last Checked</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"feedPanel = !feedPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': feedPanel, \'fa-caret-left\': !feedPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse\">Title <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse}\"></i></a></th><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse\">RSS <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse}\"></i></a></th><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse\">Last Checked <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse}\"></i></a></th><th>Auto Download?</th><th>Refresh</th><th>Edit</th><th>Delete</th></tr></thead><tbody><tr ng-repeat=\"feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText\"><td style=\"width: 30%;\"><a ui-sref=\"home.feeds.view({id: feed._id})\">{{feed.title}}</a></td><td>{{feed.rss}}</td><td>{{feed.lastChecked * 1000 | date:\'medium\'}}</td><td>{{feed.autoDownload}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.Feeds.refreshFeed(feed._id);\">Refresh</a></td><td><a ui-sref=\"home.feeds.edit({id: feed._id})\">Edit</a></td><td><a ui-sref=\"home.feeds.delete({id: feed._id})\">Delete</a></td></tr></tbody></table></div></div>");
+$templateCache.put("feeds.add/feeds.add.tpl.html","<form name=\"addFeed\" novalidate><div class=\"modal-header\"><h3>Add Feed</h3></div><div class=\"modal-body\"><p ng-show=\"feedsAddCtrl.error\" class=\"bg-danger\" ng-cloak><strong>Error:</strong>{{feedsAddCtrl.error}}</p><div class=\"form-group\"><label for=\"feedName\">Name (Required):</label><input type=\"text\" id=\"feedName\" name=\"feedName\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.name\" required><p class=\"help-block\" ng-show=\"addFeed.feedName.$error.required\">Please enter in a name.</p></div><div class=\"form-group\"><label for=\"feedUrl\">URL (Required):</label><input type=\"text\" id=\"feedUrl\" name=\"feedUrl\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.url\" required><p class=\"help-block\" ng-show=\"addFeed.feedUrl.$error.required\">Please enter in a URL.</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsAddCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsAddCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to add regex filters.</p></div><div ng-if=\"feedsAddCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsAddCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsAddCtrl.feed.filters track by $index\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-default\" ng-disabled>Test Feed</button><button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"feedsAddCtrl.checkDisabled()\" ng-click=\"feedsAddCtrl.addRssFeed()\">Add Feed</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.cancel()\">Cancel</button></div></div></form>");
+$templateCache.put("feeds.delete/feeds.delete.tpl.html","<div class=\"modal-header\"><h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3></div><div class=\"modal-body\"><p>Deleting will remove the feed from the list.</p></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)\">Delete</button><button class=\"btn btn-default\" ng-click=\"feedsDeleteCtrl.cancel()\">Cancel</button></div>");
+$templateCache.put("feeds.edit/feeds.edit.tpl.html","<div class=\"modal-header\"><h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Title:</label><input type=\"text\" class=\"form-control\" id=\"feedName\" ng-model=\"feedsEditCtrl.feed.title\"></div><div class=\"form-group\"><label for=\"feedUrl\">URL:</label><p class=\"form-control-static\">{{feedsEditCtrl.feed.rss}}</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsEditCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsEditCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to edit regex filters.</p></div><div ng-if=\"feedsEditCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsEditCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsEditCtrl.feed.filters track by $index\" class=\"filter\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-primary\" ng-click=\"feedsEditCtrl.editFeed(feedsEditCtrl.feed)\">Save changes</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.cancel()\">Cancel</button></div></div>");
+$templateCache.put("home/home.tpl.html","");
+$templateCache.put("login/login.tpl.html","<form ng-submit=\"loginCtrl.login()\"><div class=\"modal-header\"><h3>Login</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label class=\"control-label\" for=\"email\">Email</label><input type=\"text\" id=\"email\" class=\"form-control\" placeholder=\"Email\" ng-model=\"loginCtrl.email\"></div><div class=\"form-group\"><label class=\"control-label\" for=\"password\">Password</label><input type=\"password\" id=\"password\" class=\"form-control\" placeholder=\"Password\" ng-model=\"loginCtrl.password\"></div></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" ng-click=\"loginCtrl.close()\">Cancel</button><button type=\"submit\" class=\"btn btn-primary\">Sign in</button></div></form>");
+$templateCache.put("settings/settings.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div class=\"col-xs-12\"><fieldset><legend>Listening Port</legend><div class=\"form-group\"><label for=\"listening-port-range\">Port range used for incoming connections:</label><input type=\"number\" name=\"listening-port-range\" id=\"listening-port-range\" value class=\"form-control\"></div><div class=\"checkbox\"><label><input type=\"checkbox\" name=\"randomize-listening-port\">Randomize port each time rTorrent starts.</label></div></fieldset><fieldset><legend>Bandwidth Settings</legend><div class=\"form-group\"><label for=\"number-upload-slots\">Number of upload slots:</label><input type=\"number\" name=\"number-upload-slots\" id=\"number-upload-slots\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers\">Minimum number of peers:</label><input type=\"number\" name=\"min-number-peers\" id=\"min-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers\">Maximum number of peers:</label><input type=\"number\" name=\"max-number-peers\" id=\"max-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers-seeding\">Minimum number of peers for seeding:</label><input type=\"number\" name=\"min-number-peers-seeding\" id=\"min-number-peers-seeding\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers-seeding\">Maximum number of peers for seeding:</label><input type=\"number\" name=\"max-number-peers-seeding\" id=\"max-number-peers-seeding\" value class=\"form-control\"></div></fieldset><fieldset><legend>Bandwidth Limiting</legend><div class=\"from-group\"><label for=\"global-max-upload-rate\">Global maximum upload rate: (kB/s)</label><input type=\"number\" name=\"global-max-upload-rate\" id=\"global-max-upload-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div><div class=\"form-group\"><label for=\"global-max-download-rate\">Global maximum download rate: (kB/s)</label><input type=\"number\" name=\"global-max-download-rate\" id=\"global-max-download-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div></fieldset></div></div>");
+$templateCache.put("torrents/torrents-delete-data.tpl.html","<div class=\"modal-header\"><h3>Delete \'{{torrent.name}}\'?</h3></div><div class=\"modal-body\"><p>Deleting will remove the torrent from the list along with its data.</p></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"deleteData(torrent.hash)\">Delete</button><button class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button></div>");
+$templateCache.put("torrents/torrents.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 300px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 100%; float: left; padding: 10px;\" ng-hide=\"torrentPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.torrents.add\">Add Torrent</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"torrentsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Filter by Status</h4><ul class=\"list-unstyled\"><li><a href ng-click=\"torrentsCtrl.status=\'\'\">All <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'\'}\" ng-init=\"torrentsCtrl.status=\'\'\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'downloading\'\">Downloading <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'downloading\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'finished\'\">Finished <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'finished\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'stopped\'\">Stopped <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'stopped\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'seeding\'\">Seeding <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'seeding\'}\"></i></a></li></ul><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"status_col=!status_col\" checked>Status</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"size_col=!size_col\" checked>Size</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"percent_downloaded_col=!percent_downloaded_col\" checked>Done</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"downloaded_col=!downloaded_col\" checked>Downloaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"uploaded_col=!uploaded_col\" checked>Uploaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"dl_speed_col=!dl_speed_col\" checked>DL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"ul_speed_col=!ul_speed_col\" checked>UL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"time_remaining_col=!time_remaining_col\" checked>ETA</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"peers_col=!peers_col\" checked>Peers</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"seeds_col=!seeds_col\" checked>Seeds</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"torrentPanel = !torrentPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': torrentPanel, \'fa-caret-left\': !torrentPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;\"><table class=\"table table-condensed table-hover\" style=\"min-width: 1400px;\"><colgroup><col style=\"width: 30%;\"><col style=\"width: 120px;\"><col style=\"width: 160px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"></colgroup><thead><tr><th><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'name\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Name <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'name\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'name\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"status_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'status\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Status <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'status\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'status\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"size_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'size\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Size <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'size\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'size\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"percent_downloaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'percent_downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Done <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'percent_downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'percent_downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"downloaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Downloaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"uploaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'uploaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Uploaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'uploaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'uploaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"dl_speed_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'dl_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">DL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'dl_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'dl_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"ul_speed_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'ul_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">UL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'ul_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'ul_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"time_remaining_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'time_remaining\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">ETA <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'time_remaining\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'time_remaining\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"peers_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'peers\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Peers <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'peers\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'peers\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"seeds_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'seeds\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Seeds <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'seeds\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'seeds\' && !torrentsCtrl.reverse}\"></i></a></th></tr></thead><tbody><tr ng-repeat=\"torrent in torrentsCtrl.Torrents.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} | filter:torrentsCtrl.searchText track by torrent.hash\" class=\"torrent\" context-menu data-target=\"menu-{{$index}}\"><td><div class=\"clearfix\" style=\"position: relative;\"><h5 class=\"pull-left\" style=\"white-space: nowrap; overflow: hidden;\" title=\"{{torrent.name}}\">{{torrent.name}}</h5></div><div class=\"dropdown position-fixed\" id=\"menu-{{$index}}\"><ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.start(torrent.hash)\">Play</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.pause(torrent.hash)\">Pause</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.stop(torrent.hash)\">Stop</a></li><li class=\"divider\"></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Priority</a><ul class=\"dropdown-menu\"><li><a href=\"javascript: void(0);\">High</a></li><li><a href=\"javascript: void(0);\">Medium</a></li><li><a href=\"javascript: void(0);\">Low</a></li><li><a href=\"javascript: void(0);\">Don\'t Download</a></li></ul></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Set Channel</a><ul class=\"dropdown-menu\"><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'\')\">No Channel</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_4\')\">Up16</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_3\')\">Up32</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_2\')\">Up64</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_1\')\">Up128</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_0\')\">Up256</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_4\')\">Down16</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_3\')\">Down32</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_2\')\">Down64</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_1\')\">Down128</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_0\')\">Down256</a></li></ul></li><li class=\"divider\"></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.remove(torrent.hash)\">Remove</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.deleteData(torrent)\">Delete with Data</a></li><li><a href=\"javascript: void(0);\" ng-click>Details</a></li></ul></div></td><td ng-hide=\"status_col\">{{torrent.status}}</td><td ng-hide=\"size_col\">{{torrent.size | bytes}}</td><td ng-hide=\"percent_downloaded_col\"><div class=\"progress\"><div class=\"progress-bar\" style=\"width: {{torrent.percent_downloaded | percentage}}\" ng-class=\"{\'progress-bar-warning\': torrent.status === \'checking\', \'progress-bar-success\': torrent.status === \'seeding\'}\">{{torrent.percent_downloaded | percentage}}</div></div></td><td ng-hide=\"downloaded_col\">{{torrent.downloaded | bytes}}</td><td ng-hide=\"uploaded_col\">{{torrent.uploaded | bytes}}</td><td ng-hide=\"dl_speed_col\">{{torrent.dl_speed | dataTransferRate}}</td><td ng-hide=\"ul_speed_col\">{{torrent.ul_speed | dataTransferRate}}</td><td ng-hide=\"time_remaining_col\">{{torrent.time_remaining | time}}</td><td ng-hide=\"peers_col\">{{torrent.peers}} ({{torrent.total_peers}})</td><td ng-hide=\"seeds_col\">{{torrent.seeds}} ({{torrent.total_seeds}})</td></tr></tbody></table></div></div>");
+$templateCache.put("torrents.add/torrents.add.tpl.html","<div class=\"modal-header\"><h3>Add Torrent</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"torrent-url\">URL:</label><input type=\"text\" id=\"torrent-url\" class=\"form-control\" placeholder=\"Torrent URL or Magnet Link\" ng-model=\"torrentsAddCtrl.url\"><span class=\"help-block\">Enter in a Magnet link or Torrent link.</span></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary\" ng-click=\"torrentsAddCtrl.loadTorrent(torrentsAddCtrl.url)\">Add Link</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"torrentsAddCtrl.cancel()\">Cancel</button></div></div>");}]);
+},{}],"/vagrant/.tmp/torrents.add/torrents.add-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('torrents.add')
+	.controller('TorrentsAddCtrl', ["njrtLog", "$state", "Torrents", function(njrtLog, $state, Torrents) {
+
+		var logger = njrtLog.getInstance('torrents.add.TorrentsAddCtrl');
+
+		logger.debug('TorrentsAddCtrl loaded.');
+
+		var vm = this;
+
+		vm.loadTorrent = function(url) {
+			Torrents.load(url)
+				.then(function(data) {
+					logger.debug(data);
+					$state.go('home.torrents');
+				}, function(err) {
+					logger.error(err);
+				});
+		}
+
+		vm.cancel = function() {
+			$state.go('home.torrents');
+		}
+
+	}]);
+
+},{}],"/vagrant/.tmp/torrents.add/torrents.add.js":[function(require,module,exports){
+var log = require('../log/log');
+var torrents = require('../torrents/torrents');
+
+module.exports = angular
+	.module('torrents.add', [
+		'ui.router',
+		log.name,
+		torrents.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.torrents.add', {
+			url: '/add',
+			views: {
+				'modal@': {
+					templateUrl: 'torrents.add/torrents.add.tpl.html',
+					controller: 'TorrentsAddCtrl as torrentsAddCtrl'
+				}
+			},
+			isModal: true
+		});
+	}]);
+
+require('./torrents.add-controller');
+},{"../log/log":"/vagrant/.tmp/log/log.js","../torrents/torrents":"/vagrant/.tmp/torrents/torrents.js","./torrents.add-controller":"/vagrant/.tmp/torrents.add/torrents.add-controller.js"}],"/vagrant/.tmp/torrents/torrents-controller.js":[function(require,module,exports){
+module.exports = angular
+	.module('torrents')
+	.controller('TorrentsCtrl', ["njrtLog", "Torrents", "$modal", function(njrtLog, Torrents, $modal) {
+		
+		var logger = njrtLog.getInstance('torrents.TorrentsCtrl');
+		
+		logger.debug('TorrentsCtrl loaded.');
+
+		var vm = this;
+
+		vm.Torrents = Torrents;
+
+		vm.predicate = 'name';
+		vm.reverse = false;
+		vm.status = '';
+
+		vm.deleteData = function (torrent) {
+			var modalInstance = $modal.open({
+				templateUrl: 'torrents/torrents-delete-data.tpl.html',
+				controller: ["$scope", "torrent", "$modalInstance", "Torrents", function ($scope, torrent, $modalInstance, Torrents) {
+					$scope.torrent = torrent;
+					
+					$scope.deleteData = function (hash) {
+						Torrents.deleteData(hash).then(function(data) {
+							$modalInstance.close(data);
+						}, function(err) {
+							console.log(err);
+							logger.error(err);
+						});
+
+						// show error in gui somehow
+					}
+
+					$scope.cancel = function () {
+						$modalInstance.dismiss('cancel');
+					}
+				}],
+				resolve: {
+					torrent: function () {
+						return torrent;
+					}
+				}
+			});
+		}
+	}]);
+},{}],"/vagrant/.tmp/torrents/torrents-factory.js":[function(require,module,exports){
+module.exports = angular
+	.module('torrents')
+	.factory('Torrents', ["njrtLog", "Restangular", "Socket", "Notification", "$state", "SessionService", function (njrtLog, Restangular, Socket, Notification, $state, SessionService) {
+
+		var logger = njrtLog.getInstance('torrents.Torrents');
+
+		logger.debug('Torrents loaded.');
+
+		var Torrents = {};
+
+		Torrents.torrents = [];
+
+		Socket.on('connect', function() {
+			logger.debug('Connected to socket.');
+		});
+
+		Socket.on('connecting', function() {
+			logger.debug('Connecting to socket.');
+		});
+
+		Socket.on('connect_failed', function() {
+			logger.error('Connection to socket failed');
+			Notification.add('danger', 'Failed to connect to server via web sockets');
+		});
+
+		Socket.on('error', function(err) {
+			if (err === 'handshake unauthorized') {
+				Notification.add('danger', 'Handshake unauthorized. Please login.');
+				
+				// Clear session
+				SessionService.clearSession();
+
+				// Redirect to login
+				$state.go('login');
+			}
+			logger.error(err);
+		});
+
+		Socket.on('torrents', function(data) {
+			Torrents.torrents = data;
+		});
+
+		Torrents.getTorrents = function () {
+			logger.debug('Getting torrents');
+
+			// Initial REST call to get torrents on resolve.
+		}
+
+		/**
+		 * Start a torent given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent.
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.start = function (hash) {
+			logger.debug('Starting torrent from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('start', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent started.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to start.');
+				});
+		}
+
+		/**
+		 * Pause a torrent given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent.
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.pause = function (hash) {
+			logger.debug('Pausing torrent from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('pause', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent paused.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to pause.');
+				});
+		}
+
+		/**
+		 * Stop a torrent given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.stop = function (hash) {
+			logger.debug('Stopping torrent from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('stop', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent stopped.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to stop.');
+				});
+		}
+
+		/**
+		 * Remove a torrent given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.remove = function (hash) {
+			logger.debug('Removing torrent from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('remove', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent removed.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be removed.');
+				});
+		}
+
+		/**
+		 * Delete torrent data given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.deleteData = function (hash) {
+			logger.debug('Deleting torrent data from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('delete_data', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent data deleted.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be deleted.');
+				});
+		}
+
+		/**
+		 * Load a torrent given a url string of the torrent file or magnet link.
+		 * @param  {String} url  Url of the torrent file or magnet link.
+		 * @return {Promise}     Promise with success string.
+		 */
+		Torrents.load = function (url) {
+			logger.debug('Loading torrent from url', url);
+			return Restangular
+				.all('torrents')
+				.customPOST({
+					'url': url
+				}, 'load')
+				.then(function () {
+					return Notification.add('success', 'Torrent loaded.');
+				}, function () {
+					return Notification.add('danger', 'Torrent failed to load.');
+				});
+		}
+
+		/**
+		 * Set the throttle channel for the specified torrent hash.
+		 * @param {String} hash    Hash of the torrent.
+		 * @param {String} channel Channel name (specified by the server).
+		 * @return {Promise}	Promise with success string.
+		 */
+		Torrents.setChannel = function (hash, channel) {
+			logger.debug('Setting channel for hash', hash, 'and channel', channel);
+			return Restangular
+				.one('torrents', hash)
+				.post('channel', {
+					'channel': channel
+				})
+				.then(function () {
+					return Notification.add('success', 'Torrent throttle channel set.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be throttled.');
+				});
+		}
+
+		return Torrents;
+	}]);
+},{}],"/vagrant/.tmp/torrents/torrents.js":[function(require,module,exports){
+var log = require('../log/log');
+var socket = require('../socket/socket');
+var session = require('../session/session');
+
+module.exports = angular
+	.module('torrents', [
+		'ui.router',
+		'restangular',
+		log.name,
+		socket.name,
+		session.name
+	])
+	.config(["$stateProvider", function($stateProvider) {
+		$stateProvider.state('home.torrents', {
+			url: 'torrents',
+			views: {
+				'home@': {
+					controller: 'TorrentsCtrl as torrentsCtrl',
+					templateUrl: 'torrents/torrents.tpl.html'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			}
+		});
+	}]);
+
+	require('./torrents-factory');
+	require('./torrents-controller');
+},{"../log/log":"/vagrant/.tmp/log/log.js","../session/session":"/vagrant/.tmp/session/session.js","../socket/socket":"/vagrant/.tmp/socket/socket.js","./torrents-controller":"/vagrant/.tmp/torrents/torrents-controller.js","./torrents-factory":"/vagrant/.tmp/torrents/torrents-factory.js"}],"/vagrant/node_modules/moment/moment.js":[function(require,module,exports){
 (function (global){
 //! moment.js
 //! version : 2.8.3
@@ -2917,1386 +4293,7 @@ require('./directives/resize-directive');
 }).call(this);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],"/vagrant/src/client/authentication/authentication-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('authentication')
-	.controller('AuthenticationCtrl', function(njrtLog, Authentication, $previousState) {
-
-		var logger = njrtLog.getInstance('authentication.AuthenticationCtrl');
-
-		logger.debug('AuthenticationCtrl loaded.');
-
-		var vm = this;
-
-		vm.Authentication = Authentication;
-
-	});
-},{}],"/vagrant/src/client/authentication/authentication-factory.js":[function(require,module,exports){
-module.exports = angular
-	.module('authentication')
-	.factory('Authentication', function(njrtLog, $http, $rootScope, $state, $window, Restangular, SessionService, $q, Socket) {
-
-		var logger = njrtLog.getInstance('authentication.Authentication');
-
-		logger.debug('Authentication loaded.');
-		
-		var Authentication = {};
-
-		Authentication.login = function(user) {
-			var deferred = $q.defer();
-
-			$http.post("/login", user).then(function(data) {
-
-				data = data.data;
-
-				var userSession = {
-					token: data.token,
-					expires: data.expires,
-					_id: data._id,
-					email: user.email
-				}
-				SessionService.setUserSession(userSession);
-
-				// Connect to socket
-				Socket.connect();
-				
-				deferred.resolve(userSession);
-			}, function(err) {
-				SessionService.clearSession();
-				deferred.reject(new Error(err.statusText));
-			});
-
-			return deferred.promise;
-		};
-		
-		Authentication.logout = function() {
-			SessionService.clearSession();
-
-			Socket.disconnect();
-			$state.go('home');
-		};
-		
-		Authentication.isAuthenticated = function() {
-			if (SessionService.isCurrentSessionValid()) {
-				return true;
-			}
-
-			return false;
-		};
-		
-		Authentication.getCurrentUser = function() {
-			return SessionService.getUserSession();
-		};
-
-		return Authentication;
-	});
-},{}],"/vagrant/src/client/authentication/authentication.js":[function(require,module,exports){
-var log = require('../log/log');
-var session = require('../session/session');
-var socket = require('../socket/socket');
-
-module.exports = angular
-	.module('authentication', [
-		session.name,
-		log.name,
-		socket.name
-	])
-	.run(function($rootScope, SessionService, $state, njrtLog, Restangular) {
-
-		var logger = njrtLog.getInstance('authentication');
-
-		logger.debug('Authentication module loaded.');
-
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
-			if (!toState.data) {
-				logger.debug('State has no data, returning early');
-				return;
-			}
-
-			if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
-				logger.debug(toState.name, 'state has rule: isLoggedIn');
-				if (!SessionService.isCurrentSessionValid()) {
-					$state.go('login');
-					event.preventDefault();
-				}
-			}
-		});
-
-		Restangular.setErrorInterceptor(
-			function(res) {
-				if (res.status == 401) {
-					logger.error(res.status, res.statusText, ':', res.data);
-					$state.go('login');
-					return false; // stop the promise chain
-				} else if (res.status == 404) {
-					logger.error(res.status, res.statusText, ':', res.data);
-					return false; // stop the promise chain
-				} 
-				return true;
-			});
-
-		Restangular.setRestangularFields({
-			id: "_id"
-		});
-
-		Restangular.setDefaultHeaders({
-			Authorization: SessionService.getAuthorizationHeader()
-		});
-
-	});
-
-require('./authentication-factory');
-require('./authentication-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","../socket/socket":"/vagrant/src/client/socket/socket.js","./authentication-controller":"/vagrant/src/client/authentication/authentication-controller.js","./authentication-factory":"/vagrant/src/client/authentication/authentication-factory.js"}],"/vagrant/src/client/directives/resize-directive.js":[function(require,module,exports){
-module.exports = angular
-	.module('app')
-	.directive('resize', ['$window',
-		function($window) {
-			return function(scope, element) {
-				var w = angular.element($window);
-				scope.$watch(function() {
-					return {
-						'h': w.height()
-					}
-				}, function(newValue, oldValue) {
-					scope.style = function() {
-						return {
-							'height': newValue.h - element.offset().top + 'px'
-						}
-					}
-				}, true);
-
-				w.bind('resize', function() {
-					scope.$apply();
-				});
-			};
-		}
-	]);
-},{}],"/vagrant/src/client/feed/feed-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('feed')
-	.controller('FeedCtrl', function(njrtLog, $state, $scope, feed, Torrents) {
-
-		var logger = njrtLog.getInstance('feed.FeedCtrl');
-
-		logger.debug('FeedCtrl loaded.');
-
-		var vm = this;
-
-		vm.feed = feed;
-
-		vm.loadTorrent = function (url) {
-			logger.debug('Loading torrent');
-			Torrents.load(url)
-			.then(function(data) {
-				logger.debug(data);
-			}, function(err) {
-				logger.error(err);
-			});
-		}
-
-	});
-},{}],"/vagrant/src/client/feed/feed.js":[function(require,module,exports){
-var log = require('../log/log');
-var feeds = require('../feeds/feeds');
-var torrents = require('../torrents/torrents');
-
-module.exports = angular
-	.module('feed', [
-		'ui.router',
-		log.name,
-		feeds.name,
-		torrents.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds.view', {
-			url: '/:id/view',
-			views: {
-				'home@': {
-					templateUrl: 'feed/feed.tpl.html',
-					controller: 'FeedCtrl as feedCtrl'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeed($stateParams.id);
-				}
-			}
-		});
-	});
-
-require('./feed-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./feed-controller":"/vagrant/src/client/feed/feed-controller.js"}],"/vagrant/src/client/feeds.add/feeds.add-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('feeds.add')
-	.controller('FeedsAddCtrl', function(njrtLog, $state, $scope, Feeds, Notification) {
-
-		var logger = njrtLog.getInstance('feeds.add.FeedsAddCtrl');
-
-		logger.debug('FeedsAddCtrl loaded.');
-
-		var vm = this;
-
-		vm.feed = {
-			rss: '',
-			title: '',
-			regexFilter: false,
-			autoDownload: false,
-			filters: []
-		};
-		vm.newFilter = {};
-
-		vm.error = false;
-
-		vm.checkDisabled = function() {
-			// if form is invalid, but filters are added
-			// return false to enable submit button
-			if ($scope.addFeed.$invalid) {
-				
-				if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
-					return false;
-				}
-
-				return true;
-			}
-
-			// if form is valid because of filter options being 
-			// entered in, but not added, do an additional check
-			if (!$scope.addFeed.$invalid) {
-
-				// if regexFilter option is true
-				// and no filters were added
-				// return true to disable submit button
-				if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		vm.addFilter = function(filter) {
-			
-			vm.feed.filters.push({
-				regex: filter.regex,
-				type: filter.type
-			});
-			vm.newFilter = {
-				regex: "",
-				type: ""
-			};
-		}
-
-		vm.deleteFilter = function(index) {
-			vm.feed.filters.splice(index, 1);
-		}
-
-		vm.editFilter = function (index) {
-			vm.newFilter = vm.feed.filters[index];
-			vm.feed.filters.splice(index, 1);
-		}
-
-		vm.addRssFeed = function() {
-			Feeds.addFeed({
-				rss: vm.feed.url,
-				title: vm.feed.name,
-				filters: vm.feed.filters,
-				regexFilter: vm.feed.regexFilter,
-				autoDownload: vm.feed.autoDownload
-			}).then(function(data) {
-				$state.go('home.feeds');
-			}, function(err) {
-				handleError(err);
-				logger.error(err.data);
-			});
-		}
-
-		vm.cancel = function() {
-			$state.go('home.feeds');
-		}
-
-		function handleError (err) {
-			console.log(err);
-			if (err.data === 'Feed exists') {
-				vm.error = 'Feed exists. Please enter in a unique URL.';
-			}
-		}
-	});
-},{}],"/vagrant/src/client/feeds.add/feeds.add.js":[function(require,module,exports){
-var log = require('../log/log');
-var feeds = require('../feeds/feeds');
-
-module.exports = angular
-	.module('feeds.add', [
-		'ui.router',
-		log.name,
-		feeds.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds.add', {
-			url: '/add',
-			views: {
-				'modal@': {
-					templateUrl: 'feeds.add/feeds.add.tpl.html',
-					controller: 'FeedsAddCtrl as feedsAddCtrl'
-				}
-			},
-			isModal: true
-		});
-	});
-
-require('./feeds.add-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.add-controller":"/vagrant/src/client/feeds.add/feeds.add-controller.js"}],"/vagrant/src/client/feeds.delete/feeds.delete-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('feeds.delete')
-	.controller('FeedsDeleteCtrl', function(njrtLog, $state, feed, $modal, Feeds) {
-
-		var logger = njrtLog.getInstance('feeds.delete.FeedsDeleteCtrl');
-
-		logger.debug('FeedsDeleteCtrl loaded.');
-
-		var vm = this;
-		
-		vm.feed = feed;
-
-		vm.deleteFeed = function (feed) {
-			Feeds.deleteFeed(feed)
-				.then(function(data) {
-					$state.go('home.feeds');
-				}, function(err) {
-					logger.error(err);
-				});
-		}
-
-		vm.cancel = function () {
-			$state.go('home.feeds');
-		}
-
-		
-	});
-},{}],"/vagrant/src/client/feeds.delete/feeds.delete.js":[function(require,module,exports){
-var log = require('../log/log');
-var feeds = require('../feeds/feeds');
-
-module.exports = angular
-	.module('feeds.delete', [
-		'ui.router',
-		log.name,
-		feeds.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds.delete', {
-			url: '/:id/delete',
-			views: {
-				'modal@': {
-					templateUrl: 'feeds.delete/feeds.delete.tpl.html',
-					controller: 'FeedsDeleteCtrl as feedsDeleteCtrl'
-				}
-			},
-			isModal: true,
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeed($stateParams.id);
-				}
-			}
-		});
-	});
-
-require('./feeds.delete-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.delete-controller":"/vagrant/src/client/feeds.delete/feeds.delete-controller.js"}],"/vagrant/src/client/feeds.edit/feeds.edit-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('feeds.edit')
-	.controller('FeedsEditCtrl', function(njrtLog, $state, $scope, feed, Feeds, Restangular) {
-		
-		var logger = njrtLog.getInstance('feeds.edit.FeedsEditCtrl');
-
-		logger.debug('FeedsEditCtrl loaded.');
-
-		var vm = this;
-
-		vm.feed = Restangular.copy(feed);
-		vm.newFilter = {};
-
-		vm.checkDisabled = function() {
-			// if form is invalid, but filters are added
-			// return false to enable submit button
-			if ($scope.addFeed.$invalid) {
-				
-				if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
-					return false;
-				}
-
-				return true;
-			}
-
-			// if form is valid because of filter options being 
-			// entered in, but not added, do an additional check
-			if (!$scope.addFeed.$invalid) {
-
-				// if regexFilter option is true
-				// and no filters were added
-				// return true to disable submit button
-				if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		vm.addFilter = function(filter) {
-			
-			vm.feed.filters.push({
-				regex: filter.regex,
-				type: filter.type
-			});
-			vm.newFilter = {
-				regex: "",
-				type: ""
-			};
-		}
-
-		vm.deleteFilter = function(index) {
-			vm.feed.filters.splice(index, 1);
-		}
-
-		vm.editFilter = function (index) {
-			vm.newFilter = vm.feed.filters[index];
-			vm.feed.filters.splice(index, 1);
-		}
-
-		vm.editFeed = function (feed) {
-			Feeds.updateFeed(feed)
-				.then(function(data) {
-					$state.go('home.feeds');
-				}, function(err) {
-					logger.error(err);
-				});
-		}
-
-		vm.cancel = function () {
-			$state.go('home.feeds');
-		}
-
-	});
-},{}],"/vagrant/src/client/feeds.edit/feeds.edit.js":[function(require,module,exports){
-var log = require('../log/log');
-var feeds = require('../feeds/feeds');
-
-module.exports = angular
-	.module('feeds.edit', [
-		'ui.router',
-		log.name,
-		feeds.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds.edit', {
-			url: '/:id/edit',
-			views: {
-				'modal@': {
-					templateUrl: 'feeds.edit/feeds.edit.tpl.html',
-					controller: 'FeedsEditCtrl as feedsEditCtrl'
-				}
-			},
-			isModal: true,
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeed($stateParams.id);
-				}
-			}
-		});
-	});
-
-require('./feeds.edit-controller');
-},{"../feeds/feeds":"/vagrant/src/client/feeds/feeds.js","../log/log":"/vagrant/src/client/log/log.js","./feeds.edit-controller":"/vagrant/src/client/feeds.edit/feeds.edit-controller.js"}],"/vagrant/src/client/feeds/feeds-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('feeds')
-	.controller('FeedsCtrl', function(njrtLog, $previousState, $modal, Feeds, feeds) {
-
-		var logger = njrtLog.getInstance('feeds.FeedsCtrl');
-
-		logger.debug('FeedsCtrl loaded.');
-
-		var vm = this;
-
-		vm.Feeds = Feeds;
-
-		vm.reverse = false;
-		vm.predicate = 'lastChecked';
-		
-	});
-},{}],"/vagrant/src/client/feeds/feeds-factory.js":[function(require,module,exports){
-module.exports = angular
-	.module('feeds')
-	.factory('Feeds', function(njrtLog, Restangular, $q) {
-
-		var logger = njrtLog.getInstance('feeds.Feeds');
-
-		logger.debug('Feeds loaded.');
-
-		var Feeds = {};
-
-		Feeds.feeds = [];
-
-		Feeds.getFeeds = function() {
-			return Restangular.all('feeds').getList()
-				.then(function (data) {
-					Feeds.feeds = data;
-					return Feeds.feeds;
-				});
-		}
-
-		Feeds.getFeed = function(id) {
-			return Restangular.one('feeds', id).get();
-		}
-
-		Feeds.addFeed = function(feed) {
-			return Restangular.all('feeds').post(feed)
-				.then(function (data) {
-					Feeds.feeds.push(data);
-					return data;
-				});
-		}
-
-		Feeds.refreshFeed = function(id) {
-			return Restangular.one('feeds', id).post('refresh', {})
-				.then(function (data) {
-					return Feeds.getFeeds()
-						.then(function () {
-							return data;
-						});
-				});
-		}
-
-		Feeds.updateFeed = function(feed) {
-			return feed.put()
-				.then(function (data) {
-					return Feeds.getFeeds()
-						.then(function () {
-							return data;
-						});
-				});
-		}
-
-		Feeds.deleteFeed = function(feed) {
-			var deferred = $q.defer();
-
-			// delete from server
-			feed.remove()
-				.then(function () {
-					var item = _.findWhere(Feeds.feeds, {
-						_id: feed._id
-					});
-
-					var index = Feeds.feeds.indexOf(item);
-					
-					// delete from collection
-					if (index > -1) {
-						Feeds.feeds.splice(index, 1);
-					}
-
-					deferred.resolve('deleted');
-				}, function (err) {
-					console.error(err);
-					deferred.reject(err);
-				});
-
-			return deferred.promise;
-		}
-
-		
-
-		return Feeds;
-
-	});
-},{}],"/vagrant/src/client/feeds/feeds.js":[function(require,module,exports){
-var log = require('../log/log');
-var session = require('../session/session');
-
-module.exports = angular
-	.module('feeds', [
-		'ui.router',
-		'ct.ui.router.extras',
-		session.name,
-		log.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds', {
-			url: 'feeds',
-			views: {
-				'home@': {
-					controller: 'FeedsCtrl as feedsCtrl',
-					templateUrl: 'feeds/feeds.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feeds: function (Feeds) {
-					return Feeds.getFeeds();
-				}
-			}
-		});
-	});
-
-require('./feeds-factory');
-require('./feeds-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","./feeds-controller":"/vagrant/src/client/feeds/feeds-controller.js","./feeds-factory":"/vagrant/src/client/feeds/feeds-factory.js"}],"/vagrant/src/client/filters/bytes-filter.js":[function(require,module,exports){
-module.exports = angular.module('app')
-	.filter('bytes', function() {
-		return function(bytes, precision) {
-			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
-			if (bytes === 0) return '-';
-			if (typeof precision === 'undefined') precision = 1;
-			var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-				number = Math.floor(Math.log(bytes) / Math.log(1024));
-			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-		}
-	});
-},{}],"/vagrant/src/client/filters/datatransferrate-filter.js":[function(require,module,exports){
-module.exports = angular.module('app')
-	.filter('dataTransferRate', function() {
-		return function(dataTransferRate, precision) {
-			if (isNaN(parseFloat(dataTransferRate)) || !isFinite(dataTransferRate)) return '-';
-			if (dataTransferRate === 0) return '-';
-			if (typeof precision === 'undefined') precision = 1;
-			var units = ['bytes/s', 'kB/s', 'MB/s', 'GB/s', 'TB/s', 'PB/s'],
-				number = Math.floor(Math.log(dataTransferRate) / Math.log(1024));
-			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-		}
-	});
-},{}],"/vagrant/src/client/filters/percentage-filter.js":[function(require,module,exports){
-module.exports = angular.module('app')
-	.filter('percentage', function() {
-		return function(input) {
-			var rounded = Math.round(input * 10000) / 100;
-			if (rounded == NaN) {
-				return '';
-			}
-			var percentage = '' + rounded + '%';
-			return percentage;
-		};
-	});
-},{}],"/vagrant/src/client/filters/time-filter.js":[function(require,module,exports){
-module.exports = angular.module('app')
-	.filter('time', function() {
-		return function(value) {
-			if (isNaN(parseFloat(value)) || !isFinite(value)) return '-';
-			var suffix = "s",
-				day = 86400,
-				hr = 3600,
-				min = 60;
-			var seconds = parseInt(value, 10);
-			var days = Math.floor(seconds / day);
-			var hours = Math.floor((seconds - (days * day)) / hr);
-			var minutes = Math.floor((seconds - (days * day) - (hours * hr)) / min);
-			var seconds = seconds - (days * day) - (hours * hr) - (minutes * min);
-
-			if (value >= min && value <= hr) {
-				return [minutes, "m ", seconds, "s"].join("");
-			} else if (value >= hr && value <= day) {
-				return [hours, "h ", minutes, "m ", seconds, "s"].join("");
-			} else if (value >= day) {
-				return [days, "d ", hours, "h ", minutes, "m ", seconds, "s"].join("");
-			}
-		}
-	})
-},{}],"/vagrant/src/client/home/home.js":[function(require,module,exports){
-module.exports = angular
-	.module('home', [
-		'ui.router'
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home', {
-			url: '/',
-			views: {
-				'home@': {
-					templateUrl: 'home/home.tpl.html'
-				}
-			},
-			sticky: true
-			// ,
-			// data: {
-			// 	rule: ['isLoggedIn']
-			// }
-		});
-	});
-},{}],"/vagrant/src/client/log/log.js":[function(require,module,exports){
-var moment = require('moment');
-
-module.exports = angular
-	.module('njrt.log', [
-
-	])
-	.run(['$log', function ($log) {
-		$log.getInstance = function(context) {
-			return {
-				log: enhanceLogging($log.log, context),
-				info: enhanceLogging($log.info, context),
-				warn: enhanceLogging($log.warn, context),
-				debug: enhanceLogging($log.debug, context),
-				error: enhanceLogging($log.error, context)
-			};
-		}
-
-		function enhanceLogging(logFn, context) {
-			return function() {
-				var modifiedArguments = [].slice.call(arguments);
-				modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
-				logFn.apply(null, modifiedArguments);
-			};
-		}
-	}])
-	.service('njrtLog', function($log) {
-		this.getInstance = function(context) {
-			return $log.getInstance(context);
-		}
-	});
-},{"moment":"/vagrant/node_modules/moment/moment.js"}],"/vagrant/src/client/login/login-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('login')
-	.controller('LoginCtrl', function(njrtLog, Authentication, $state) {
-
-		var logger = njrtLog.getInstance('login.LoginCtrl');
-
-		logger.debug('LoginCtrl loaded.');
-
-		var vm = this;
-
-		vm.close = function() {
-			$state.go('home'); // return to previous state
-		};
-
-
-		vm.login = function() {
-			Authentication.login({
-				email: vm.email,
-				password: vm.password
-			}).then(function(data) {
-				logger.info(data);
-				$state.go('home');
-			}, function(err) {
-				logger.error(err);
-			});
-		};
-	});
-},{}],"/vagrant/src/client/login/login.js":[function(require,module,exports){
-var log = require('../log/log');
-var authentication = require('../authentication/authentication');
-
-module.exports = angular
-	.module('login', [
-		log.name,
-		authentication.name,
-		'ui.router',
-		'ct.ui.router.extras'
-	])
-	.config(function ($stateProvider) {
-		$stateProvider.state('login', {
-			url: '/login',
-			views: {
-				'modal@': {
-					templateUrl: 'login/login.tpl.html',
-					controller: 'LoginCtrl as loginCtrl'
-				}
-			},
-			isModal: true
-		});
-	});
-
-require('./login-controller');
-},{"../authentication/authentication":"/vagrant/src/client/authentication/authentication.js","../log/log":"/vagrant/src/client/log/log.js","./login-controller":"/vagrant/src/client/login/login-controller.js"}],"/vagrant/src/client/modal/modal.js":[function(require,module,exports){
-module.exports = angular
-	.module('modal', [
-		'ui.bootstrap',
-		'ui.router',
-		'ct.ui.router.extras'
-	])
-	.run(function($rootScope, $modal, $previousState) {
-
-		var stateBehindModal = {};
-		var modalInstance = null;
-
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
-			// Implementing 'isModal':
-			// perform the required action to transitions between 'modal states' and 'non-modal states'.
-			//
-
-			if (!fromState.isModal && toState.isModal) {
-				//
-				// Non-modal state ---> modal state
-				//
-
-				stateBehindModal = {
-					state: fromState,
-					params: fromParams
-				};
-
-				$previousState.memo('modalInvoker');
-
-				// Open up modal
-				modalInstance = $modal.open({
-					template: '<div ui-view="modal"></div>',
-					backdrop: 'static'
-				});
-
-				modalInstance.result.finally(function() {
-					// Reset instance to mark that the modal has been dismissed.
-					modalInstance = null
-
-					// Go to previous state
-					$state.go(stateBehindModal.state, stateBehindModal.params);
-				});
-
-			} else if (fromState.isModal && !toState.isModal) {
-				//
-				// Modal state ---> non-modal state
-				//
-
-				// Directly return if the instance is already dismissed.
-				if (!modalInstance) {
-					return;
-				}
-
-				// Dismiss the modal, triggering the reset of modalInstance
-				modalInstance.dismiss();
-			}
-
-		});
-	});
-},{}],"/vagrant/src/client/notification/notification-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('notification')
-	.controller('NotificationCtrl', function(njrtLog, Notification) {
-
-		var logger = njrtLog.getInstance('notification.NotificationCtrl');
-
-		logger.debug('NotificationCtrl loaded.');
-
-		var vm = this;
-
-		vm.Notification = Notification;
-	});
-},{}],"/vagrant/src/client/notification/notification-factory.js":[function(require,module,exports){
-module.exports = angular
-	.module('notification')
-	.factory('Notification', function ($q, $timeout) {
-
-		var Notification = {};
-
-		Notification.notifications = [];
-
-		Notification.add = function (type, message) {
-			var deferred = $q.defer();
-			
-			var notification = {
-				type: type,
-				msg: message
-			}
-
-			Notification.notifications.push(notification);
-
-			// need to add animation
-			$timeout(function () {
-				Notification.notifications.splice(0, 1);
-			}, 3000);
-
-			deferred.resolve(notification);
-
-			return deferred.promise;
-		}
-
-		Notification.remove = function (index) {
-			Notification.notifications.splice(index, 1);
-		}
-
-		return Notification;
-	});
-},{}],"/vagrant/src/client/notification/notification.js":[function(require,module,exports){
-module.exports = angular
-	.module('notification', [
-		
-	]);
-
-require('./notification-factory');
-require('./notification-controller');
-},{"./notification-controller":"/vagrant/src/client/notification/notification-controller.js","./notification-factory":"/vagrant/src/client/notification/notification-factory.js"}],"/vagrant/src/client/session/session-service.js":[function(require,module,exports){
-module.exports = angular
-	.module('session')
-	.service('SessionService', function(njrtLog, $window, Restangular) {
-
-			var logger = njrtLog.getInstance('session.SessionService');
-
-			logger.debug('SessionService loaded.');
-
-			var userSession = {};
-
-			// expects token, expires, id, email
-			this.setUserSession = function(data) {
-				userSession = data;
-
-				$window.sessionStorage.email = data.email;
-				$window.sessionStorage._id = data._id;
-				$window.sessionStorage.token = data.token;
-				$window.sessionStorage.expires = data.expires;
-
-				Restangular.setDefaultHeaders({
-					Authorization: this.getAuthorizationHeader()
-				});
-			}
-
-			this.getUserSession = function() {
-				return userSession;
-			}
-
-			this.clearSession = function() {
-				$window.sessionStorage.clear();
-				userSession = {};
-			}
-
-			this.isCurrentSessionValid = function() {
-				if (!_.isEmpty(userSession)) {
-					return true;
-				}
-
-				return false;
-			}
-
-			this.getAuthorizationHeader = function() {
-				var authorizationHeader = 'Bearer ' + userSession._id + ':' + userSession.expires + ':' + userSession.token;
-				logger.debug('Authorization header:', authorizationHeader);
-				//config.headers.Authorization = 'Bearer ' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token;
-				return authorizationHeader;
-			}
-
-			function loadExistingSession() {
-
-				if ($window.sessionStorage.length > 0 &&
-					$window.sessionStorage.token) {
-					logger.debug('Session exists.');
-					logger.debug('Saving window session to session service.');
-
-					userSession.email = $window.sessionStorage.email;
-					userSession._id = $window.sessionStorage._id;
-					userSession.token = $window.sessionStorage.token;
-					userSession.expires = $window.sessionStorage.expires;
-
-				} else {
-					logger.info('Session doesn\'t exist');
-				}
-
-			}
-
-			// Load existing window session if it exists
-			loadExistingSession();
-
-		});
-},{}],"/vagrant/src/client/session/session.js":[function(require,module,exports){
-var log = require('../log/log');
-
-module.exports = angular
-	.module('session', [
-		log.name
-	]);
-
-require('./session-service');
-},{"../log/log":"/vagrant/src/client/log/log.js","./session-service":"/vagrant/src/client/session/session-service.js"}],"/vagrant/src/client/socket/socket-factory.js":[function(require,module,exports){
-var io = require('socket-io');
-
-module.exports = angular
-	.module('socket')
-	.factory('Socket', function(njrtLog, $rootScope, $window) {
-
-		var logger = njrtLog.getInstance('socket.Socket');
-		
-		logger.debug('Socket loaded.');
-
-		var socket = connect();
-
-		var Socket = {};
-
-		Socket.connect = function() {
-			logger.debug('Connecting to socket.');
-			socket = connect();
-		}
-
-		Socket.reconnect = function() {
-			logger.debug('Reconnecting to socket.');
-			socket = connect();
-		}
-
-		Socket.disconnect = function() {
-			logger.debug('Disconnecting from socket.')
-			socket.disconnect();
-		}
-
-		Socket.on = function(eventName, callback) {
-			socket.on(eventName, function () {  
-				var args = arguments;
-				$rootScope.$apply(function () {
-					callback.apply(socket, args);
-				});
-			});
-		}
-
-		Socket.emit = function() {
-			socket.emit(eventName, data, function () {
-				var args = arguments;
-				$rootScope.$apply(function () {
-					if (callback) {
-						callback.apply(socket, args);
-					}
-				});
-			});
-		}
-
-		function connect() {
-			logger.debug('Initializing connection to socket.');
-			return io.connect('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
-				'force new connection': true,
-				'sync disconnect on unload': true
-			});
-		}
-
-		return Socket;
-
-	});
-},{"socket-io":"/vagrant/src/vendor/socket.io-client/dist/socket.io.js"}],"/vagrant/src/client/socket/socket.js":[function(require,module,exports){
-var log = require('../log/log');
-
-module.exports = angular
-	.module('socket', [
-		log.name
-	]);
-
-require('./socket-factory');
-},{"../log/log":"/vagrant/src/client/log/log.js","./socket-factory":"/vagrant/src/client/socket/socket-factory.js"}],"/vagrant/src/client/templates.js":[function(require,module,exports){
-angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("feed/feed.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th>Name</th><th>Date</th><th>Status</th><th>Load</th></tr></thead><tbody><tr ng-repeat=\"torrent in feedCtrl.feed.torrents\"><td>{{torrent.name}}</td><td>{{torrent.date | date:\"medium\"}}</td><td>{{torrent.status}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedCtrl.loadTorrent(torrent.url)\">Load</a></td></tr></tbody></table></div></div>");
-$templateCache.put("feeds/feeds.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 240px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 240px; float: left; padding: 10px;\" ng-hide=\"feedPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.feeds.add\">Add Feed</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"feedsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>RSS</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click checked>Last Checked</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"feedPanel = !feedPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': feedPanel, \'fa-caret-left\': !feedPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow-y: scroll;\"><table class=\"table table-condensed table-hover\"><thead><tr><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse\">Title <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse}\"></i></a></th><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse\">RSS <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse}\"></i></a></th><th><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse\">Last Checked <i class=\"fa\" ng-class=\"{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse}\"></i></a></th><th>Auto Download?</th><th>Refresh</th><th>Edit</th><th>Delete</th></tr></thead><tbody><tr ng-repeat=\"feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText\"><td style=\"width: 30%;\"><a ui-sref=\"home.feeds.view({id: feed._id})\">{{feed.title}}</a></td><td>{{feed.rss}}</td><td>{{feed.lastChecked * 1000 | date:\'medium\'}}</td><td>{{feed.autoDownload}}</td><td><a href=\"javascript: void(0);\" ng-click=\"feedsCtrl.Feeds.refreshFeed(feed._id);\">Refresh</a></td><td><a ui-sref=\"home.feeds.edit({id: feed._id})\">Edit</a></td><td><a ui-sref=\"home.feeds.delete({id: feed._id})\">Delete</a></td></tr></tbody></table></div></div>");
-$templateCache.put("feeds.delete/feeds.delete.tpl.html","<div class=\"modal-header\"><h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3></div><div class=\"modal-body\"><p>Deleting will remove the feed from the list.</p></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)\">Delete</button><button class=\"btn btn-default\" ng-click=\"feedsDeleteCtrl.cancel()\">Cancel</button></div>");
-$templateCache.put("feeds.edit/feeds.edit.tpl.html","<div class=\"modal-header\"><h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"feedName\">Title:</label><input type=\"text\" class=\"form-control\" id=\"feedName\" ng-model=\"feedsEditCtrl.feed.title\"></div><div class=\"form-group\"><label for=\"feedUrl\">URL:</label><p class=\"form-control-static\">{{feedsEditCtrl.feed.rss}}</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsEditCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsEditCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to edit regex filters.</p></div><div ng-if=\"feedsEditCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsEditCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsEditCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsEditCtrl.feed.filters track by $index\" class=\"filter\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span> <a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsEditCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-primary\" ng-click=\"feedsEditCtrl.editFeed(feedsEditCtrl.feed)\">Save changes</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsEditCtrl.cancel()\">Cancel</button></div></div>");
-$templateCache.put("home/home.tpl.html","");
-$templateCache.put("feeds.add/feeds.add.tpl.html","<form name=\"addFeed\" novalidate><div class=\"modal-header\"><h3>Add Feed</h3></div><div class=\"modal-body\"><p ng-show=\"feedsAddCtrl.error\" class=\"bg-danger\" ng-cloak><strong>Error:</strong>{{feedsAddCtrl.error}}</p><div class=\"form-group\"><label for=\"feedName\">Name (Required):</label><input type=\"text\" id=\"feedName\" name=\"feedName\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.name\" required><p class=\"help-block\" ng-show=\"addFeed.feedName.$error.required\">Please enter in a name.</p></div><div class=\"form-group\"><label for=\"feedUrl\">URL (Required):</label><input type=\"text\" id=\"feedUrl\" name=\"feedUrl\" class=\"form-control\" ng-model=\"feedsAddCtrl.feed.url\" required><p class=\"help-block\" ng-show=\"addFeed.feedUrl.$error.required\">Please enter in a URL.</p></div><div class=\"checkbox\"><label for=\"autoDownload\"><input type=\"checkbox\" id=\"autoDownload\" ng-model=\"feedsAddCtrl.feed.autoDownload\">Auto Download</label><p class=\"help-block\">Check box to automatically download torrents when the feed is updated.</p></div><div class=\"checkbox\"><label for=\"regexFilter\"><input type=\"checkbox\" id=\"regexFilter\" ng-model=\"feedsAddCtrl.feed.regexFilter\">Add advanced filtering</label><p class=\"help-block\">Check box to add regex filters.</p></div><div ng-if=\"feedsAddCtrl.feed.regexFilter\"><h4>Regex Filters</h4><div class=\"form-inline\" style=\"margin-bottom: 10px;\"><div class=\"form-group\"><input type=\"text\" class=\"form-control\" placeholder=\"Regular expression\" ng-model=\"feedsAddCtrl.newFilter.regex\" style=\"width: 350px;\" required></div><div class=\"form-group\"><label for=\"filterTypeInclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeInclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"include\" required>Include</label><label for=\"filterTypeExclude\" class=\"radio-inline\"><input type=\"radio\" id=\"filterTypeExclude\" ng-model=\"feedsAddCtrl.newFilter.type\" value=\"exclude\" required>Exclude</label></div><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)\"><i class=\"fa fa-plus\"></i></button></div><ul class=\"list-unstyled feed__filter-list\"><li ng-repeat=\"filter in feedsAddCtrl.feed.filters track by $index\"><span class=\"filter-regex\">{{filter.regex}}</span><span class=\"filter-type badge\">{{filter.type}}</span><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.editFilter($index)\"><i class=\"fa fa-pencil\"></i></a><a href=\"javascript: void(0);\" ng-click=\"feedsAddCtrl.deleteFilter($index)\"><i class=\"fa fa-times\"></i></a></li></ul></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"button\" class=\"btn btn-default\" ng-disabled>Test Feed</button><button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"feedsAddCtrl.checkDisabled()\" ng-click=\"feedsAddCtrl.addRssFeed()\">Add Feed</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"feedsAddCtrl.cancel()\">Cancel</button></div></div></form>");
-$templateCache.put("login/login.tpl.html","<form ng-submit=\"loginCtrl.login()\"><div class=\"modal-header\"><h3>Login</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label class=\"control-label\" for=\"email\">Email</label><input type=\"text\" id=\"email\" class=\"form-control\" placeholder=\"Email\" ng-model=\"loginCtrl.email\"></div><div class=\"form-group\"><label class=\"control-label\" for=\"password\">Password</label><input type=\"password\" id=\"password\" class=\"form-control\" placeholder=\"Password\" ng-model=\"loginCtrl.password\"></div></div><div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" ng-click=\"loginCtrl.close()\">Cancel</button><button type=\"submit\" class=\"btn btn-primary\">Sign in</button></div></form>");
-$templateCache.put("settings/settings.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div class=\"col-xs-12\"><fieldset><legend>Listening Port</legend><div class=\"form-group\"><label for=\"listening-port-range\">Port range used for incoming connections:</label><input type=\"number\" name=\"listening-port-range\" id=\"listening-port-range\" value class=\"form-control\"></div><div class=\"checkbox\"><label><input type=\"checkbox\" name=\"randomize-listening-port\">Randomize port each time rTorrent starts.</label></div></fieldset><fieldset><legend>Bandwidth Settings</legend><div class=\"form-group\"><label for=\"number-upload-slots\">Number of upload slots:</label><input type=\"number\" name=\"number-upload-slots\" id=\"number-upload-slots\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers\">Minimum number of peers:</label><input type=\"number\" name=\"min-number-peers\" id=\"min-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers\">Maximum number of peers:</label><input type=\"number\" name=\"max-number-peers\" id=\"max-number-peers\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"min-number-peers-seeding\">Minimum number of peers for seeding:</label><input type=\"number\" name=\"min-number-peers-seeding\" id=\"min-number-peers-seeding\" value class=\"form-control\"></div><div class=\"form-group\"><label for=\"max-number-peers-seeding\">Maximum number of peers for seeding:</label><input type=\"number\" name=\"max-number-peers-seeding\" id=\"max-number-peers-seeding\" value class=\"form-control\"></div></fieldset><fieldset><legend>Bandwidth Limiting</legend><div class=\"from-group\"><label for=\"global-max-upload-rate\">Global maximum upload rate: (kB/s)</label><input type=\"number\" name=\"global-max-upload-rate\" id=\"global-max-upload-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div><div class=\"form-group\"><label for=\"global-max-download-rate\">Global maximum download rate: (kB/s)</label><input type=\"number\" name=\"global-max-download-rate\" id=\"global-max-download-rate\" value class=\"form-control\"><span class=\"help-block\">0 is unlimited</span></div></fieldset></div></div>");
-$templateCache.put("torrents/torrents-delete-data.tpl.html","<div class=\"modal-header\"><h3>Delete \'{{torrent.name}}\'?</h3></div><div class=\"modal-body\"><p>Deleting will remove the torrent from the list along with its data.</p></div><div class=\"modal-footer\"><button class=\"btn btn-primary\" ng-click=\"deleteData(torrent.hash)\">Delete</button><button class=\"btn btn-default\" ng-click=\"cancel()\">Cancel</button></div>");
-$templateCache.put("torrents/torrents.tpl.html","<div class=\"content\" style=\"position: relative;\" ng-style=\"style()\" resize><div style=\"position: absolute; bottom: 20px; left: -1px; height: 300px; background: rgba(255, 255, 255, 0.85); display: block; z-index: 30; border: 1px solid #cacaca; box-shadow: 5px 3px 8px #cacaca; \"><div style=\"overflow-y: scroll; width: 200px; height: 100%; float: left; padding: 10px;\" ng-hide=\"torrentPanel\"><h3>Actions</h3><ul class=\"list-unstyled\"><li><a ui-sref=\"home.torrents.add\">Add Torrent</a></li></ul><h4>Filter by Text</h4><input type=\"text\" ng-model=\"torrentsCtrl.searchText\" placeholder=\"Filter list\" class=\"form-control\"><h4>Filter by Status</h4><ul class=\"list-unstyled\"><li><a href ng-click=\"torrentsCtrl.status=\'\'\">All <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'\'}\" ng-init=\"torrentsCtrl.status=\'\'\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'downloading\'\">Downloading <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'downloading\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'finished\'\">Finished <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'finished\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'stopped\'\">Stopped <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'stopped\'}\"></i></a></li><li><a href ng-click=\"torrentsCtrl.status=\'seeding\'\">Seeding <i ng-class=\"{\'fa fa-check\': torrentsCtrl.status===\'seeding\'}\"></i></a></li></ul><h4>Hide Columns</h4><div class=\"form-group\"><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"status_col=!status_col\" checked>Status</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"size_col=!size_col\" checked>Size</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"percent_downloaded_col=!percent_downloaded_col\" checked>Done</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"downloaded_col=!downloaded_col\" checked>Downloaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"uploaded_col=!uploaded_col\" checked>Uploaded</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"dl_speed_col=!dl_speed_col\" checked>DL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"ul_speed_col=!ul_speed_col\" checked>UL Speed</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"time_remaining_col=!time_remaining_col\" checked>ETA</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"peers_col=!peers_col\" checked>Peers</label></div><div class=\"checkbox\"><label><input type=\"checkbox\" ng-click=\"seeds_col=!seeds_col\" checked>Seeds</label></div></div></div><div style=\"width: 20px; height: 100%; float: left;\"><a href style=\"display: block; height: 100%;\" ng-click=\"torrentPanel = !torrentPanel\"><i class=\"fa fa-lg\" style=\"padding: 10px 5px;\" ng-class=\"{\'fa-caret-right\': torrentPanel, \'fa-caret-left\': !torrentPanel}\"></i></a></div></div><div style=\"position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; overflow: scroll;\"><table class=\"table table-condensed table-hover\" style=\"min-width: 1400px;\"><colgroup><col style=\"width: 30%;\"><col style=\"width: 120px;\"><col style=\"width: 160px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 140px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"><col style=\"width: 120px;\"></colgroup><thead><tr><th><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'name\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Name <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'name\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'name\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"status_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'status\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Status <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'status\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'status\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"size_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'size\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Size <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'size\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'size\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"percent_downloaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'percent_downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Done <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'percent_downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'percent_downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"downloaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'downloaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Downloaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'downloaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'downloaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"uploaded_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'uploaded\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Uploaded <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'uploaded\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'uploaded\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"dl_speed_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'dl_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">DL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'dl_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'dl_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"ul_speed_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'ul_speed\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">UL <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'ul_speed\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'ul_speed\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"time_remaining_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'time_remaining\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">ETA <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'time_remaining\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'time_remaining\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"peers_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'peers\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Peers <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'peers\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'peers\' && !torrentsCtrl.reverse}\"></i></a></th><th ng-hide=\"seeds_col\"><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.predicate=\'seeds\';torrentsCtrl.reverse=!torrentsCtrl.reverse\">Seeds <i class=\"fa\" ng-class=\"{\'fa-caret-up\': torrentsCtrl.predicate===\'seeds\' && torrentsCtrl.reverse, \'fa-caret-down\': torrentsCtrl.predicate===\'seeds\' && !torrentsCtrl.reverse}\"></i></a></th></tr></thead><tbody><tr ng-repeat=\"torrent in torrentsCtrl.Torrents.torrents | orderBy:torrentsCtrl.predicate:torrentsCtrl.reverse | filter:{status: torrentsCtrl.status} | filter:torrentsCtrl.searchText track by torrent.hash\" class=\"torrent\" context-menu data-target=\"menu-{{$index}}\"><td><div class=\"clearfix\" style=\"position: relative;\"><h5 class=\"pull-left\" style=\"white-space: nowrap; overflow: hidden;\" title=\"{{torrent.name}}\">{{torrent.name}}</h5></div><div class=\"dropdown position-fixed\" id=\"menu-{{$index}}\"><ul class=\"dropdown-menu\" role=\"menu\"><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.start(torrent.hash)\">Play</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.pause(torrent.hash)\">Pause</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.stop(torrent.hash)\">Stop</a></li><li class=\"divider\"></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Priority</a><ul class=\"dropdown-menu\"><li><a href=\"javascript: void(0);\">High</a></li><li><a href=\"javascript: void(0);\">Medium</a></li><li><a href=\"javascript: void(0);\">Low</a></li><li><a href=\"javascript: void(0);\">Don\'t Download</a></li></ul></li><li class=\"dropdown-submenu\"><a href=\"javascript: void(0);\">Set Channel</a><ul class=\"dropdown-menu\"><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'\')\">No Channel</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_4\')\">Up16</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_3\')\">Up32</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_2\')\">Up64</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_1\')\">Up128</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'up_0\')\">Up256</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_4\')\">Down16</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_3\')\">Down32</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_2\')\">Down64</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_1\')\">Down128</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.setChannel(torrent.hash, \'down_0\')\">Down256</a></li></ul></li><li class=\"divider\"></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.Torrents.remove(torrent.hash)\">Remove</a></li><li><a href=\"javascript: void(0);\" ng-click=\"torrentsCtrl.deleteData(torrent)\">Delete with Data</a></li><li><a href=\"javascript: void(0);\" ng-click>Details</a></li></ul></div></td><td ng-hide=\"status_col\">{{torrent.status}}</td><td ng-hide=\"size_col\">{{torrent.size | bytes}}</td><td ng-hide=\"percent_downloaded_col\"><div class=\"progress\"><div class=\"progress-bar\" style=\"width: {{torrent.percent_downloaded | percentage}}\" ng-class=\"{\'progress-bar-warning\': torrent.status === \'checking\', \'progress-bar-success\': torrent.status === \'seeding\'}\">{{torrent.percent_downloaded | percentage}}</div></div></td><td ng-hide=\"downloaded_col\">{{torrent.downloaded | bytes}}</td><td ng-hide=\"uploaded_col\">{{torrent.uploaded | bytes}}</td><td ng-hide=\"dl_speed_col\">{{torrent.dl_speed | dataTransferRate}}</td><td ng-hide=\"ul_speed_col\">{{torrent.ul_speed | dataTransferRate}}</td><td ng-hide=\"time_remaining_col\">{{torrent.time_remaining | time}}</td><td ng-hide=\"peers_col\">{{torrent.peers}} ({{torrent.total_peers}})</td><td ng-hide=\"seeds_col\">{{torrent.seeds}} ({{torrent.total_seeds}})</td></tr></tbody></table></div></div>");
-$templateCache.put("torrents.add/torrents.add.tpl.html","<div class=\"modal-header\"><h3>Add Torrent</h3></div><div class=\"modal-body\"><div class=\"form-group\"><label for=\"torrent-url\">URL:</label><input type=\"text\" id=\"torrent-url\" class=\"form-control\" placeholder=\"Torrent URL or Magnet Link\" ng-model=\"torrentsAddCtrl.url\"><span class=\"help-block\">Enter in a Magnet link or Torrent link.</span></div></div><div class=\"modal-footer\"><div class=\"form-group\"><button type=\"submit\" class=\"btn btn-primary\" ng-click=\"torrentsAddCtrl.loadTorrent(torrentsAddCtrl.url)\">Add Link</button><button type=\"button\" class=\"btn btn-default\" ng-click=\"torrentsAddCtrl.cancel()\">Cancel</button></div></div>");}]);
-},{}],"/vagrant/src/client/torrents.add/torrents.add-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('torrents.add')
-	.controller('TorrentsAddCtrl', function(njrtLog, $state, Torrents) {
-
-		var logger = njrtLog.getInstance('torrents.add.TorrentsAddCtrl');
-
-		logger.debug('TorrentsAddCtrl loaded.');
-
-		var vm = this;
-
-		vm.loadTorrent = function(url) {
-			Torrents.load(url)
-				.then(function(data) {
-					logger.debug(data);
-					$state.go('home.torrents');
-				}, function(err) {
-					logger.error(err);
-				});
-		}
-
-		vm.cancel = function() {
-			$state.go('home.torrents');
-		}
-
-	});
-
-},{}],"/vagrant/src/client/torrents.add/torrents.add.js":[function(require,module,exports){
-var log = require('../log/log');
-var torrents = require('../torrents/torrents');
-
-module.exports = angular
-	.module('torrents.add', [
-		'ui.router',
-		log.name,
-		torrents.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.torrents.add', {
-			url: '/add',
-			views: {
-				'modal@': {
-					templateUrl: 'torrents.add/torrents.add.tpl.html',
-					controller: 'TorrentsAddCtrl as torrentsAddCtrl'
-				}
-			},
-			isModal: true
-		});
-	});
-
-require('./torrents.add-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../torrents/torrents":"/vagrant/src/client/torrents/torrents.js","./torrents.add-controller":"/vagrant/src/client/torrents.add/torrents.add-controller.js"}],"/vagrant/src/client/torrents/torrents-controller.js":[function(require,module,exports){
-module.exports = angular
-	.module('torrents')
-	.controller('TorrentsCtrl', function(njrtLog, Torrents, $modal) {
-		
-		var logger = njrtLog.getInstance('torrents.TorrentsCtrl');
-		
-		logger.debug('TorrentsCtrl loaded.');
-
-		var vm = this;
-
-		vm.Torrents = Torrents;
-
-		vm.predicate = 'name';
-		vm.reverse = false;
-		vm.status = '';
-
-		vm.deleteData = function (torrent) {
-			var modalInstance = $modal.open({
-				templateUrl: 'torrents/torrents-delete-data.tpl.html',
-				controller: function ($scope, torrent, $modalInstance, Torrents) {
-					$scope.torrent = torrent;
-					
-					$scope.deleteData = function (hash) {
-						Torrents.deleteData(hash).then(function(data) {
-							$modalInstance.close(data);
-						}, function(err) {
-							console.log(err);
-							logger.error(err);
-						});
-
-						// show error in gui somehow
-					}
-
-					$scope.cancel = function () {
-						$modalInstance.dismiss('cancel');
-					}
-				},
-				resolve: {
-					torrent: function () {
-						return torrent;
-					}
-				}
-			});
-		}
-	});
-},{}],"/vagrant/src/client/torrents/torrents-factory.js":[function(require,module,exports){
-module.exports = angular
-	.module('torrents')
-	.factory('Torrents', function (njrtLog, Restangular, Socket, Notification, $state, SessionService) {
-
-		var logger = njrtLog.getInstance('torrents.Torrents');
-
-		logger.debug('Torrents loaded.');
-
-		var Torrents = {};
-
-		Torrents.torrents = [];
-
-		Socket.on('connect', function() {
-			logger.debug('Connected to socket.');
-		});
-
-		Socket.on('connecting', function() {
-			logger.debug('Connecting to socket.');
-		});
-
-		Socket.on('connect_failed', function() {
-			logger.error('Connection to socket failed');
-			Notification.add('danger', 'Failed to connect to server via web sockets');
-		});
-
-		Socket.on('error', function(err) {
-			if (err === 'handshake unauthorized') {
-				Notification.add('danger', 'Handshake unauthorized. Please login.');
-				
-				// Clear session
-				SessionService.clearSession();
-
-				// Redirect to login
-				$state.go('login');
-			}
-			logger.error(err);
-		});
-
-		Socket.on('torrents', function(data) {
-			Torrents.torrents = data;
-		});
-
-		Torrents.getTorrents = function () {
-			logger.debug('Getting torrents');
-
-			// Initial REST call to get torrents on resolve.
-		}
-
-		/**
-		 * Start a torent given a specified torrent hash.
-		 * @param  {String} hash Hash of the torrent.
-		 * @return {Promise}      Promise with success string.
-		 */
-		Torrents.start = function (hash) {
-			logger.debug('Starting torrent from hash', hash);
-			return Restangular
-				.one('torrents', hash)
-				.post('start', {})
-				.then(function () {
-					return Notification.add('success', 'Torrent started.');
-				}, function () {
-					return Notification.add('danger', 'Torrent failed to start.');
-				});
-		}
-
-		/**
-		 * Pause a torrent given a specified torrent hash.
-		 * @param  {String} hash Hash of the torrent.
-		 * @return {Promise}      Promise with success string.
-		 */
-		Torrents.pause = function (hash) {
-			logger.debug('Pausing torrent from hash', hash);
-			return Restangular
-				.one('torrents', hash)
-				.post('pause', {})
-				.then(function () {
-					return Notification.add('success', 'Torrent paused.');
-				}, function () {
-					return Notification.add('danger', 'Torrent failed to pause.');
-				});
-		}
-
-		/**
-		 * Stop a torrent given a specified torrent hash.
-		 * @param  {String} hash Hash of the torrent
-		 * @return {Promise}      Promise with success string.
-		 */
-		Torrents.stop = function (hash) {
-			logger.debug('Stopping torrent from hash', hash);
-			return Restangular
-				.one('torrents', hash)
-				.post('stop', {})
-				.then(function () {
-					return Notification.add('success', 'Torrent stopped.');
-				}, function () {
-					return Notification.add('danger', 'Torrent failed to stop.');
-				});
-		}
-
-		/**
-		 * Remove a torrent given a specified torrent hash.
-		 * @param  {String} hash Hash of the torrent
-		 * @return {Promise}      Promise with success string.
-		 */
-		Torrents.remove = function (hash) {
-			logger.debug('Removing torrent from hash', hash);
-			return Restangular
-				.one('torrents', hash)
-				.post('remove', {})
-				.then(function () {
-					return Notification.add('success', 'Torrent removed.');
-				}, function () {
-					return Notification.add('danger', 'Torrent could not be removed.');
-				});
-		}
-
-		/**
-		 * Delete torrent data given a specified torrent hash.
-		 * @param  {String} hash Hash of the torrent
-		 * @return {Promise}      Promise with success string.
-		 */
-		Torrents.deleteData = function (hash) {
-			logger.debug('Deleting torrent data from hash', hash);
-			return Restangular
-				.one('torrents', hash)
-				.post('delete_data', {})
-				.then(function () {
-					return Notification.add('success', 'Torrent data deleted.');
-				}, function () {
-					return Notification.add('danger', 'Torrent could not be deleted.');
-				});
-		}
-
-		/**
-		 * Load a torrent given a url string of the torrent file or magnet link.
-		 * @param  {String} url  Url of the torrent file or magnet link.
-		 * @return {Promise}     Promise with success string.
-		 */
-		Torrents.load = function (url) {
-			logger.debug('Loading torrent from url', url);
-			return Restangular
-				.all('torrents')
-				.customPOST({
-					'url': url
-				}, 'load')
-				.then(function () {
-					return Notification.add('success', 'Torrent loaded.');
-				}, function () {
-					return Notification.add('danger', 'Torrent failed to load.');
-				});
-		}
-
-		/**
-		 * Set the throttle channel for the specified torrent hash.
-		 * @param {String} hash    Hash of the torrent.
-		 * @param {String} channel Channel name (specified by the server).
-		 * @return {Promise}	Promise with success string.
-		 */
-		Torrents.setChannel = function (hash, channel) {
-			logger.debug('Setting channel for hash', hash, 'and channel', channel);
-			return Restangular
-				.one('torrents', hash)
-				.post('channel', {
-					'channel': channel
-				})
-				.then(function () {
-					return Notification.add('success', 'Torrent throttle channel set.');
-				}, function () {
-					return Notification.add('danger', 'Torrent could not be throttled.');
-				});
-		}
-
-		return Torrents;
-	});
-},{}],"/vagrant/src/client/torrents/torrents.js":[function(require,module,exports){
-var log = require('../log/log');
-var socket = require('../socket/socket');
-var session = require('../session/session');
-
-module.exports = angular
-	.module('torrents', [
-		'ui.router',
-		'restangular',
-		log.name,
-		socket.name,
-		session.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.torrents', {
-			url: 'torrents',
-			views: {
-				'home@': {
-					controller: 'TorrentsCtrl as torrentsCtrl',
-					templateUrl: 'torrents/torrents.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			}
-		});
-	});
-
-	require('./torrents-factory');
-	require('./torrents-controller');
-},{"../log/log":"/vagrant/src/client/log/log.js","../session/session":"/vagrant/src/client/session/session.js","../socket/socket":"/vagrant/src/client/socket/socket.js","./torrents-controller":"/vagrant/src/client/torrents/torrents-controller.js","./torrents-factory":"/vagrant/src/client/torrents/torrents-factory.js"}],"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
+},{}],"/vagrant/src/vendor/angular-bootstrap/ui-bootstrap-tpls.js":[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -48727,7 +48724,7 @@ angular.module("ct.ui.router.extras").config(
       pendingTransitions = [];
 
       // Decorate any state attribute in order to get access to the internal state representation.
-      $stateProvider.decorator('parent', function (state, parentFn) {
+      $stateProvider.decorator('parent', ["state", "parentFn", function (state, parentFn) {
         // Capture each internal UI-Router state representations as opposed to the user-defined state object.
         // The internal state is, e.g., the state returned by $state.$current as opposed to $state.current
         internalStates[state.self.name] = state;
@@ -48742,7 +48739,7 @@ angular.module("ct.ui.router.extras").config(
         }
 
         return parentFn(state);
-      });
+      }]);
 
       var $state_transitionTo; // internal reference to the real $state.transitionTo function
       // Decorate the $state service, so we can decorate the $state.transitionTo() function with sticky state stuff.
@@ -50816,4 +50813,4 @@ angular.module("ct.ui.router.extras").config( [ "$provide",  function ($provide)
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},["./src/client/app.js"]);
+},{}]},{},["./.tmp/app.js"]);

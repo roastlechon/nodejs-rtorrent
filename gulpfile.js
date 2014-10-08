@@ -2,18 +2,18 @@ var gulp = require('gulp');
 var bump = require('gulp-bump');
 var browserify = require('browserify');
 var watchify = require('watchify');
-var stringify = require('stringify');
-var partialify = require('partialify');
+
 var source = require('vinyl-source-stream');
-var replace = require('gulp-replace');
-var spawn = require('child_process').spawn;
-var es = require('event-stream');
+
 var sass = require('gulp-ruby-sass');
 var rimraf = require('gulp-rimraf');
 var preprocess = require('gulp-preprocess');
 var gutil = require('gulp-util');
+
 var templateCache = require('gulp-angular-templatecache');
+
 var minifyHTML = require('gulp-minify-html');
+var runSequence = require('run-sequence');
 
 var packageJson = require('./package.json');
 
@@ -21,30 +21,73 @@ var nodemon = require('gulp-nodemon');
 
 var watch = require('gulp-watch');
 
-// Clean
-gulp.task('clean', function() {
-	return gulp.src('dist', {
+// Clean tmp folder
+gulp.task('clean', function () {
+	return gulp.src('.tmp', {
 			read: false
 		})
 		.pipe(rimraf());
 });
 
-// Copy
-gulp.task('assets', function() {
+// Copy assets to dist folder
+gulp.task('copy_assets', function () {
 	return gulp.src('src/assets/**/*')
 		.pipe(gulp.dest('dist'))
 });
 
-// Sass
-gulp.task('sass', function() {
+// Copy client scripts to .tmp folder to build
+gulp.task('copy_scripts', function () {
+	return gulp.src([
+		'src/client/**/*', 
+		'!src/client/**/*.html'
+		])
+		.pipe(gulp.dest('.tmp'));
+});
+
+gulp.task('watch_scripts', function () {
+	watch([
+		'src/client/**/*',
+		'!src/client/**/*.html'
+		], function (files) {
+			return files.pipe(gulp.dest('.tmp'));
+		});
+})
+
+// Compile sass from src and copy to dist
+gulp.task('compile_sass', function () {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
 			style: 'compressed'
-		}).on('error', gutil.log))
+		})
+		.on('error', gutil.log))
 		.pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('watch_index.html', function() {
+// Watches sass files and compiles to dist
+gulp.task('watch_compile_sass', function () {
+	watch('src/sass/**/*.scss', function () {
+		return gulp.src(['src/sass/styles.scss'])
+			.pipe(sass({
+				style: 'compressed'
+			})
+			.on('error', gutil.log))
+			.pipe(gulp.dest('dist/css'));
+	});
+});
+
+// Preprocess index.html from src to dist
+gulp.task('preprocess_index.html', function () {
+	return gulp.src('src/client/index.html')
+		.pipe(preprocess({
+			context: {
+				VERSION: packageJson.version
+			}
+		}))
+		.pipe(gulp.dest('dist'));
+});
+
+// Watch index.html and preprocess index.html from src to dist
+gulp.task('watch_preprocess_index.html', function () {
 	watch('src/client/index.html', function(file) {
 		return file.pipe(preprocess({
 				context: {
@@ -53,18 +96,13 @@ gulp.task('watch_index.html', function() {
 			}))
 			.pipe(gulp.dest('dist'));
 	});
-	watch(['src/client/**/*.html', '!src/client/index.html'], function() {
-		gulp.start('copy_html');
-	});
-	watch('src/sass/**/*.scss', function() {
-		gulp.start('sass');
-	});
 });
 
-gulp.task('copy_html', function() {
+// Minify html templates from src to .tmp into templates.js file
+gulp.task('minify_templates', function () {
 	return gulp.src([
-		'src/client/**/*.html',
-		'!src/client/index.html'
+			'src/client/**/*.html',
+			'!src/client/index.html'
 		])
 		.pipe(minifyHTML({
 			quotes: true,
@@ -73,26 +111,52 @@ gulp.task('copy_html', function() {
 		.pipe(templateCache({
 			standalone: true
 		}))
-		.pipe(gulp.dest('src/client'));
+		.pipe(gulp.dest('.tmp'));
 });
 
-// Scripts
-gulp.task('scripts_prod', ['sass', 'assets', 'copy_html'], function() {
-	return browserify({
-			entries: './src/client/app.js'
+// Watch templates from src and minify to .tmp into templates.js file
+gulp.task('watch_templates', function () {
+	watch([
+		'src/client/**/*.html',
+		'!src/client/index.html'
+		], function () {
+			return gulp.src([
+					'src/client/**/*.html',
+					'!src/client/index.html'
+				])
+				.pipe(minifyHTML({
+					quotes: true,
+					empty: true
+				}))
+				.pipe(templateCache({
+					standalone: true
+				}))
+				.pipe(gulp.dest('.tmp'));
+		});
+});
+
+// Compiles client source from .tmp to dist
+// This has a dependency on minify_templates
+gulp.task('compile_client_src', function () {
+	return browserify()
+		.add('./.tmp/app.js')
+		.plugin('minifyify', {
+			map: false
 		})
-		.transform(stringify(['.html']))
 		.bundle()
 		.pipe(source('app.js'))
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts_dev', ['sass', 'assets', 'copy_html'], function() {
+
+// Watches file dependencies in app.js in .tmp folder and compiles to
+// the dist folder.
+gulp.task('watchify', function () {
 	var w = watchify(browserify({
 		cache: {},
 		packageCache: {},
 		fullPaths: true
-	})).add('./src/client/app.js');
+	})).add('./.tmp/app.js');
 
 	w.on('update', function(ids) {
 		gutil.log('[watchify] rebundling files: ', ids);
@@ -102,19 +166,32 @@ gulp.task('scripts_dev', ['sass', 'assets', 'copy_html'], function() {
 			.pipe(gulp.dest('./dist/js'));
 	});
 
-	gulp.start('watch_index.html');
-
 	return w.bundle()
 		.pipe(source('app.js'))
 		.pipe(gulp.dest('./dist/js'));
 });
 
 // Update bower, component, npm at once:
-gulp.task('bump', function() {
+gulp.task('bump', function () {
 	return gulp.src(['./bower.json', './package.json'])
 		.pipe(bump())
 		.pipe(gulp.dest('./'));
 });
 
-// Default
-gulp.task('default', ['scripts_dev']);
+// Dev task that calls watch functions
+gulp.task('dev', function () {
+	return runSequence('clean', 
+		['copy_assets', 'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'],
+		'watchify', function () {
+			gutil.log('Finished executing dev run sequence.')
+		});
+});
+
+// Default task that calls production build
+gulp.task('default', function () {
+	return runSequence('clean',
+		['copy_assets', 'copy_scripts', 'compile_sass', 'minify_templates'],
+		'compile_client_src', function () {
+			gutil.log('Finished executing prod run sequence.')
+		});
+});

@@ -92,7 +92,7 @@ app.configure(function() {
 	app.use(express.static("../../dist"));
 });
 
-require("./controllers/socket")(io);
+require("./controllers/socket").init(io);
 require("./controllers/login")(app);
 require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);

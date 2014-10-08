@@ -47,7 +47,6 @@ angular.module('app', [
 	feedsEdit.name,
 	feedsDelete.name
 ]).config(function($urlRouterProvider, $stickyStateProvider) {
-	$stickyStateProvider.enableDebug(true);
 	$urlRouterProvider.otherwise('/');
 });
 

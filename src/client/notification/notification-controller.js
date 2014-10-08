@@ -1,6 +1,6 @@
 module.exports = angular
 	.module('notification')
-	.controller('NotificationCtrl', function(njrtLog, Notification) {
+	.controller('NotificationCtrl', function(njrtLog, Notification, Socket) {
 
 		var logger = njrtLog.getInstance('notification.NotificationCtrl');
 
@@ -9,4 +9,8 @@ module.exports = angular
 		var vm = this;
 
 		vm.Notification = Notification;
+
+		Socket.on('notifications', function (data) {
+			Notification.add(data.type, data.message);
+		});
 	});

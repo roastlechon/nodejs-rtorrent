@@ -1,6 +1,6 @@
 var feeds = require('../models/feeds');
 var logger = require('winston');
-var auth = require('./auth.js');
+var auth = require('./auth');
 var Q = require('q');
 
 module.exports = function(app) {

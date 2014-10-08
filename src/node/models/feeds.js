@@ -9,6 +9,7 @@ var rtorrent = require("../lib/rtorrent");
 var torrentFeedParser = require("../lib/torrent-feed-parser");
 var logger = require("winston");
 var Q = require("q");
+var socket = require('../controllers/socket');
 
 
 var feeds = module.exports = {}
@@ -186,7 +187,6 @@ feeds.deleteFeed = function (_id) {
 
 
 feeds.addTorrent = function(_id, torrent, autoDownload) {
-	var deferred = Q.defer();
 
 	var torrentFeed = new Torrent({
 		name: torrent.name,
@@ -195,52 +195,34 @@ feeds.addTorrent = function(_id, torrent, autoDownload) {
 		date: torrent.date
 	});
 
-	var findTorrentInFeed = Feed.findOne({
+	return Feed.findOne({
 		"_id": _id,
 		"torrents.url": torrent.url
-	}).exec();
-
-	var findFeed = findTorrentInFeed.then(function(data) {
+	}).exec().then(function (data) {
 		if (!data) {
 			return Feed.findOne({
 				"_id": _id
-			}).exec();
+			}).exec().then(function (data) {
+				if (!data) {
+					throw new Error ('Feed does not exist.');
+				}
+
+				// If autoDownload is true, start the torrent automatically
+				if (autoDownload) {
+					rtorrent.loadTorrentUrl(torrent.url).then(function() {
+						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + torrent.url + '"'});
+					});
+				}
+
+				data.torrents.push(torrentFeed);
+				data.save(function(err, doc) {
+					socket.addNotification({type: 'success', message: 'New torrent saved in feed "' + data.title + '"'});
+				});
+
+				return updateLastChecked(_id, moment().unix());
+			});
 		}
 
-		return Q.reject("Torrent exists in feed already.");
-	}, function(err) {
-		return Q.reject(err);
+		throw new Error('Torrent exists in feed already.');
 	});
-
-	var saveFeed = findFeed.then(function(data) {
-		if (!data) {
-			return Q.reject("Feed does not exist");
-		}
-
-		// If autoDownload is true, start the torrent automatically
-		if (autoDownload) {
-			rtorrent.loadTorrentUrl(torrent.url);
-		}
-
-		data.torrents.push(torrentFeed);
-		data.save();
-		return Q(data);
-	}, function(err) {
-		return Q.reject(err);
-	});
-
-
-	var updateLastCheckedTimestamp = saveFeed.then(function(data) {
-		return updateLastChecked(_id, moment().unix());
-	}, function(err) {
-		return Q.reject(err);
-	});
-
-	updateLastCheckedTimestamp.then(function(data) {
-		return deferred.resolve(data);
-	}, function(err) {
-		return deferred.reject(err);
-	});
-
-	return deferred.promise;
 }

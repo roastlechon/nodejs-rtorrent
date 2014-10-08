@@ -28,6 +28,7 @@
   "devDependencies": {
     "bower": "1.2.7",
     "browserify": "5.5.0",
+    "browserify-ngannotate": "^0.2.0",
     "browserify-shim": "^3.6.0",
     "debowerify": "latest",
     "event-stream": "latest",
@@ -39,6 +40,7 @@
     "gulp-karma": "latest",
     "gulp-livereload": "latest",
     "gulp-minify-html": "^0.1.5",
+    "gulp-ng-annotate": "^0.3.3",
     "gulp-nodemon": "^1.0.4",
     "gulp-preprocess": "~1.1.1",
     "gulp-protractor": "latest",
@@ -48,7 +50,9 @@
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "gulp-watch": "^0.7.0",
+    "minifyify": "^4.4.0",
     "partialify": "^3.1.1",
+    "run-sequence": "^1.0.1",
     "stringify": "^2.2.0",
     "tiny-lr": "latest",
     "underscore": "latest",
@@ -71,7 +75,8 @@
   },
   "browserify": {
     "transform": [
-      "browserify-shim"
+      "browserify-shim",
+      "browserify-ngannotate"
     ]
   },
   "browserify-shim": {
