@@ -36,7 +36,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Torrents > Batch (not started)
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
-* Feeds Import & Export (not started)
+* Feeds > Import & Export (not started)
 * Search (not started)
 * Multi-User (not started)
 * File Manager (not started)
@@ -50,13 +50,13 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 this is our dev branch, the bleeding edge, might brake so hold on
 
 *Codename Unicorn*
-this is our master branch, the most stable yet beta
+this is our master branch, the most stable
 
 ### Depends on
-NodeJS NPM Bower MongoDB rtorrent
+NodeJS NPM Bower rtorrent
 
 ## Installation Guide
-* [Ubuntu](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu-(direct-scgi-connection))
+* [Linux](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu-(direct-scgi-connection))
 
 ## Support
 * Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
