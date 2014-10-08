@@ -7,6 +7,7 @@ module.exports = function(app) {
 	app.post("/torrents/:hash/pause", auth.ensureAuthenticated, pauseTorrent);
 	app.post("/torrents/:hash/stop", auth.ensureAuthenticated, stopTorrent);
 	app.post("/torrents/:hash/remove", auth.ensureAuthenticated, removeTorrent);
+	app.post("/torrents/:hash/delete_data", auth.ensureAuthenticated, deleteTorrentData);
 	app.post("/torrents/load", auth.ensureAuthenticated, loadTorrent);
 	app.post("/torrents/:hash/channel", auth.ensureAuthenticated, setTorrentChannel);
 }
@@ -48,7 +49,12 @@ function removeTorrent(req, res) {
 }
 
 function deleteTorrentData(req, res) {
-	
+	rtorrent.deleteTorrentData(req.params.hash).then(function(data) {
+		res.send('success');
+	}, function (err) {
+		logger.error(err.message);
+		res.status(500).send(err.message);
+	});
 }
 
 function loadTorrent(req, res) {
