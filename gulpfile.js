@@ -17,8 +17,6 @@ var runSequence = require('run-sequence');
 
 var packageJson = require('./package.json');
 
-var nodemon = require('gulp-nodemon');
-
 var watch = require('gulp-watch');
 
 // Clean tmp folder
