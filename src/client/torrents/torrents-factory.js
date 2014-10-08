@@ -115,6 +115,23 @@ module.exports = angular
 		}
 
 		/**
+		 * Delete torrent data given a specified torrent hash.
+		 * @param  {String} hash Hash of the torrent
+		 * @return {Promise}      Promise with success string.
+		 */
+		Torrents.deleteData = function (hash) {
+			logger.debug('Deleting torrent data from hash', hash);
+			return Restangular
+				.one('torrents', hash)
+				.post('delete_data', {})
+				.then(function () {
+					return Notification.add('success', 'Torrent data deleted.');
+				}, function () {
+					return Notification.add('danger', 'Torrent could not be deleted.');
+				});
+		}
+
+		/**
 		 * Load a torrent given a url string of the torrent file or magnet link.
 		 * @param  {String} url  Url of the torrent file or magnet link.
 		 * @return {Promise}     Promise with success string.

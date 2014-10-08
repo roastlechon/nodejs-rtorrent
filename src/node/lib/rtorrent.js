@@ -333,9 +333,42 @@ rtorrent.removeTorrent = function (hash) {
 }
 
 rtorrent.deleteTorrentData = function (hash) {
-	// check if multifile
-	// if yes, get basepath and delete
-	// if no, get name and delete
+	return rtorrent.stopTorrent(hash).then(function() {
+		return rtorrent.isMultiFile(hash).then(function(data) {
+			return rtorrent.getDirectory(hash).then(function(dir) {
+				if (data === '1') {
+					return deleteData(dir).then(function() {
+						return rtorrent.removeTorrent(hash);
+					});
+				} else {
+					return rtorrent.getTorrentName(hash).then(function(name) {
+						return deleteData(dir + '/' + name).then(function() {
+							return rtorrent.removeTorrent(hash);
+						});
+					});
+				}
+				
+			});
+		});
+	});
+}
+
+function deleteData (path) {
+	var deferred = Q.defer();
+
+	rimraf(path, function(err, results) {
+		if (err) {
+			deferred.reject(err)
+		}
+
+		deferred.resolve(results);
+	});
+
+	return deferred.promise;
+}
+
+rtorrent.getTorrentName = function (hash) {
+	return methodCall('d.get_name', [hash]);
 }
 
 rtorrent.getBasePath = function (hash) {
