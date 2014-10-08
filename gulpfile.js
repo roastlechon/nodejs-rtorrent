@@ -29,6 +29,14 @@ gulp.task('clean', function () {
 		.pipe(rimraf());
 });
 
+// Clean tmp folder
+gulp.task('clean_dist', function () {
+	return gulp.src('dist', {
+			read: false
+		})
+		.pipe(rimraf());
+});
+
 // Copy assets to dist folder
 gulp.task('copy_assets', function () {
 	return gulp.src('src/assets/**/*')
@@ -180,8 +188,8 @@ gulp.task('bump', function () {
 
 // Dev task that calls watch functions
 gulp.task('dev', function () {
-	return runSequence('clean', 
-		['copy_assets', 'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'],
+	return runSequence('clean', 'clean_dist', 
+		['watch_preprocess_index.html', 'preprocess_index.html', 'copy_assets', 'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'],
 		'watchify', function () {
 			gutil.log('Finished executing dev run sequence.')
 		});
@@ -189,8 +197,8 @@ gulp.task('dev', function () {
 
 // Default task that calls production build
 gulp.task('default', function () {
-	return runSequence('clean',
-		['copy_assets', 'copy_scripts', 'compile_sass', 'minify_templates'],
+	return runSequence('clean', 'clean_dist',
+		['preprocess_index.html', 'copy_assets', 'copy_scripts', 'compile_sass', 'minify_templates'],
 		'compile_client_src', function () {
 			gutil.log('Finished executing prod run sequence.')
 		});
