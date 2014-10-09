@@ -1,5 +1,6 @@
 var logger = require("winston");
 var nconf = require("nconf");
+var fs = require("fs");
 nconf.env().argv().file("./config/config.json");
 
 var rtorrent = require("./lib/rtorrent");
@@ -8,25 +9,61 @@ logger.exitOnError = false;
 
 logger.info("Initializing nodejs-rtorrent server.");
 
+if (nconf.get("app:database") === "tingodb") {
+  require('tungus');
+}
+
 var mongoose = require("mongoose");
 var express = require("express");
 
-var http = require("http");
 var io = require("socket.io");
 
 var passport = require("passport")
 require("./config/passport-strategy");
 
 var socketAuthorization = require('./config/socket-authorization');
-
 var app = express();
-var server = http.createServer(app);
+
+// Setup server options
+if( nconf.get("app:ssl") ) {
+	var serverOptions = {};
+	serverOptions.cert	= fs.readFileSync( nconf.get("ssl:cert"), 'utf-8');
+	serverOptions.key	= fs.readFileSync( nconf.get("ssl:key"), 'utf-8');
+	
+	var http = require('https');
+	var server = http.createServer(serverOptions, app);
+} else {
+	var http = require("http");
+	var server = http.createServer(app);
+}
+
 var io = io.listen(server);
 
-logger.info("connecting to " + nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database"));
+// Check for config setting if app database is tingodb.
+// By default app setting should be tingodb
+if (nconf.get("app:database") === "mongodb") {
+  logger.info('Using mongodb for database.');
 
-var connectionString = nconf.get("mongoose:prefix") + nconf.get("mongoose:uri") + "/" + nconf.get("mongoose:database");
-mongoose.connect(connectionString);
+  var connectionString = nconf.get("mongodb:prefix") + nconf.get("mongodb:uri") + "/" + nconf.get("mongodb:database");
+  logger.info("Connecting to ", connectionString);
+  mongoose.connect(connectionString, function (err) {
+    if (err) {
+      logger.error(err.message);
+      throw err;
+    }
+  });
+} else {
+  logger.info('Using tingodb for database.');
+  logger.info('Connecting to tingodb');
+  mongoose.connect("tingodb://" + __dirname + "/../../data", function (err) {
+    if (err) {
+      logger.error(err.message);
+      throw err;
+    }
+  });
+}
+
+logger.info('Connected successfully to database.');
 
 logger.info("Configuring default user");
 var users = require("./models/users");
@@ -55,7 +92,7 @@ app.configure(function() {
 	app.use(express.static("../../dist"));
 });
 
-require("./controllers/socket")(io);
+require("./controllers/socket").init(io);
 require("./controllers/login")(app);
 require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);

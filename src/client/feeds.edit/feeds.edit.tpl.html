@@ -1,47 +1,47 @@
 <div class="modal-header">
-    <h3>Editing '{{feedsEdit.feed.title}}'</h3>
+    <h3>Editing '{{feedsEditCtrl.feed.title}}'</h3>
 </div>
 <div class="modal-body">
 	<div class="form-group">
 		<label for="feedName">Title:</label>
-		<input type="text" class="form-control" id="feedName" ng-model="feedsEdit.feed.title" />
+		<input type="text" class="form-control" id="feedName" ng-model="feedsEditCtrl.feed.title" />
 	</div>
 	<div class="form-group">
 		<label for="feedUrl">URL:</label>
-		<p class="form-control-static">{{feedsEdit.feed.rss}}</p>
+		<p class="form-control-static">{{feedsEditCtrl.feed.rss}}</p>
 	</div>
 	<div class="checkbox">
-		<label for="autoDownload"><input type="checkbox" id="autoDownload" ng-model="feedsEdit.feed.autoDownload"> Auto Download</label>
+		<label for="autoDownload"><input type="checkbox" id="autoDownload" ng-model="feedsEditCtrl.feed.autoDownload"> Auto Download</label>
 		<p class="help-block">Check box to automatically download torrents when the feed is updated.</p>
 	</div>
 	<div class="checkbox">
-		<label for="regexFilter"><input type="checkbox" id="regexFilter" ng-model="feedsEdit.feed.regexFilter"> Add advanced filtering</label>
+		<label for="regexFilter"><input type="checkbox" id="regexFilter" ng-model="feedsEditCtrl.feed.regexFilter"> Add advanced filtering</label>
 		<p class="help-block">Check box to edit regex filters.</p>
 	</div>
-	<div ng-if="feedsEdit.feed.regexFilter">
+	<div ng-if="feedsEditCtrl.feed.regexFilter">
 		<h4>Regex Filters</h4>
 		<div class="form-inline" style="margin-bottom: 10px;">
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Regular expression" ng-model="feedsEdit.newFilter.regex" style="width: 300px;">
+				<input type="text" class="form-control" placeholder="Regular expression" ng-model="feedsEditCtrl.newFilter.regex" style="width: 350px;" required>
 			</div>
 			<div class="form-group">
 				<label for="filterTypeInclude" class="radio-inline">
-					<input type="radio" id="filterTypeInclude" ng-model="feedsEdit.newFilter.type" value="include"> Include
+					<input type="radio" id="filterTypeInclude" ng-model="feedsEditCtrl.newFilter.type" value="include" required> Include
 				</label>
 				<label for="filterTypeExclude" class="radio-inline">
-					<input type="radio" id="filterTypeExclude" ng-model="feedsEdit.newFilter.type" value="exclude"> Exclude
+					<input type="radio" id="filterTypeExclude" ng-model="feedsEditCtrl.newFilter.type" value="exclude" required> Exclude
 				</label>
 			</div>
-			<button type="button" class="btn" ng-click="feedsEdit.addFilter(newFilter)"><i class="fa fa-plus"></i></button>
+			<button type="button" class="btn btn-default" ng-click="feedsEditCtrl.addFilter(feedsEditCtrl.newFilter)"><i class="fa fa-plus"></i></button>
 		</div>
-		<ul class="list-unstyled">
-			<li ng-repeat="filter in feedsEdit.feed.filters track by $index">{{filter.regex}} <span class="badge">{{filter.type}}</span> <a href="javascript: void(0);" ng-click="feedsEdit.deleteFilter($index)"><i class="fa fa-times"></i></a></li>
+		<ul class="list-unstyled feed__filter-list">
+			<li ng-repeat="filter in feedsEditCtrl.feed.filters track by $index" class="filter"><span class="filter-regex">{{filter.regex}}</span><span class="filter-type badge">{{filter.type}}</span> <a href="javascript: void(0);" ng-click="feedsEditCtrl.editFilter($index)"><i class="fa fa-pencil"></i></a><a href="javascript: void(0);" ng-click="feedsEditCtrl.deleteFilter($index)"><i class="fa fa-times"></i></a></li>
 		</ul>
 	</div>
 </div>
 <div class="modal-footer">
 	<div class="form-group">
-		<button type="button" class="btn btn-primary" ng-click="feedsEdit.editFeed(feedsEdit.feed)">Save changes</button>
-		<button type="button" class="btn btn-default" ng-click="feedsEdit.cancel()">Cancel</button>
+		<button type="button" class="btn btn-primary" ng-click="feedsEditCtrl.editFeed(feedsEditCtrl.feed)">Save changes</button>
+		<button type="button" class="btn btn-default" ng-click="feedsEditCtrl.cancel()">Cancel</button>
 	</div>
 </div>

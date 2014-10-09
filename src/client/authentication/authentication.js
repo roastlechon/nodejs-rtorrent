@@ -1,13 +1,18 @@
 var log = require('../log/log');
 var session = require('../session/session');
+var socket = require('../socket/socket');
 
 module.exports = angular
 	.module('authentication', [
 		session.name,
-		log.name
+		log.name,
+		socket.name
 	])
 	.run(function($rootScope, SessionService, $state, njrtLog, Restangular) {
+
 		var logger = njrtLog.getInstance('authentication');
+
+		logger.debug('Authentication module loaded.');
 
 		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
@@ -30,12 +35,12 @@ module.exports = angular
 				if (res.status == 401) {
 					logger.error(res.status, res.statusText, ':', res.data);
 					$state.go('login');
+					return false; // stop the promise chain
 				} else if (res.status == 404) {
 					logger.error(res.status, res.statusText, ':', res.data);
-				} else {
-					logger.error(res.status, res.statusText, ':', res.data);
-				}
-				return false; // stop the promise chain
+					return false; // stop the promise chain
+				} 
+				return true;
 			});
 
 		Restangular.setRestangularFields({

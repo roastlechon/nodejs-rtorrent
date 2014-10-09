@@ -13,7 +13,7 @@ module.exports = angular
 			views: {
 				'modal@': {
 					templateUrl: 'torrents.add/torrents.add.tpl.html',
-					controller: 'TorrentsAddController as torrentsAdd'
+					controller: 'TorrentsAddCtrl as torrentsAddCtrl'
 				}
 			},
 			isModal: true

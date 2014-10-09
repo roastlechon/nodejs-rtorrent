@@ -13,7 +13,7 @@ module.exports = angular
 			views: {
 				'modal@': {
 					templateUrl: 'feeds.edit/feeds.edit.tpl.html',
-					controller: 'FeedsEditController as feedsEdit'
+					controller: 'FeedsEditCtrl as feedsEditCtrl'
 				}
 			},
 			isModal: true,
@@ -22,9 +22,7 @@ module.exports = angular
 			},
 			resolve: {
 				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeeds().then(function(data) {
-						return Feeds.getFeed($stateParams.id);
-					});
+					return Feeds.getFeed($stateParams.id);
 				}
 			}
 		});

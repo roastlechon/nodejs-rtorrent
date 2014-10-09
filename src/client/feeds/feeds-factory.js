@@ -4,71 +4,50 @@ module.exports = angular
 
 		var logger = njrtLog.getInstance('feeds.Feeds');
 
-		logger.debug('Feeds loaded');
+		logger.debug('Feeds loaded.');
 
 		var Feeds = {};
 
 		Feeds.feeds = [];
 
 		Feeds.getFeeds = function() {
-			var deferred = $q.defer();
-
-			Restangular.all("feeds").getList().
-				then(function(data) {
+			return Restangular.all('feeds').getList()
+				.then(function (data) {
 					Feeds.feeds = data;
-					deferred.resolve(data);
-				}, function(err) {
-					console.error(err);
-					deferred.reject(err);
+					return Feeds.feeds;
 				});
-
-			return deferred.promise;
 		}
 
 		Feeds.getFeed = function(id) {
-			var deferred = $q.defer();
-
-			var feed = _.findWhere(Feeds.feeds, {
-				_id: id
-			});
-
-			if (feed) {
-				deferred.resolve(feed);
-			} else {
-				deferred.reject(new Error('Feed doesn\'t exist.'));
-			}
-
-			return deferred.promise;
+			return Restangular.one('feeds', id).get();
 		}
 
 		Feeds.addFeed = function(feed) {
-			var deferred = $q.defer();
-
-			Feeds.feeds.post(feed)
+			return Restangular.all('feeds').post(feed)
 				.then(function (data) {
 					Feeds.feeds.push(data);
-					deferred.resolve(feed);
-				}, function (err) {
-					logger.error(err.status, err.statusText, ':', err.data);
-					deferred.reject(err);
+					return data;
 				});
-			return deferred.promise;
+		}
+
+		Feeds.refreshFeed = function(id) {
+			return Restangular.one('feeds', id).post('refresh', {})
+				.then(function (data) {
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
+						});
+				});
 		}
 
 		Feeds.updateFeed = function(feed) {
-			var deferred = $q.defer();
-
-			feed.put()
+			return feed.put()
 				.then(function (data) {
-					Feeds.getFeeds()
-						.then(function() {
-							deferred.resolve(data);
+					return Feeds.getFeeds()
+						.then(function () {
+							return data;
 						});
-				}, function (err) {
-					logger.error(err.status, err.statusText, ':', err.data);
-					deferred.reject(err);
 				});
-			return deferred.promise;
 		}
 
 		Feeds.deleteFeed = function(feed) {

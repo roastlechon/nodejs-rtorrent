@@ -1,39 +1,45 @@
 module.exports = angular
 	.module('torrents')
-	.controller('TorrentsController', function(njrtLog, $state, Torrents, Socket) {
-		var logger = njrtLog.getInstance('TorrentsController');
-		logger.debug('TorrentsController loaded');
+	.controller('TorrentsCtrl', function(njrtLog, Torrents, $modal) {
+		
+		var logger = njrtLog.getInstance('torrents.TorrentsCtrl');
+		
+		logger.debug('TorrentsCtrl loaded.');
 
 		var vm = this;
 
-		vm.t = Torrents;
+		vm.Torrents = Torrents;
 
 		vm.predicate = 'name';
 		vm.reverse = false;
 		vm.status = '';
 
-		Socket.connect();
+		vm.deleteData = function (torrent) {
+			var modalInstance = $modal.open({
+				templateUrl: 'torrents/torrents-delete-data.tpl.html',
+				controller: function ($scope, torrent, $modalInstance, Torrents) {
+					$scope.torrent = torrent;
+					
+					$scope.deleteData = function (hash) {
+						Torrents.deleteData(hash).then(function(data) {
+							$modalInstance.close(data);
+						}, function(err) {
+							console.log(err);
+							logger.error(err);
+						});
 
-		Socket.on('connect', function() {
-			logger.debug('Connected to socket.');
-		});
+						// show error in gui somehow
+					}
 
-		Socket.on('connecting', function() {
-			logger.debug('Connecting to socket.');
-		});
-
-		Socket.on('connect_failed', function() {
-			logger.error('Connection to socket failed');
-		});
-
-		Socket.on('error', function(err) {
-			if (err === 'handshake unauthorized') {
-				$state.go('login');
-			}
-			logger.error(err);
-		});
-
-		Socket.on('torrents', function(data) {
-			vm.torrents = data;
-		});
+					$scope.cancel = function () {
+						$modalInstance.dismiss('cancel');
+					}
+				},
+				resolve: {
+					torrent: function () {
+						return torrent;
+					}
+				}
+			});
+		}
 	});

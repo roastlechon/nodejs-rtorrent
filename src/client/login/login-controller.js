@@ -1,10 +1,10 @@
 module.exports = angular
 	.module('login')
-	.controller('LoginController', function(njrtLog, Authentication, $state) {
+	.controller('LoginCtrl', function(njrtLog, Authentication, $state) {
 
-		var logger = njrtLog.getInstance('LoginController');
+		var logger = njrtLog.getInstance('login.LoginCtrl');
 
-		logger.debug('LoginController loaded');
+		logger.debug('LoginCtrl loaded.');
 
 		var vm = this;
 

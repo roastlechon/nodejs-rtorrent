@@ -23,11 +23,11 @@ module.exports = function() {
 							if (result.state === "fulfilled") {
 								logger.info("New torrent saved in feed");
 							} else {
-								if (result.reason === "Torrent exists in feed already.") {
+								if (result.reason.message === "Torrent exists in feed already.") {
 									// No need to log here, since it
 									// would be very verbose
 								} else {
-									logger.error(result.reason);	
+									logger.error(result.reason.message);	
 								}
 							}
 						});

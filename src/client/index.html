@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" version="<!-- @echo VERSION -->">
 	<head>
 		<meta charset="utf-8">
-		<title>{{pageTitle}}</title>
+		<title ng-cloak>nodejs-rtorrent</title>
 		<link href="css/styles.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			.container { max-width: none !important; width: 1350px;}
@@ -10,12 +10,11 @@
 				position: fixed;
 				z-index: 9999;
 			}
-
 		</style>
 	</head>
-	<body>
+	<body style="position: relative;">
 		<div class="header">
-			<h1 style="margin: 0;" class="pull-left">nodejs-rtorrent <small>{{pageTitle}}</small></h1>
+			<h1 style="margin: 0;" class="pull-left">nodejs-rtorrent <small><!-- @echo VERSION --></small></h1>
 			<nav>
 				<ul class="header-nav-list">
 					<li><a ui-sref="home.torrents">Torrents</a></li>
@@ -24,13 +23,16 @@
 					<li><a ui-sref="settings">Settings</a></li>
 				</ul>	
 			</nav>
-			<ul class="header-secondary-nav-list" ng-controller="AuthenticationController as auth">
-				<li ng-if="auth.Authentication.isAuthenticated()">Logged in as {{auth.Authentication.getCurrentUser().email}}. <a href="javascript: void(0);" ng-click="auth.Authentication.logout()">Logout</a></li>
-				<li ng-if="!auth.Authentication.isAuthenticated()"><a ui-sref="login">Login</a></li>
+			<ul class="header-secondary-nav-list" ng-controller="AuthenticationCtrl as authenticationCtrl">
+				<li ng-if="authenticationCtrl.Authentication.isAuthenticated()" ng-cloak>Logged in as {{authenticationCtrl.Authentication.getCurrentUser().email}}. <a href="javascript: void(0);" ng-click="authenticationCtrl.Authentication.logout()">Logout</a></li>
+				<li ng-if="!authenticationCtrl.Authentication.isAuthenticated()" ng-cloak><a ui-sref="login">Login</a></li>
 			</ul>
 		</div>
 
 		<div ui-view="home"></div>
+		<div class="notifications" ng-controller="NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 20px; left: 0; right: 0; margin: 0 auto; z-index: 5;" ng-cloak>
+			<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="notification.type" close="notificationCtrl.Notification.remove($index)">{{notification.msg}}</alert>
+		</div>
 		<script src="js/app.js"></script>
 	</body>
 </html>

@@ -11,3 +11,6 @@ npm-debug.log
 package.box
 Vagrantfile
 nodejs-rtorrent.log
+data
+.tmp
+.DS_Store

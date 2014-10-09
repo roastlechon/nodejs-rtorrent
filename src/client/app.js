@@ -11,6 +11,7 @@ var moment = require('moment');
 require('./templates');
 
 var modal = require('./modal/modal');
+var notification = require('./notification/notification');
 var session = require('./session/session');
 var authentication = require('./authentication/authentication');
 var home = require('./home/home');
@@ -32,6 +33,7 @@ angular.module('app', [
 	'ng-context-menu',
 	'templates',
 	modal.name,
+	notification.name,
 	home.name,
 	login.name,
 	session.name,
@@ -45,7 +47,6 @@ angular.module('app', [
 	feedsEdit.name,
 	feedsDelete.name
 ]).config(function($urlRouterProvider, $stickyStateProvider) {
-	$stickyStateProvider.enableDebug(true);
 	$urlRouterProvider.otherwise('/');
 });
 

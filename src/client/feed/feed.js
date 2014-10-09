@@ -23,9 +23,7 @@ module.exports = angular
 			},
 			resolve: {
 				feed: function (Feeds, $stateParams) {
-					return Feeds.getFeeds().then(function(data) {
-						return Feeds.getFeed($stateParams.id);
-					});
+					return Feeds.getFeed($stateParams.id);
 				}
 			}
 		});

@@ -3,9 +3,10 @@ var io = require('socket-io');
 module.exports = angular
 	.module('socket')
 	.factory('Socket', function(njrtLog, $rootScope, $window) {
-		var logger = njrtLog.getInstance('Socket');
+
+		var logger = njrtLog.getInstance('socket.Socket');
 		
-		logger.debug('SocketFactory loaded.');
+		logger.debug('Socket loaded.');
 
 		var socket = connect();
 
