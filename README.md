@@ -56,7 +56,7 @@ this is our master branch, the most stable
 NodeJS NPM Bower rtorrent
 
 ## Installation Guide
-* [Linux](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Ubuntu-(direct-scgi-connection))
+* [Linux](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Linux-(direct-scgi-connection))
 
 ## Support
 * Having issues? [submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
