@@ -1,7 +1,7 @@
 # NodeJS-rTorrent
-we are looking for developers, please fork and tell us what you want to code and submit pull requests when done
+We are looking for developers, please fork and tell us what you want to code and submit pull requests when done. We are active on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent).
 
-nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used nodejs and this is the how far I got. The technologies used are NodeJS, Express, Handlebars, MongoDB, Mongoose, XMLRPC, FeedMe, Q (Promises), Passport, Socket.IO. For the front-end, I am using AngularJS, RequireJS, Bower, Underscore, and Twitter Bootstrap.
+Nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used NodeJS and this is the how far I got. The technologies used are NodeJS, Express, MongoDB/TingoDB, Mongoose, tungus (for use with Mongoose), XML-RPC, FeedMe, Q (Promises), Passport, and Socket.IO. For the front-end, I am using AngularJS, Browserify, Bower, and Twitter Bootstrap (using Scss).
 
  Screenshot
  
@@ -10,9 +10,9 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 ## Team
-* roastlechon, Creator, Developer
-* rendom, Developer
-* nwgat, Docs, Testing, Community 
+* roastlechon - Creator, Developer
+* rendom - Developer
+* nwgat - Docs, Testing, Community 
 
 ## Roadmap
 ** Current: NOT PRODUCTION READY
@@ -23,7 +23,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Torrents > Filter (works)
 * Feeds > Basic Regex (works)
 * Feeds > AutoDL (works)
-* fcgi Direct Connection (works)
+* SCGI Direct Connection (works)
 * HTTPS support (by rendom, works)
 * Embedded database support (works)
 
@@ -47,13 +47,13 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 
 ### Branches ###
 *Codename Alchemist*
-this is our dev branch, the bleeding edge, might brake so hold on
+This is our dev branch, the bleeding edge, might break so hold on
 
 *Codename Unicorn*
-this is our master branch, the most stable
+This is our master branch, the most stable
 
 ### Depends on
-NodeJS NPM Bower rtorrent
+NodeJS NPM rtorrent
 
 ## Installation Guide
 * [Linux](https://github.com/roastlechon/nodejs-rtorrent/wiki/Installation-Guide-for-Linux-(direct-scgi-connection))
