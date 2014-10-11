@@ -15,7 +15,7 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * nwgat, Docs, Testing, Community 
 
 ## Roadmap
-** Current  (Dev Beta..) **  * NOT PRODUCTION READY
+** Current: NOT PRODUCTION READY
 
 ### Features that are working
 * Feeds (works) 
