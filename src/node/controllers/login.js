@@ -3,7 +3,8 @@ var passport = require("passport");
 var express = require("express");
 var jwt = require("jwt-simple");
 var moment = require("moment");
-var secret = "123456789";
+var nconf = require("nconf");
+var secret = nconf.get("authentication:secret");
 
 module.exports = function(app) {
 	app.post("/login", login);
