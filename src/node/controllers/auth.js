@@ -1,6 +1,7 @@
 var logger = require("winston");
 var jwt = require("jwt-simple");
-var secret = "123456789";
+var nconf = require("nconf");
+var secret = nconf.get("authentication:secret");
 
 module.exports = {
 	ensureAuthenticated: function(req, res, next) {
