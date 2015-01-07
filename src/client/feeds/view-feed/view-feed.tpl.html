@@ -12,7 +12,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="torrent in feedCtrl.feed.torrents  | orderBy:feedCtrl.predicate:feedCtrl.reverse | filter:feedCtrl.searchText">
-						<td><h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5></td>
+						<td><h5 title="{{torrent.name}}" style="width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5></td>
 						<td>{{torrent.date | date:"medium"}}</td>
 						<td>{{torrent.status}}</td>
 						<td><a href="javascript: void(0);" ng-click="feedCtrl.loadTorrent(torrent.url)">Load</a></td>
