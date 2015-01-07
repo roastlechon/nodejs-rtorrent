@@ -4,9 +4,9 @@
 			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">
 				<thead style="background: #ffffff;">
 					<tr>
-						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='title';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='title' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='title' && !feedsCtrl.reverse}"></i></a></th>
-						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='rss';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='rss' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='rss' && !feedsCtrl.reverse}"></i></a></th>
-						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='lastChecked';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='lastChecked' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='lastChecked' && !feedsCtrl.reverse}"></i></a></th>
+						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='title';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='title' && !feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='title' && feedsCtrl.reverse}"></i></a></th>
+						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='rss';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='rss' && !feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='rss' && feedsCtrl.reverse}"></i></a></th>
+						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='lastChecked';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='lastChecked' && !feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='lastChecked' && feedsCtrl.reverse}"></i></a></th>
 						<th>Auto Download?</th>
 						<th>Refresh</th>
 						<th>Edit</th>

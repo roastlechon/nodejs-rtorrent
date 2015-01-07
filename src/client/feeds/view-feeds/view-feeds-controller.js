@@ -10,7 +10,7 @@ function FeedsCtrl (njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
 
 	vm.Feeds = Feeds;
 
-	vm.reverse = false;
+	vm.reverse = true;
 	vm.predicate = 'lastChecked';
 
 	$scope.floatTheadOptions = {
