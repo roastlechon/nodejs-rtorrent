@@ -1,16 +1,20 @@
-module.exports = angular
-	.module('notification')
-	.controller('NotificationCtrl', function(njrtLog, Notification, Socket) {
+'use strict';
 
-		var logger = njrtLog.getInstance('notification.NotificationCtrl');
+function NotificationCtrl (njrtLog, Notification, Socket) {
 
-		logger.debug('NotificationCtrl loaded.');
+	var logger = njrtLog.getInstance('njrt.notification');
 
-		var vm = this;
+	logger.debug('NotificationCtrl loaded.');
 
-		vm.Notification = Notification;
+	var vm = this;
 
-		Socket.on('notifications', function (data) {
-			Notification.add(data.type, data.message);
-		});
+	vm.Notification = Notification;
+
+	Socket.on('notifications', function (data) {
+		Notification.add(data.type, data.message);
 	});
+}
+
+module.exports = angular
+	.module('njrt.notification')
+	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);

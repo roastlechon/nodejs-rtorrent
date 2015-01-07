@@ -1,24 +1,20 @@
-var log = require('../log/log');
-var authentication = require('../authentication/authentication');
+'use strict';
+
+function config ($stateProvider) {
+	$stateProvider.state('login', {
+		url: '/login',
+		views: {
+			'modal@': {
+				templateUrl: 'login/login.tpl.html',
+				controller: 'njrt.LoginCtrl as loginCtrl'
+			}
+		},
+		isModal: true
+	});
+}
 
 module.exports = angular
-	.module('login', [
-		log.name,
-		authentication.name,
-		'ui.router',
-		'ct.ui.router.extras'
-	])
-	.config(function ($stateProvider) {
-		$stateProvider.state('login', {
-			url: '/login',
-			views: {
-				'modal@': {
-					templateUrl: 'login/login.tpl.html',
-					controller: 'LoginCtrl as loginCtrl'
-				}
-			},
-			isModal: true
-		});
-	});
-
+	.module('njrt.login', [])
+	.config(['$stateProvider', config]);
+	
 require('./login-controller');

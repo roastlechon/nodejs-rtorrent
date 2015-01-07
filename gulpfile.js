@@ -5,7 +5,7 @@ var watchify = require('watchify');
 
 var source = require('vinyl-source-stream');
 
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
 var preprocess = require('gulp-preprocess');
 var gutil = require('gulp-util');
@@ -63,7 +63,7 @@ gulp.task('watch_scripts', function () {
 gulp.task('compile_sass', function () {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
-			style: 'compressed'
+			outputStyle: 'compressed'
 		})
 		.on('error', gutil.log))
 		.pipe(gulp.dest('dist/css'));
@@ -73,9 +73,7 @@ gulp.task('compile_sass', function () {
 gulp.task('watch_compile_sass', function () {
 	watch('src/sass/**/*.scss', function () {
 		return gulp.src(['src/sass/styles.scss'])
-			.pipe(sass({
-				style: 'compressed'
-			})
+			.pipe(sass()
 			.on('error', gutil.log))
 			.pipe(gulp.dest('dist/css'));
 	});
@@ -161,7 +159,8 @@ gulp.task('watchify', function () {
 	var w = watchify(browserify({
 		cache: {},
 		packageCache: {},
-		fullPaths: true
+		fullPaths: true,
+		debug: true
 	})).add('./.tmp/app.js');
 
 	w.on('update', function(ids) {

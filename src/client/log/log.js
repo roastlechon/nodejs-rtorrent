@@ -1,9 +1,7 @@
 var moment = require('moment');
 
 module.exports = angular
-	.module('njrt.log', [
-
-	])
+	.module('njrt.log', [])
 	.run(['$log', function ($log) {
 		$log.getInstance = function(context) {
 			return {

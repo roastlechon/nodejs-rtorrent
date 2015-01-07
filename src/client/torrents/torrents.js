@@ -1,29 +1,12 @@
-var log = require('../log/log');
-var socket = require('../socket/socket');
-var session = require('../session/session');
+var addTorrent = require('./add-torrent/add-torrent');
+var deleteTorrentData = require('./delete-torrent-data/delete-torrent-data');
+var viewTorrents = require('./view-torrents/view-torrents');
 
 module.exports = angular
-	.module('torrents', [
-		'ui.router',
-		'restangular',
-		log.name,
-		socket.name,
-		session.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.torrents', {
-			url: 'torrents',
-			views: {
-				'home@': {
-					controller: 'TorrentsCtrl as torrentsCtrl',
-					templateUrl: 'torrents/torrents.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			}
-		});
-	});
+	.module('njrt.torrents', [
+		addTorrent.name,
+		deleteTorrentData.name,
+		viewTorrents.name
+	]);
 
-	require('./torrents-factory');
-	require('./torrents-controller');
+require('./torrents-factory');

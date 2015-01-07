@@ -443,6 +443,10 @@ rtorrent.getPortRange = function () {
 	return methodCall('get_port_range', []);
 }
 
+rtorrent.setPortRange = function (value) {
+	return methodCall('set_port_range', [value]);
+}
+
 // get_port_open
 // returns 1 or 0
 // Opens listening port
@@ -450,12 +454,24 @@ rtorrent.getPortOpen = function () {
 	return methodCall('get_port_open', []);
 }
 
+rtorrent.setPortOpen = function (value) {
+	return methodCall('set_port_open', [value]);
+}
+
 rtorrent.getUploadSlots = function () {
 	return methodCall('get_max_uploads', []);
 }
 
+rtorrent.setUploadSlots = function (value) {
+	return methodCall('set_max_uploads', [value]);
+}
+
 rtorrent.getUploadSlotsGlobal = function () {
 	return methodCall('get_max_uploads_global', []);
+}
+
+rtorrent.setUploadSlotsGlobal = function (value) {
+	return methodCall('set_max_uploads_global', []);
 }
 
 // get_port_random
@@ -463,6 +479,10 @@ rtorrent.getUploadSlotsGlobal = function () {
 // Randomize port each time rTorrent starts
 rtorrent.getPortRandom = function () {
 	return methodCall('get_port_random', []);
+}
+
+rtorrent.setPortRandom = function (value) {
+	return methodCall('set_port_random', [value]);
 }
 
 // get_download_rate

@@ -1,0 +1,51 @@
+<div class="content" style="position: relative;" ng-style="style()" njrt-resize>
+	<div class="table-container">
+		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">
+			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">
+				<thead style="background: #ffffff;">
+					<tr>
+						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='title';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='title' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='title' && !feedsCtrl.reverse}"></i></a></th>
+						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='rss';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='rss' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='rss' && !feedsCtrl.reverse}"></i></a></th>
+						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate='lastChecked';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{'fa-caret-up': feedsCtrl.predicate==='lastChecked' && feedsCtrl.reverse, 'fa-caret-down': feedsCtrl.predicate==='lastChecked' && !feedsCtrl.reverse}"></i></a></th>
+						<th>Auto Download?</th>
+						<th>Refresh</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText">
+						<td>
+							<h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+								<a ui-sref="top.feeds.view({id: feed._id})">{{feed.title}}</a>
+							</h5>
+						</td>
+						<td ng-hide="rss_col"><div title="{{feed.rss}}" style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{feed.rss}}</div></td>
+						<td ng-hide="last_checked_col">{{feed.lastChecked * 1000 | date:'medium'}}</td>
+						<td>{{feed.autoDownload}}</td>
+						<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>
+						<td><a ui-sref="editFeed({id: feed._id})">Edit</a></td>
+						<td><a ui-sref="deleteFeed({id: feed._id})">Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">
+		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">
+			<span class="dropdown dropup" dropdown>
+				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>
+				<ul class="dropdown-menu" role="menu">
+					<li class="dropdown-submenu">
+						<a href="javascript: void(0);">Hide Columns</a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="rss_col=!rss_col; feedsCtrl.reflowTable()">RSS <i ng-class="{'fa fa-check': !rss_col}"></i></a></li>
+							<li><a href="" ng-click="last_checked_col=!last_checked_col; feedsCtrl.reflowTable()">Last Checked <i ng-class="{'fa fa-check': !last_checked_col}"></i></a></li>
+						</ul>
+					</li>
+				</ul>
+			</span>
+			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">
+		</div>
+	</div>
+</div>

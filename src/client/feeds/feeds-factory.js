@@ -1,83 +1,84 @@
-module.exports = angular
-	.module('feeds')
-	.factory('Feeds', function(njrtLog, Restangular, $q) {
+'use strict';
 
-		var logger = njrtLog.getInstance('feeds.Feeds');
+function Feeds (njrtLog, Restangular, $q) {
 
-		logger.debug('Feeds loaded.');
+	var logger = njrtLog.getInstance('njrt.feeds');
 
-		var Feeds = {};
+	logger.debug('Feeds loaded.');
 
-		Feeds.feeds = [];
+	var Feeds = {};
 
-		Feeds.getFeeds = function() {
-			return Restangular.all('feeds').getList()
-				.then(function (data) {
-					Feeds.feeds = data;
-					return Feeds.feeds;
-				});
-		}
+	Feeds.feeds = [];
 
-		Feeds.getFeed = function(id) {
-			return Restangular.one('feeds', id).get();
-		}
+	Feeds.getFeeds = function () {
+		return Restangular.all('feeds').getList()
+			.then(function (data) {
+				Feeds.feeds = data;
+				return Feeds.feeds;
+			});
+	};
 
-		Feeds.addFeed = function(feed) {
-			return Restangular.all('feeds').post(feed)
-				.then(function (data) {
-					Feeds.feeds.push(data);
-					return data;
-				});
-		}
+	Feeds.getFeed = function (id) {
+		return Restangular.one('feeds', id).get();
+	};
 
-		Feeds.refreshFeed = function(id) {
-			return Restangular.one('feeds', id).post('refresh', {})
-				.then(function (data) {
-					return Feeds.getFeeds()
-						.then(function () {
-							return data;
-						});
-				});
-		}
+	Feeds.addFeed = function (feed) {
+		return Restangular.all('feeds').post(feed)
+			.then(function (data) {
+				Feeds.feeds.push(data);
+				return data;
+			});
+	};
 
-		Feeds.updateFeed = function(feed) {
-			return feed.put()
-				.then(function (data) {
-					return Feeds.getFeeds()
-						.then(function () {
-							return data;
-						});
-				});
-		}
-
-		Feeds.deleteFeed = function(feed) {
-			var deferred = $q.defer();
-
-			// delete from server
-			feed.remove()
-				.then(function () {
-					var item = _.findWhere(Feeds.feeds, {
-						_id: feed._id
+	Feeds.refreshFeed = function (id) {
+		return Restangular.one('feeds', id).post('refresh', {})
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
 					});
+			});
+	};
 
-					var index = Feeds.feeds.indexOf(item);
-					
-					// delete from collection
-					if (index > -1) {
-						Feeds.feeds.splice(index, 1);
-					}
+	Feeds.updateFeed = function (feed) {
+		return feed.put()
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
+					});
+			});
+	};
 
-					deferred.resolve('deleted');
-				}, function (err) {
-					console.error(err);
-					deferred.reject(err);
+	Feeds.deleteFeed = function (feed) {
+		var deferred = $q.defer();
+
+		// delete from server
+		feed.remove()
+			.then(function () {
+				var item = _.findWhere(Feeds.feeds, {
+					_id: feed._id
 				});
 
-			return deferred.promise;
-		}
+				var index = Feeds.feeds.indexOf(item);
+				
+				// delete from collection
+				if (index > -1) {
+					Feeds.feeds.splice(index, 1);
+				}
 
-		
+				deferred.resolve('deleted');
+			}, function (err) {
+				console.error(err);
+				deferred.reject(err);
+			});
 
-		return Feeds;
+		return deferred.promise;
+	};
 
-	});
+	return Feeds;
+}
+
+module.exports = angular
+	.module('njrt.feeds')
+	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);

@@ -30,10 +30,12 @@ $container-large-desktop: 1350px !default;
 @import "modules/badges";
 @import "modules/alerts";
 @import "modules/close";
-
+@import "modules/navs";
+@import "modules/navbar";
 @import "modules/angular";
 @import "modules/feeds";
 @import "modules/validation";
+@import "modules/advanced-filter";
 
 // Components
 

@@ -224,6 +224,11 @@
     -webkit-border-radius:0 6px 6px 6px;
     -moz-border-radius:0 6px 6px 6px;
     border-radius:0 6px 6px 6px;
+
+    .dropup & {
+      bottom: 0;
+      top: auto;
+    }
   }
   
   > a:after {

@@ -5,22 +5,6 @@ var rtorrent = require("../lib/rtorrent");
 
 var settings = module.exports = {};
 
-var listeningPort = settings.listeningPort = {};
+settings.getConnectionSettings = function () {
 
-var bandwidthLimiting = settings.bandwidthLimiting = {};
-
-bandwidthLimiting.getGlobalMaximumUploadRate = function() {
-	return rtorrent.getGlobalMaximumUploadRate();
-}
-
-bandwidthLimiting.setGlobalMaximumUploadRate = function(value) {
-	return rtorrent.setGlobalMaximumUploadRate(value);
-}
-
-bandwidthLimiting.getGlobalMaximumDownloadRate = function() {
-	return rtorrent.getGlobalMaximumDownloadRate();
-}
-
-bandwidthLimiting.setGlobalMaximumDownloadRate = function(value) {
-	return rtorrent.setGlobalMaximumDownloadRate(value);
 }
