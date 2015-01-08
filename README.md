@@ -3,9 +3,9 @@ We are looking for developers, please fork and tell us what you want to code and
 
 Nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used NodeJS and this is the how far I got. The technologies used are NodeJS, Express, MongoDB/TingoDB, Mongoose, tungus (for use with Mongoose), XML-RPC, FeedMe, Q (Promises), Passport, and Socket.IO. For the front-end, I am using AngularJS, Browserify, Bower, and Twitter Bootstrap (using Scss).
 
- Screenshot
+ Screenshot 0.0.18
  
-![cutout](https://camo.githubusercontent.com/e38d456dab6214a6f9fe98deea596ec5eaf90877/687474703a2f2f692e696d6775722e636f6d2f683958376877552e706e67 "screenshot")
+![cutout](http://i.imgur.com/ywbBABC.png "screenshot")
 
 Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
@@ -26,14 +26,15 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * SCGI Direct Connection (works)
 * HTTPS support (by rendom, works)
 * Embedded database support (works)
+* Torrents > Batch (works)
 
 ### Features being worked on
-* Settings (not complete, rendom is working on it)
+* Torrents > Selective Folder/File Download
+* Settings (not complete)
 
 ### Features not started
 * Docker support (????)
 * Settings > Pushover support (not started)
-* Torrents > Batch (not started)
 * First Time Setup (not started)
 * Feeds > Custom Max Size (not started)
 * Feeds > Import & Export (not started)
