@@ -1,10 +1,10 @@
 var logger = require("winston");
 var nconf = require("nconf");
 var fs = require("fs");
-nconf.env().argv().file("./config/config.json");
+nconf.env().argv().file("../../config.json");
 
 var rtorrent = require("./lib/rtorrent");
-logger.add(logger.transports.File, { filename: "nodejs-rtorrent.log"});
+logger.add(logger.transports.File, { filename: "../../nodejs-rtorrent.log"});
 logger.exitOnError = false;
 
 logger.info("Initializing nodejs-rtorrent server.");
