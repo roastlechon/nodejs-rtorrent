@@ -1,0 +1,6 @@
+[program:NodeJS-rTorrent]
+command = nodejs /home/rtorrent/nodejs-rtorrent/index.js
+directory = /home/rtorrent/nodejs-rtorrent
+user = rtorrent
+autostart = true
+autorestart = true
