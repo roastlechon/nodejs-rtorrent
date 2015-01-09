@@ -58,7 +58,6 @@ function scgiMethodCall(api, array) {
 	deserializer.deserializeMethodResponse(stream, function (err, data) {
 
 		if (err) {
-			console.log(err);
 			return deferred.reject(err);
 		}
 		return deferred.resolve(data);
@@ -109,13 +108,12 @@ function methodCall (api, array) {
 
 rtorrent.init = function () {
 	return createThrottleSettings()
-		.then(function (results) {
-			results.forEach(function (result) {
-				if (result.state !== 'fulfilled') {
-					logger.error(result.reason);
-				}
-			})
+		.then(function () {
 			logger.info('Finished creating throttle settings.');
+		}, function (err) {
+			if (err.code == 'ECONNREFUSED') {
+				throw new Error('Unable to connect to rtorrent.');
+			}
 		});
 }
 
@@ -156,7 +154,7 @@ function createThrottleSettings () {
 		createThrottleSettingList.push(createThrottleSetting(throttle_settings[i]));
 	}
 
-	return Q.allSettled(createThrottleSettingList);
+	return Q.all(createThrottleSettingList);
 }
 
 function createThrottleSetting (throttleSetting) {

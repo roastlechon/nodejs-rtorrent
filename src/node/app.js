@@ -105,4 +105,8 @@ rtorrent.init()
     server.listen(nconf.get("app:port"));
     logger.info('Successfully started nodejs-rtorrent.');
     logger.info('Open http://%s:%s in a browser and login with user "%s" and password "%s".', nconf.get("app:hostname"), nconf.get("app:port"), nconf.get("app:defaultUser:email"), nconf.get("app:defaultUser:password"));
-  });
+  }, function (err) {
+    logger.error('An error occurred while starting nodejs-rtorrent.');
+    throw err;
+  })
+  .done();
