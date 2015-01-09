@@ -27,24 +27,28 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * HTTPS support (by rendom, works)
 * Embedded database support (works)
 * Torrents > Batch (works)
+* Torrents > Search (see filter by text)
+
 
 ### Features being worked on
-* Torrents > Selective Folder/File Download
+* Torrents > Add Torrent > Custom Download path
 * Settings (not complete)
 
 ### Features not started
-* Docker support (????)
-* Settings > Pushover support (not started)
 * First Time Setup (not started)
-* Feeds > Custom Max Size (not started)
 * Feeds > Import & Export (not started)
-* Search (not started)
-* Multi-User (not started)
-* File Manager (not started)
-* Torrent Creator (not started)
-* HTML5 Media Player (not started)
+* Feeds > Custom Max Size (not started)
 * Keyboard Shortcuts (not started)
+* File Manager with Torrent Creator (not started)
 * Stats Page (not started)
+* Multi-User (not started)
+* Settings > Pushover support (not started)
+* Search (files and external sites)
+
+### Features that need more research
+* Torrents > Selective Folder/File Download (not started)
+* HTML5 Media Player (not started)
+* Docker support (?)
 
 ### Branches ###
 *Codename Alchemist*
@@ -64,4 +68,4 @@ NodeJS NPM rtorrent
 * Join us on our IRC channel [#NodeJS-rTorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
 
 ## FAQ
-huh?
+[read the wiki here](https://github.com/roastlechon/nodejs-rtorrent/wiki)
