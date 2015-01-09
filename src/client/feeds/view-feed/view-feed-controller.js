@@ -14,7 +14,9 @@ function ViewFeedCtrl (njrtLog, $state, $scope, feed, Torrents) {
 	vm.predicate = 'date';
 
 	vm.loadTorrent = function (url) {
-		Torrents.load(url);
+		Torrents.load({
+			url: url
+		});
 	};
 
 	$scope.floatTheadOptions = {

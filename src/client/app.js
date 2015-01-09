@@ -56,4 +56,5 @@ require('./filters/datatransferrate-filter');
 require('./filters/percentage-filter');
 require('./filters/time-filter');
 require('./directives/resize-directive');
+require('./directives/torrent-url-validator-directive');
 require('./directives/app-version-directive');

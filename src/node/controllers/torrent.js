@@ -63,13 +63,22 @@ function deleteTorrentData(req, res) {
 }
 
 function loadTorrent(req, res) {
-	rtorrent.loadTorrentUrl(req.body.url).then(function(data) {
-		logger.info('Successfully loaded torrent', req.body.url);
-		res.json(data);
-	}, function(err) {
-		logger.error(err.message);
-		res.status(500).send(err.message);
-	});
+	var torrent = {
+		url: req.body.url
+	};
+
+	if (req.body.path) {
+		torrent.path = req.body.path;
+	}
+
+	rtorrent.loadTorrent(torrent)
+		.then(function(data) {
+			logger.info('Successfully loaded torrent', req.body.url);
+			res.json(data);
+		}, function(err) {
+			logger.error(err.message);
+			res.status(500).send(err.message);
+		});
 }
 
 function setTorrentChannel(req, res) {

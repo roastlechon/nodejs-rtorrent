@@ -259,12 +259,13 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 * @param  {String} url  Url of the torrent file or magnet link.
 	 * @return {Promise}     Promise with success string.
 	 */
-	Torrents.load = function (url) {
-		logger.debug('Loading torrent from url', url);
+	Torrents.load = function (torrent) {
+		logger.debug('Loading torrent from url', torrent.url);
 		return Restangular
 			.all('torrents')
 			.customPOST({
-				'url': url
+				'url': torrent.url,
+				'path': torrent.path
 			}, 'load')
 			.then(function () {
 				return Notification.add('success', 'Torrent loaded.');
