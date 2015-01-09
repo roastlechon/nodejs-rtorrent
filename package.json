@@ -12,7 +12,6 @@
     "moment": "latest",
     "mongoose": "3.8.3",
     "nconf": "0.6.9",
-    "parse-torrent": "^3.0.0",
     "passport": "0.1.17",
     "passport-local": "0.1.6",
     "portscanner": "0.1.3",
