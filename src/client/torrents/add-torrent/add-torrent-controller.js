@@ -10,8 +10,13 @@ function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents) {
 
 	var vm = this;
 
-	vm.loadTorrent = function (url) {
-		Torrents.load(url)
+	vm.torrent = {
+		url: '',
+		path: ''
+	};
+
+	vm.loadTorrent = function (torrent) {
+		Torrents.load(torrent)
 			.then(function (data) {
 				logger.debug(data);
 				$previousState.go('modalInvoker');

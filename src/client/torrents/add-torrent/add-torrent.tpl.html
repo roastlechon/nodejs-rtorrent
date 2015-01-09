@@ -1,16 +1,32 @@
-<div class="modal-header">
-    <h3>Add Torrent</h3>
-</div>
-<div class="modal-body">
-	<div class="form-group">
-		<label for="torrent-url">URL:</label>
-		<input type="text" id="torrent-url" class="form-control" placeholder="Torrent URL or Magnet Link" ng-model="torrentsAddCtrl.url">
-		<span class="help-block">Enter in a Magnet link or Torrent link.</span>
+<form ng-submit="torrentsAddCtrl.loadTorrent(torrentsAddCtrl.torrent)" name="addTorrent" novalidate>
+	<div class="modal-header">
+	    <h3>Add Torrent</h3>
 	</div>
-</div>
-<div class="modal-footer">
-	<div class="form-group">
-		<button type="submit" class="btn btn-primary" ng-click="torrentsAddCtrl.loadTorrent(torrentsAddCtrl.url)">Add Link</button>
-		<button type="button" class="btn btn-default" ng-click="torrentsAddCtrl.cancel()">Cancel</button>
+	<div class="modal-body">
+		<div class="form-group" ng-class="{'has-error': addTorrent.torrentUrl.$invalid && addTorrent.torrentUrl.$touched}">
+			<label for="torrentUrl" class="control-label">URL:</label>
+			<input type="text" id="torrentUrl" name="torrentUrl" class="form-control" placeholder="Enter in Torrent URL or Magnet Link" ng-model="torrentsAddCtrl.torrent.url" required torrent-url-validator>
+			<div class="help-block" ng-show="addTorrent.torrentUrl.$invalid && addTorrent.torrentUrl.$touched">
+				<p ng-show="addTorrent.torrentUrl.$error.required"><strong>Error:</strong> URL is required!</p>
+				<p ng-show="addTorrent.torrentUrl.$error.torrentUrl"><strong>Error:</strong> URL is not a valid http/https or magnet link!</p>
+			</div>
+		</div>
+		<div class="checkbox">
+			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="torrentsAddCtrl.changeTorrentLocation"> Change torrent download location</label>
+			<p class="help-block">Check box to change the location of where the torrent is downloaded. The default is the download directory set by rtorrent.</p>
+		</div>
+		<div class="form-group" ng-if="torrentsAddCtrl.changeTorrentLocation" ng-class="{'has-error': addTorrent.torrentPath.$invalid && addTorrent.torrentPath.$touched}">
+			<label for="torrentPath" class="control-label">Directory to unpack:</label>
+			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="Path to download torrent" ng-model="torrentsAddCtrl.torrent.path" required>
+			<div class="help-block" ng-show="addTorrent.torrentPath.$invalid && addTorrent.torrentPath.$touched">
+				<p ng-show="addTorrent.torrentPath.$error.required"><strong>Error:</strong> A path is required if you check <i>Change torrent download location</i>!</p>
+			</div>
+		</div>
 	</div>
-</div>
+	<div class="modal-footer">
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary" ng-click="torrentsAddCtrl.loadTorrent(torrentsAddCtrl.torrent)" ng-disabled="addTorrent.$invalid">Add Link</button>
+			<button type="button" class="btn btn-default" ng-click="torrentsAddCtrl.cancel()">Cancel</button>
+		</div>
+	</div>
+</form>

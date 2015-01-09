@@ -1,5 +1,8 @@
 var xmlrpc = require('xmlrpc')
+var fs = require('fs');
+var request = require('request');
 var portscanner = require('portscanner');
+var readTorrent = require('read-torrent');
 var logger = require('winston');
 var Q = require('q');
 var nconf = require('nconf');
@@ -309,8 +312,60 @@ rtorrent.loadTorrentFile = function (filepath) {
 	return methodCall('load', [filepath, 'd.set_custom=x-filename']);
 }
 
-rtorrent.loadTorrentUrl = function (url) {
+rtorrent.loadTorrentStart = function (url) {
 	return methodCall('load_start', [url]);
+}
+
+
+rtorrent.getTorrentMetaData = function (torrent) {
+	var deferred = Q.defer();
+
+	readTorrent(torrent.url, {}, function (err, data) {
+		if (err) {
+			deferred.reject(err);
+		}
+
+		deferred.resolve(data);
+	});
+
+	return deferred.promise;
+}
+
+rtorrent.getHash = function (hash) {
+	return methodCall('d.get_hash', [hash]);
+}
+
+
+rtorrent.loadTorrent = function (torrent) {
+	return rtorrent.getTorrentMetaData(torrent)
+		.then(function (data) {
+			var hash = data.infoHash.toUpperCase();
+			logger.info('Retrieved hash from torrent', hash);
+
+			if (torrent.path) {
+				logger.info('Setting directory of torrent to', torrent.path);
+
+				return methodCall('load', [torrent.url])
+					.then(function () {
+						return Q.delay(150)
+							.then(function () {
+								return rtorrent.getHash(hash)
+									.then(function () {
+										return rtorrent.setTorrentDirectory(hash, torrent.path)
+											.then(function () {
+												return rtorrent.startTorrent(hash);
+											});
+									});
+							})
+					});
+			}
+
+			return rtorrent.loadTorrentStart(torrent.url);
+		});
+}
+
+rtorrent.setTorrentDirectory = function (hash, path) {
+	return methodCall('d.set_directory', [hash, path]);
 }
 
 rtorrent.startTorrent = function (hash) {
@@ -379,7 +434,7 @@ rtorrent.isMultiFile = function (hash) {
 	return methodCall('d.is_multi_file', [hash]);
 }
 
-rtorrent.getDirectory = function (hash) {
+rtorrent.getTorrentDirectory = function (hash) {
 	return methodCall('d.get_directory', [hash]);
 }
 
@@ -507,4 +562,12 @@ rtorrent.getGlobalMaximumUploadRate = function () {
 // requires value in bytes
 rtorrent.setGlobalMaximumUploadRate = function (value) {
 	return methodCall('set_upload_rate', [value]);
+}
+
+rtorrent.getDirectory = function () {
+	return methodCall('get_directory', []);
+}
+
+rtorrent.setDirectory = function (path) {
+	return methodCall('set_directory', [path]);
 }
