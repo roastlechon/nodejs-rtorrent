@@ -108,7 +108,7 @@ function methodCall (api, array) {
 }
 
 rtorrent.init = function () {
-	createThrottleSettings()
+	return createThrottleSettings()
 		.then(function (results) {
 			results.forEach(function (result) {
 				if (result.state !== 'fulfilled') {
