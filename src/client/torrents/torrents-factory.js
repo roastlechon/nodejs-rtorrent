@@ -263,10 +263,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 		logger.debug('Loading torrent from url', torrent.url);
 		return Restangular
 			.all('torrents')
-			.customPOST({
-				'url': torrent.url,
-				'path': torrent.path
-			}, 'load')
+			.customPOST(torrent, 'load')
 			.then(function () {
 				return Notification.add('success', 'Torrent loaded.');
 			}, function () {
