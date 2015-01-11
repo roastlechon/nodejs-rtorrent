@@ -493,7 +493,12 @@ rtorrent.getScrapeComplete = function (hash) {
 // get_port_range
 // returns string of port range
 rtorrent.getPortRange = function () {
-	return methodCall('get_port_range', []);
+	return methodCall('get_port_range', [])
+		.then(function (data) {
+			return {
+				'port_range': data
+			}
+		});
 }
 
 rtorrent.setPortRange = function (value) {
@@ -504,7 +509,12 @@ rtorrent.setPortRange = function (value) {
 // returns 1 or 0
 // Opens listening port
 rtorrent.getPortOpen = function () {
-	return methodCall('get_port_open', []);
+	return methodCall('get_port_open', [])
+		.then(function (data) {
+			return {
+				'port_open': data == 1 ? true : false
+			}
+		});
 }
 
 rtorrent.setPortOpen = function (value) {
@@ -512,7 +522,12 @@ rtorrent.setPortOpen = function (value) {
 }
 
 rtorrent.getUploadSlots = function () {
-	return methodCall('get_max_uploads', []);
+	return methodCall('get_max_uploads', [])
+		.then(function (data) {
+			return {
+				'max_uploads': data
+			}
+		});
 }
 
 rtorrent.setUploadSlots = function (value) {
@@ -520,18 +535,41 @@ rtorrent.setUploadSlots = function (value) {
 }
 
 rtorrent.getUploadSlotsGlobal = function () {
-	return methodCall('get_max_uploads_global', []);
+	return methodCall('get_max_uploads_global', [])
+		.then(function (data) {
+			return {
+				'max_uploads_global': data
+			}
+		});
 }
 
 rtorrent.setUploadSlotsGlobal = function (value) {
-	return methodCall('set_max_uploads_global', []);
+	return methodCall('set_max_uploads_global', [value]);
+}
+
+rtorrent.getDownloadSlotsGlobal = function () {
+	return methodCall('get_max_downloads_global', [])
+		.then(function (data) {
+			return {
+				'max_downloads_global': data
+			}
+		});
+}
+
+rtorrent.setDownloadSlotsGlobal = function (value) {
+	return methodCall('set_max_downloads_global', [value]);
 }
 
 // get_port_random
 // returns 1 or 0
 // Randomize port each time rTorrent starts
 rtorrent.getPortRandom = function () {
-	return methodCall('get_port_random', []);
+	return methodCall('get_port_random', [])
+		.then(function (data) {
+			return {
+				'port_random': data == 1 ? true : false
+			}
+		});
 }
 
 rtorrent.setPortRandom = function (value) {
@@ -541,7 +579,12 @@ rtorrent.setPortRandom = function (value) {
 // get_download_rate
 // returns value in bytes
 rtorrent.getGlobalMaximumDownloadRate = function () {
-	return methodCall('get_download_rate', []);
+	return methodCall('get_download_rate', [])
+		.then(function (data) {
+			return {
+				'global_max_download_rate': data
+			}
+		});
 }
 
 // set_download_rate
@@ -553,7 +596,64 @@ rtorrent.setGlobalMaximumDownloadRate = function (value) {
 // get_upload_rate
 // returns value in bytes
 rtorrent.getGlobalMaximumUploadRate = function () {
-	return methodCall('get_upload_rate', []);
+	return methodCall('get_upload_rate', [])
+		.then(function (data) {
+			return {
+				'global_max_upload_rate': data
+			}
+		});
+}
+
+rtorrent.getMinNumberPeers = function () {
+	return methodCall('get_min_peers', [])
+		.then(function (data) {
+			return {
+				'min_peers': data
+			}
+		}); 
+}
+
+rtorrent.setMinNumberPeers = function (value) {
+	return methodCall('set_min_peers', [value]);
+}
+
+rtorrent.getMinNumberSeeds = function () {
+	return methodCall('get_min_peers_seed', [])
+		.then(function (data) {
+			return {
+				'min_seeds': data
+			}
+		}); 
+}
+
+rtorrent.setMinNumberSeeds = function (value) {
+	return methodCall('set_min_peers_seed', [value]);
+}
+
+rtorrent.getMaxNumberPeers = function () {
+	return methodCall('get_max_peers', [])
+		.then(function (data) {
+			return {
+				'max_peers': data
+			}
+		}); 
+}
+
+rtorrent.setMaxNumberPeers = function (value) {
+	return methodCall('set_max_peers', [value]);
+}
+
+rtorrent.getMaxNumberSeeds = function () {
+	return methodCall('get_max_peers_seed', [])
+		.then(function (data) {
+			return {
+				'max_seeds': data
+			}
+		}); 
+}
+
+rtorrent.setMaxNumberSeeds = function (value) {
+	return methodCall('set_max_peers_seed', [value]);
 }
 
 // set_upload_rate

@@ -96,6 +96,7 @@ require("./controllers/socket").init(io);
 require("./controllers/login")(app);
 require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);
+require("./controllers/settings")(app);
 require("./controllers/rss-subscriptions")();
 
 logger.debug("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
