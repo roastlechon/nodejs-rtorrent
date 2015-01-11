@@ -209,7 +209,7 @@ feeds.addTorrent = function(_id, torrent, autoDownload) {
 
 				// If autoDownload is true, start the torrent automatically
 				if (autoDownload) {
-					rtorrent.loadTorrentUrl(torrent.url).then(function() {
+					rtorrent.loadTorrent(torrent).then(function() {
 						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + torrent.url + '"'});
 					});
 				}
