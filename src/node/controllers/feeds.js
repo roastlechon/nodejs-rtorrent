@@ -53,13 +53,7 @@ function getFeeds(req, res) {
 function addFeed(req, res) {
 	logger.info('Adding feed', req.body.rss);
 
-	feeds.add({
-		title: req.body.title,
-		rss: req.body.rss,
-		autoDownload: req.body.autoDownload,
-		regexFilter: req.body.regexFilter,
-		filters: req.body.filters
-	}).then(function(data) {
+	feeds.add(req.body).then(function(data) {
 		logger.info('Successfully saved feed.');
 		res.json(data);
 	}, function(err) {
@@ -77,6 +71,8 @@ function updateFeed(req, res) {
 	feeds.edit({
 		_id: req.params.id,
 		title: req.body.title,
+		path: req.body.path,
+		changeTorrentLocation: req.body.changeTorrentLocation,
 		autoDownload: req.body.autoDownload,
 		regexFilter: req.body.regexFilter,
 		filters: req.body.filters

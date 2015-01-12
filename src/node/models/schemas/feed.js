@@ -5,6 +5,8 @@ var Filter = require("./filter");
 
 var FeedSchema = new Schema({
 	title: String,
+	path: String,
+	changeTorrentLocation: Boolean,
 	lastChecked: String,
 	rss: String,
 	regexFilter: Boolean,
