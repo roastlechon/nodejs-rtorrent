@@ -28,11 +28,10 @@ Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements an
 * Embedded database support (works)
 * Torrents > Batch (works)
 * Torrents > Search (see filter by text)
-
+* Torrents > Add Torrent > Custom Download path
+* Settings (works, more settings in the future)
 
 ### Features being worked on
-* Torrents > Add Torrent > Custom Download path
-* Settings (not complete)
 
 ### Features not started
 * First Time Setup (not started)
