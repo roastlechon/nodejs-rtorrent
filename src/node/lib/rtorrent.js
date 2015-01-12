@@ -388,12 +388,14 @@ rtorrent.removeTorrent = function (hash) {
 rtorrent.deleteTorrentData = function (hash) {
 	return rtorrent.stopTorrent(hash).then(function() {
 		return rtorrent.isMultiFile(hash).then(function(data) {
-			return rtorrent.getDirectory(hash).then(function(dir) {
+			return rtorrent.getTorrentDirectory(hash).then(function(dir) {
 				if (data === '1') {
+					logger.info(hash, 'is a multifile torrent.');
 					return deleteData(dir).then(function() {
 						return rtorrent.removeTorrent(hash);
 					});
 				} else {
+					logger.info(hash, 'is a single file torrent.');
 					return rtorrent.getTorrentName(hash).then(function(name) {
 						return deleteData(dir + '/' + name).then(function() {
 							return rtorrent.removeTorrent(hash);
