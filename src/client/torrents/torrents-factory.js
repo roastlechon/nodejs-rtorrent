@@ -264,9 +264,10 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 		return Restangular
 			.all('torrents')
 			.customPOST(torrent, 'load')
-			.then(function () {
+			.then(function (data) {
 				return Notification.add('success', 'Torrent loaded.');
-			}, function () {
+			}, function (err) {
+				logger.error(err.data);
 				return Notification.add('danger', 'Torrent failed to load.');
 			});
 	};

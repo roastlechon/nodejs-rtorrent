@@ -1,5 +1,6 @@
 var xmlrpc = require('xmlrpc')
 var fs = require('fs');
+var path = require('path');
 var request = require('request');
 var portscanner = require('portscanner');
 var readTorrent = require('read-torrent');
@@ -340,24 +341,72 @@ rtorrent.loadTorrent = function (torrent) {
 			var hash = data.infoHash.toUpperCase();
 			logger.info('Retrieved hash from torrent', hash);
 
+			// Check if torrent path is passed as a parameter
 			if (torrent.path) {
-				logger.info('Setting directory of torrent to', torrent.path);
+				// Check if path exists
+				return Q.nfcall(fs.exists, torrent.path)
+					.then(function (exists) {
+						if (!exists) {
+							logger.info('Directory does not exist.');
 
-				return methodCall('load', [torrent.url])
-					.then(function () {
-						return Q.delay(150)
+							var joinedPath = path.join('/', torrent.path);
+
+							// Check path 
+
+							return Q.nfcall(fs.mkdir, joinedPath)
+								.then(function () {
+									logger.info('Created directory', joinedPath);
+
+									logger.info('Setting directory of torrent to', joinedPath);
+
+									// Load torrent but do not start
+									return methodCall('load', [torrent.url])
+										.then(function () {
+											return Q.delay(150)
+												.then(function () {
+													// Get torrent hash
+													return rtorrent.getHash(hash)
+														.then(function () {
+															return rtorrent.setTorrentDirectory(hash, joinedPath)
+																.then(function () {
+																	return rtorrent.startTorrent(hash);
+																});
+														});
+												})
+										});
+
+								}, function (err) {
+
+									if (err.code == 'EACCES') {
+										throw new Error('Unable to create directory for torrent due to permissions.', hash);
+									}
+									
+									// THrow error if not EACESS
+									throw err;
+								});
+						}
+
+						logger.info('Directory exists.');
+
+						// Load torrent but do not start
+						return methodCall('load', [torrent.url])
 							.then(function () {
-								return rtorrent.getHash(hash)
+								return Q.delay(150)
 									.then(function () {
-										return rtorrent.setTorrentDirectory(hash, torrent.path)
+										// Get torrent hash
+										return rtorrent.getHash(hash)
 											.then(function () {
-												return rtorrent.startTorrent(hash);
+												return rtorrent.setTorrentDirectory(hash, torrent.path)
+													.then(function () {
+														return rtorrent.startTorrent(hash);
+													});
 											});
-									});
-							})
+									})
+							});
 					});
 			}
 
+			// Start torrent if no path is passed
 			return rtorrent.loadTorrentStart(torrent.url);
 		});
 }
@@ -391,13 +440,15 @@ rtorrent.deleteTorrentData = function (hash) {
 			return rtorrent.getTorrentDirectory(hash).then(function(dir) {
 				if (data === '1') {
 					logger.info(hash, 'is a multifile torrent.');
-					return deleteData(dir).then(function() {
+					logger.info('Deleting directory path/file', dir);
+					return deleteData(dir).then(function(data) {
 						return rtorrent.removeTorrent(hash);
 					});
 				} else {
 					logger.info(hash, 'is a single file torrent.');
 					return rtorrent.getTorrentName(hash).then(function(name) {
-						return deleteData(dir + '/' + name).then(function() {
+						logger.info('Deleting directory path/file', dir + '/' + name)
+						return deleteData(dir + '/' + name).then(function(data) {
 							return rtorrent.removeTorrent(hash);
 						});
 					});
