@@ -334,6 +334,18 @@ rtorrent.getHash = function (hash) {
 	return methodCall('d.get_hash', [hash]);
 }
 
+function checkPathExists (path) {
+	var deferred = Q.defer();
+	fs.exists(path, function (exists) {
+		if (exists) {
+			deferred.resolve(exists);
+		}
+
+		deferred.reject(new Error('Path does not exist.'));
+	})
+	return deferred.promise;
+}
+
 
 rtorrent.loadTorrent = function (torrent) {
 	return rtorrent.getTorrentMetaData(torrent)
@@ -344,54 +356,17 @@ rtorrent.loadTorrent = function (torrent) {
 			// Check if torrent path is passed as a parameter
 			if (torrent.path) {
 				// Check if path exists
-				return Q.nfcall(fs.exists, torrent.path)
-					.then(function (exists) {
-						if (!exists) {
-							logger.info('Directory does not exist.');
+				logger.info('Checking if path exists.');
 
-							var joinedPath = path.join('/', torrent.path);
-
-							// Check path 
-
-							return Q.nfcall(fs.mkdir, joinedPath)
-								.then(function () {
-									logger.info('Created directory', joinedPath);
-
-									logger.info('Setting directory of torrent to', joinedPath);
-
-									// Load torrent but do not start
-									return methodCall('load', [torrent.url])
-										.then(function () {
-											return Q.delay(150)
-												.then(function () {
-													// Get torrent hash
-													return rtorrent.getHash(hash)
-														.then(function () {
-															return rtorrent.setTorrentDirectory(hash, joinedPath)
-																.then(function () {
-																	return rtorrent.startTorrent(hash);
-																});
-														});
-												})
-										});
-
-								}, function (err) {
-
-									if (err.code == 'EACCES') {
-										throw new Error('Unable to create directory for torrent due to permissions.', hash);
-									}
-									
-									// THrow error if not EACESS
-									throw err;
-								});
-						}
+				return checkPathExists(torrent.path)
+					.then(function (data) {
 
 						logger.info('Directory exists.');
 
 						// Load torrent but do not start
 						return methodCall('load', [torrent.url])
 							.then(function () {
-								return Q.delay(150)
+								return Q.delay(500)
 									.then(function () {
 										// Get torrent hash
 										return rtorrent.getHash(hash)
@@ -402,6 +377,43 @@ rtorrent.loadTorrent = function (torrent) {
 													});
 											});
 									})
+							});
+					}, function () {
+
+						logger.info('Directory does not exist.');
+
+						var joinedPath = path.join('/', torrent.path);
+
+						return Q.nfcall(fs.mkdir, joinedPath)
+							.then(function () {
+								logger.info('Created directory', joinedPath);
+
+								logger.info('Setting directory of torrent to', joinedPath);
+
+								// Load torrent but do not start
+								return methodCall('load', [torrent.url])
+									.then(function () {
+										return Q.delay(500)
+											.then(function () {
+												// Get torrent hash
+												return rtorrent.getHash(hash)
+													.then(function () {
+														return rtorrent.setTorrentDirectory(hash, joinedPath)
+															.then(function () {
+																return rtorrent.startTorrent(hash);
+															});
+													});
+											});
+									});
+
+							}, function (err) {
+
+								if (err.code == 'EACCES') {
+									throw new Error('Unable to create directory for torrent due to permissions.', hash);
+								}
+								
+								// THrow error if not EACESS
+								throw err;
 							});
 					});
 			}

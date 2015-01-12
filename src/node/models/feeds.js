@@ -102,6 +102,8 @@ feeds.add = function(feed) {
 			logger.info("Getting torrents from feed.");
 			var feedModel = new Feed({
 				title: feed.title,
+				path: feed.path,
+				changeTorrentLocation: feed.changeTorrentLocation,
 				lastChecked: moment().unix(),
 				rss: feed.rss,
 				regexFilter: feed.regexFilter,

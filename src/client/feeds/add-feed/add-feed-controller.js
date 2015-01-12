@@ -11,6 +11,8 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 	vm.feed = {
 		rss: '',
 		title: '',
+		changeTorrentLocation: false,
+		path: '',
 		regexFilter: false,
 		autoDownload: false,
 		filters: []
@@ -72,6 +74,8 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 		Feeds.addFeed({
 			rss: vm.feed.url,
 			title: vm.feed.name,
+			path: vm.feed.path,
+			changeTorrentLocation: vm.feed.changeTorrentLocation,
 			filters: vm.feed.filters,
 			regexFilter: vm.feed.regexFilter,
 			autoDownload: vm.feed.autoDownload
