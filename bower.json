@@ -1,6 +1,6 @@
 {
   "name": "nodejs-rtorrent",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "ignore": [
     "**/.*",
     "node_modules"
@@ -17,6 +17,7 @@
     "moment": "~2.6.0",
     "ui-router-extras": "latest",
     "angular-float-thead": "~0.0.1",
-    "floatThead": "~1.2.9"
+    "floatThead": "~1.2.9",
+    "ng-file-upload": "~2.1.1"
   }
 }

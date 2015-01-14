@@ -8,7 +8,7 @@ module.exports = function(app) {
 	app.get('/feeds/:id', auth.ensureAuthenticated, getFeed);
 	app.post('/feeds', auth.ensureAuthenticated, addFeed);
 	app.put('/feeds/:id', auth.ensureAuthenticated, updateFeed);
-	app.del('/feeds/:id', auth.ensureAuthenticated, deleteFeed);
+	app.delete('/feeds/:id', auth.ensureAuthenticated, deleteFeed);
 	app.post('/feeds/test', auth.ensureAuthenticated, testFeed);
 	app.post('/feeds/:id/refresh', auth.ensureAuthenticated, refreshFeed);
 }

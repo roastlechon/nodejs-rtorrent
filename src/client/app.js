@@ -9,6 +9,7 @@ require('floatThead');
 require('underscore');
 require('restangular');
 require('angular-floatThead');
+require('angular-file-upload');
 
 require('./templates');
 
@@ -29,6 +30,7 @@ angular.module('app', [
 	'ui.router',
 	'ct.ui.router.extras',
 	'floatThead',
+	'angularFileUpload',
 	'restangular',
 	'templates',
 	log.name,
@@ -58,3 +60,4 @@ require('./filters/time-filter');
 require('./directives/resize-directive');
 require('./directives/torrent-url-validator-directive');
 require('./directives/app-version-directive');
+require('./directives/file-validator-directive');

@@ -20,7 +20,6 @@ function ViewTorrentsCtrl (njrtLog, $scope, Torrents, $modal) {
 		useAbsolutePositioning: true,
 		zIndex: 999,
 		scrollContainer: function(test) {
-			console.log(test);
 			return $('.table-wrapper');
 		}
 	};

@@ -1,8 +1,8 @@
 module.exports = angular
 	.module('njrt.torrents')
-	.factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', Torrents]);
+	.factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', Torrents]);
 
-function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionService, $q) {
+function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionService, $q, $upload) {
 
 	var logger = njrtLog.getInstance('njrt.torrents');
 
@@ -260,6 +260,26 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 * @return {Promise}     Promise with success string.
 	 */
 	Torrents.load = function (torrent) {
+		if (torrent.file instanceof File) {
+			logger.debug('Loading torrent from file', torrent.file.name);
+			
+			return $upload.upload({
+				url: '/torrents/load',
+				method: 'POST',
+				headers: {
+					'Authorization': SessionService.getAuthorizationHeader()
+				},
+				data: {
+					path: torrent.path
+				},
+				file: torrent.file
+			}).then(function (data) {
+				return Notification.add('success', 'Torrent loaded.');
+			}, function (err) {
+				return Notification.add('danger', 'Torrent failed to load.');
+			});
+		}
+
 		logger.debug('Loading torrent from url', torrent.url);
 		return Restangular
 			.all('torrents')
