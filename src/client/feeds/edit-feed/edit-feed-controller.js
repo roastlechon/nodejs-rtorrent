@@ -11,6 +11,14 @@ function EditFeedCtrl (njrtLog, $state, $previousState, $scope, feed, Feeds, Res
 	vm.feed = Restangular.copy(feed);
 	vm.newFilter = {};
 
+	if (!('changeTorrentLocation' in vm.feed)) {
+		vm.feed.changeTorrentLocation = false;
+	}
+
+	if (!('path' in vm.feed)) {
+		vm.feed.path = '';
+	}
+
 	vm.checkDisabled = function() {
 		// if form is invalid, but filters are added
 		// return false to enable submit button
