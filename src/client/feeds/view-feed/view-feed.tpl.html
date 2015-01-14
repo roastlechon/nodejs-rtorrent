@@ -2,7 +2,7 @@
 	<div class="table-container">
 		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">
 			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedCtrl.feed.torrents">
-				<thead style="background: #ffffff;">
+				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">
 					<tr>
 						<th><a href="javascript: void(0);" ng-click="feedCtrl.predicate='name';feedCtrl.reverse=!feedCtrl.reverse">Name <i class="fa" ng-class="{'fa-caret-up': feedCtrl.predicate==='name' && !feedCtrl.reverse, 'fa-caret-down': feedCtrl.predicate==='name' && feedCtrl.reverse}"></i></a></th>
 						<th><a href="javascript: void(0);" ng-click="feedCtrl.predicate='date';feedCtrl.reverse=!feedCtrl.reverse">Date <i class="fa" ng-class="{'fa-caret-up': feedCtrl.predicate==='date' && !feedCtrl.reverse, 'fa-caret-down': feedCtrl.predicate==='date' && feedCtrl.reverse}"></i></a></th>
