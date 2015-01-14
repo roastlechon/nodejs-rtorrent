@@ -214,9 +214,20 @@ feeds.addTorrent = function(_id, torrent, autoDownload) {
 
 				// If autoDownload is true, start the torrent automatically
 				if (autoDownload) {
-					rtorrent.loadTorrent(torrent).then(function() {
-						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + torrent.url + '"'});
+
+					var tor = {
+						url: torrent.url
+					};
+
+					// If changeTorrentLocation is true, set path and load torrent
+					if (data.changeTorrentLocation) {
+						tor.path = data.path;
+					} 
+
+					rtorrent.loadTorrent(tor).then(function() {
+						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + tor.url + '"'});
 					});
+
 				}
 
 				data.torrents.push(torrentFeed);

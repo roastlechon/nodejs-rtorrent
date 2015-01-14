@@ -19,8 +19,9 @@
 			<p class="help-block">Check box to change the location of where the torrent is downloaded. The default is the download directory set by rtorrent.</p>
 		</div>
 		<div class="form-group" ng-if="feedsAddCtrl.feed.changeTorrentLocation">
-			<label for="torrentPath" class="control-label">Directory to unpack:</label>
-			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="Path to download torrent" ng-model="feedsAddCtrl.feed.path" required>
+			<label for="torrentPath" class="control-label">Torrent save directory:</label>
+			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="{{feedsAddCtrl.defaultDownloadPath}}" ng-model="feedsAddCtrl.feed.path" required>
+			<p class="help-block">Default path is {{feedsAddCtrl.defaultDownloadPath}}. <br>Go to Settings > Download or modify your rtorrent config file to change the default path. Specifying a path here will only impact the current torrent.</p>
 			<div class="help-block" ng-show="addFeed.path.$invalid && addFeed.path.$touched">
 				<p ng-show="addFeed.path.$error.required"><strong>Error:</strong> A path is required if you check <i>Change torrent download location</i>!</p>
 			</div>

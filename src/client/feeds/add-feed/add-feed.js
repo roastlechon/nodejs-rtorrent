@@ -1,5 +1,9 @@
 'use strict';
 
+function resolve (Settings) {
+	return Settings.getDownloadSettings();
+}
+
 function config ($stateProvider) {
 	$stateProvider
 		.state('addFeed', {
@@ -12,6 +16,9 @@ function config ($stateProvider) {
 			},
 			data: {
 				rule: ['isLoggedIn']
+			},
+			resolve: {
+				downloadSettings: ['njrt.Settings', resolve]
 			},
 			isModal: true
 		});

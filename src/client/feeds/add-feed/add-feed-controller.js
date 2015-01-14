@@ -1,6 +1,6 @@
 'use strict';
 
-function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notification) {
+function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notification, downloadSettings) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
@@ -17,6 +17,8 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 		autoDownload: false,
 		filters: []
 	};
+	
+	vm.defaultDownloadPath = downloadSettings.download_directory;
 	
 	vm.newFilter = {};
 
@@ -101,4 +103,4 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 
 module.exports = angular
 	.module('njrt.feeds.addFeed')
-	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', AddFeedCtrl]);
+	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);
