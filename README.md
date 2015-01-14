@@ -3,6 +3,8 @@ nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alt
 
 We are looking for developers, please fork and tell us what you want to code and submit pull requests when done. We are active on our IRC channel [#nodejs-rtorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent).
 
+Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
+
 ![cutout](http://i.imgur.com/ywbBABC.png "screenshot")
 
 ## Features
@@ -45,8 +47,6 @@ Development follows standard git work flows: dev is the main development branch,
 * NPM
 * rtorrent
 * Linux
-
-Special thanks to [nwgat](http://nwgat.net)  for testing, readme improvements and ideas :)
 
 ## Team
 * roastlechon - Creator, Developer
