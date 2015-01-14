@@ -728,9 +728,14 @@ rtorrent.setGlobalMaximumUploadRate = function (value) {
 }
 
 rtorrent.getDirectory = function () {
-	return methodCall('get_directory', []);
+	return methodCall('get_directory', [])
+		.then(function (data) {
+				return {
+					'download_directory': data
+				}
+			}); 
 }
 
-rtorrent.setDirectory = function (path) {
-	return methodCall('set_directory', [path]);
+rtorrent.setDirectory = function (value) {
+	return methodCall('set_directory', [value]);
 }

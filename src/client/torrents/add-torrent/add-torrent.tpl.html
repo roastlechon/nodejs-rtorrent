@@ -4,7 +4,7 @@
 	</div>
 	<div class="modal-body">
 		<div class="form-group">
-			<p class="help-block">Choose where the torrent is coming from.</p>
+			<label class="control-label">Choose where the torrent is coming from:</p>
 			<div class="btn-group center-block">
 		        <label class="btn btn-default" ng-model="torrentsAddCtrl.source" btn-radio="'web'" required>Web</label>
 		        <label class="btn btn-default" ng-model="torrentsAddCtrl.source" btn-radio="'computer'" required>Computer</label>
@@ -26,7 +26,8 @@
 		</div>
 		<div class="form-group" ng-if="torrentsAddCtrl.changeTorrentLocation" ng-class="{'has-error': addTorrent.torrentPath.$invalid && addTorrent.torrentPath.$touched}">
 			<label for="torrentPath" class="control-label">Directory to unpack:</label>
-			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="Path to download torrent" ng-model="torrentsAddCtrl.torrent.path" required>
+			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="{{torrentsAddCtrl.defaultDownloadPath}}" ng-model="torrentsAddCtrl.torrent.path" required>
+			<p class="help-block">Default path is {{torrentsAddCtrl.defaultDownloadPath}}. <br>Go to Settings > Download or modify your rtorrent config file to change the default path. Specifying a path here will only impact the current torrent.</p>
 			<div class="help-block" ng-show="addTorrent.torrentPath.$invalid && addTorrent.torrentPath.$touched">
 				<p ng-show="addTorrent.torrentPath.$error.required"><strong>Error:</strong> A path is required if you check <i>Change torrent download location</i>!</p>
 			</div>

@@ -61,6 +61,7 @@ settings.getDownloadSettings = function () {
 	downloadSettingPromises.push(rtorrent.getMinNumberPeers());
 	downloadSettingPromises.push(rtorrent.getMaxNumberSeeds());
 	downloadSettingPromises.push(rtorrent.getMinNumberSeeds());
+	downloadSettingPromises.push(rtorrent.getDirectory());
 
 	return buildResults(downloadSettingPromises);
 };
@@ -73,6 +74,7 @@ settings.updateDownloadSettings = function (downloadSettings) {
 	downloadSettingPromises.push(rtorrent.setMinNumberPeers(downloadSettings.min_peers));
 	downloadSettingPromises.push(rtorrent.setMaxNumberSeeds(downloadSettings.max_seeds));
 	downloadSettingPromises.push(rtorrent.setMinNumberSeeds(downloadSettings.min_seeds));
+	downloadSettingPromises.push(rtorrent.setDirectory(downloadSettings.download_directory));
 
 	return buildResults(downloadSettingPromises);
 };

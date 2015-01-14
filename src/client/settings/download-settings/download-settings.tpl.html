@@ -4,6 +4,11 @@
 		<fieldset>
 			<legend>Download Settings</legend>
 			<div class="form-group">
+				<label for="downloadDirectory">Default download directory:</label>
+				<input type="text" name="downloadDirectory" id="downloadDirectory" ng-model="downloadSettingsCtrl.downloadSettings.download_directory" class="form-control">
+				<p class="help-block">Make sure path has correct permissions.</p>
+			</div>
+			<div class="form-group">
 				<label for="maxUploads" class="control-label">Number of upload slots:</label>
 				<input type="text" name="maxUploads" id="maxUploads" ng-model="downloadSettingsCtrl.downloadSettings.max_uploads" class="form-control">
 				<p class="help-block">0 means unlimited.</p>

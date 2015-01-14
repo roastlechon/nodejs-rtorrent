@@ -17,7 +17,6 @@ function FeedsCtrl (njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
 		useAbsolutePositioning: true,
 		zIndex: 999,
 		scrollContainer: function(test) {
-			console.log(test);
 			return $('.table-wrapper');
 		}
 	};

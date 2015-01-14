@@ -19,7 +19,6 @@ function LoginCtrl (njrtLog, Authentication, SessionService, $state, $previousSt
 			email: vm.email,
 			password: vm.password
 		}).then(function (data) {
-			logger.info(data);
 			
 			if (SessionService.destinationState != '') {
 				$state.go(SessionService.destinationState);

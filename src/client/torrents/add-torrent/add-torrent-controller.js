@@ -1,8 +1,8 @@
 module.exports = angular
 	.module('njrt.torrents.addTorrent')
-	.controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', AddTorrentCtrl]);
+	.controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
 
-function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope) {
+function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
 
 	var logger = njrtLog.getInstance('torrents.add');
 
@@ -14,6 +14,8 @@ function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope) {
 		url: '',
 		path: ''
 	};
+
+	vm.defaultDownloadPath = downloadSettings.download_directory;
 
 	vm.loadTorrent = function (torrent) {
 		Torrents.load(torrent)

@@ -2,9 +2,13 @@ module.exports = angular
 	.module('njrt.torrents.addTorrent', [])
 	.config(['$stateProvider', config]);
 
+function resolve (Settings) {
+	return Settings.getDownloadSettings();
+}
+
 function config ($stateProvider) {
 	$stateProvider.state('addTorrent', {
-		url: '/addTorrent',
+		url: '/add-torrent',
 		views: {
 			'modal@': {
 				templateUrl: 'torrents/add-torrent/add-torrent.tpl.html',
@@ -13,6 +17,9 @@ function config ($stateProvider) {
 		},
 		data: {
 			rule: ['isLoggedIn']
+		},
+		resolve: {
+			downloadSettings: ['njrt.Settings', resolve]
 		},
 		isModal: true
 	});
