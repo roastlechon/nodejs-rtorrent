@@ -1,6 +1,10 @@
 var logger = require("winston");
 var nconf = require("nconf");
 var fs = require("fs");
+var bodyParser = require('body-parser');
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty();
+
 nconf.env().argv().file("../../config.json");
 
 var rtorrent = require("./lib/rtorrent");
@@ -82,20 +86,15 @@ io.configure(function() {
 
 
 logger.info("Configuring express.");
-app.configure(function() {
-	app.use(express.bodyParser());
-  app.use(express.multipart());
-  app.use(express.methodOverride());
-	app.use(passport.initialize());
-	app.use(app.router);
-  // need to configure option to allow for static or separate hosting
-	app.use(express.static("../../dist"));
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(passport.initialize());
+app.use(express.static("../../dist"));
 
 require("./controllers/socket").init(io);
 require("./controllers/login")(app);
 require("./controllers/feeds")(app);
-require("./controllers/torrent")(app);
+require("./controllers/torrent")(app, multipartyMiddleware);
 require("./controllers/settings")(app);
 require("./controllers/rss-subscriptions")();
 

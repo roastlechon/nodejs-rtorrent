@@ -3,13 +3,22 @@
 	    <h3>Add Torrent</h3>
 	</div>
 	<div class="modal-body">
-		<div class="form-group" ng-class="{'has-error': addTorrent.torrentUrl.$invalid && addTorrent.torrentUrl.$touched}">
-			<label for="torrentUrl" class="control-label">URL:</label>
+		<div class="form-group">
+			<p class="help-block">Choose where the torrent is coming from.</p>
+			<div class="btn-group center-block">
+		        <label class="btn btn-default" ng-model="torrentsAddCtrl.source" btn-radio="'web'" required>Web</label>
+		        <label class="btn btn-default" ng-model="torrentsAddCtrl.source" btn-radio="'computer'" required>Computer</label>
+		    </div>
+		</div>
+		<div class="form-group" ng-if="torrentsAddCtrl.source == 'web'" ng-class="{'has-error': addTorrent.torrentUrl.$invalid && addTorrent.torrentUrl.$touched}">
 			<input type="text" id="torrentUrl" name="torrentUrl" class="form-control" placeholder="Enter in Torrent URL or Magnet Link" ng-model="torrentsAddCtrl.torrent.url" required torrent-url-validator>
 			<div class="help-block" ng-show="addTorrent.torrentUrl.$invalid && addTorrent.torrentUrl.$touched">
 				<p ng-show="addTorrent.torrentUrl.$error.required"><strong>Error:</strong> URL is required!</p>
 				<p ng-show="addTorrent.torrentUrl.$error.torrentUrl"><strong>Error:</strong> URL is not a valid http/https or magnet link!</p>
 			</div>
+		</div>
+		<div class="form-group" ng-if="torrentsAddCtrl.source == 'computer'">
+			<button type="button" ng-file-select ng-file-change="torrentsAddCtrl.fileSelected($files, $event)" ng-model="torrentsAddCtrl.torrent.file" class="btn btn-default" file-validator>Upload Torrent</button> <span style="white-space: nowrap; text-overflow: ellipsis; width: 75%; overflow: hidden; display: inline-block; line-height: 33px; vertical-align: middle;">{{torrentsAddCtrl.torrent.file.name}}</span>
 		</div>
 		<div class="checkbox">
 			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="torrentsAddCtrl.changeTorrentLocation"> Change torrent download location</label>
@@ -25,7 +34,7 @@
 	</div>
 	<div class="modal-footer">
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary" ng-disabled="addTorrent.$invalid">Add Link</button>
+			<button type="submit" class="btn btn-primary" ng-disabled="addTorrent.$invalid">Add Torrent</button>
 			<button type="button" class="btn btn-default" ng-click="torrentsAddCtrl.cancel()">Cancel</button>
 		</div>
 	</div>

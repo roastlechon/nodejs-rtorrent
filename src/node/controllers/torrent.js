@@ -2,13 +2,13 @@ var rtorrent = require("../lib/rtorrent");
 var logger = require("winston");
 var auth = require("./auth")
 
-module.exports = function(app) {
+module.exports = function(app, multipartyMiddleware) {
 	app.post("/torrents/:hash/start", auth.ensureAuthenticated, startTorrent);
 	app.post("/torrents/:hash/pause", auth.ensureAuthenticated, pauseTorrent);
 	app.post("/torrents/:hash/stop", auth.ensureAuthenticated, stopTorrent);
 	app.post("/torrents/:hash/remove", auth.ensureAuthenticated, removeTorrent);
 	app.post("/torrents/:hash/delete_data", auth.ensureAuthenticated, deleteTorrentData);
-	app.post("/torrents/load", auth.ensureAuthenticated, loadTorrent);
+	app.post("/torrents/load", auth.ensureAuthenticated, multipartyMiddleware, loadTorrent);
 	app.post("/torrents/:hash/channel", auth.ensureAuthenticated, setTorrentChannel);
 }
 
@@ -63,9 +63,13 @@ function deleteTorrentData(req, res) {
 }
 
 function loadTorrent(req, res) {
-	var torrent = {
-		url: req.body.url
-	};
+	var torrent = {};
+
+	if (req.files) {
+		torrent.url = req.files.file.path;
+	} else {
+		torrent.url = req.body.url;
+	}
 
 	if (req.body.path) {
 		torrent.path = req.body.path;
@@ -73,7 +77,7 @@ function loadTorrent(req, res) {
 
 	rtorrent.loadTorrent(torrent)
 		.then(function(data) {
-			logger.info('Successfully loaded torrent', req.body.url);
+			logger.info('Successfully loaded torrent', torrent.url);
 			res.json(data);
 		}, function(err) {
 			logger.error(err.message);
