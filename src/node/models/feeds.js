@@ -30,9 +30,12 @@ function updateLastChecked(_id, time) {
 }
 
 feeds.getAll = function() {
-	return Feed.find({}).sort({
-		"title": "ascending"
-	}).exec();
+	return Feed
+		.find({})
+		.select('-torrents -__v')
+		.sort({
+			"title": "ascending"
+		}).exec();
 }
 
 feeds.get = function(id) {

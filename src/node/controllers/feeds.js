@@ -28,22 +28,7 @@ function getFeed(req, res) {
 function getFeeds(req, res) {
 	feeds.getAll().then(function(data) {
 		logger.info('Successfully retrieved rss feeds');
-		res.json(data.map(function(feed) {
-			return {
-				_id: feed._id,
-				title: feed.title,
-				lastChecked: feed.lastChecked,
-				rss: feed.rss,
-				regexFilter: feed.regexFilter,
-				autoDownload: feed.autoDownload,
-				filters: feed.filters,
-				torrents: feed.torrents.sort(function(a, b) {
-					a = a.date;
-					b = b.date;
-					return a > b ? -1 : a < b ? 1 : 0;
-				})
-			};
-		}));
+		res.json(data);
 	}, function(err) {
 		logger.error(err.message);
 		res.status(500).send(err.message);
