@@ -47,7 +47,6 @@
     "gulp-watch": "^0.7.0",
     "minifyify": "^4.4.0",
     "ng-annotate": "~0.14.0",
-    "run-sequence": "^1.0.1",
     "vinyl-source-stream": "latest",
     "watchify": "1.0.2"
   },
