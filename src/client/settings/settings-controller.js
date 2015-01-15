@@ -1,6 +1,6 @@
 'use strict';
 
-function SettingsCtrl (njrtLog) {
+function SettingsCtrl (njrtLog, $state) {
 
 	var logger = njrtLog.getInstance('njrt.SettingsCtrl');
 
@@ -8,8 +8,10 @@ function SettingsCtrl (njrtLog) {
 
 	var vm = this;
 
+	$state.go('settings.download');
+
 }
 
 module.exports = angular
 	.module('njrt.settings')
-	.controller('njrt.SettingsCtrl', ['njrtLog', SettingsCtrl]);
+	.controller('njrt.SettingsCtrl', ['njrtLog', '$state', SettingsCtrl]);
