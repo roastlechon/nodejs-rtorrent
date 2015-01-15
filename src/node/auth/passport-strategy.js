@@ -9,13 +9,11 @@ passport.use(new LocalStrategy({
 		usernameField: "email"
 	},
 	function(email, password, done) {
-		logger.info("something");
+
 		User.findOne({
 			email: email
-		}, function(errors, user) {
-			logger.info("validating user");
-			if (errors) {
-				logger.error("errors");
+		}, function(err, user) {
+			if (err) {
 				return done(err);
 			}
 			if (!user) {
@@ -23,9 +21,9 @@ passport.use(new LocalStrategy({
 					message: "Incorrect username."
 				});
 			}
-			user.comparePassword(password, function(errors, match) {
-				if (errors) {
-					return done(errors);
+			user.comparePassword(password, function(err, match) {
+				if (err) {
+					return done(err);
 				}
 				if (match) {
 					return done(null, user);

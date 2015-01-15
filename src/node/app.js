@@ -4,6 +4,9 @@ var fs = require("fs");
 var bodyParser = require('body-parser');
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
+var https = require('https');
+var http = require('http');
+var server;
 
 nconf.env().argv().file("../../config.json");
 
@@ -20,12 +23,10 @@ if (nconf.get("app:database") === "tingodb") {
 var mongoose = require("mongoose");
 var express = require("express");
 
-var io = require("socket.io");
-
 var passport = require("passport")
 require("./auth/passport-strategy");
 
-var socketAuthorization = require('./auth/socket-authorization');
+var auth = require('./auth/auth');
 var app = express();
 
 // Setup server options
@@ -33,15 +34,17 @@ if( nconf.get("app:ssl") ) {
 	var serverOptions = {};
 	serverOptions.cert	= fs.readFileSync( nconf.get("ssl:cert"), 'utf-8');
 	serverOptions.key	= fs.readFileSync( nconf.get("ssl:key"), 'utf-8');
-	
-	var http = require('https');
-	var server = http.createServer(serverOptions, app);
+	server = https.createServer(serverOptions, app);
 } else {
-	var http = require("http");
-	var server = http.createServer(app);
+	server = http.createServer(app);
 }
 
-var io = io.listen(server);
+var io = require('socket.io')(server, {
+  serverClient: false,
+  origins: nconf.get("app:hostname") + ":" + nconf.get("app:port")
+});
+
+io.use(auth.isSocketAuthenticated);
 
 // Check for config setting if app database is tingodb.
 // By default app setting should be tingodb
@@ -78,25 +81,37 @@ users.add(nconf.get("app:defaultUser")).then(function(data) {
   logger.debug(err);
 });
 
-io.configure(function() {
-  io.set("origins", nconf.get("app:hostname") + ":" + nconf.get("app:port"));
-  io.set("log level", 1);
-  io.set("authorization", socketAuthorization);
-});
-
-
-logger.info("Configuring express.");
+logger.info("Configuring Express.");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(passport.initialize());
 app.use(express.static("../../dist"));
+app.use(multipartyMiddleware);
+app.use(function (req, res, next) {
+  logger.info('Request from', req.connection.remoteAddress);
+  next();
+});
+app.use(function (err, req, res, next) {
+  console.log(err.stack);
+  next();
+});
+app.use(function (err, req, res, next) {
+  res.status(500);
+  res.send(err);
+});
 
-require("./controllers/socket").init(io);
+// Login does not use authentication module
 require("./controllers/login")(app);
+
+app.use(auth.isAuthenticated);
+
+// Below uses the authentication module
 require("./controllers/feeds")(app);
-require("./controllers/torrent")(app, multipartyMiddleware);
+require("./controllers/torrent")(app);
 require("./controllers/settings")(app);
 require("./controllers/rss-subscriptions")();
+
+require("./controllers/socket").init(io);
 
 logger.debug("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
 

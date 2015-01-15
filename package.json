@@ -22,7 +22,7 @@
     "request": "2.21.0",
     "rimraf": "^2.2.8",
     "sax": "0.4.x",
-    "socket.io": "0.9.14",
+    "socket.io": "~1.2.1",
     "tungus": "0.0.2",
     "winston": "0.7.2",
     "xmlbuilder": "0.4.2",
@@ -64,7 +64,7 @@
     "angular-floatThead": "./src/vendor/angular-float-thead/angular-floatThead.js",
     "angular-file-upload": "./src/vendor/ng-file-upload/angular-file-upload.js",
     "restangular": "./src/vendor/restangular/dist/restangular.js",
-    "socket-io": "./src/vendor/socket.io-client/dist/socket.io.js"
+    "socket-io": "./src/vendor/socket.io-client/socket.io.js"
   },
   "browserify": {
     "transform": [

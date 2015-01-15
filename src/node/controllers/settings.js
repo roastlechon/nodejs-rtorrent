@@ -1,12 +1,12 @@
 var logger = require('winston');
-var auth = require('./auth');
+var auth = require('../auth/auth');
 var settings = require('../models/settings');
 
 module.exports = function(app) {
-	app.get('/settings/connection', auth.ensureAuthenticated, getConnectionSettings);
-	app.put('/settings/connection', auth.ensureAuthenticated, updateConnectionSettings);
-	app.get('/settings/download', auth.ensureAuthenticated, getDownloadSettings);
-	app.put('/settings/download', auth.ensureAuthenticated, updateDownloadSettings);
+	app.get('/settings/connection', getConnectionSettings);
+	app.put('/settings/connection', updateConnectionSettings);
+	app.get('/settings/download', getDownloadSettings);
+	app.put('/settings/download', updateDownloadSettings);
 }
 
 function getConnectionSettings(req, res) {

@@ -28,8 +28,9 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	});
 
 	Socket.on('error', function(err) {
-		if (err === 'handshake unauthorized') {
-			Notification.add('danger', 'Handshake unauthorized. Please login.');
+		logger.error(err);
+		if (err === 'Authentication token does not match.') {
+			Notification.add('danger', 'Authentication token does not match. Please login.');
 			
 			// Clear session
 			SessionService.clearSession();
@@ -37,7 +38,6 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 			// Redirect to login
 			$state.go('login');
 		}
-		logger.error(err);
 	});
 
 	Socket.on('torrents', function(data) {

@@ -30,6 +30,9 @@
 		}
 
 		this.clearSession = function () {
+			// Remove default headers when clearing session.
+			Restangular.setDefaultHeaders({});
+
 			$window.sessionStorage.clear();
 			userSession = {};
 		}
