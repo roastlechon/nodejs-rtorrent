@@ -36,6 +36,7 @@
 		},
 		"checkFeedLoopInterval": 300000,
 		"rtorrentLoopInterval": 2000,
+		"tokenExpireMinutes": 600,
 		"database": "tingodb"
 	}
 }

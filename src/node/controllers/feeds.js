@@ -1,16 +1,16 @@
 var feeds = require('../models/feeds');
 var logger = require('winston');
-var auth = require('./auth');
+var auth = require('../auth/auth');
 var Q = require('q');
 
 module.exports = function(app) {
-	app.get('/feeds', auth.ensureAuthenticated, getFeeds);
-	app.get('/feeds/:id', auth.ensureAuthenticated, getFeed);
-	app.post('/feeds', auth.ensureAuthenticated, addFeed);
-	app.put('/feeds/:id', auth.ensureAuthenticated, updateFeed);
-	app.delete('/feeds/:id', auth.ensureAuthenticated, deleteFeed);
-	app.post('/feeds/test', auth.ensureAuthenticated, testFeed);
-	app.post('/feeds/:id/refresh', auth.ensureAuthenticated, refreshFeed);
+	app.get('/feeds', getFeeds);
+	app.get('/feeds/:id', getFeed);
+	app.post('/feeds', addFeed);
+	app.put('/feeds/:id', updateFeed);
+	app.delete('/feeds/:id', deleteFeed);
+	app.post('/feeds/test', testFeed);
+	app.post('/feeds/:id/refresh', refreshFeed);
 }
 
 function getFeed(req, res) {
@@ -47,7 +47,6 @@ function addFeed(req, res) {
 		res.status(500).send(err.message);
 	});
 }
-
 
 
 function updateFeed(req, res) {

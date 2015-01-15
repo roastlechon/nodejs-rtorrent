@@ -13,17 +13,17 @@ function Socket (njrtLog, $rootScope, $window) {
 	var Socket = {};
 
 	Socket.connect = function () {
-		logger.debug('Connecting to socket.');
-		socket = connect();
+		logger.info('Connecting to socket.');
+		socket.connect();
 	};
 
 	Socket.reconnect = function () {
-		logger.debug('Reconnecting to socket.');
+		logger.info('Reconnecting to socket.');
 		socket = connect();
 	};
 
 	Socket.disconnect = function () {
-		logger.debug('Disconnecting from socket.')
+		logger.info('Disconnecting from socket.')
 		socket.disconnect();
 	};
 
@@ -47,13 +47,11 @@ function Socket (njrtLog, $rootScope, $window) {
 		});
 	};
 
-	function connect() {
-		logger.debug('Initializing connection to socket.');
-		return io.connect('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
-			'force new connection': true,
-			'sync disconnect on unload': true
-		});
+	function connect () {
+		return io.connect('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token);
 	}
+
+	connect();
 
 	return Socket;
 

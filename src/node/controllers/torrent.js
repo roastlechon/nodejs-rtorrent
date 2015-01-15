@@ -1,15 +1,15 @@
 var rtorrent = require("../lib/rtorrent");
 var logger = require("winston");
-var auth = require("./auth")
+var auth = require("../auth/auth")
 
-module.exports = function(app, multipartyMiddleware) {
-	app.post("/torrents/:hash/start", auth.ensureAuthenticated, startTorrent);
-	app.post("/torrents/:hash/pause", auth.ensureAuthenticated, pauseTorrent);
-	app.post("/torrents/:hash/stop", auth.ensureAuthenticated, stopTorrent);
-	app.post("/torrents/:hash/remove", auth.ensureAuthenticated, removeTorrent);
-	app.post("/torrents/:hash/delete_data", auth.ensureAuthenticated, deleteTorrentData);
-	app.post("/torrents/load", auth.ensureAuthenticated, multipartyMiddleware, loadTorrent);
-	app.post("/torrents/:hash/channel", auth.ensureAuthenticated, setTorrentChannel);
+module.exports = function(app) {
+	app.post("/torrents/:hash/start", startTorrent);
+	app.post("/torrents/:hash/pause", pauseTorrent);
+	app.post("/torrents/:hash/stop", stopTorrent);
+	app.post("/torrents/:hash/remove", removeTorrent);
+	app.post("/torrents/:hash/delete_data", deleteTorrentData);
+	app.post("/torrents/load", loadTorrent);
+	app.post("/torrents/:hash/channel", setTorrentChannel);
 }
 
 function startTorrent(req, res) {
