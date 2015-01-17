@@ -1,6 +1,6 @@
 #### 0.0.27
-*Drastically improved cpu usage on some systems
-*Upgraded to Express 4, Socket.IO 1.2.1
+* Drastically improved cpu usage on some systems
+* Upgraded to Express 4, Socket.IO 1.2.1
 
 #### 0.0.24
 * [Remote Torrent Adder support](https://code.google.com/p/remote-torrent-adder/)
