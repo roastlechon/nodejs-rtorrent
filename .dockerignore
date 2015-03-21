@@ -1,0 +1,11 @@
+.git
+.sass-cache
+.tmp
+.vagrant
+node_modules
+nodejs-rtorrent.log
+npm-debug.log
+package.box
+Vagrantfile
+.dockerignore
+.gitignore

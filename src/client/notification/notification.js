@@ -1,5 +1,2 @@
-module.exports = angular
+angular
 	.module('njrt.notification', []);
-
-require('./notification-factory');
-require('./notification-controller');

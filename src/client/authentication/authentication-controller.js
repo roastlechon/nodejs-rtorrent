@@ -1,6 +1,4 @@
-'use strict';
-
-function AuthenticationCtrl (njrtLog, Authentication) {
+function AuthenticationCtrl(njrtLog, Authentication) {
 
 	var logger = njrtLog.getInstance('njrt.authentication');
 
@@ -12,6 +10,6 @@ function AuthenticationCtrl (njrtLog, Authentication) {
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.authentication')
 	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);

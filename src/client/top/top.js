@@ -1,9 +1,7 @@
-'use strict';
-
-function config ($stateProvider, $urlRouterProvider) {
+function config($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/', '/torrents');
-	
+
 	$stateProvider.state('top', {
 		url: '/',
 		views: {
@@ -13,11 +11,8 @@ function config ($stateProvider, $urlRouterProvider) {
 		},
 		sticky: true
 	});
-
-
-
 }
 
-module.exports = angular
+angular
 	.module('njrt.top', [])
 	.config(['$stateProvider', '$urlRouterProvider', config]);

@@ -1,6 +1,4 @@
-'use strict';
-
-function LoginCtrl (njrtLog, Authentication, SessionService, $state, $previousState) {
+function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousState) {
 
 	var logger = njrtLog.getInstance('njrt.login');
 
@@ -19,13 +17,13 @@ function LoginCtrl (njrtLog, Authentication, SessionService, $state, $previousSt
 			email: vm.email,
 			password: vm.password
 		}).then(function (data) {
-			
+
 			if (SessionService.destinationState != '') {
 				$state.go(SessionService.destinationState);
 			} else {
 				$state.go('top');
 			}
-			
+
 		}, function (err) {
 			handleError(err);
 			logger.error(err);
@@ -40,6 +38,6 @@ function LoginCtrl (njrtLog, Authentication, SessionService, $state, $previousSt
 	}
 }
 
-module.exports = angular
+angular
 	.module('njrt.login')
 	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);

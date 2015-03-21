@@ -1,0 +1,4 @@
+scgi_port = localhost:5000
+directory = /root/data/downloads
+session = /root/data/session
+port_range = 63256-63256

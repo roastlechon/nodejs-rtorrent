@@ -1,6 +1,4 @@
-'use strict';
-
-function fileValidator () {
+function fileValidator() {
 	return {
 		restrict: 'A',
 		require:'ngModel',
@@ -13,6 +11,6 @@ function fileValidator () {
 	}
 }
 
-module.exports = angular
+angular
 	.module('app')
 	.directive('fileValidator', [fileValidator]);

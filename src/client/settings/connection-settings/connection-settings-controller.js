@@ -1,6 +1,4 @@
-'use strict';
-
-function ConnectionSettingsCtrl (njrtLog, connectionSettings, Settings, $previousState, $scope, Notification) {
+function ConnectionSettingsCtrl(njrtLog, connectionSettings, Settings, $previousState, $scope, Notification) {
 
 	var logger = njrtLog.getInstance('njrt.settings');
 
@@ -38,6 +36,6 @@ function ConnectionSettingsCtrl (njrtLog, connectionSettings, Settings, $previou
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings.connectionSettings')
 	.controller('njrt.ConnectionSettingsCtrl', ['njrtLog', 'connectionSettings', 'njrt.Settings', '$previousState', '$scope', 'njrt.Notification', ConnectionSettingsCtrl]);

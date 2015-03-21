@@ -1,27 +1,27 @@
-var gulp = require('gulp');
 var bump = require('gulp-bump');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var source = require('vinyl-source-stream');
-var sass = require('gulp-sass');
-var rimraf = require('gulp-rimraf');
-var preprocess = require('gulp-preprocess');
+var concat = require('gulp-concat');
+var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var templateCache = require('gulp-angular-templatecache');
-var minifyHTML = require('gulp-minify-html');
-var packageJson = require('./package.json');
+var karma = require('karma').server;
+var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
+var ngHtml2Js = require('gulp-ng-html2js');
+var rimraf = require('gulp-rimraf');
+var sass = require('gulp-sass');
+var nodemon = require('gulp-nodemon');
+var path = require('path');
+var tinylr = require('tiny-lr')();
+var mainBowerFiles = require('main-bower-files');
+var wrap = require('gulp-wrap');
+var series = require('stream-series');
 var watch = require('gulp-watch');
+var jshint = require('gulp-jshint');
+var angularFilesort = require('gulp-angular-filesort');
+var packageJson = require('./package.json');
+var preprocess = require('gulp-preprocess');
 
-// Clean tmp folder
 gulp.task('clean', function () {
-	return gulp.src('.tmp', {
-			read: false
-		})
-		.pipe(rimraf());
-});
-
-// Clean tmp folder
-gulp.task('clean_dist', function () {
 	return gulp.src('dist', {
 			read: false
 		})
@@ -29,31 +29,13 @@ gulp.task('clean_dist', function () {
 });
 
 // Copy assets to dist folder
-gulp.task('copy_assets', ['clean', 'clean_dist'], function () {
-	return gulp.src('src/assets/**/*')
-		.pipe(gulp.dest('dist'))
+gulp.task('copy', function () {
+  return gulp.src('src/assets/**/*')
+    .pipe(gulp.dest('dist'));
 });
-
-// Copy client scripts to .tmp folder to build
-gulp.task('copy_scripts', ['clean', 'clean_dist'], function () {
-	return gulp.src([
-		'src/client/**/*', 
-		'!src/client/**/*.html'
-		])
-		.pipe(gulp.dest('.tmp'));
-});
-
-gulp.task('watch_scripts', ['clean', 'clean_dist'], function () {
-	watch([
-		'src/client/**/*',
-		'!src/client/**/*.html'
-		], function (files) {
-			return files.pipe(gulp.dest('.tmp'));
-		});
-})
 
 // Compile sass from src and copy to dist
-gulp.task('compile_sass', ['clean', 'clean_dist'], function () {
+gulp.task('scss', function () {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
 			outputStyle: 'compressed'
@@ -62,18 +44,8 @@ gulp.task('compile_sass', ['clean', 'clean_dist'], function () {
 		.pipe(gulp.dest('dist/css'));
 });
 
-// Watches sass files and compiles to dist
-gulp.task('watch_compile_sass', ['clean', 'clean_dist'], function () {
-	watch('src/sass/**/*.scss', function () {
-		return gulp.src(['src/sass/styles.scss'])
-			.pipe(sass()
-			.on('error', gutil.log))
-			.pipe(gulp.dest('dist/css'));
-	});
-});
-
 // Preprocess index.html from src to dist
-gulp.task('preprocess_index.html', ['clean', 'clean_dist'], function () {
+gulp.task('preprocess', function () {
 	return gulp.src('src/client/index.html')
 		.pipe(preprocess({
 			context: {
@@ -83,96 +55,77 @@ gulp.task('preprocess_index.html', ['clean', 'clean_dist'], function () {
 		.pipe(gulp.dest('dist'));
 });
 
-// Watch index.html and preprocess index.html from src to dist
-gulp.task('watch_preprocess_index.html', ['clean', 'clean_dist'], function () {
-	watch('src/client/index.html', function(file) {
-		return file.pipe(preprocess({
-				context: {
-					VERSION: packageJson.version
-				}
-			}))
-			.pipe(gulp.dest('dist'));
-	});
+gulp.task('scripts', function () {
+  return series(
+      gulp.src(mainBowerFiles({
+          filter: '**/*.js'
+        }, {
+          base: 'src/vendor'
+        })
+        .concat('src/client/**/*.tpl.html')),
+      gulp.src('src/client/**/*.js')
+        // .pipe(gulpif('**/*.js', jshint()))
+        // .pipe(jshint.reporter('default'))
+        // .pipe(gulpif(gutil.env.production, jshint.reporter('fail')))
+        .pipe(gulpif('**/*.js', angularFilesort()))
+        .pipe(gulpif('**/*.js', wrap('(function() {\'use strict\'; <%= contents %>})();'))))
+    .pipe(gulpif('**/*.tpl.html', ngHtml2Js({
+      moduleName: 'njrt.templates'
+    })))
+    .pipe(gulpif(gutil.env.production, ngAnnotate()))
+    .pipe(gulpif(gutil.env.production, uglify()))
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('dist/js'));
 });
 
-// Minify html templates from src to .tmp into templates.js file
-gulp.task('minify_templates', ['clean', 'clean_dist'], function () {
-	return gulp.src([
-			'src/client/**/*.html',
-			'!src/client/index.html'
-		])
-		.pipe(minifyHTML({
-			quotes: true,
-			empty: true
-		}))
-		.pipe(templateCache({
-			standalone: true
-		}))
-		.pipe(gulp.dest('.tmp'));
+gulp.task('dev', ['copy', 'scripts', 'preprocess', 'scss'], function () {
+
 });
 
-// Watch templates from src and minify to .tmp into templates.js file
-gulp.task('watch_templates', ['clean', 'clean_dist'], function () {
-	watch([
-		'src/client/**/*.html',
-		'!src/client/index.html'
-		], function () {
-			return gulp.src([
-					'src/client/**/*.html',
-					'!src/client/index.html'
-				])
-				.pipe(minifyHTML({
-					quotes: true,
-					empty: true
-				}))
-				.pipe(templateCache({
-					standalone: true
-				}))
-				.pipe(gulp.dest('.tmp'));
-		});
-});
+gulp.task('watch', ['dev'], function () {
+  tinylr.listen(4002);
 
-// Compiles client source using browserify. Minifies and pipes everything 
-// to dist folder.
-gulp.task('browserify', ['preprocess_index.html', 'copy_assets', 'copy_scripts', 
-	'compile_sass', 'minify_templates'], function () {
-	return browserify()
-		.add('./.tmp/app.js')
-		.plugin('minifyify', {
-			map: false
-		})
-		.bundle()
-		.pipe(source('app.js'))
-		.pipe(gulp.dest('dist/js'));
-});
+  // watch scss and copy to dist/css/styles.css
+  watch('src/sass/styles.scss', function () {
+    gulp.start('scss');
+  });
 
-// Watches file dependencies in app.js in .tmp folder and compiles to
-// the dist folder.
-gulp.task('watchify', ['watch_preprocess_index.html', 'preprocess_index.html', 'copy_assets', 
-	'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'], function () {
+  // watch js and copy to dist/js/app.js
+  watch(mainBowerFiles({
+          filter: '**/*.js'
+        }, {
+          base: 'src/vendor'
+        })
+    .concat('src/client/**/*.tpl.html')
+    .concat('src/client/**/*.js'), function () {
+    gulp.start('scripts');
+  });
 
-	function bundle (ids) {
+  // watch dist/js/app.js and trigger livereload
+  gulp.watch(['./dist/js/app.js', './dist/css/styles.css'], function (e) {
+    var fileName = path.relative(__dirname, e.path);
+    tinylr.changed({
+      body: {
+        files: [fileName]
+      }
+    });
+  });
 
-		if (ids) {
-			gutil.log('[watchify] rebundling files: ', ids);	
-		}
-		
-		return bundler.bundle()
-			.on('error', gutil.log)
-			.pipe(source('app.js'))
-			.pipe(gulp.dest('./dist/js'));
-	}
-
-	var bundler = watchify(browserify({
-		cache: {},
-		packageCache: {},
-		fullPaths: true,
-		debug: true
-	})).add('./.tmp/app.js');
-
-	bundler.on('update', bundle);
-
-	return bundle();
+  // start express server and restart if there are
+  // changes to src/node
+  nodemon({
+    script: './index.js',
+    ext: 'js html',
+    ignore: [
+      'dist/**/*',
+      'node_modules/**/*',
+      'src/client/**/*',
+      'src/assets/**/*',
+      'src/sass/**/*',
+      'src/vendor/**/*',
+      'gulpfile.js'
+    ]
+  });
 
 });
 
@@ -181,15 +134,4 @@ gulp.task('bump', function () {
 	return gulp.src(['./bower.json', './package.json'])
 		.pipe(bump())
 		.pipe(gulp.dest('./'));
-});
-
-// Dev task that calls watch functions
-gulp.task('dev', ['watchify'], function () {
-	gutil.log('Finished executing dev run sequence.');
-	gutil.log('Watching for changes...');
-});
-
-// Default task that calls production build
-gulp.task('default', ['browserify'], function () {
-	gutil.log('Finished executing prod run sequence.');
 });

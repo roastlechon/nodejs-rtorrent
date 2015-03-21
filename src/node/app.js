@@ -3,6 +3,7 @@ var nconf = require("nconf");
 var fs = require("fs");
 var bodyParser = require('body-parser');
 var multiparty = require('connect-multiparty');
+var livereload = require('connect-livereload');
 var multipartyMiddleware = multiparty();
 var https = require('https');
 var http = require('http');
@@ -11,7 +12,10 @@ var server;
 nconf.env().argv().file("../../config.json");
 
 var rtorrent = require("./lib/rtorrent");
-logger.add(logger.transports.File, { filename: "../../nodejs-rtorrent.log"});
+logger.add(logger.transports.File, {
+    filename: "../../nodejs-rtorrent.log"
+});
+logger.level = 'debug';
 logger.exitOnError = false;
 
 logger.info("Initializing nodejs-rtorrent server.");
@@ -23,8 +27,8 @@ if (nconf.get("app:database") === "tingodb") {
 var mongoose = require("mongoose");
 var express = require("express");
 
-var passport = require("passport")
-require("./auth/passport-strategy");
+var passport = require("passport");
+require("./auth/passport/passport-strategy")(passport);
 
 var auth = require('./auth/auth');
 var app = express();
@@ -73,18 +77,24 @@ if (nconf.get("app:database") === "mongodb") {
 logger.info('Connected successfully to database.');
 
 logger.info("Configuring default user");
-var users = require("./models/users");
-users.add(nconf.get("app:defaultUser")).then(function(data) {
-  logger.info(data);
-  logger.info("Successfully created default user");
-}, function(err) {
-  logger.debug(err);
+var users = require("./users/users-model");
+users.add(nconf.get("app:defaultUser")).then(function (data) {
+  logger.info("Successfully created default user", data.email);
+}, function (err) {
+  if (err.message === 'User exists.') {
+    logger.debug('User exists.');
+  } else {
+    logger.error(err.message);
+  }
 });
 
 logger.info("Configuring Express.");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(passport.initialize());
+app.use(livereload({
+    port: 4002
+  }));
 app.use(express.static("../../dist"));
 app.use(multipartyMiddleware);
 app.use(function (req, res, next) {
@@ -100,18 +110,30 @@ app.use(function (err, req, res, next) {
   res.send(err);
 });
 
-// Login does not use authentication module
-require("./controllers/login")(app);
+var authRoute = require("./auth/auth-route");
+var torrentsRoute = require("./torrents/torrents-route");
+var feedsRoute = require("./feeds/feeds-route");
+var settingsRoute = require('./settings/settings-route');
 
+var router = express.Router();
+var loginRouter = express.Router();
+
+// authRoute does not use authentication
+authRoute(loginRouter);
+feedsRoute(router);
+settingsRoute(router);
+torrentsRoute(router);
+
+
+
+app.use(loginRouter);
 app.use(auth.isAuthenticated);
+app.use(router);
 
-// Below uses the authentication module
-require("./controllers/feeds")(app);
-require("./controllers/torrent")(app);
-require("./controllers/settings")(app);
-require("./controllers/rss-subscriptions")();
+// require("./controllers/rss-subscriptions")();
 
-require("./controllers/socket").init(io);
+var socket = require("./app/socket");
+socket(io);
 
 logger.debug("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
 

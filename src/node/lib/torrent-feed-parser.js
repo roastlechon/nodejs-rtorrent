@@ -77,7 +77,7 @@ function evaluateRules(torrent, includeRules, excludeRules) {
 torrentFeedParser.getTorrents = function(feed) {
 	var rss = feed.rss;
 	var filters = feed.filters;
-	var regexFilter = feed.regexFilter;
+	var regexFilter = filters.length > 0;
 
 	logger.info("Parsing feed: %s", rss);	
 

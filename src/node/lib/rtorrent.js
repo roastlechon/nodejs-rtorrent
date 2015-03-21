@@ -27,7 +27,7 @@ logger.info('Connect to rtorrent via', nconf.get('rtorrent:option'));
 // need something to test connection to rtorrent first...
 
 function scgiMethodCall(api, array) {
-	var stream = net.connect(nconf.get('rtorrent:scgi:port'), nconf.get('rtorrent:scgi:host'));
+	var stream = net.connect(5000, 'localhost');
 	stream.setEncoding('UTF8');
 
 	var deferred = Q.defer();
@@ -116,7 +116,7 @@ rtorrent.init = function () {
 				throw new Error('Unable to connect to rtorrent.');
 			}
 		});
-}
+};
 
 function createThrottleSettings () {
 	logger.info('Creating throttle settings.');
@@ -237,6 +237,85 @@ function adaptTorrentArray (torrent) {
 		total_seeds: 0
 	}
 }
+
+rtorrent.getTorrentsByHash = function (hashes) {
+
+	var systemMultiCallArray = [];
+
+	var infoArray = ['d.name', 'd.hash', 'd.size_bytes', 'd.bytes_done', 'd.get_down_rate', 'd.get_up_rate', 'd.get_complete', 'd.is_open', 'd.is_hash_checking', 'd.get_state', 'd.get_peers_complete', 'd.get_peers_accounted', 'd.get_up_total'];
+
+	hashes.forEach(function (hash) {
+		infoArray.forEach(function (api) {
+			systemMultiCallArray.push({
+				methodName: api,
+				params: [hash]
+			});
+		});
+	});
+
+	return methodCall('system.multicall', [systemMultiCallArray])
+		.then(function (data) {
+			console.log(data);
+			var sliceSize = infoArray.length;
+			var results = [];
+			for (var i = 0; i < data.length; i += sliceSize) {
+				var tArray = data.slice(i, i + sliceSize);
+				results.push(adaptTorrentArray(tArray.reduce(function (prevVal, currentVal, index, array) {
+					return prevVal.concat(currentVal);
+				})));
+			}
+
+			var multiCallSeedsPeersArray = [];
+			results.forEach(function (torrent) {
+
+				// Push peers first for the torrent
+				multiCallSeedsPeersArray.push({
+					methodName: 't.multicall', 
+					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_incomplete=']
+				});
+
+				// Push seeds second for the torrent
+				multiCallSeedsPeersArray.push({
+					methodName: 't.multicall', 
+					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_complete=']
+				});
+			});
+
+			// Do the system.multicall and return promise
+			// Inside the resolve function, we loop through the array
+			return methodCall('system.multicall', [multiCallSeedsPeersArray]).then(function(data) {
+				var numberArray = [];
+				
+				// The length of data should be equal to the length of systemMultiCallArray
+				data.forEach(function(item) {
+					// Each item in the array has an array of arrays
+					 item.forEach(function(itemagain) {
+					 	// Map and reduce the array to get the number
+						var number = itemagain.map(function (value) {
+								return parseInt(value, 10);
+							})
+							.reduce(function (a, b) {
+								return a + b;
+							}, 0);
+						// Push the number to a clean array so that we can place it correctly back into
+						// the torrent object to return to client
+						numberArray.push(number);
+					});				
+				});
+
+				// Map torrents and shift from numberArray to get the correct order
+				// Peers is first, followed by seeds.
+				// Return each torrent and finally return torrents back to caller.
+				return results.map(function (torrent) {
+					torrent.total_peers = numberArray.shift();
+					torrent.total_seeds = numberArray.shift();
+					return torrent;
+				});
+			});
+			
+
+		});
+};
 
 rtorrent.getTorrents = function () {
 	return methodCall('d.multicall', ['main', 'd.name=', 'd.hash=', 'd.size_bytes=', 'd.bytes_done=', 'd.get_down_rate=', 'd.get_up_rate=', 'd.get_complete=', 'd.is_open=', 'd.is_hash_checking=', 'd.get_state=', 'd.get_peers_complete=', 'd.get_peers_accounted=', 'd.get_up_total='])

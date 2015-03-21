@@ -1,4 +1,2 @@
-module.exports = angular
+angular
 	.module('njrt.session', []);
-
-require('./session-service');

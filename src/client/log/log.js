@@ -1,6 +1,4 @@
-var moment = require('moment');
-
-module.exports = angular
+angular
 	.module('njrt.log', [])
 	.run(['$log', function ($log) {
 		$log.getInstance = function(context) {
@@ -11,7 +9,7 @@ module.exports = angular
 				debug: enhanceLogging($log.debug, context),
 				error: enhanceLogging($log.error, context)
 			};
-		}
+		};
 
 		function enhanceLogging(logFn, context) {
 			return function() {
@@ -24,5 +22,5 @@ module.exports = angular
 	.service('njrtLog', function($log) {
 		this.getInstance = function(context) {
 			return $log.getInstance(context);
-		}
+		};
 	});

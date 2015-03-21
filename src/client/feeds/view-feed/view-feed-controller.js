@@ -1,6 +1,4 @@
-'use strict';
-
-function ViewFeedCtrl (njrtLog, $state, $scope, feed, Torrents) {
+function ViewFeedCtrl(njrtLog, $state, $scope, feed, Torrents) {
 
 	var logger = njrtLog.getInstance('njrt.feed');
 
@@ -41,6 +39,6 @@ function ViewFeedCtrl (njrtLog, $state, $scope, feed, Torrents) {
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);

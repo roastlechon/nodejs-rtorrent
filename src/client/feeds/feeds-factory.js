@@ -1,6 +1,4 @@
-'use strict';
-
-function Feeds (njrtLog, Restangular, $q) {
+function Feeds(njrtLog, Restangular, $q) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
@@ -61,7 +59,7 @@ function Feeds (njrtLog, Restangular, $q) {
 				});
 
 				var index = Feeds.feeds.indexOf(item);
-				
+
 				// delete from collection
 				if (index > -1) {
 					Feeds.feeds.splice(index, 1);
@@ -79,6 +77,6 @@ function Feeds (njrtLog, Restangular, $q) {
 	return Feeds;
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds')
 	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);

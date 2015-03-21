@@ -1,6 +1,4 @@
-'use strict';
-
-function Settings (njrtLog, Restangular, $q) {
+function Settings(njrtLog, Restangular, $q) {
 
 	var logger = njrtLog.getInstance('njrt.settings');
 
@@ -27,6 +25,6 @@ function Settings (njrtLog, Restangular, $q) {
 	return Settings;
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings')
 	.factory('njrt.Settings', ['njrtLog', 'Restangular', '$q', Settings]);

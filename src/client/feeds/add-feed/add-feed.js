@@ -1,10 +1,8 @@
-'use strict';
-
-function resolve (Settings) {
+function resolve(Settings) {
 	return Settings.getDownloadSettings();
 }
 
-function config ($stateProvider) {
+function config($stateProvider) {
 	$stateProvider
 		.state('addFeed', {
 			url: '/add-feed',
@@ -24,8 +22,6 @@ function config ($stateProvider) {
 		});
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.addFeed', [])
 	.config(['$stateProvider', config]);
-
-require('./add-feed-controller');

@@ -1,11 +1,9 @@
-'use strict';
-
-function Authentication (njrtLog, $http, $state, SessionService, $q, Socket) {
+function Authentication(njrtLog, $http, $state, SessionService, $q, Socket) {
 
 	var logger = njrtLog.getInstance('njrt.authentication');
 
 	logger.debug('Authentication loaded.');
-	
+
 	var Authentication = {};
 
 	Authentication.login = function (user) {
@@ -25,7 +23,7 @@ function Authentication (njrtLog, $http, $state, SessionService, $q, Socket) {
 
 			// Connect to socket
 			Socket.connect();
-			
+
 			deferred.resolve(userSession);
 		}, function (err) {
 			SessionService.clearSession();
@@ -34,14 +32,14 @@ function Authentication (njrtLog, $http, $state, SessionService, $q, Socket) {
 
 		return deferred.promise;
 	};
-	
+
 	Authentication.logout = function () {
 		SessionService.clearSession();
 
 		Socket.disconnect();
 		$state.go('top');
 	};
-	
+
 	Authentication.isAuthenticated = function () {
 		if (SessionService.isCurrentSessionValid()) {
 			return true;
@@ -49,7 +47,7 @@ function Authentication (njrtLog, $http, $state, SessionService, $q, Socket) {
 
 		return false;
 	};
-	
+
 	Authentication.getCurrentUser = function () {
 		return SessionService.getUserSession();
 	};
@@ -57,6 +55,6 @@ function Authentication (njrtLog, $http, $state, SessionService, $q, Socket) {
 	return Authentication;
 }
 
-module.exports = angular
+angular
 	.module('njrt.authentication')
 	.factory('njrt.Authentication', ['njrtLog', '$http', '$state', 'njrt.SessionService', '$q', 'Socket', Authentication]);

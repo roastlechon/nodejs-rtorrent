@@ -1,0 +1,1 @@
+cd /home/app/webapp/nodejs-rtorrent/ && exec npm start

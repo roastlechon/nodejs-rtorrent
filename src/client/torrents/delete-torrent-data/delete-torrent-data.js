@@ -1,12 +1,12 @@
-module.exports = angular
-	.module('njrt.torrents.deleteTorrentData', [])
-	.config(['$stateProvider', config]);
-
-function resolve (Torrents, $stateParams) {
-	return Torrents.getTorrent($stateParams.id);
+function resolve(Torrents, $stateParams) {
+	var hash = [];
+	if ($stateParams.id) {
+		hash = $stateParams.id.split(',');
+	}
+	return Torrents.getTorrent(hash);
 }
 
-function config ($stateProvider) {
+function config($stateProvider) {
 	$stateProvider.state('deleteTorrentData', {
 		url: '/deleteTorrentData/:id',
 		views: {
@@ -25,4 +25,6 @@ function config ($stateProvider) {
 	});
 }
 
-require('./delete-torrent-data-controller');
+angular
+  .module('njrt.torrents.deleteTorrentData', [])
+  .config(['$stateProvider', config]);

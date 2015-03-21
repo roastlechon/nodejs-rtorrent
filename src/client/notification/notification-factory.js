@@ -1,6 +1,4 @@
-'use strict';
-
-function Notification ($q, $timeout) {
+function Notification($q, $timeout) {
 
 	var Notification = {};
 
@@ -8,11 +6,11 @@ function Notification ($q, $timeout) {
 
 	Notification.add = function (type, message) {
 		var deferred = $q.defer();
-		
+
 		var notification = {
 			type: type,
 			msg: message
-		}
+		};
 
 		Notification.notifications.push(notification);
 
@@ -24,15 +22,15 @@ function Notification ($q, $timeout) {
 		deferred.resolve(notification);
 
 		return deferred.promise;
-	}
+	};
 
 	Notification.remove = function (index) {
 		Notification.notifications.splice(index, 1);
-	}
+	};
 
 	return Notification;
 }
 
-module.exports = angular
+angular
 	.module('njrt.notification')
 	.factory('njrt.Notification', ['$q', '$timeout', Notification]);

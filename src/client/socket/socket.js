@@ -1,4 +1,1 @@
-module.exports = angular
-	.module('socket', []);
-
-require('./socket-factory');
+angular.module('njrt.socket', []);

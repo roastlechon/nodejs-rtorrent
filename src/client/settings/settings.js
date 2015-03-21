@@ -1,12 +1,7 @@
-'use strict';
-
-var connectionSettings = require('./connection-settings/connection-settings');
-var downloadSettings = require('./download-settings/download-settings');
-
 function config ($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/settings', '/settings/download');
-	
+
 	$stateProvider
 		.state('settings', {
 			url: '/settings',
@@ -24,12 +19,9 @@ function config ($stateProvider, $urlRouterProvider) {
 		});
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings', [
-		connectionSettings.name,
-		downloadSettings.name
+		'njrt.settings.connectionSettings',
+    'njrt.settings.downloadSettings'
 	])
 	.config(['$stateProvider', '$urlRouterProvider', config]);
-
-require('./settings-factory');
-require('./settings-controller');

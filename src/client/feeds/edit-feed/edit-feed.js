@@ -1,5 +1,3 @@
-'use strict';
-
 function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
@@ -22,11 +20,9 @@ function config ($stateProvider) {
 		}
 	});
 
-	
+
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.editFeed', [])
 	.config(['$stateProvider', config]);
-
-require('./edit-feed-controller');

@@ -1,6 +1,4 @@
-'use strict';
-
-function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notification, downloadSettings) {
+function AddFeedCtrl(njrtLog, $state, $previousState, $scope, Feeds, Notification, downloadSettings) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
@@ -11,15 +9,13 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 	vm.feed = {
 		rss: '',
 		title: '',
-		changeTorrentLocation: false,
 		path: '',
-		regexFilter: false,
 		autoDownload: false,
 		filters: []
 	};
-	
+
 	vm.defaultDownloadPath = downloadSettings.download_directory;
-	
+
 	vm.newFilter = {};
 
 	vm.error = false;
@@ -28,22 +24,22 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 		// if form is invalid, but filters are added
 		// return false to enable submit button
 		if ($scope.addFeed.$invalid) {
-			
-			if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
+
+			if (vm.hasRegexFilter && vm.feed.filters.length > 0) {
 				return false;
 			}
 
 			return true;
 		}
 
-		// if form is valid because of filter options being 
+		// if form is valid because of filter options being
 		// entered in, but not added, do an additional check
 		if (!$scope.addFeed.$invalid) {
 
 			// if regexFilter option is true
 			// and no filters were added
 			// return true to disable submit button
-			if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
+			if (vm.hasRegexFilter && vm.feed.filters.length === 0) {
 				return true;
 			}
 
@@ -52,7 +48,7 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 	};
 
 	vm.addFilter = function (filter) {
-		
+
 		vm.feed.filters.push({
 			regex: filter.regex,
 			type: filter.type
@@ -73,13 +69,22 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 	};
 
 	vm.addRssFeed = function () {
+
+		// If changeTorrentLocation option is true, empty path
+		if (!vm.changeTorrentLocation) {
+			vm.feed.path = '';
+		}
+
+		// If has regex filter option, empty filters array
+		if (!vm.hasRegexFilter) {
+			vm.feed.filters = [];
+		}
+
 		Feeds.addFeed({
 			rss: vm.feed.url,
 			title: vm.feed.name,
 			path: vm.feed.path,
-			changeTorrentLocation: vm.feed.changeTorrentLocation,
 			filters: vm.feed.filters,
-			regexFilter: vm.feed.regexFilter,
 			autoDownload: vm.feed.autoDownload
 		}).then(function (data) {
 			$previousState.go('modalInvoker');
@@ -101,6 +106,6 @@ function AddFeedCtrl (njrtLog, $state, $previousState, $scope, Feeds, Notificati
 	}
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.addFeed')
 	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);

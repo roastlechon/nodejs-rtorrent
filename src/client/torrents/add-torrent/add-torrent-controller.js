@@ -1,8 +1,4 @@
-module.exports = angular
-	.module('njrt.torrents.addTorrent')
-	.controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
-
-function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
+function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
 
 	var logger = njrtLog.getInstance('torrents.add');
 
@@ -25,7 +21,7 @@ function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope, down
 			}, function (err) {
 				logger.error(err);
 			});
-	}
+	};
 
 	vm.fileSelected = function ($files, $event) {
 		vm.torrent.file = $files[0];
@@ -33,6 +29,10 @@ function AddTorrentCtrl (njrtLog, $state, $previousState, Torrents, $scope, down
 
 	vm.cancel = function () {
 		$previousState.go('modalInvoker');
-	}
+	};
 
 }
+
+angular
+  .module('njrt.torrents.addTorrent')
+  .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);

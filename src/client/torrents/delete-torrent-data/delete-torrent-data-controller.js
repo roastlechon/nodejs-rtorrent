@@ -1,7 +1,3 @@
-module.exports = angular
-	.module('njrt.torrents.deleteTorrentData')
-	.controller('njrt.DeleteTorrentDataCtrl', ['njrtLog', '$stateParams', '$previousState', '$modal', 'njrt.Torrents', 'torrent', DeleteTorrentDataCtrl]);
-
 function DeleteTorrentDataCtrl (njrtLog, $stateParams, $previousState, $modal, Torrents, torrent) {
 
 	var logger = njrtLog.getInstance('njrt.torrents');
@@ -32,3 +28,7 @@ function DeleteTorrentDataCtrl (njrtLog, $stateParams, $previousState, $modal, T
 	};
 
 }
+
+angular
+  .module('njrt.torrents.deleteTorrentData')
+  .controller('njrt.DeleteTorrentDataCtrl', ['njrtLog', '$stateParams', '$previousState', '$modal', 'njrt.Torrents', 'torrent', DeleteTorrentDataCtrl]);

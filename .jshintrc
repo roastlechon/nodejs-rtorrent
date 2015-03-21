@@ -1,0 +1,43 @@
+{
+    "bitwise":      true,
+    "browser":      true,
+    "camelcase":    true,
+    "curly":        true,
+    "esnext":       true,
+    "eqeqeq":       true,
+    "immed":        true,
+    "indent":       false,
+    "newcap":       true,
+    "noarg":        true,
+    "node":         true,
+    "quotmark":     "single",
+    "smarttabs":    true,
+    "sub":          true, //to suppress dot notation usage jshint issue (eg.$scope.column['task'])
+    "trailing":     true,
+    "undef":        true,
+    "unused":       true,
+
+    "globals": {
+        "$":        false,
+        "_":        false,
+        "PDFJS":    false,
+        "angular":  false,
+        "console":  false,
+        "define":   false,
+        "describe": false,
+        "expect":   false,
+        "exports":  false,
+        "it":       false,
+        "JST":      true,
+        "jQuery":   false,
+        "module":   false,
+        "moment":   false,
+        "regexp":   false,
+        "require":  false,
+        "runs":     false,
+        "typeOf":   false,
+        "waitsFor": false,
+        "alert":    false,
+        "jasmine":  false
+    }
+}

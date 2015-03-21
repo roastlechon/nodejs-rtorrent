@@ -1,53 +1,49 @@
-'use strict';
+function EditFeedCtrl(njrtLog, $state, $previousState, $scope, feed, Feeds, Restangular) {
 
-function EditFeedCtrl (njrtLog, $state, $previousState, $scope, feed, Feeds, Restangular) {
-	
 	var logger = njrtLog.getInstance('njrt.feeds');
 
 	logger.debug('EditFeedCtrl loaded.');
 
 	var vm = this;
 
+	vm.error = false;
+
 	vm.feed = Restangular.copy(feed);
 	vm.newFilter = {};
-
-	if (!('changeTorrentLocation' in vm.feed)) {
-		vm.feed.changeTorrentLocation = false;
-	}
 
 	if (!('path' in vm.feed)) {
 		vm.feed.path = '';
 	}
 
-	vm.checkDisabled = function() {
-		// if form is invalid, but filters are added
-		// return false to enable submit button
-		if ($scope.addFeed.$invalid) {
-			
-			if (vm.feed.regexFilter && vm.feed.filters.length > 0) {
-				return false;
-			}
+	if (vm.feed.path.length > 0) {
+		vm.changeTorrentLocation = true;
+	}
 
+	if (vm.feed.filters.length > 0) {
+		vm.hasRegexFilter = true;
+	}
+
+	vm.checkDisabled = function() {
+
+		// If form has been touched, disable submit button.
+		if ($scope.editFeed.$pristine) {
 			return true;
 		}
 
-		// if form is valid because of filter options being 
-		// entered in, but not added, do an additional check
-		if (!$scope.addFeed.$invalid) {
+		// If form is invalid, but filters are added, enable submit button.
+		if ($scope.editFeed.$invalid) {
+			return true;
+		}
 
-			// if regexFilter option is true
-			// and no filters were added
-			// return true to disable submit button
-			if (vm.feed.regexFilter && vm.feed.filters.length === 0) {
-				return true;
-			}
-
-			return false;
+		// If form is valid and regex is checked and filters are empty,
+		// disable the submit button.
+		if (vm.hasRegexFilter && vm.feed.filters.length === 0) {
+			return true;
 		}
 	};
 
 	vm.addFilter = function(filter) {
-		
+
 		vm.feed.filters.push({
 			regex: filter.regex,
 			type: filter.type
@@ -68,10 +64,22 @@ function EditFeedCtrl (njrtLog, $state, $previousState, $scope, feed, Feeds, Res
 	};
 
 	vm.editFeed = function (feed) {
+
+		// If changeTorrentLocation option is true, empty path
+		if (!vm.changeTorrentLocation) {
+			vm.feed.path = '';
+		}
+
+		// If has regex filter option, empty filters array
+		if (!vm.hasRegexFilter) {
+			vm.feed.filters = [];
+		}
+
 		Feeds.updateFeed(feed)
 			.then(function(data) {
 				$previousState.go('modalInvoker');
 			}, function(err) {
+				handleError(err);
 				logger.error(err);
 			});
 	};
@@ -80,8 +88,13 @@ function EditFeedCtrl (njrtLog, $state, $previousState, $scope, feed, Feeds, Res
 		$previousState.go('modalInvoker');
 	};
 
+	function handleError (err) {
+		console.log(err);
+		vm.error(err);
+	}
+
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.editFeed')
 	.controller('njrt.EditFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'feed', 'njrt.Feeds', 'Restangular', EditFeedCtrl]);

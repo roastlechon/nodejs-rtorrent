@@ -1,6 +1,4 @@
-'use strict';
-
-function torrentUrlValidator () {
+function torrentUrlValidator() {
 	return {
 		restrict: 'A',
 		require:'ngModel',
@@ -10,9 +8,9 @@ function torrentUrlValidator () {
 				return /^https?:/.test(value) || /^magnet:/.test(value);
 			}
 		}
-	}
+	};
 }
 
-module.exports = angular
+angular
 	.module('app')
 	.directive('torrentUrlValidator', [torrentUrlValidator]);

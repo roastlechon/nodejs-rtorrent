@@ -1,5 +1,3 @@
-'use strict';
-
 function njrtResize ($window) {
 	return function(scope, element) {
 		var w = angular.element($window);
@@ -21,6 +19,6 @@ function njrtResize ($window) {
 	};
 }
 
-module.exports = angular
+angular
 	.module('app')
 	.directive('njrtResize', ['$window', njrtResize]);

@@ -1,11 +1,9 @@
-'use strict';
-
-function resolve (Settings) {
+function resolve(Settings) {
 	return Settings.getConnectionSettings();
 }
 
-function config ($stateProvider) {
-	
+function config($stateProvider) {
+
 	$stateProvider
 		.state('settings.connection', {
 			url: '/connection',
@@ -23,8 +21,6 @@ function config ($stateProvider) {
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings.connectionSettings', [])
 	.config(['$stateProvider', config]);
-
-require('./connection-settings-controller');

@@ -1,12 +1,8 @@
-module.exports = angular
-	.module('njrt.torrents.addTorrent', [])
-	.config(['$stateProvider', config]);
-
-function resolve (Settings) {
+function resolve(Settings) {
 	return Settings.getDownloadSettings();
 }
 
-function config ($stateProvider) {
+function config($stateProvider) {
 	$stateProvider.state('addTorrent', {
 		url: '/add-torrent',
 		views: {
@@ -25,4 +21,6 @@ function config ($stateProvider) {
 	});
 }
 
-require('./add-torrent-controller');
+angular
+  .module('njrt.torrents.addTorrent', [])
+  .config(['$stateProvider', config]);

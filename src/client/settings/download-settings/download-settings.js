@@ -1,11 +1,9 @@
-'use strict';
-
-function resolve (Settings) {
+function resolve(Settings) {
 	return Settings.getDownloadSettings();
 }
 
-function config ($stateProvider) {
-	
+function config($stateProvider) {
+
 	$stateProvider
 		.state('settings.download', {
 			url: '/download',
@@ -23,8 +21,6 @@ function config ($stateProvider) {
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings.downloadSettings', [])
 	.config(['$stateProvider', config]);
-
-require('./download-settings-controller');

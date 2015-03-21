@@ -1,10 +1,8 @@
-'use strict';
-
-function resolve (Feeds, $stateParams) {
+function resolve(Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
-	
-function config ($stateProvider) {
+
+function config($stateProvider) {
 	$stateProvider.state('top.feeds.view', {
 		url: '/:id/view',
 		views: {
@@ -22,8 +20,6 @@ function config ($stateProvider) {
 	});
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.viewFeed', [])
 	.config(['$stateProvider', config]);
-
-require('./view-feed-controller');

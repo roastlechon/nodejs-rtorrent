@@ -1,6 +1,4 @@
-'use strict';
-
-function DownloadSettingsCtrl (njrtLog, downloadSettings, Settings, $previousState, $scope) {
+function DownloadSettingsCtrl(njrtLog, downloadSettings, Settings, $previousState, $scope) {
 
 	var logger = njrtLog.getInstance('njrt.settings');
 
@@ -38,6 +36,6 @@ function DownloadSettingsCtrl (njrtLog, downloadSettings, Settings, $previousSta
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.settings.downloadSettings')
 	.controller('njrt.DownloadSettingsCtrl', ['njrtLog', 'downloadSettings', 'njrt.Settings', '$previousState', '$scope', DownloadSettingsCtrl]);

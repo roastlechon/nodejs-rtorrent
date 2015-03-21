@@ -1,8 +1,4 @@
-module.exports = angular
-	.module('njrt.torrents')
-	.factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', Torrents]);
-
-function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionService, $q, $upload) {
+function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionService, $q, $upload, $interval) {
 
 	var logger = njrtLog.getInstance('njrt.torrents');
 
@@ -14,12 +10,18 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 
 	Torrents.selectedTorrents = [];
 
-	Socket.on('connect', function() {
-		logger.debug('Connected to socket.');
-	});
+  Torrents.query = {
+    sort_by: '',
+    reverse: false,
+    filter: ''
+  };
 
 	Socket.on('connecting', function() {
 		logger.debug('Connecting to socket.');
+	});
+
+	Socket.on('disconnect', function () {
+		logger.debug('Disconnected from socket.');
 	});
 
 	Socket.on('connect_failed', function() {
@@ -29,30 +31,42 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 
 	Socket.on('error', function(err) {
 		logger.error(err);
-		if (err === 'Authentication token does not match.') {
-			Notification.add('danger', 'Authentication token does not match. Please login.');
-			
+		if (err === 'Authentication token does not match.' || err === 'Authentication token has expired.') {
+			Notification.add('danger', 'Authentication token does not match or has expired. Please login.');
+
 			// Clear session
 			SessionService.clearSession();
 
-			// Redirect to login
 			$state.go('login');
 		}
 	});
 
-	Socket.on('torrents', function(data) {
-		Torrents.torrents = data;
-	});
 
 	Torrents.getTorrents = function () {
-		logger.debug('Getting torrents');
+		var deferred = $q.defer();
 
-		// Initial REST call to get torrents on resolve.
+		Socket.emit('torrentsQuery', Torrents.query, function (err, data) {
+			if (err) {
+				deferred.reject(err);
+			}
+
+			deferred.resolve(data);
+		});
+
+		return deferred.promise;
 	};
+
+  $interval(function () {
+    Torrents.getTorrents()
+      .then(function (data) {
+        Torrents.torrents = data;
+      });
+  }, 1000);
+
 
 	Torrents.getTorrent = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -61,9 +75,8 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 			for (var i = hash.length - 1; i >= 0; i--) {
 				if (hash[i] == torrent.hash) {
 					return true;
-					break;
 				}
-			};
+			}
 		});
 	};
 
@@ -78,12 +91,12 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 
 	Torrents.selectTorrent = function (hash) {
 		var index = Torrents.selectedTorrents.indexOf(hash);
-		
+
 		if (index === -1) {
 			Torrents.selectedTorrents.push(hash);
 			console.log('Selected torrents:', Torrents.selectedTorrents);
 			return;
-		} 
+		}
 
 		Torrents.selectedTorrents.splice(index, 1);
 		console.log('Selected torrents:', Torrents.selectedTorrents);
@@ -96,7 +109,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.start = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -129,7 +142,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.pause = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -162,7 +175,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.stop = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -195,7 +208,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.remove = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -228,7 +241,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.deleteData = function (hash) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -238,7 +251,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 		angular.forEach(hash, function (h) {
 			promises.push(Restangular
 				.one('torrents', h)
-				.post('delete_data', {})
+				.post('delete-data', {})
 			);
 		});
 
@@ -262,7 +275,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	Torrents.load = function (torrent) {
 		if (torrent.file instanceof File) {
 			logger.debug('Loading torrent from file', torrent.file.name);
-			
+
 			return $upload.upload({
 				url: '/torrents/load',
 				method: 'POST',
@@ -300,7 +313,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 	 */
 	Torrents.setChannel = function (hash, channel) {
 		// Check if hash is instance of array.
-		// If hash is instance of array, 
+		// If hash is instance of array,
 		if (!(hash instanceof Array)) {
 			hash = [hash];
 		}
@@ -321,7 +334,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 			.then(function () {
 				// Remove selected torrents from selectedTorrents array.
 				Torrents.selectedTorrents = [];
-				
+
 				return Notification.add('success', 'Torrent(s) throttle channel(s) set.');
 			}, function () {
 				return Notification.add('danger', 'Torrent(s) could not be throttled.');
@@ -330,3 +343,7 @@ function Torrents (njrtLog, Restangular, Socket, Notification, $state, SessionSe
 
 	return Torrents;
 }
+
+angular
+  .module('njrt.torrents')
+  .factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', '$interval', Torrents]);

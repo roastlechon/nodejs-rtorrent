@@ -1,9 +1,10 @@
-var mongoose = require("mongoose");
-var logger = require("winston");
-var Q = require("q");
-var rtorrent = require("../lib/rtorrent");
+var mongoose = require('mongoose');
+var logger = require('winston');
+var Q = require('q');
+var rtorrent = require('../lib/rtorrent');
 
-var settings = module.exports = {};
+var connection = {};
+var download = {};
 
 function buildResults (promiseArray) {
 	return Q.all(promiseArray)
@@ -21,11 +22,13 @@ function buildResults (promiseArray) {
 
 			return settingResults;
 		}, function (err) {
+			logger.error('Error occurred while waiting for promises to resolve.');
 			console.log(err);
+			throw err;
 		});
 }
 
-settings.getConnectionSettings = function () {
+connection.all = function () {
 	var connectionSettingsPromises = [];
 
 	connectionSettingsPromises.push(rtorrent.getPortOpen());
@@ -39,7 +42,7 @@ settings.getConnectionSettings = function () {
 	return buildResults(connectionSettingsPromises);
 };
 
-settings.updateConnectionSettings = function (connectionSettings) {
+connection.edit = function (connectionSettings) {
 	var connectionSettingsPromises = [];
 
 	connectionSettingsPromises.push(rtorrent.setPortOpen(connectionSettings.port_open));
@@ -53,7 +56,7 @@ settings.updateConnectionSettings = function (connectionSettings) {
 	return buildResults(connectionSettingsPromises);
 };
 
-settings.getDownloadSettings = function () {
+download.all = function () {
 	var downloadSettingPromises = [];
 
 	downloadSettingPromises.push(rtorrent.getUploadSlots());
@@ -66,7 +69,7 @@ settings.getDownloadSettings = function () {
 	return buildResults(downloadSettingPromises);
 };
 
-settings.updateDownloadSettings = function (downloadSettings) {
+download.edit = function (downloadSettings) {
 	var downloadSettingPromises = [];
 
 	downloadSettingPromises.push(rtorrent.setUploadSlots(downloadSettings.max_uploads));
@@ -78,3 +81,6 @@ settings.updateDownloadSettings = function (downloadSettings) {
 
 	return buildResults(downloadSettingPromises);
 };
+
+exports.download = download;
+exports.connection = connection;

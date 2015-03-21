@@ -1,13 +1,11 @@
-'use strict';
-
-function DeleteFeedCtrl (njrtLog, $state, $previousState, feed, $modal, Feeds) {
+function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
 	logger.debug('DeleteFeedCtrl loaded.');
 
 	var vm = this;
-	
+
 	vm.feed = feed;
 
 	vm.deleteFeed = function (feed) {
@@ -25,6 +23,6 @@ function DeleteFeedCtrl (njrtLog, $state, $previousState, feed, $modal, Feeds) {
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.deleteFeed')
 	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);

@@ -1,10 +1,8 @@
-'use strict';
-
-function resolve (Feeds, $stateParams) {
+function resolve(Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
 
-function config ($stateProvider) {
+function config($stateProvider) {
 	$stateProvider.state('deleteFeed', {
 		url: '/delete-feed/:id',
 		views: {
@@ -23,8 +21,6 @@ function config ($stateProvider) {
 	});
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.deleteFeed', [])
 	.config(['$stateProvider', config]);
-
-require('./delete-feed-controller');

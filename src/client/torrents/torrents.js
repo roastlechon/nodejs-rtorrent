@@ -1,12 +1,6 @@
-var addTorrent = require('./add-torrent/add-torrent');
-var deleteTorrentData = require('./delete-torrent-data/delete-torrent-data');
-var viewTorrents = require('./view-torrents/view-torrents');
-
-module.exports = angular
+angular
 	.module('njrt.torrents', [
-		addTorrent.name,
-		deleteTorrentData.name,
-		viewTorrents.name
+		'njrt.torrents.addTorrent',
+		'njrt.torrents.viewTorrents',
+		'njrt.torrents.deleteTorrentData'
 	]);
-
-require('./torrents-factory');

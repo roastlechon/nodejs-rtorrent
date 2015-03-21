@@ -1,4 +1,4 @@
-module.exports = angular.module('app')
+angular.module('app')
 	.filter('time', function() {
 		return function(value) {
 			if (isNaN(parseFloat(value)) || !isFinite(value)) return '-';
@@ -19,5 +19,5 @@ module.exports = angular.module('app')
 			} else if (value >= day) {
 				return [days, "d ", hours, "h ", minutes, "m ", seconds, "s"].join("");
 			}
-		}
-	})
+		};
+	});

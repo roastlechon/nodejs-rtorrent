@@ -1,6 +1,4 @@
-'use strict';
-
-function run ($rootScope, $modal, $previousState) {
+function run($rootScope, $modal, $previousState) {
 
 	var stateBehindModal = {};
 	var modalInstance = null;
@@ -21,7 +19,7 @@ function run ($rootScope, $modal, $previousState) {
 				state: fromState,
 				params: fromParams
 			};
-			
+
 			$previousState.memo('modalInvoker', 'top');
 
 			modalOptions = {
@@ -62,6 +60,6 @@ function run ($rootScope, $modal, $previousState) {
 	});
 }
 
-module.exports = angular
+angular
 	.module('njrt.modal', [])
 	.run(['$rootScope', '$modal', '$previousState', run]);

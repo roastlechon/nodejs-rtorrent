@@ -1,12 +1,10 @@
-'use strict';
-
-function run ($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
+function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
 
 	var logger = njrtLog.getInstance('njrt.authentication');
 
 	logger.debug('njrt.authentication module loaded.');
 
-	$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+	$rootScope.$on('$stateChangeStart', function (event, toState) {
 
 		if (!toState.data) {
 			logger.debug('State has no data, returning early');
@@ -28,19 +26,19 @@ function run ($rootScope, SessionService, $state, $previousState, njrtLog, Resta
 
 	Restangular.setErrorInterceptor(
 		function (res) {
-			if (res.status == 401) {
+			if (res.status === 401) {
 				logger.error(res.status, res.statusText, ':', res.data);
 				$state.go('login');
 				return false; // stop the promise chain
-			} else if (res.status == 404) {
+			} else if (res.status === 404) {
 				logger.error(res.status, res.statusText, ':', res.data);
 				return false; // stop the promise chain
-			} 
+			}
 			return true;
 		});
 
 	Restangular.setRestangularFields({
-		id: "_id"
+		id: '_id'
 	});
 
 	Restangular.setDefaultHeaders({
@@ -49,9 +47,6 @@ function run ($rootScope, SessionService, $state, $previousState, njrtLog, Resta
 
 }
 
-module.exports = angular
+angular
 	.module('njrt.authentication', [])
 	.run(['$rootScope', 'njrt.SessionService', '$state', '$previousState', 'njrtLog', 'Restangular', run]);
-
-require('./authentication-factory');
-require('./authentication-controller');

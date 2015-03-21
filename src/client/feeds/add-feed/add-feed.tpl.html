@@ -1,24 +1,24 @@
-<form name="addFeed" novalidate>
-	<div class="modal-header">
-	    <h3>Add Feed</h3>
-	</div>
-	<div class="modal-body">
+<div class="modal-header">
+    <h3>Add Feed</h3>
+</div>
+<div class="modal-body">
+	<form name="addFeed" novalidate>
 		<p ng-show="feedsAddCtrl.error" class="bg-danger text-danger" ng-cloak><strong>Error: </strong>{{feedsAddCtrl.error}}</p>
-		<div class="form-group">
-			<label for="feedName">Name (Required):</label>
+		<div class="form-group" ng-class="{'has-error': addFeed.feedName.$invalid && addFeed.feedName.$touched}">
+			<label for="feedName" class="control-label">Name (Required):</label>
 			<input type="text" id="feedName" name="feedName" class="form-control" ng-model="feedsAddCtrl.feed.name" required>
 			<p class="help-block" ng-show="addFeed.feedName.$error.required" class="has-error">Please enter in a name.</p>
 		</div>
-		<div class="form-group">
-			<label for="feedUrl">URL (Required):</label>
+		<div class="form-group" ng-class="{'has-error': addFeed.feedUrl.$invalid && addFeed.feedUrl.$touched}">
+			<label for="feedUrl" class="control-label">URL (Required):</label>
 			<input type="text" id="feedUrl" name="feedUrl" class="form-control" ng-model="feedsAddCtrl.feed.url" required>
 			<p class="help-block" ng-show="addFeed.feedUrl.$error.required" class="has-error">Please enter in a URL.</p>
 		</div>
 		<div class="checkbox">
-			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="feedsAddCtrl.feed.changeTorrentLocation"> Change torrent download location</label>
+			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="feedsAddCtrl.changeTorrentLocation"> Change torrent download location</label>
 			<p class="help-block">Check box to change the location of where the torrent is downloaded. The default is the download directory set by rtorrent.</p>
 		</div>
-		<div class="form-group" ng-if="feedsAddCtrl.feed.changeTorrentLocation">
+		<div class="form-group" ng-if="feedsAddCtrl.changeTorrentLocation">
 			<label for="torrentPath" class="control-label">Torrent save directory:</label>
 			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="{{feedsAddCtrl.defaultDownloadPath}}" ng-model="feedsAddCtrl.feed.path" required>
 			<p class="help-block">Default path is {{feedsAddCtrl.defaultDownloadPath}}. <br>Go to Settings > Download or modify your rtorrent config file to change the default path. Specifying a path here will only impact the current torrent.</p>
@@ -31,35 +31,37 @@
 			<p class="help-block">Check box to automatically download torrents when the feed is updated.</p>
 		</div>
 		<div class="checkbox">
-			<label for="regexFilter"><input type="checkbox" id="regexFilter" ng-model="feedsAddCtrl.feed.regexFilter"> Add advanced filtering</label>
+			<label for="hasRegexFilter"><input type="checkbox" id="hasRegexFilter" ng-model="feedsAddCtrl.hasRegexFilter"> Add advanced filtering</label>
 			<p class="help-block">Check box to add regex filters.</p>
 		</div>
-		<div ng-if="feedsAddCtrl.feed.regexFilter">
+	</form>
+	<div ng-if="feedsAddCtrl.hasRegexFilter">
+		<form name="regexFilter" novalidate>
 			<h4>Regex Filters</h4>
 			<div class="form-inline" style="margin-bottom: 10px;">
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Regular expression" ng-model="feedsAddCtrl.newFilter.regex" style="width: 350px;" required>
+					<input type="text" class="form-control" placeholder="Regular expression" name="regexFilter.regex" ng-model="feedsAddCtrl.newFilter.regex" style="width: 350px;" required>
 				</div>
 				<div class="form-group">
 					<label for="filterTypeInclude" class="radio-inline">
-						<input type="radio" id="filterTypeInclude" ng-model="feedsAddCtrl.newFilter.type" value="include" required> Include
+						<input type="radio" id="filterTypeInclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="include" required> Include
 					</label>
 					<label for="filterTypeExclude" class="radio-inline">
-						<input type="radio" id="filterTypeExclude" ng-model="feedsAddCtrl.newFilter.type" value="exclude" required> Exclude
+						<input type="radio" id="filterTypeExclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="exclude" required> Exclude
 					</label>
 				</div>
-				<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)"><i class="fa fa-plus"></i></button>
+				<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)" ng-disabled="regexFilter.$invalid"><i class="fa fa-plus"></i></button>
 			</div>
 			<ul class="list-unstyled feed__filter-list">
 				<li ng-repeat="filter in feedsAddCtrl.feed.filters track by $index"><span class="filter-regex">{{filter.regex}}</span><span class="filter-type badge">{{filter.type}}</span><a href="javascript: void(0);" ng-click="feedsAddCtrl.editFilter($index)"><i class="fa fa-pencil"></i></a><a href="javascript: void(0);" ng-click="feedsAddCtrl.deleteFilter($index)"><i class="fa fa-times"></i></a></li>
 			</ul>
-		</div>
+		</form>
 	</div>
-	<div class="modal-footer">
-		<div class="form-group">
-			<button type="button" class="btn btn-default" ng-disabled="">Test Feed</button>
-			<button type="submit" class="btn btn-primary" ng-disabled="feedsAddCtrl.checkDisabled()" ng-click="feedsAddCtrl.addRssFeed()">Add Feed</button>
-			<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.cancel()">Cancel</button>
-		</div>
+</div>
+<div class="modal-footer">
+	<div class="form-group">
+		<button type="button" class="btn btn-default" ng-disabled="">Test Feed</button>
+		<button type="submit" class="btn btn-primary" ng-disabled="feedsAddCtrl.checkDisabled()" ng-click="feedsAddCtrl.addRssFeed()">Add Feed</button>
+		<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.cancel()">Cancel</button>
 	</div>
-</form>
+</div>

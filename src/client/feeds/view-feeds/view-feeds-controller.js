@@ -1,6 +1,4 @@
-'use strict';
-
-function FeedsCtrl (njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
+function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
@@ -24,9 +22,9 @@ function FeedsCtrl (njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
 	vm.reflowTable = function () {
 		$('table.table').trigger('reflow');
 	};
-	
+
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.viewFeeds')
 	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);

@@ -6,7 +6,7 @@ var Q = require('q');
 var secret = nconf.get('authentication:secret');
 
 
-function checkAuthentication (jsonToken) {
+function checkAuthentication(jsonToken) {
 
 	var deferred = Q.defer();
 
@@ -35,7 +35,7 @@ function checkAuthentication (jsonToken) {
 }
 
 
-function parseBearerToken (bearerToken) {
+function parseBearerToken(bearerToken) {
 
 	var deferred = Q.defer();
 
@@ -60,7 +60,7 @@ function parseBearerToken (bearerToken) {
 }
 
 // Authentication check for Express
-function isAuthenticated (req, res, next) {
+function isAuthenticated(req, res, next) {
 
 	if (!req.headers.authorization) {
 		return res.status(401).send('Authorization Header does not exist.');
@@ -80,7 +80,7 @@ function isAuthenticated (req, res, next) {
 }
 
 // Authentication check for Socket.IO
-function isSocketAuthenticated (socket, next) {
+function isSocketAuthenticated(socket, next) {
 
     var bearerToken = socket.handshake.query.token;
 

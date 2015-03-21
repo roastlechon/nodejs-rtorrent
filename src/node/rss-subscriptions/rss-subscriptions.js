@@ -1,14 +1,11 @@
-var logger = require("winston");
-var nconf = require("nconf");
-var FeedMe = require("feedme");
-var request = require("request");
-var mongoose = require("mongoose");
-var moment = require("moment");
-var Q = require("q");
-var feeds = require("../models/feeds");
-var torrentFeedParser = require("../lib/torrent-feed-parser");
+var logger = require('winston');
+var nconf = require('nconf');
 
-module.exports = function() {
+var Q = require('q');
+var feeds = require('../models/feeds');
+var torrentFeedParser = require('../lib/torrent-feed-parser');
+
+module.exports = function () {
 	setInterval(function() {
 		feeds.getAll().then(function(data) {
 			data.map(function(feed) {
@@ -20,10 +17,10 @@ module.exports = function() {
 
 					Q.allSettled(addTorrentPromises).then(function(results) {
 						results.forEach(function(result) {
-							if (result.state === "fulfilled") {
-								logger.info("New torrent saved in feed");
+							if (result.state === 'fulfilled') {
+								logger.info('New torrent saved in feed');
 							} else {
-								if (result.reason.message === "Torrent exists in feed already.") {
+								if (result.reason.message === 'Torrent exists in feed already.') {
 									// No need to log here, since it
 									// would be very verbose
 								} else {
@@ -41,5 +38,5 @@ module.exports = function() {
 		}, function(err) {
 			logger.error(err.message);
 		});
-	}, nconf.get("app:checkFeedLoopInterval"));
+	}, nconf.get('app:checkFeedLoopInterval'));
 }

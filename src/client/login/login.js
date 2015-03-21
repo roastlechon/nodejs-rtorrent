@@ -1,6 +1,4 @@
-'use strict';
-
-function config ($stateProvider) {
+function config($stateProvider) {
 	$stateProvider.state('login', {
 		url: '/login',
 		views: {
@@ -13,8 +11,6 @@ function config ($stateProvider) {
 	});
 }
 
-module.exports = angular
+angular
 	.module('njrt.login', [])
 	.config(['$stateProvider', config]);
-	
-require('./login-controller');

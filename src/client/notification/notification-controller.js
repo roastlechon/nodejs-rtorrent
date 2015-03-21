@@ -1,6 +1,4 @@
-'use strict';
-
-function NotificationCtrl (njrtLog, Notification, Socket) {
+function NotificationCtrl(njrtLog, Notification, Socket) {
 
 	var logger = njrtLog.getInstance('njrt.notification');
 
@@ -15,6 +13,6 @@ function NotificationCtrl (njrtLog, Notification, Socket) {
 	});
 }
 
-module.exports = angular
+angular
 	.module('njrt.notification')
 	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);

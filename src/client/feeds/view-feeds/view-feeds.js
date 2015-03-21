@@ -1,5 +1,3 @@
-'use strict';
-
 function resolve (Feeds) {
 	return Feeds.getFeeds();
 }
@@ -23,8 +21,6 @@ function config ($stateProvider) {
 		});
 }
 
-module.exports = angular
+angular
 	.module('njrt.feeds.viewFeeds', [])
 	.config(['$stateProvider', config]);
-
-require('./view-feeds-controller');
