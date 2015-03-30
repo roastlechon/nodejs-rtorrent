@@ -1,7 +1,9 @@
 angular.module('app')
 	.filter('time', function() {
 		return function(value) {
-			if (isNaN(parseFloat(value)) || !isFinite(value)) return '-';
+			if (isNaN(parseFloat(value)) || !isFinite(value) || value === 0) {
+        return '-';
+      }
 			var suffix = "s",
 				day = 86400,
 				hr = 3600,

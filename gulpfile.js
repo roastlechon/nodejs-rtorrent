@@ -3,7 +3,8 @@ var concat = require('gulp-concat');
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var karma = require('karma').server;
+// var karma = require('karma').server;
+// var react = require('gulp-react');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var ngHtml2Js = require('gulp-ng-html2js');
@@ -20,6 +21,8 @@ var jshint = require('gulp-jshint');
 var angularFilesort = require('gulp-angular-filesort');
 var packageJson = require('./package.json');
 var preprocess = require('gulp-preprocess');
+
+var jsfilewrap = '(function() {\'use strict\'; <%= contents %>})();';
 
 gulp.task('clean', function () {
 	return gulp.src('dist', {
@@ -67,8 +70,9 @@ gulp.task('scripts', function () {
         // .pipe(gulpif('**/*.js', jshint()))
         // .pipe(jshint.reporter('default'))
         // .pipe(gulpif(gutil.env.production, jshint.reporter('fail')))
+        // .pipe(gulpif('**/*.jsx.js', react()))
         .pipe(gulpif('**/*.js', angularFilesort()))
-        .pipe(gulpif('**/*.js', wrap('(function() {\'use strict\'; <%= contents %>})();'))))
+        .pipe(gulpif('**/*.js', wrap(jsfilewrap))))
     .pipe(gulpif('**/*.tpl.html', ngHtml2Js({
       moduleName: 'njrt.templates'
     })))

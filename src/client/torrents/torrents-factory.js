@@ -10,11 +10,7 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 
 	Torrents.selectedTorrents = [];
 
-  Torrents.query = {
-    sort_by: '',
-    reverse: false,
-    filter: ''
-  };
+  Torrents.totalSize = 0;
 
 	Socket.on('connecting', function() {
 		logger.debug('Connecting to socket.');
@@ -42,10 +38,10 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 	});
 
 
-	Torrents.getTorrents = function () {
+	Torrents.getTorrents = function (query) {
 		var deferred = $q.defer();
 
-		Socket.emit('torrentsQuery', Torrents.query, function (err, data) {
+		Socket.emit('torrentsQuery', query, function (err, data) {
 			if (err) {
 				deferred.reject(err);
 			}
@@ -56,13 +52,19 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 		return deferred.promise;
 	};
 
-  $interval(function () {
-    Torrents.getTorrents()
-      .then(function (data) {
-        Torrents.torrents = data;
-      });
-  }, 1000);
+  Torrents.getTorrentsByHash = function (hashes) {
+    var deferred = $q.defer();
 
+    Socket.emit('torrentsHashes', hashes, function (err, data) {
+      if (err) {
+        deferred.reject(err);
+      }
+
+      deferred.resolve(data);
+    });
+
+    return deferred.promise;
+  };
 
 	Torrents.getTorrent = function (hash) {
 		// Check if hash is instance of array.

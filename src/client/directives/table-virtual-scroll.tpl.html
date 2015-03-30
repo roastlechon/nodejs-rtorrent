@@ -1,0 +1,57 @@
+<thead style="background: #fafafa; border-top: 2px solid #cacaca;">
+  <tr>
+    <th>
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('name')">Name <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('name')"></i></a>
+    </th>
+    <th ng-hide="status_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('status')">Status <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('status')"></i></a>
+    </th>
+    <th ng-hide="size_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('size')">Size <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('size')"></i></a>
+    </th>
+    <th ng-hide="percent_downloaded_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('percent_downloaded')">Done <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('percent_downloaded')"></i></a>
+    </th>
+    <th ng-hide="downloaded_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('downloaded')">Downloaded <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('downloaded')"></i></a>
+    </th>
+    <th ng-hide="uploaded_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('uploaded')">Uploaded <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('uploaded')"></i></a>
+    </th>
+    <th ng-hide="dl_speed_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('dl_speed')">DL <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('dl_speed')"></i></a>
+    </th>
+    <th ng-hide="ul_speed_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('ul_speed')">UL <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('ul_speed')"></i></a>
+    <th ng-hide="time_remaining_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('time_remaining')">ETA <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('time_remaining')"></i></a>
+    </th>
+    <th ng-hide="peers_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('peers')">Peers <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('peers')"></i></a>
+    </th>
+    <th ng-hide="seeds_col">
+      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort('seeds')">Seeds <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc('seeds')"></i></a>
+    </th>
+  </tr>
+</thead>
+<tbody data-begin="{{tableVirtualScrollCtrl.begin}}" data-end="{{tableVirtualScrollCtrl.end}}">
+  <tr ng-repeat="torrent in tableVirtualScrollCtrl.tableVirtualScrollOptions.dataSource.data track by torrent.hash" class="torrent" ng-click="tableVirtualScrollCtrl.tableVirtualScrollOptions.selectRow(torrent.hash)" ng-class="{'active': tableVirtualScrollCtrl.tableVirtualScrollOptions.isRowSelected(torrent.hash)}" data-index="{{torrent.index}}" in-view="tableVirtualScrollCtrl.rowInView($inview, torrent.hash)">
+    <td>
+      <h5 title="{{torrent.name}}" style="width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5>
+    </td>
+    <td ng-hide="status_col" style="width: 130px;">{{torrent.status}}</td>
+    <td ng-hide="size_col"><div style="width: 90px;">{{torrent.size | bytes}}</div></td>
+    <td ng-hide="percent_downloaded_col">
+      <div class="progress" style="width: 80px;">
+        <div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{'progress-bar-warning': torrent.status === 'checking', 'progress-bar-success': torrent.status === 'seeding'}">{{torrent.percent_downloaded  | percentage}}</div>
+      </div>
+    </td>
+    <td ng-hide="downloaded_col"><div style="width: 90px;">{{torrent.downloaded | bytes}}</div></td>
+    <td ng-hide="uploaded_col"><div style="width: 90px;">{{torrent.uploaded | bytes}}</div></td>
+    <td ng-hide="dl_speed_col"><div style="width: 90px;">{{torrent.dl_speed | dataTransferRate}}</div></td>
+    <td ng-hide="ul_speed_col"><div style="width: 90px;">{{torrent.ul_speed | dataTransferRate}}</div></td>
+    <td ng-hide="time_remaining_col"><div style="width: 120px;">{{torrent.time_remaining | time}}</div></td>
+    <td ng-hide="peers_col"><div style="width: 90px;">{{torrent.peers}} ({{torrent.total_peers}})</div></td>
+    <td ng-hide="seeds_col"><div style="width: 90px;">{{torrent.seeds}} ({{torrent.total_seeds}})</div></td>
+  </tr>
+</tbody>

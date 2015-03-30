@@ -160,7 +160,7 @@ function createThrottleSettings () {
 
 function createThrottleSetting (throttleSetting) {
 	switch(throttleSetting.direction) {
-		case 'up': 
+		case 'up':
 			return rtorrent.throttleUp('' + throttleSetting.name, '' + throttleSetting.up);
 		break;
 		case 'down':
@@ -238,7 +238,7 @@ function adaptTorrentArray (torrent) {
 	}
 }
 
-rtorrent.getTorrentsByHash = function (hashes) {
+rtorrent.getTorrentsByHashes = function (hashes) {
 
 	var systemMultiCallArray = [];
 
@@ -255,7 +255,6 @@ rtorrent.getTorrentsByHash = function (hashes) {
 
 	return methodCall('system.multicall', [systemMultiCallArray])
 		.then(function (data) {
-			console.log(data);
 			var sliceSize = infoArray.length;
 			var results = [];
 			for (var i = 0; i < data.length; i += sliceSize) {
@@ -270,13 +269,13 @@ rtorrent.getTorrentsByHash = function (hashes) {
 
 				// Push peers first for the torrent
 				multiCallSeedsPeersArray.push({
-					methodName: 't.multicall', 
+					methodName: 't.multicall',
 					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_incomplete=']
 				});
 
 				// Push seeds second for the torrent
 				multiCallSeedsPeersArray.push({
-					methodName: 't.multicall', 
+					methodName: 't.multicall',
 					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_complete=']
 				});
 			});
@@ -285,7 +284,7 @@ rtorrent.getTorrentsByHash = function (hashes) {
 			// Inside the resolve function, we loop through the array
 			return methodCall('system.multicall', [multiCallSeedsPeersArray]).then(function(data) {
 				var numberArray = [];
-				
+
 				// The length of data should be equal to the length of systemMultiCallArray
 				data.forEach(function(item) {
 					// Each item in the array has an array of arrays
@@ -300,7 +299,7 @@ rtorrent.getTorrentsByHash = function (hashes) {
 						// Push the number to a clean array so that we can place it correctly back into
 						// the torrent object to return to client
 						numberArray.push(number);
-					});				
+					});
 				});
 
 				// Map torrents and shift from numberArray to get the correct order
@@ -312,7 +311,7 @@ rtorrent.getTorrentsByHash = function (hashes) {
 					return torrent;
 				});
 			});
-			
+
 
 		});
 };
@@ -341,13 +340,13 @@ rtorrent.getTorrents = function () {
 
 				// Push peers first for the torrent
 				systemMultiCallArray.push({
-					methodName: 't.multicall', 
+					methodName: 't.multicall',
 					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_incomplete=']
 				});
 
 				// Push seeds second for the torrent
 				systemMultiCallArray.push({
-					methodName: 't.multicall', 
+					methodName: 't.multicall',
 					params: [torrent.hash, 'd.get_hash=', 't.get_scrape_complete=']
 				});
 			});
@@ -356,7 +355,7 @@ rtorrent.getTorrents = function () {
 			// Inside the resolve function, we loop through the array
 			return methodCall('system.multicall', [systemMultiCallArray]).then(function(data) {
 				var numberArray = [];
-				
+
 				// The length of data should be equal to the length of systemMultiCallArray
 				data.forEach(function(item) {
 					// Each item in the array has an array of arrays
@@ -371,7 +370,7 @@ rtorrent.getTorrents = function () {
 						// Push the number to a clean array so that we can place it correctly back into
 						// the torrent object to return to client
 						numberArray.push(number);
-					});				
+					});
 				});
 
 				// Map torrents and shift from numberArray to get the correct order
@@ -490,7 +489,7 @@ rtorrent.loadTorrent = function (torrent) {
 								if (err.code == 'EACCES') {
 									throw new Error('Unable to create directory for torrent due to permissions.', hash);
 								}
-								
+
 								// THrow error if not EACESS
 								throw err;
 							});
@@ -544,7 +543,7 @@ rtorrent.deleteTorrentData = function (hash) {
 						});
 					});
 				}
-				
+
 			});
 		});
 	});
@@ -596,7 +595,7 @@ rtorrent.getPortStatus = function (port) {
 		if (err) {
 			return deferred.reject(err);
 		}
-		
+
 		return deferred.resolve(data);
 	});
 
@@ -754,7 +753,7 @@ rtorrent.getMinNumberPeers = function () {
 			return {
 				'min_peers': data
 			}
-		}); 
+		});
 }
 
 rtorrent.setMinNumberPeers = function (value) {
@@ -767,7 +766,7 @@ rtorrent.getMinNumberSeeds = function () {
 			return {
 				'min_seeds': data
 			}
-		}); 
+		});
 }
 
 rtorrent.setMinNumberSeeds = function (value) {
@@ -780,7 +779,7 @@ rtorrent.getMaxNumberPeers = function () {
 			return {
 				'max_peers': data
 			}
-		}); 
+		});
 }
 
 rtorrent.setMaxNumberPeers = function (value) {
@@ -793,7 +792,7 @@ rtorrent.getMaxNumberSeeds = function () {
 			return {
 				'max_seeds': data
 			}
-		}); 
+		});
 }
 
 rtorrent.setMaxNumberSeeds = function (value) {
@@ -812,7 +811,7 @@ rtorrent.getDirectory = function () {
 				return {
 					'download_directory': data
 				}
-			}); 
+			});
 }
 
 rtorrent.setDirectory = function (value) {

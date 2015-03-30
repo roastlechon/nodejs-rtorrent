@@ -1,5 +1,11 @@
 function resolve(Torrents) {
-	return Torrents.getTorrents();
+	return Torrents.getTorrents({
+    skip: 0,
+    limit: 40,
+    sortBy: 'name',
+    reverse: false,
+    filter: ''
+  });
 }
 
 function config($stateProvider) {
@@ -21,7 +27,5 @@ function config($stateProvider) {
 }
 
 angular
-  .module('njrt.torrents.viewTorrents', [
-    'vs-repeat'
-  ])
+  .module('njrt.torrents.viewTorrents', [])
   .config(['$stateProvider', config]);

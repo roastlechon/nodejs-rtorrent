@@ -20,7 +20,8 @@
     "floatThead": "~1.2.9",
     "ng-file-upload": "~2.1.1",
     "angular-inview": "~1.5.0",
-    "angular-vs-repeat": "~1.0.0-rc5"
+    "angular-vs-repeat": "~1.0.0-rc5",
+    "ngReact": "~0.1.4"
   },
   "resolutions": {
     "angular": "~1.3"

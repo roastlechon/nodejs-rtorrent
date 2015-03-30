@@ -11,46 +11,81 @@ var _ = require('lodash');
  * Torrents stay up to date constantly. On client connection,
  * torrent loop is started. Client emits "torrents" with query
  * object. Server will emit back "torrents" as a result of query.
- * 
+ *
  */
 
-var interval;
+// var interval;
+// rtorrent.getTorrents()
+//       .then(function(data) {
+//         exports.list = data;
+//       }, function(err) {
+//         logger.error(err.message);
+//       });
 
-function startLoop() {
-	logger.info('Starting torrent loop.');
-	interval = setInterval(function () {
-		rtorrent.getTorrents()
-			.then(function(data) {
-				exports.list = data;
-			}, function(err) {
-				logger.error(err.message);
-			});
-	}, nconf.get('app:rtorrentLoopInterval'));
-}
+// function startLoop() {
+// 	logger.info('Starting torrent loop.');
+// 	interval = setTimeout(function () {
+// 		rtorrent.getTorrents()
+// 			.then(function(data) {
+// 				exports.list = data;
+// 			}, function(err) {
+// 				logger.error(err.message);
+// 			});
+// 	}, nconf.get('app:rtorrentLoopInterval'));
+// }
 
-function stopLoop() {
-	logger.info('Stopping torrent loop.');
-	clearInterval(interval);
-}
+// function stopLoop() {
+// 	logger.info('Stopping torrent loop.');
+// 	clearTimeout(interval);
+// }
 
 function query(params) {
-	var deferred = Q.defer();
 
-	deferred.resolve(exports.list);
-	
-	return deferred.promise;
+  return rtorrent.getTorrents()
+    .then(function (data) {
+      var list = _.sortBy(data, params.sortBy);
+      if (params.reverse === true) {
+        list = list.reverse();
+      }
+      list = _.map(list, function (item, index) {
+              item.index = index;
+              return item;
+            });
+
+      console.log(params);
+      var limit = params.limit;
+      var begin = params.skip;
+      var end = (begin + limit) > list.length ? list.length : (begin + limit);
+      console.log(begin, end);
+      var results = list.slice(begin, end);
+
+      // var rest = _.rest(list, (params.skip - 1) * params.per_page)
+      // var results = _.take(rest, params.per_page);
+
+      // console.log(results);
+      return {
+        data: results,
+        total: data.length
+      };
+    });
+
+}
+
+function getTorrentsByHashes(hashes) {
+  return rtorrent.getTorrentsByHashes(hashes);
 }
 
 function all() {
-	var deferred = Q.defer();
+	// var deferred = Q.defer();
 
-	deferred.resolve(exports.list);
+	// deferred.resolve(exports.list);
 
-	return deferred.promise;
+	// return deferred.promise;
 }
 
 exports.list = [];
-exports.startLoop = startLoop;
-exports.stopLoop = stopLoop;
+// exports.startLoop = startLoop;
+// exports.stopLoop = stopLoop;
 exports.query = query;
 exports.all = all;
+exports.getTorrentsByHashes = getTorrentsByHashes;
