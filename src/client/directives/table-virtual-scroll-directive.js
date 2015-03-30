@@ -96,21 +96,25 @@ function tableVirtualScroll () {
         console.log('bottom', vm.dataCache.bottom.length);
         console.log('delete index', index);
         // if within main array, remove
-        if (vm.tableVirtualScrollOptions.dataSource.data.length > index > 0) {
+        if (vm.tableVirtualScrollOptions.dataSource.data.length > index && index > 0) {
           vm.tableVirtualScrollOptions.dataSource.data.splice(index, 1);
           vm.end--;
           vm.rowCounter--;
         }
 
         var mainTopLength = vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length;
-        if (mainTopLength > index > vm.tableVirtualScrollOptions.dataSource.data.length) {
-          console.log(vm.dataCache.top);
+        if (mainTopLength > index && index > vm.tableVirtualScrollOptions.dataSource.data.length) {
           vm.dataCache.top.splice(index - vm.tableVirtualScrollOptions.dataSource.data.length, 1);
-          console.log(vm.dataCache.top);
+          vm.end--;
+          vm.rowCounter--;
         }
 
-        if (totalArray.length > index > vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length) {
-          vm.dataCache.bottom.splice(index - vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length, 1);
+        if (totalArray.length > index && index > mainTopLength) {
+          console.log(vm.dataCache.bottom.length);
+          vm.dataCache.bottom.splice(index - mainTopLength, 1);
+          console.log(vm.dataCache.bottom.length);
+          vm.end--;
+          vm.rowCounter--;
         }
 
       }

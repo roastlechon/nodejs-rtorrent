@@ -79667,84 +79667,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/add-feed/add-feed.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3>Add Feed</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '	<form name="addFeed" novalidate>\n' +
-    '		<p ng-show="feedsAddCtrl.error" class="bg-danger text-danger" ng-cloak><strong>Error: </strong>{{feedsAddCtrl.error}}</p>\n' +
-    '		<div class="form-group" ng-class="{\'has-error\': addFeed.feedName.$invalid && addFeed.feedName.$touched}">\n' +
-    '			<label for="feedName" class="control-label">Name (Required):</label>\n' +
-    '			<input type="text" id="feedName" name="feedName" class="form-control" ng-model="feedsAddCtrl.feed.name" required>\n' +
-    '			<p class="help-block" ng-show="addFeed.feedName.$error.required" class="has-error">Please enter in a name.</p>\n' +
-    '		</div>\n' +
-    '		<div class="form-group" ng-class="{\'has-error\': addFeed.feedUrl.$invalid && addFeed.feedUrl.$touched}">\n' +
-    '			<label for="feedUrl" class="control-label">URL (Required):</label>\n' +
-    '			<input type="text" id="feedUrl" name="feedUrl" class="form-control" ng-model="feedsAddCtrl.feed.url" required>\n' +
-    '			<p class="help-block" ng-show="addFeed.feedUrl.$error.required" class="has-error">Please enter in a URL.</p>\n' +
-    '		</div>\n' +
-    '		<div class="checkbox">\n' +
-    '			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="feedsAddCtrl.changeTorrentLocation"> Change torrent download location</label>\n' +
-    '			<p class="help-block">Check box to change the location of where the torrent is downloaded. The default is the download directory set by rtorrent.</p>\n' +
-    '		</div>\n' +
-    '		<div class="form-group" ng-if="feedsAddCtrl.changeTorrentLocation">\n' +
-    '			<label for="torrentPath" class="control-label">Torrent save directory:</label>\n' +
-    '			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="{{feedsAddCtrl.defaultDownloadPath}}" ng-model="feedsAddCtrl.feed.path" required>\n' +
-    '			<p class="help-block">Default path is {{feedsAddCtrl.defaultDownloadPath}}. <br>Go to Settings > Download or modify your rtorrent config file to change the default path. Specifying a path here will only impact the current torrent.</p>\n' +
-    '			<div class="help-block" ng-show="addFeed.path.$invalid && addFeed.path.$touched">\n' +
-    '				<p ng-show="addFeed.path.$error.required"><strong>Error:</strong> A path is required if you check <i>Change torrent download location</i>!</p>\n' +
-    '			</div>\n' +
-    '		</div>\n' +
-    '		<div class="checkbox">\n' +
-    '			<label for="autoDownload"><input type="checkbox" id="autoDownload" ng-model="feedsAddCtrl.feed.autoDownload"> Auto Download</label>\n' +
-    '			<p class="help-block">Check box to automatically download torrents when the feed is updated.</p>\n' +
-    '		</div>\n' +
-    '		<div class="checkbox">\n' +
-    '			<label for="hasRegexFilter"><input type="checkbox" id="hasRegexFilter" ng-model="feedsAddCtrl.hasRegexFilter"> Add advanced filtering</label>\n' +
-    '			<p class="help-block">Check box to add regex filters.</p>\n' +
-    '		</div>\n' +
-    '	</form>\n' +
-    '	<div ng-if="feedsAddCtrl.hasRegexFilter">\n' +
-    '		<form name="regexFilter" novalidate>\n' +
-    '			<h4>Regex Filters</h4>\n' +
-    '			<div class="form-inline" style="margin-bottom: 10px;">\n' +
-    '				<div class="form-group">\n' +
-    '					<input type="text" class="form-control" placeholder="Regular expression" name="regexFilter.regex" ng-model="feedsAddCtrl.newFilter.regex" style="width: 350px;" required>\n' +
-    '				</div>\n' +
-    '				<div class="form-group">\n' +
-    '					<label for="filterTypeInclude" class="radio-inline">\n' +
-    '						<input type="radio" id="filterTypeInclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="include" required> Include\n' +
-    '					</label>\n' +
-    '					<label for="filterTypeExclude" class="radio-inline">\n' +
-    '						<input type="radio" id="filterTypeExclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="exclude" required> Exclude\n' +
-    '					</label>\n' +
-    '				</div>\n' +
-    '				<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)" ng-disabled="regexFilter.$invalid"><i class="fa fa-plus"></i></button>\n' +
-    '			</div>\n' +
-    '			<ul class="list-unstyled feed__filter-list">\n' +
-    '				<li ng-repeat="filter in feedsAddCtrl.feed.filters track by $index"><span class="filter-regex">{{filter.regex}}</span><span class="filter-type badge">{{filter.type}}</span><a href="javascript: void(0);" ng-click="feedsAddCtrl.editFilter($index)"><i class="fa fa-pencil"></i></a><a href="javascript: void(0);" ng-click="feedsAddCtrl.deleteFilter($index)"><i class="fa fa-times"></i></a></li>\n' +
-    '			</ul>\n' +
-    '		</form>\n' +
-    '	</div>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '	<div class="form-group">\n' +
-    '		<button type="button" class="btn btn-default" ng-disabled="">Test Feed</button>\n' +
-    '		<button type="submit" class="btn btn-primary" ng-disabled="feedsAddCtrl.checkDisabled()" ng-click="feedsAddCtrl.addRssFeed()">Add Feed</button>\n' +
-    '		<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.cancel()">Cancel</button>\n' +
-    '	</div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
@@ -79827,6 +79749,84 @@ module.run(['$templateCache', function($templateCache) {
     '	<div class="form-group">\n' +
     '		<button type="button" class="btn btn-primary" ng-click="feedsEditCtrl.editFeed(feedsEditCtrl.feed)" ng-disabled="feedsEditCtrl.checkDisabled()">Save changes</button>\n' +
     '		<button type="button" class="btn btn-default" ng-click="feedsEditCtrl.cancel()">Cancel</button>\n' +
+    '	</div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('feeds/add-feed/add-feed.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3>Add Feed</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '	<form name="addFeed" novalidate>\n' +
+    '		<p ng-show="feedsAddCtrl.error" class="bg-danger text-danger" ng-cloak><strong>Error: </strong>{{feedsAddCtrl.error}}</p>\n' +
+    '		<div class="form-group" ng-class="{\'has-error\': addFeed.feedName.$invalid && addFeed.feedName.$touched}">\n' +
+    '			<label for="feedName" class="control-label">Name (Required):</label>\n' +
+    '			<input type="text" id="feedName" name="feedName" class="form-control" ng-model="feedsAddCtrl.feed.name" required>\n' +
+    '			<p class="help-block" ng-show="addFeed.feedName.$error.required" class="has-error">Please enter in a name.</p>\n' +
+    '		</div>\n' +
+    '		<div class="form-group" ng-class="{\'has-error\': addFeed.feedUrl.$invalid && addFeed.feedUrl.$touched}">\n' +
+    '			<label for="feedUrl" class="control-label">URL (Required):</label>\n' +
+    '			<input type="text" id="feedUrl" name="feedUrl" class="form-control" ng-model="feedsAddCtrl.feed.url" required>\n' +
+    '			<p class="help-block" ng-show="addFeed.feedUrl.$error.required" class="has-error">Please enter in a URL.</p>\n' +
+    '		</div>\n' +
+    '		<div class="checkbox">\n' +
+    '			<label for="changeTorrentLocation"><input type="checkbox" id="changeTorrentLocation" ng-model="feedsAddCtrl.changeTorrentLocation"> Change torrent download location</label>\n' +
+    '			<p class="help-block">Check box to change the location of where the torrent is downloaded. The default is the download directory set by rtorrent.</p>\n' +
+    '		</div>\n' +
+    '		<div class="form-group" ng-if="feedsAddCtrl.changeTorrentLocation">\n' +
+    '			<label for="torrentPath" class="control-label">Torrent save directory:</label>\n' +
+    '			<input type="text" id="torrentPath" name="torrentPath" class="form-control" placeholder="{{feedsAddCtrl.defaultDownloadPath}}" ng-model="feedsAddCtrl.feed.path" required>\n' +
+    '			<p class="help-block">Default path is {{feedsAddCtrl.defaultDownloadPath}}. <br>Go to Settings > Download or modify your rtorrent config file to change the default path. Specifying a path here will only impact the current torrent.</p>\n' +
+    '			<div class="help-block" ng-show="addFeed.path.$invalid && addFeed.path.$touched">\n' +
+    '				<p ng-show="addFeed.path.$error.required"><strong>Error:</strong> A path is required if you check <i>Change torrent download location</i>!</p>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '		<div class="checkbox">\n' +
+    '			<label for="autoDownload"><input type="checkbox" id="autoDownload" ng-model="feedsAddCtrl.feed.autoDownload"> Auto Download</label>\n' +
+    '			<p class="help-block">Check box to automatically download torrents when the feed is updated.</p>\n' +
+    '		</div>\n' +
+    '		<div class="checkbox">\n' +
+    '			<label for="hasRegexFilter"><input type="checkbox" id="hasRegexFilter" ng-model="feedsAddCtrl.hasRegexFilter"> Add advanced filtering</label>\n' +
+    '			<p class="help-block">Check box to add regex filters.</p>\n' +
+    '		</div>\n' +
+    '	</form>\n' +
+    '	<div ng-if="feedsAddCtrl.hasRegexFilter">\n' +
+    '		<form name="regexFilter" novalidate>\n' +
+    '			<h4>Regex Filters</h4>\n' +
+    '			<div class="form-inline" style="margin-bottom: 10px;">\n' +
+    '				<div class="form-group">\n' +
+    '					<input type="text" class="form-control" placeholder="Regular expression" name="regexFilter.regex" ng-model="feedsAddCtrl.newFilter.regex" style="width: 350px;" required>\n' +
+    '				</div>\n' +
+    '				<div class="form-group">\n' +
+    '					<label for="filterTypeInclude" class="radio-inline">\n' +
+    '						<input type="radio" id="filterTypeInclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="include" required> Include\n' +
+    '					</label>\n' +
+    '					<label for="filterTypeExclude" class="radio-inline">\n' +
+    '						<input type="radio" id="filterTypeExclude" name="regexFilter.type" ng-model="feedsAddCtrl.newFilter.type" value="exclude" required> Exclude\n' +
+    '					</label>\n' +
+    '				</div>\n' +
+    '				<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.addFilter(feedsAddCtrl.newFilter)" ng-disabled="regexFilter.$invalid"><i class="fa fa-plus"></i></button>\n' +
+    '			</div>\n' +
+    '			<ul class="list-unstyled feed__filter-list">\n' +
+    '				<li ng-repeat="filter in feedsAddCtrl.feed.filters track by $index"><span class="filter-regex">{{filter.regex}}</span><span class="filter-type badge">{{filter.type}}</span><a href="javascript: void(0);" ng-click="feedsAddCtrl.editFilter($index)"><i class="fa fa-pencil"></i></a><a href="javascript: void(0);" ng-click="feedsAddCtrl.deleteFilter($index)"><i class="fa fa-times"></i></a></li>\n' +
+    '			</ul>\n' +
+    '		</form>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '	<div class="form-group">\n' +
+    '		<button type="button" class="btn btn-default" ng-disabled="">Test Feed</button>\n' +
+    '		<button type="submit" class="btn btn-primary" ng-disabled="feedsAddCtrl.checkDisabled()" ng-click="feedsAddCtrl.addRssFeed()">Add Feed</button>\n' +
+    '		<button type="button" class="btn btn-default" ng-click="feedsAddCtrl.cancel()">Cancel</button>\n' +
     '	</div>\n' +
     '</div>');
 }]);
@@ -79958,59 +79958,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('settings/download-settings/download-settings.tpl.html',
-    '<form ng-submit="downloadSettingsCtrl.updateDownloadSettings(downloadSettingsCtrl.downloadSettings)" name="downloadSettings" novalidate>\n' +
-    '	<div style="overflow-y: auto; height: 350px;">\n' +
-    '		<alert ng-repeat="alert in downloadSettingsCtrl.alerts" type="{{alert.type}}" close="downloadSettingsCtrl.closeAlert($index)">{{alert.msg}}</alert>\n' +
-    '		<fieldset>\n' +
-    '			<legend>Download Settings</legend>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="downloadDirectory">Default download directory:</label>\n' +
-    '				<input type="text" name="downloadDirectory" id="downloadDirectory" ng-model="downloadSettingsCtrl.downloadSettings.download_directory" class="form-control">\n' +
-    '				<p class="help-block">Make sure path has correct permissions.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="maxUploads" class="control-label">Number of upload slots:</label>\n' +
-    '				<input type="text" name="maxUploads" id="maxUploads" ng-model="downloadSettingsCtrl.downloadSettings.max_uploads" class="form-control">\n' +
-    '				<p class="help-block">0 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="minPeers" class="control-label">Minimum number of peers:</label>\n' +
-    '				<input type="text" name="minPeers" id="minPeers" ng-model="downloadSettingsCtrl.downloadSettings.min_peers" class="form-control">\n' +
-    '				<p class="help-block">-1 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="maxPeers" class="control-label">Maximum number of peers:</label>\n' +
-    '				<input type="text" name="maxPeers" id="maxPeers" ng-model="downloadSettingsCtrl.downloadSettings.max_peers" class="form-control">\n' +
-    '				<p class="help-block">-1 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="minSeeds" class="control-label">Minimum number of seeds:</label>\n' +
-    '				<input type="text" name="minSeeds" id="minSeeds" ng-model="downloadSettingsCtrl.downloadSettings.min_seeds" class="form-control">\n' +
-    '				<p class="help-block">-1 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="maxSeeds" class="control-label">Maximum number of seeds:</label>\n' +
-    '				<input type="text" name="maxSeeds" id="maxSeeds" ng-model="downloadSettingsCtrl.downloadSettings.max_seeds" class="form-control">\n' +
-    '				<p class="help-block">-1 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '		</fieldset>\n' +
-    '	</div>\n' +
-    '	<div class="form-group" style="float: right; padding-top: 15px;">\n' +
-    '		<button type="button" class="btn btn-default" ng-click="downloadSettingsCtrl.cancel()">Cancel</button>\n' +
-    '		<button type="submit" class="btn btn-primary" ng-disabled="downloadSettings.$pristine">Save Download Settings</button>\n' +
-    '	</div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('settings/connection-settings/connection-settings.tpl.html',
     '<form ng-submit="connectionSettingsCtrl.updateConnectionSettings(connectionSettingsCtrl.connectionSettings)" name="connectionSettings" novalidate>\n' +
     '	<div style="overflow-y: auto; height: 350px;">\n' +
@@ -80054,6 +80001,59 @@ module.run(['$templateCache', function($templateCache) {
     '		<button type="submit" class="btn btn-primary" ng-disabled="connectionSettings.$pristine">Save Connection Settings</button>\n' +
     '	</div>\n' +
     '</form>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('settings/download-settings/download-settings.tpl.html',
+    '<form ng-submit="downloadSettingsCtrl.updateDownloadSettings(downloadSettingsCtrl.downloadSettings)" name="downloadSettings" novalidate>\n' +
+    '	<div style="overflow-y: auto; height: 350px;">\n' +
+    '		<alert ng-repeat="alert in downloadSettingsCtrl.alerts" type="{{alert.type}}" close="downloadSettingsCtrl.closeAlert($index)">{{alert.msg}}</alert>\n' +
+    '		<fieldset>\n' +
+    '			<legend>Download Settings</legend>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="downloadDirectory">Default download directory:</label>\n' +
+    '				<input type="text" name="downloadDirectory" id="downloadDirectory" ng-model="downloadSettingsCtrl.downloadSettings.download_directory" class="form-control">\n' +
+    '				<p class="help-block">Make sure path has correct permissions.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="maxUploads" class="control-label">Number of upload slots:</label>\n' +
+    '				<input type="text" name="maxUploads" id="maxUploads" ng-model="downloadSettingsCtrl.downloadSettings.max_uploads" class="form-control">\n' +
+    '				<p class="help-block">0 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="minPeers" class="control-label">Minimum number of peers:</label>\n' +
+    '				<input type="text" name="minPeers" id="minPeers" ng-model="downloadSettingsCtrl.downloadSettings.min_peers" class="form-control">\n' +
+    '				<p class="help-block">-1 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="maxPeers" class="control-label">Maximum number of peers:</label>\n' +
+    '				<input type="text" name="maxPeers" id="maxPeers" ng-model="downloadSettingsCtrl.downloadSettings.max_peers" class="form-control">\n' +
+    '				<p class="help-block">-1 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="minSeeds" class="control-label">Minimum number of seeds:</label>\n' +
+    '				<input type="text" name="minSeeds" id="minSeeds" ng-model="downloadSettingsCtrl.downloadSettings.min_seeds" class="form-control">\n' +
+    '				<p class="help-block">-1 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="maxSeeds" class="control-label">Maximum number of seeds:</label>\n' +
+    '				<input type="text" name="maxSeeds" id="maxSeeds" ng-model="downloadSettingsCtrl.downloadSettings.max_seeds" class="form-control">\n' +
+    '				<p class="help-block">-1 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '		</fieldset>\n' +
+    '	</div>\n' +
+    '	<div class="form-group" style="float: right; padding-top: 15px;">\n' +
+    '		<button type="button" class="btn btn-default" ng-click="downloadSettingsCtrl.cancel()">Cancel</button>\n' +
+    '		<button type="submit" class="btn btn-primary" ng-disabled="downloadSettings.$pristine">Save Download Settings</button>\n' +
+    '	</div>\n' +
+    '</div>');
 }]);
 })();
 
@@ -80458,75 +80458,6 @@ angular
   .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
-	return Settings.getConnectionSettings();
-}
-
-function config($stateProvider) {
-
-	$stateProvider
-		.state('settings.connection', {
-			url: '/connection',
-			templateUrl: 'settings/connection-settings/connection-settings.tpl.html',
-			controller: 'njrt.ConnectionSettingsCtrl as connectionSettingsCtrl',
-			data: {
-				rule: ['isLoggedIn']
-			},
-			isModal: true,
-			modalSize: 'lg',
-			resolve: {
-				connectionSettings: ['njrt.Settings', resolve]
-			}
-		});
-
-}
-
-angular
-	.module('njrt.settings.connectionSettings', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function ConnectionSettingsCtrl(njrtLog, connectionSettings, Settings, $previousState, $scope, Notification) {
-
-	var logger = njrtLog.getInstance('njrt.settings');
-
-	logger.debug('njrt.ConnectionSettingsCtrl loaded.');
-
-	var vm = this;
-
-	vm.connectionSettings = connectionSettings;
-
-	vm.alerts = [];
-	vm.closeAlert = function (index) {
-		vm.alerts.splice(index, 1);
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-	vm.updateConnectionSettings = function (connectionSettings) {
-		Settings.updateConnectionSettings(connectionSettings)
-			.then(function () {
-				vm.alerts.push({
-					type: 'success',
-					msg: 'Successfully saved connection settings.'
-				});
-				$scope.connectionSettings.$setPristine();
-			}, function (err) {
-				vm.alerts.push({
-					type: 'danger',
-					msg: 'Failed to save connection settings.'
-				});
-				logger.error(err);
-			});
-	};
-
-}
-
-angular
-	.module('njrt.settings.connectionSettings')
-	.controller('njrt.ConnectionSettingsCtrl', ['njrtLog', 'connectionSettings', 'njrt.Settings', '$previousState', '$scope', 'njrt.Notification', ConnectionSettingsCtrl]);
-})();
-(function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
 }
 
@@ -80594,6 +80525,75 @@ angular
 angular
 	.module('njrt.settings.downloadSettings')
 	.controller('njrt.DownloadSettingsCtrl', ['njrtLog', 'downloadSettings', 'njrt.Settings', '$previousState', '$scope', DownloadSettingsCtrl]);
+})();
+(function() {'use strict'; function resolve(Settings) {
+	return Settings.getConnectionSettings();
+}
+
+function config($stateProvider) {
+
+	$stateProvider
+		.state('settings.connection', {
+			url: '/connection',
+			templateUrl: 'settings/connection-settings/connection-settings.tpl.html',
+			controller: 'njrt.ConnectionSettingsCtrl as connectionSettingsCtrl',
+			data: {
+				rule: ['isLoggedIn']
+			},
+			isModal: true,
+			modalSize: 'lg',
+			resolve: {
+				connectionSettings: ['njrt.Settings', resolve]
+			}
+		});
+
+}
+
+angular
+	.module('njrt.settings.connectionSettings', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function ConnectionSettingsCtrl(njrtLog, connectionSettings, Settings, $previousState, $scope, Notification) {
+
+	var logger = njrtLog.getInstance('njrt.settings');
+
+	logger.debug('njrt.ConnectionSettingsCtrl loaded.');
+
+	var vm = this;
+
+	vm.connectionSettings = connectionSettings;
+
+	vm.alerts = [];
+	vm.closeAlert = function (index) {
+		vm.alerts.splice(index, 1);
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+	vm.updateConnectionSettings = function (connectionSettings) {
+		Settings.updateConnectionSettings(connectionSettings)
+			.then(function () {
+				vm.alerts.push({
+					type: 'success',
+					msg: 'Successfully saved connection settings.'
+				});
+				$scope.connectionSettings.$setPristine();
+			}, function (err) {
+				vm.alerts.push({
+					type: 'danger',
+					msg: 'Failed to save connection settings.'
+				});
+				logger.error(err);
+			});
+	};
+
+}
+
+angular
+	.module('njrt.settings.connectionSettings')
+	.controller('njrt.ConnectionSettingsCtrl', ['njrtLog', 'connectionSettings', 'njrt.Settings', '$previousState', '$scope', 'njrt.Notification', ConnectionSettingsCtrl]);
 })();
 (function() {'use strict'; function resolve (Feeds) {
 	return Feeds.getFeeds();
@@ -80723,6 +80723,146 @@ angular
 angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);
+})();
+(function() {'use strict'; function resolve(Settings) {
+	return Settings.getDownloadSettings();
+}
+
+function config($stateProvider) {
+	$stateProvider
+		.state('addFeed', {
+			url: '/add-feed',
+			views: {
+				'modal@': {
+					templateUrl: 'feeds/add-feed/add-feed.tpl.html',
+					controller: 'njrt.AddFeedCtrl as feedsAddCtrl'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				downloadSettings: ['njrt.Settings', resolve]
+			},
+			isModal: true
+		});
+}
+
+angular
+	.module('njrt.feeds.addFeed', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function AddFeedCtrl(njrtLog, $state, $previousState, $scope, Feeds, Notification, downloadSettings) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('AddFeedCtrl loaded.');
+
+	var vm = this;
+
+	vm.feed = {
+		rss: '',
+		title: '',
+		path: '',
+		autoDownload: false,
+		filters: []
+	};
+
+	vm.defaultDownloadPath = downloadSettings.download_directory;
+
+	vm.newFilter = {};
+
+	vm.error = false;
+
+	vm.checkDisabled = function () {
+		// if form is invalid, but filters are added
+		// return false to enable submit button
+		if ($scope.addFeed.$invalid) {
+
+			if (vm.hasRegexFilter && vm.feed.filters.length > 0) {
+				return false;
+			}
+
+			return true;
+		}
+
+		// if form is valid because of filter options being
+		// entered in, but not added, do an additional check
+		if (!$scope.addFeed.$invalid) {
+
+			// if regexFilter option is true
+			// and no filters were added
+			// return true to disable submit button
+			if (vm.hasRegexFilter && vm.feed.filters.length === 0) {
+				return true;
+			}
+
+			return false;
+		}
+	};
+
+	vm.addFilter = function (filter) {
+
+		vm.feed.filters.push({
+			regex: filter.regex,
+			type: filter.type
+		});
+		vm.newFilter = {
+			regex: "",
+			type: ""
+		};
+	};
+
+	vm.deleteFilter = function (index) {
+		vm.feed.filters.splice(index, 1);
+	};
+
+	vm.editFilter = function (index) {
+		vm.newFilter = vm.feed.filters[index];
+		vm.feed.filters.splice(index, 1);
+	};
+
+	vm.addRssFeed = function () {
+
+		// If changeTorrentLocation option is true, empty path
+		if (!vm.changeTorrentLocation) {
+			vm.feed.path = '';
+		}
+
+		// If has regex filter option, empty filters array
+		if (!vm.hasRegexFilter) {
+			vm.feed.filters = [];
+		}
+
+		Feeds.addFeed({
+			rss: vm.feed.url,
+			title: vm.feed.name,
+			path: vm.feed.path,
+			filters: vm.feed.filters,
+			autoDownload: vm.feed.autoDownload
+		}).then(function (data) {
+			$previousState.go('modalInvoker');
+		}, function (err) {
+			handleError(err);
+			logger.error(err.data);
+		});
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+	function handleError (err) {
+		console.log(err);
+		if (err.data === 'Feed exists') {
+			vm.error = 'Feed exists. Please enter in a unique URL.';
+		}
+	}
+}
+
+angular
+	.module('njrt.feeds.addFeed')
+	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);
 })();
 (function() {'use strict'; function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
@@ -80909,146 +81049,6 @@ angular
 angular
 	.module('njrt.feeds.deleteFeed')
 	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
-})();
-(function() {'use strict'; function resolve(Settings) {
-	return Settings.getDownloadSettings();
-}
-
-function config($stateProvider) {
-	$stateProvider
-		.state('addFeed', {
-			url: '/add-feed',
-			views: {
-				'modal@': {
-					templateUrl: 'feeds/add-feed/add-feed.tpl.html',
-					controller: 'njrt.AddFeedCtrl as feedsAddCtrl'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				downloadSettings: ['njrt.Settings', resolve]
-			},
-			isModal: true
-		});
-}
-
-angular
-	.module('njrt.feeds.addFeed', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function AddFeedCtrl(njrtLog, $state, $previousState, $scope, Feeds, Notification, downloadSettings) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('AddFeedCtrl loaded.');
-
-	var vm = this;
-
-	vm.feed = {
-		rss: '',
-		title: '',
-		path: '',
-		autoDownload: false,
-		filters: []
-	};
-
-	vm.defaultDownloadPath = downloadSettings.download_directory;
-
-	vm.newFilter = {};
-
-	vm.error = false;
-
-	vm.checkDisabled = function () {
-		// if form is invalid, but filters are added
-		// return false to enable submit button
-		if ($scope.addFeed.$invalid) {
-
-			if (vm.hasRegexFilter && vm.feed.filters.length > 0) {
-				return false;
-			}
-
-			return true;
-		}
-
-		// if form is valid because of filter options being
-		// entered in, but not added, do an additional check
-		if (!$scope.addFeed.$invalid) {
-
-			// if regexFilter option is true
-			// and no filters were added
-			// return true to disable submit button
-			if (vm.hasRegexFilter && vm.feed.filters.length === 0) {
-				return true;
-			}
-
-			return false;
-		}
-	};
-
-	vm.addFilter = function (filter) {
-
-		vm.feed.filters.push({
-			regex: filter.regex,
-			type: filter.type
-		});
-		vm.newFilter = {
-			regex: "",
-			type: ""
-		};
-	};
-
-	vm.deleteFilter = function (index) {
-		vm.feed.filters.splice(index, 1);
-	};
-
-	vm.editFilter = function (index) {
-		vm.newFilter = vm.feed.filters[index];
-		vm.feed.filters.splice(index, 1);
-	};
-
-	vm.addRssFeed = function () {
-
-		// If changeTorrentLocation option is true, empty path
-		if (!vm.changeTorrentLocation) {
-			vm.feed.path = '';
-		}
-
-		// If has regex filter option, empty filters array
-		if (!vm.hasRegexFilter) {
-			vm.feed.filters = [];
-		}
-
-		Feeds.addFeed({
-			rss: vm.feed.url,
-			title: vm.feed.name,
-			path: vm.feed.path,
-			filters: vm.feed.filters,
-			autoDownload: vm.feed.autoDownload
-		}).then(function (data) {
-			$previousState.go('modalInvoker');
-		}, function (err) {
-			handleError(err);
-			logger.error(err.data);
-		});
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-	function handleError (err) {
-		console.log(err);
-		if (err.data === 'Feed exists') {
-			vm.error = 'Feed exists. Please enter in a unique URL.';
-		}
-	}
-}
-
-angular
-	.module('njrt.feeds.addFeed')
-	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);
 })();
 (function() {'use strict'; angular
 	.module('njrt.torrents', [
@@ -81558,65 +81558,6 @@ angular
 	.controller('njrt.SettingsCtrl', ['njrtLog', '$state', SettingsCtrl]);
 })();
 (function() {'use strict'; angular
-	.module('njrt.notification', []);
-})();
-(function() {'use strict'; function Notification($q, $timeout) {
-
-	var Notification = {};
-
-	Notification.notifications = [];
-
-	Notification.add = function (type, message) {
-		var deferred = $q.defer();
-
-		var notification = {
-			type: type,
-			msg: message
-		};
-
-		Notification.notifications.push(notification);
-
-		// need to add animation
-		$timeout(function () {
-			Notification.notifications.splice(0, 1);
-		}, 3000);
-
-		deferred.resolve(notification);
-
-		return deferred.promise;
-	};
-
-	Notification.remove = function (index) {
-		Notification.notifications.splice(index, 1);
-	};
-
-	return Notification;
-}
-
-angular
-	.module('njrt.notification')
-	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
-})();
-(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
-
-	var logger = njrtLog.getInstance('njrt.notification');
-
-	logger.debug('NotificationCtrl loaded.');
-
-	var vm = this;
-
-	vm.Notification = Notification;
-
-	Socket.on('notifications', function (data) {
-		Notification.add(data.type, data.message);
-	});
-}
-
-angular
-	.module('njrt.notification')
-	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
-})();
-(function() {'use strict'; angular
 	.module('njrt.session', []);
 })();
 (function() {'use strict'; function SessionService (njrtLog, $window, Restangular) {
@@ -81697,6 +81638,65 @@ angular
 angular
 	.module('njrt.session')
 	.service('njrt.SessionService', ['njrtLog', '$window', 'Restangular', SessionService]);
+})();
+(function() {'use strict'; angular
+	.module('njrt.notification', []);
+})();
+(function() {'use strict'; function Notification($q, $timeout) {
+
+	var Notification = {};
+
+	Notification.notifications = [];
+
+	Notification.add = function (type, message) {
+		var deferred = $q.defer();
+
+		var notification = {
+			type: type,
+			msg: message
+		};
+
+		Notification.notifications.push(notification);
+
+		// need to add animation
+		$timeout(function () {
+			Notification.notifications.splice(0, 1);
+		}, 3000);
+
+		deferred.resolve(notification);
+
+		return deferred.promise;
+	};
+
+	Notification.remove = function (index) {
+		Notification.notifications.splice(index, 1);
+	};
+
+	return Notification;
+}
+
+angular
+	.module('njrt.notification')
+	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
+})();
+(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
+
+	var logger = njrtLog.getInstance('njrt.notification');
+
+	logger.debug('NotificationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Notification = Notification;
+
+	Socket.on('notifications', function (data) {
+		Notification.add(data.type, data.message);
+	});
+}
+
+angular
+	.module('njrt.notification')
+	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
 })();
 (function() {'use strict'; function run($rootScope, $modal, $previousState) {
 
@@ -82035,136 +82035,6 @@ angular
 	.module('njrt.feeds')
 	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
 })();
-(function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('njrt.authentication module loaded.');
-
-	$rootScope.$on('$stateChangeStart', function (event, toState) {
-
-		if (!toState.data) {
-			logger.debug('State has no data, returning early');
-			return;
-		}
-
-		if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
-			logger.debug(toState.name, 'state has rule: isLoggedIn');
-			if (!SessionService.isCurrentSessionValid()) {
-				// Save to state to session service destination state
-				// so that we can track where the user wants to go
-				// and redirect to that after user is finished logging in
-				SessionService.destinationState = toState.name;
-				$state.go('login');
-				event.preventDefault();
-			}
-		}
-	});
-
-	Restangular.setErrorInterceptor(
-		function (res) {
-			if (res.status === 401) {
-				logger.error(res.status, res.statusText, ':', res.data);
-				$state.go('login');
-				return false; // stop the promise chain
-			} else if (res.status === 404) {
-				logger.error(res.status, res.statusText, ':', res.data);
-				return false; // stop the promise chain
-			}
-			return true;
-		});
-
-	Restangular.setRestangularFields({
-		id: '_id'
-	});
-
-	Restangular.setDefaultHeaders({
-		Authorization: SessionService.getAuthorizationHeader()
-	});
-
-}
-
-angular
-	.module('njrt.authentication', [])
-	.run(['$rootScope', 'njrt.SessionService', '$state', '$previousState', 'njrtLog', 'Restangular', run]);
-})();
-(function() {'use strict'; function Authentication(njrtLog, $http, $state, SessionService, $q, Socket) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('Authentication loaded.');
-
-	var Authentication = {};
-
-	Authentication.login = function (user) {
-		var deferred = $q.defer();
-
-		$http.post("/login", user).then(function (data) {
-
-			data = data.data;
-
-			var userSession = {
-				token: data.token,
-				expires: data.expires,
-				_id: data._id,
-				email: user.email
-			}
-			SessionService.setUserSession(userSession);
-
-			// Connect to socket
-			Socket.connect();
-
-			deferred.resolve(userSession);
-		}, function (err) {
-			SessionService.clearSession();
-			deferred.reject(new Error(err.statusText));
-		});
-
-		return deferred.promise;
-	};
-
-	Authentication.logout = function () {
-		SessionService.clearSession();
-
-		Socket.disconnect();
-		$state.go('top');
-	};
-
-	Authentication.isAuthenticated = function () {
-		if (SessionService.isCurrentSessionValid()) {
-			return true;
-		}
-
-		return false;
-	};
-
-	Authentication.getCurrentUser = function () {
-		return SessionService.getUserSession();
-	};
-
-	return Authentication;
-}
-
-angular
-	.module('njrt.authentication')
-	.factory('njrt.Authentication', ['njrtLog', '$http', '$state', 'njrt.SessionService', '$q', 'Socket', Authentication]);
-})();
-(function() {'use strict'; function AuthenticationCtrl(njrtLog, Authentication) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('AuthenticationCtrl loaded.');
-
-	var vm = this;
-
-	vm.Authentication = Authentication;
-
-}
-
-angular
-	.module('njrt.authentication')
-	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);
-})();
 (function() {'use strict'; function torrentUrlValidator() {
 	return {
 		restrict: 'A',
@@ -82280,21 +82150,25 @@ angular
         console.log('bottom', vm.dataCache.bottom.length);
         console.log('delete index', index);
         // if within main array, remove
-        if (vm.tableVirtualScrollOptions.dataSource.data.length > index > 0) {
+        if (vm.tableVirtualScrollOptions.dataSource.data.length > index && index > 0) {
           vm.tableVirtualScrollOptions.dataSource.data.splice(index, 1);
           vm.end--;
           vm.rowCounter--;
         }
 
         var mainTopLength = vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length;
-        if (mainTopLength > index > vm.tableVirtualScrollOptions.dataSource.data.length) {
-          console.log(vm.dataCache.top);
+        if (mainTopLength > index && index > vm.tableVirtualScrollOptions.dataSource.data.length) {
           vm.dataCache.top.splice(index - vm.tableVirtualScrollOptions.dataSource.data.length, 1);
-          console.log(vm.dataCache.top);
+          vm.end--;
+          vm.rowCounter--;
         }
 
-        if (totalArray.length > index > vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length) {
-          vm.dataCache.bottom.splice(index - vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length, 1);
+        if (totalArray.length > index && index > mainTopLength) {
+          console.log(vm.dataCache.bottom.length);
+          vm.dataCache.bottom.splice(index - mainTopLength, 1);
+          console.log(vm.dataCache.bottom.length);
+          vm.end--;
+          vm.rowCounter--;
         }
 
       }
@@ -82807,4 +82681,134 @@ angular
 angular
 	.module('app')
 	.directive('appVersion', ['$document', appVersion]);
+})();
+(function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('njrt.authentication module loaded.');
+
+	$rootScope.$on('$stateChangeStart', function (event, toState) {
+
+		if (!toState.data) {
+			logger.debug('State has no data, returning early');
+			return;
+		}
+
+		if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
+			logger.debug(toState.name, 'state has rule: isLoggedIn');
+			if (!SessionService.isCurrentSessionValid()) {
+				// Save to state to session service destination state
+				// so that we can track where the user wants to go
+				// and redirect to that after user is finished logging in
+				SessionService.destinationState = toState.name;
+				$state.go('login');
+				event.preventDefault();
+			}
+		}
+	});
+
+	Restangular.setErrorInterceptor(
+		function (res) {
+			if (res.status === 401) {
+				logger.error(res.status, res.statusText, ':', res.data);
+				$state.go('login');
+				return false; // stop the promise chain
+			} else if (res.status === 404) {
+				logger.error(res.status, res.statusText, ':', res.data);
+				return false; // stop the promise chain
+			}
+			return true;
+		});
+
+	Restangular.setRestangularFields({
+		id: '_id'
+	});
+
+	Restangular.setDefaultHeaders({
+		Authorization: SessionService.getAuthorizationHeader()
+	});
+
+}
+
+angular
+	.module('njrt.authentication', [])
+	.run(['$rootScope', 'njrt.SessionService', '$state', '$previousState', 'njrtLog', 'Restangular', run]);
+})();
+(function() {'use strict'; function Authentication(njrtLog, $http, $state, SessionService, $q, Socket) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('Authentication loaded.');
+
+	var Authentication = {};
+
+	Authentication.login = function (user) {
+		var deferred = $q.defer();
+
+		$http.post("/login", user).then(function (data) {
+
+			data = data.data;
+
+			var userSession = {
+				token: data.token,
+				expires: data.expires,
+				_id: data._id,
+				email: user.email
+			}
+			SessionService.setUserSession(userSession);
+
+			// Connect to socket
+			Socket.connect();
+
+			deferred.resolve(userSession);
+		}, function (err) {
+			SessionService.clearSession();
+			deferred.reject(new Error(err.statusText));
+		});
+
+		return deferred.promise;
+	};
+
+	Authentication.logout = function () {
+		SessionService.clearSession();
+
+		Socket.disconnect();
+		$state.go('top');
+	};
+
+	Authentication.isAuthenticated = function () {
+		if (SessionService.isCurrentSessionValid()) {
+			return true;
+		}
+
+		return false;
+	};
+
+	Authentication.getCurrentUser = function () {
+		return SessionService.getUserSession();
+	};
+
+	return Authentication;
+}
+
+angular
+	.module('njrt.authentication')
+	.factory('njrt.Authentication', ['njrtLog', '$http', '$state', 'njrt.SessionService', '$q', 'Socket', Authentication]);
+})();
+(function() {'use strict'; function AuthenticationCtrl(njrtLog, Authentication) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('AuthenticationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Authentication = Authentication;
+
+}
+
+angular
+	.module('njrt.authentication')
+	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);
 })();
