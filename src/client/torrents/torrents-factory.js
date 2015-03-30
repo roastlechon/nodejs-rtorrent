@@ -10,6 +10,8 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 
 	Torrents.selectedTorrents = [];
 
+  Torrents.cleanup = [];
+
   Torrents.totalSize = 0;
 
 	Socket.on('connecting', function() {
@@ -65,22 +67,6 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 
     return deferred.promise;
   };
-
-	Torrents.getTorrent = function (hash) {
-		// Check if hash is instance of array.
-		// If hash is instance of array,
-		if (!(hash instanceof Array)) {
-			hash = [hash];
-		}
-
-		return _.filter(Torrents.torrents, function (torrent) {
-			for (var i = hash.length - 1; i >= 0; i--) {
-				if (hash[i] == torrent.hash) {
-					return true;
-				}
-			}
-		});
-	};
 
 	Torrents.isTorrentSelected = function (hash) {
 		var index = Torrents.selectedTorrents.indexOf(hash);

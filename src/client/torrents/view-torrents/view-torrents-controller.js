@@ -40,6 +40,9 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
         }
 
       });
+
+      vm.tableVirtualScrollOptions.deleteRows(Torrents.cleanup);
+      Torrents.cleanup = [];
   }, 1000);
 
 	$scope.floatTheadOptions = {

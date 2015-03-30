@@ -16,7 +16,10 @@ function DeleteTorrentDataCtrl (njrtLog, $stateParams, $previousState, $modal, T
 		});
 
 		Torrents.deleteData(hash)
-			.then(function (data) {
+      .then(function () {
+        Array.prototype.push.apply(Torrents.cleanup, hash);
+      })
+			.then(function () {
 				$previousState.go('modalInvoker');
 			}, function (err) {
 				logger.error(err);

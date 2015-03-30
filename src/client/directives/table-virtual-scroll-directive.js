@@ -1,4 +1,14 @@
-function tableVirtualScroll () {
+function TableVirtualScrollManager() {
+  var TableVirtualScroll = {};
+
+  TableVirtualScroll.deleteRow = function () {
+
+  };
+
+  return TableVirtualScroll;
+}
+
+function tableVirtualScroll() {
 
   function controller() {
 
@@ -78,51 +88,48 @@ function tableVirtualScroll () {
       }
     };
 
-    function deleteRow(hash) {
-      console.log('deleting hash', hash);
-      var totalArray = vm.tableVirtualScrollOptions.dataSource.data
-        .concat(vm.dataCache.top)
-        .concat(vm.dataCache.bottom);
-      var index = _.findIndex(totalArray, function (torrent) {
-        return torrent.hash === hash;
-      });
-
-      // concat arrays in order of main, top, bottom
-      // if index is in the range of main, top, or bottom, then the
-      // item is in that array. when found, slice it out
-      if (index > -1) {
-        console.log('main', vm.tableVirtualScrollOptions.dataSource.data.length);
-        console.log('top', vm.dataCache.top.length);
-        console.log('bottom', vm.dataCache.bottom.length);
-        console.log('delete index', index);
-        // if within main array, remove
-        if (vm.tableVirtualScrollOptions.dataSource.data.length > index && index > 0) {
-          vm.tableVirtualScrollOptions.dataSource.data.splice(index, 1);
-          vm.end--;
-          vm.rowCounter--;
-        }
-
-        var mainTopLength = vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length;
-        if (mainTopLength > index && index > vm.tableVirtualScrollOptions.dataSource.data.length) {
-          vm.dataCache.top.splice(index - vm.tableVirtualScrollOptions.dataSource.data.length, 1);
-          vm.end--;
-          vm.rowCounter--;
-        }
-
-        if (totalArray.length > index && index > mainTopLength) {
-          console.log(vm.dataCache.bottom.length);
-          vm.dataCache.bottom.splice(index - mainTopLength, 1);
-          console.log(vm.dataCache.bottom.length);
-          vm.end--;
-          vm.rowCounter--;
-        }
-
-      }
-    }
-
     vm.tableVirtualScrollOptions.deleteRows = function (hashes) {
       for (var i = hashes.length - 1; i >= 0; i--) {
-        deleteRow(hashes[i]);
+        var hash = hashes[i];
+        console.log('deleting hash', hash);
+        var totalArray = vm.tableVirtualScrollOptions.dataSource.data
+          .concat(vm.dataCache.top)
+          .concat(vm.dataCache.bottom);
+        var index = _.findIndex(totalArray, function (torrent) {
+          return torrent.hash === hash;
+        });
+
+        // concat arrays in order of main, top, bottom
+        // if index is in the range of main, top, or bottom, then the
+        // item is in that array. when found, slice it out
+        if (index > -1) {
+          console.log('main', vm.tableVirtualScrollOptions.dataSource.data.length);
+          console.log('top', vm.dataCache.top.length);
+          console.log('bottom', vm.dataCache.bottom.length);
+          console.log('delete index', index);
+          // if within main array, remove
+          if (vm.tableVirtualScrollOptions.dataSource.data.length > index && index > -1) {
+            vm.tableVirtualScrollOptions.dataSource.data.splice(index, 1);
+            vm.end--;
+            vm.rowCounter--;
+          }
+
+          var mainTopLength = vm.dataCache.top.length + vm.tableVirtualScrollOptions.dataSource.data.length;
+          if (mainTopLength > index && index > vm.tableVirtualScrollOptions.dataSource.data.length) {
+            vm.dataCache.top.splice(index - vm.tableVirtualScrollOptions.dataSource.data.length, 1);
+            vm.end--;
+            vm.rowCounter--;
+          }
+
+          if (totalArray.length > index && index > mainTopLength) {
+            console.log(vm.dataCache.bottom.length);
+            vm.dataCache.bottom.splice(index - mainTopLength, 1);
+            console.log(vm.dataCache.bottom.length);
+            vm.end--;
+            vm.rowCounter--;
+          }
+
+        }
       }
     };
 
@@ -380,7 +387,7 @@ function tableVirtualScroll () {
     // scroll top initial is 0
     var st = 0;
 
-    var sensitivity = 46;
+    var sensitivity = 40;
 
     function tableScroll() {
 
@@ -442,68 +449,10 @@ function tableVirtualScroll () {
 
     }
 
-
     scrollingContainer.bind('scroll', function () {
       st = scrollingContainer[0].scrollTop;
       requestTick();
     });
-
-    // scrollingContainer.scroll(function () {
-    //   scrolling = true;
-
-    //   if (timeout) {
-    //     $timeout.cancel(timeout);
-    //   }
-
-    //   timeout = $timeout(function () {
-    //     console.log(scrolledAmount, direction);
-
-
-    //     if (scrolledAmount > 5) {
-    //       console.log('scrolled amount is larger than viewable rows');
-    //       scrollingContainer[0].scrollTop = threshold;
-    //       scrolledAmount = 0;
-    //     }
-
-    //     scrolling = false;
-    //     scrolledAmount = 0;
-    //     direction = 0;
-
-    //   }, 50);
-
-    // });
-
-    // var scrolling = false;
-    // var timeout = null;
-    // scrollingContainer.scroll(function () {
-    //   tbody[0].style.pointerEvents = 'none';
-    //   tableScroll();
-    //   scrolling = true;
-
-    //   if (timeout) {
-    //     $timeout.cancel(timeout);
-    //   }
-
-    //   timeout = $timeout(function () {
-
-    //     // if (scrolling) {
-    //     //   console.log('timeout fired event');
-    //     //   scrollingContainer.trigger('scroll');
-    //     // }
-
-    //     // scrolling = false;
-    //     tbody[0].style.pointerEvents = 'auto';
-    //   }, 200);
-    // });
-
-    // setInterval(function () {
-    //   if (scrolling) {
-    //     scrolling = false;
-
-    //     tableScroll();
-    //   }
-
-    // }, 100);
 
     scrollingContainer.bind('scroll', _.debounce(loadPageData, 100));
 
@@ -524,4 +473,5 @@ function tableVirtualScroll () {
 
 angular
 	.module('app')
-	.directive('tableVirtualScroll', [tableVirtualScroll]);
+	.directive('tableVirtualScroll', [tableVirtualScroll])
+  .factory('TableVirtualScrollManager', TableVirtualScrollManager);
