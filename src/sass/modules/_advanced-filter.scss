@@ -1,0 +1,23 @@
+.advanced-filter {
+	overflow-y: hidden;
+	max-height: 0px;
+	height: 0;
+	width: 100%;
+
+	@include transition-duration(.450s);
+}
+
+.advanced-filter--expanded {
+	@include transition-duration(.450s);
+
+	max-height: 500px;
+	height: auto;
+}
+
+.table-container {
+	position: absolute;
+	top: 0px;
+	bottom: 50px;
+	left: 0px;
+	right: 0px;
+}

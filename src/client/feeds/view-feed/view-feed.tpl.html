@@ -1,0 +1,46 @@
+<div class="content" style="position: relative;" ng-style="style()" njrt-resize>
+	<div class="table-container">
+		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">
+			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedCtrl.feed.torrents">
+				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">
+					<tr>
+						<th><a href="javascript: void(0);" ng-click="feedCtrl.predicate='name';feedCtrl.reverse=!feedCtrl.reverse">Name <i class="fa" ng-class="{'fa-caret-up': feedCtrl.predicate==='name' && !feedCtrl.reverse, 'fa-caret-down': feedCtrl.predicate==='name' && feedCtrl.reverse}"></i></a></th>
+						<th><a href="javascript: void(0);" ng-click="feedCtrl.predicate='date';feedCtrl.reverse=!feedCtrl.reverse">Date <i class="fa" ng-class="{'fa-caret-up': feedCtrl.predicate==='date' && !feedCtrl.reverse, 'fa-caret-down': feedCtrl.predicate==='date' && feedCtrl.reverse}"></i></a></th>
+						<th>Status</th>
+						<th>Load</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="torrent in feedCtrl.feed.torrents  | orderBy:feedCtrl.predicate:feedCtrl.reverse | filter:feedCtrl.searchText">
+						<td><h5 title="{{torrent.name}}" style="width: 450px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5></td>
+						<td>{{torrent.date | date:"medium"}}</td>
+						<td>{{torrent.status}}</td>
+						<td><a href="javascript: void(0);" ng-click="feedCtrl.loadTorrent(torrent.url)">Load</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">
+		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">
+			<span class="dropdown dropup" dropdown>
+				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>
+				<ul class="dropdown-menu" role="menu">
+					<li class="dropdown-submenu">
+						<a href="javascript: void(0);">Filter by Status</a>
+						<ul class="dropdown-menu">
+							
+						</ul>
+					</li>
+					<li class="dropdown-submenu">
+						<a href="javascript: void(0);">Hide Columns</a>
+						<ul class="dropdown-menu">
+							
+						</ul>
+					</li>
+				</ul>
+			</span>
+			<input type="text" ng-model="feedCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">
+		</div>
+	</div>
+</div>

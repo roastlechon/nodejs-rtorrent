@@ -30,9 +30,11 @@ function startTorrentLoop() {
 var socket = module.exports = {};
 
 socket.init = function (io) {
-	io.sockets.on("connection", function(socket) {
+	io.on("connection", function(socket) {
 		
 		connections++;
+
+		logger.info('User count:', connections);
 
 		logger.info("Successfully connected to socket.");
 
@@ -71,6 +73,10 @@ socket.init = function (io) {
 		socket.on("disconnect", function(socket) {
 			logger.info("Client disconnected.");
 			connections--;
+
+			if (connections == 0) {
+				started = false;
+			}
 		});
 	});
 }

@@ -1,10 +1,17 @@
 var logger = require("winston");
 var nconf = require("nconf");
 var fs = require("fs");
-nconf.env().argv().file("./config/config.json");
+var bodyParser = require('body-parser');
+var multiparty = require('connect-multiparty');
+var multipartyMiddleware = multiparty();
+var https = require('https');
+var http = require('http');
+var server;
+
+nconf.env().argv().file("../../config.json");
 
 var rtorrent = require("./lib/rtorrent");
-logger.add(logger.transports.File, { filename: "nodejs-rtorrent.log"});
+logger.add(logger.transports.File, { filename: "../../nodejs-rtorrent.log"});
 logger.exitOnError = false;
 
 logger.info("Initializing nodejs-rtorrent server.");
@@ -16,12 +23,10 @@ if (nconf.get("app:database") === "tingodb") {
 var mongoose = require("mongoose");
 var express = require("express");
 
-var io = require("socket.io");
-
 var passport = require("passport")
-require("./config/passport-strategy");
+require("./auth/passport-strategy");
 
-var socketAuthorization = require('./config/socket-authorization');
+var auth = require('./auth/auth');
 var app = express();
 
 // Setup server options
@@ -29,15 +34,17 @@ if( nconf.get("app:ssl") ) {
 	var serverOptions = {};
 	serverOptions.cert	= fs.readFileSync( nconf.get("ssl:cert"), 'utf-8');
 	serverOptions.key	= fs.readFileSync( nconf.get("ssl:key"), 'utf-8');
-	
-	var http = require('https');
-	var server = http.createServer(serverOptions, app);
+	server = https.createServer(serverOptions, app);
 } else {
-	var http = require("http");
-	var server = http.createServer(app);
+	server = http.createServer(app);
 }
 
-var io = io.listen(server);
+var io = require('socket.io')(server, {
+  serverClient: false,
+  origins: nconf.get("app:hostname") + ":" + nconf.get("app:port")
+});
+
+io.use(auth.isSocketAuthenticated);
 
 // Check for config setting if app database is tingodb.
 // By default app setting should be tingodb
@@ -71,35 +78,50 @@ users.add(nconf.get("app:defaultUser")).then(function(data) {
   logger.info(data);
   logger.info("Successfully created default user");
 }, function(err) {
-  logger.error(err);
+  logger.debug(err);
 });
 
-io.configure(function() {
-  io.set("origins", nconf.get("app:hostname") + ":" + nconf.get("app:port"));
-  io.set("log level", 1);
-  io.set("authorization", socketAuthorization);
+logger.info("Configuring Express.");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(passport.initialize());
+app.use(express.static("../../dist"));
+app.use(multipartyMiddleware);
+app.use(function (req, res, next) {
+  logger.info('Request from', req.connection.remoteAddress);
+  next();
+});
+app.use(function (err, req, res, next) {
+  console.log(err.stack);
+  next();
+});
+app.use(function (err, req, res, next) {
+  res.status(500);
+  res.send(err);
 });
 
-
-logger.info("Configuring express.");
-app.configure(function() {
-	app.use(express.bodyParser());
-  app.use(express.multipart());
-  app.use(express.methodOverride());
-	app.use(passport.initialize());
-	app.use(app.router);
-  // need to configure option to allow for static or separate hosting
-	app.use(express.static("../../dist"));
-});
-
-require("./controllers/socket").init(io);
+// Login does not use authentication module
 require("./controllers/login")(app);
+
+app.use(auth.isAuthenticated);
+
+// Below uses the authentication module
 require("./controllers/feeds")(app);
 require("./controllers/torrent")(app);
+require("./controllers/settings")(app);
 require("./controllers/rss-subscriptions")();
 
-logger.info("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
+require("./controllers/socket").init(io);
 
-rtorrent.init();
+logger.debug("Listening on hostname and port: %s:%s", nconf.get("app:hostname"), nconf.get("app:port"));
 
-server.listen(nconf.get("app:port"));
+rtorrent.init()
+  .then(function () {
+    server.listen(nconf.get("app:port"));
+    logger.info('Successfully started nodejs-rtorrent.');
+    logger.info('Open http://%s:%s in a browser and login with user "%s" and password "%s".', nconf.get("app:hostname"), nconf.get("app:port"), nconf.get("app:defaultUser:email"), nconf.get("app:defaultUser:password"));
+  }, function (err) {
+    logger.error('An error occurred while starting nodejs-rtorrent.');
+    throw err;
+  })
+  .done();

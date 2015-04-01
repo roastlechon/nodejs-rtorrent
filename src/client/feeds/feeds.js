@@ -1,32 +1,17 @@
-var log = require('../log/log');
-var session = require('../session/session');
+var addFeed = require('./add-feed/add-feed');
+var editFeed = require('./edit-feed/edit-feed');
+var viewFeed = require('./view-feed/view-feed');
+var deleteFeed = require('./delete-feed/delete-feed');
+var viewFeeds = require('./view-feeds/view-feeds');
+
 
 module.exports = angular
-	.module('feeds', [
-		'ui.router',
-		'ct.ui.router.extras',
-		session.name,
-		log.name
-	])
-	.config(function($stateProvider) {
-		$stateProvider.state('home.feeds', {
-			url: 'feeds',
-			views: {
-				'home@': {
-					controller: 'FeedsCtrl as feedsCtrl',
-					templateUrl: 'feeds/feeds.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feeds: function (Feeds) {
-					return Feeds.getFeeds();
-				}
-			}
-		});
-	});
+	.module('njrt.feeds', [
+		addFeed.name,
+		editFeed.name,
+		viewFeed.name,
+		deleteFeed.name,
+		viewFeeds.name
+	]);
 
 require('./feeds-factory');
-require('./feeds-controller');

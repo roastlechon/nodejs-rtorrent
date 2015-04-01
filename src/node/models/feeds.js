@@ -30,9 +30,12 @@ function updateLastChecked(_id, time) {
 }
 
 feeds.getAll = function() {
-	return Feed.find({}).sort({
-		"title": "ascending"
-	}).exec();
+	return Feed
+		.find({})
+		.select('-torrents -__v')
+		.sort({
+			"title": "ascending"
+		}).exec();
 }
 
 feeds.get = function(id) {
@@ -102,6 +105,8 @@ feeds.add = function(feed) {
 			logger.info("Getting torrents from feed.");
 			var feedModel = new Feed({
 				title: feed.title,
+				path: feed.path,
+				changeTorrentLocation: feed.changeTorrentLocation,
 				lastChecked: moment().unix(),
 				rss: feed.rss,
 				regexFilter: feed.regexFilter,
@@ -209,9 +214,20 @@ feeds.addTorrent = function(_id, torrent, autoDownload) {
 
 				// If autoDownload is true, start the torrent automatically
 				if (autoDownload) {
-					rtorrent.loadTorrentUrl(torrent.url).then(function() {
-						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + torrent.url + '"'});
+
+					var tor = {
+						url: torrent.url
+					};
+
+					// If changeTorrentLocation is true, set path and load torrent
+					if (data.changeTorrentLocation) {
+						tor.path = data.path;
+					} 
+
+					rtorrent.loadTorrent(tor).then(function() {
+						socket.addNotification({type: 'success', message: 'Automatically loaded torrent "' + tor.url + '"'});
 					});
+
 				}
 
 				data.torrents.push(torrentFeed);

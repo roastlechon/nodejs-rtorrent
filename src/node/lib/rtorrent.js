@@ -1,5 +1,9 @@
 var xmlrpc = require('xmlrpc')
+var fs = require('fs');
+var path = require('path');
+var request = require('request');
 var portscanner = require('portscanner');
+var readTorrent = require('read-torrent');
 var logger = require('winston');
 var Q = require('q');
 var nconf = require('nconf');
@@ -55,7 +59,6 @@ function scgiMethodCall(api, array) {
 	deserializer.deserializeMethodResponse(stream, function (err, data) {
 
 		if (err) {
-			console.log(err);
 			return deferred.reject(err);
 		}
 		return deferred.resolve(data);
@@ -105,14 +108,13 @@ function methodCall (api, array) {
 }
 
 rtorrent.init = function () {
-	createThrottleSettings()
-		.then(function (results) {
-			results.forEach(function (result) {
-				if (result.state !== 'fulfilled') {
-					logger.error(result.reason);
-				}
-			})
+	return createThrottleSettings()
+		.then(function () {
 			logger.info('Finished creating throttle settings.');
+		}, function (err) {
+			if (err.code == 'ECONNREFUSED') {
+				throw new Error('Unable to connect to rtorrent.');
+			}
 		});
 }
 
@@ -153,7 +155,7 @@ function createThrottleSettings () {
 		createThrottleSettingList.push(createThrottleSetting(throttle_settings[i]));
 	}
 
-	return Q.allSettled(createThrottleSettingList);
+	return Q.all(createThrottleSettingList);
 }
 
 function createThrottleSetting (throttleSetting) {
@@ -309,8 +311,120 @@ rtorrent.loadTorrentFile = function (filepath) {
 	return methodCall('load', [filepath, 'd.set_custom=x-filename']);
 }
 
-rtorrent.loadTorrentUrl = function (url) {
+rtorrent.loadTorrentStart = function (url) {
 	return methodCall('load_start', [url]);
+}
+
+
+rtorrent.getTorrentMetaData = function (torrent) {
+	var deferred = Q.defer();
+
+	readTorrent(torrent.url, {}, function (err, data) {
+		if (err) {
+			deferred.reject(err);
+		}
+
+		deferred.resolve(data);
+	});
+
+	return deferred.promise;
+}
+
+rtorrent.getHash = function (hash) {
+	return methodCall('d.get_hash', [hash]);
+}
+
+function checkPathExists (path) {
+	var deferred = Q.defer();
+	fs.exists(path, function (exists) {
+		if (exists) {
+			deferred.resolve(exists);
+		}
+
+		deferred.reject(new Error('Path does not exist.'));
+	})
+	return deferred.promise;
+}
+
+
+rtorrent.loadTorrent = function (torrent) {
+	return rtorrent.getTorrentMetaData(torrent)
+		.then(function (data) {
+			var hash = data.infoHash.toUpperCase();
+			logger.info('Retrieved hash from torrent', hash);
+
+			// Check if torrent path is passed as a parameter
+			if (torrent.path) {
+				// Check if path exists
+				logger.info('Checking if path exists.');
+
+				return checkPathExists(torrent.path)
+					.then(function (data) {
+
+						logger.info('Directory exists.');
+
+						// Load torrent but do not start
+						return methodCall('load', [torrent.url])
+							.then(function () {
+								return Q.delay(500)
+									.then(function () {
+										// Get torrent hash
+										return rtorrent.getHash(hash)
+											.then(function () {
+												return rtorrent.setTorrentDirectory(hash, torrent.path)
+													.then(function () {
+														return rtorrent.startTorrent(hash);
+													});
+											});
+									})
+							});
+					}, function () {
+
+						logger.info('Directory does not exist.');
+
+						var joinedPath = path.join('/', torrent.path);
+
+						return Q.nfcall(fs.mkdir, joinedPath)
+							.then(function () {
+								logger.info('Created directory', joinedPath);
+
+								logger.info('Setting directory of torrent to', joinedPath);
+
+								// Load torrent but do not start
+								return methodCall('load', [torrent.url])
+									.then(function () {
+										return Q.delay(500)
+											.then(function () {
+												// Get torrent hash
+												return rtorrent.getHash(hash)
+													.then(function () {
+														return rtorrent.setTorrentDirectory(hash, joinedPath)
+															.then(function () {
+																return rtorrent.startTorrent(hash);
+															});
+													});
+											});
+									});
+
+							}, function (err) {
+
+								if (err.code == 'EACCES') {
+									throw new Error('Unable to create directory for torrent due to permissions.', hash);
+								}
+								
+								// THrow error if not EACESS
+								throw err;
+							});
+					});
+			}
+
+			// Start torrent if no path is passed
+			return rtorrent.loadTorrentStart(torrent.url);
+		});
+}
+
+rtorrent.setTorrentDirectory = function (hash, path) {
+	return methodCall('d.set_directory', [hash, path]);
 }
 
 rtorrent.startTorrent = function (hash) {
@@ -335,14 +449,18 @@ rtorrent.removeTorrent = function (hash) {
 rtorrent.deleteTorrentData = function (hash) {
 	return rtorrent.stopTorrent(hash).then(function() {
 		return rtorrent.isMultiFile(hash).then(function(data) {
-			return rtorrent.getDirectory(hash).then(function(dir) {
+			return rtorrent.getTorrentDirectory(hash).then(function(dir) {
 				if (data === '1') {
-					return deleteData(dir).then(function() {
+					logger.info(hash, 'is a multifile torrent.');
+					logger.info('Deleting directory path/file', dir);
+					return deleteData(dir).then(function(data) {
 						return rtorrent.removeTorrent(hash);
 					});
 				} else {
+					logger.info(hash, 'is a single file torrent.');
 					return rtorrent.getTorrentName(hash).then(function(name) {
-						return deleteData(dir + '/' + name).then(function() {
+						logger.info('Deleting directory path/file', dir + '/' + name)
+						return deleteData(dir + '/' + name).then(function(data) {
 							return rtorrent.removeTorrent(hash);
 						});
 					});
@@ -379,7 +497,7 @@ rtorrent.isMultiFile = function (hash) {
 	return methodCall('d.is_multi_file', [hash]);
 }
 
-rtorrent.getDirectory = function (hash) {
+rtorrent.getTorrentDirectory = function (hash) {
 	return methodCall('d.get_directory', [hash]);
 }
 
@@ -440,35 +558,98 @@ rtorrent.getScrapeComplete = function (hash) {
 // get_port_range
 // returns string of port range
 rtorrent.getPortRange = function () {
-	return methodCall('get_port_range', []);
+	return methodCall('get_port_range', [])
+		.then(function (data) {
+			return {
+				'port_range': data
+			}
+		});
+}
+
+rtorrent.setPortRange = function (value) {
+	return methodCall('set_port_range', [value]);
 }
 
 // get_port_open
 // returns 1 or 0
 // Opens listening port
 rtorrent.getPortOpen = function () {
-	return methodCall('get_port_open', []);
+	return methodCall('get_port_open', [])
+		.then(function (data) {
+			return {
+				'port_open': data == 1 ? true : false
+			}
+		});
+}
+
+rtorrent.setPortOpen = function (value) {
+	return methodCall('set_port_open', [value]);
 }
 
 rtorrent.getUploadSlots = function () {
-	return methodCall('get_max_uploads', []);
+	return methodCall('get_max_uploads', [])
+		.then(function (data) {
+			return {
+				'max_uploads': data
+			}
+		});
+}
+
+rtorrent.setUploadSlots = function (value) {
+	return methodCall('set_max_uploads', [value]);
 }
 
 rtorrent.getUploadSlotsGlobal = function () {
-	return methodCall('get_max_uploads_global', []);
+	return methodCall('get_max_uploads_global', [])
+		.then(function (data) {
+			return {
+				'max_uploads_global': data
+			}
+		});
+}
+
+rtorrent.setUploadSlotsGlobal = function (value) {
+	return methodCall('set_max_uploads_global', [value]);
+}
+
+rtorrent.getDownloadSlotsGlobal = function () {
+	return methodCall('get_max_downloads_global', [])
+		.then(function (data) {
+			return {
+				'max_downloads_global': data
+			}
+		});
+}
+
+rtorrent.setDownloadSlotsGlobal = function (value) {
+	return methodCall('set_max_downloads_global', [value]);
 }
 
 // get_port_random
 // returns 1 or 0
 // Randomize port each time rTorrent starts
 rtorrent.getPortRandom = function () {
-	return methodCall('get_port_random', []);
+	return methodCall('get_port_random', [])
+		.then(function (data) {
+			return {
+				'port_random': data == 1 ? true : false
+			}
+		});
+}
+
+rtorrent.setPortRandom = function (value) {
+	return methodCall('set_port_random', [value]);
 }
 
 // get_download_rate
 // returns value in bytes
 rtorrent.getGlobalMaximumDownloadRate = function () {
-	return methodCall('get_download_rate', []);
+	return methodCall('get_download_rate', [])
+		.then(function (data) {
+			return {
+				'global_max_download_rate': data
+			}
+		});
 }
 
 // set_download_rate
@@ -480,11 +661,81 @@ rtorrent.setGlobalMaximumDownloadRate = function (value) {
 // get_upload_rate
 // returns value in bytes
 rtorrent.getGlobalMaximumUploadRate = function () {
-	return methodCall('get_upload_rate', []);
+	return methodCall('get_upload_rate', [])
+		.then(function (data) {
+			return {
+				'global_max_upload_rate': data
+			}
+		});
+}
+
+rtorrent.getMinNumberPeers = function () {
+	return methodCall('get_min_peers', [])
+		.then(function (data) {
+			return {
+				'min_peers': data
+			}
+		}); 
+}
+
+rtorrent.setMinNumberPeers = function (value) {
+	return methodCall('set_min_peers', [value]);
+}
+
+rtorrent.getMinNumberSeeds = function () {
+	return methodCall('get_min_peers_seed', [])
+		.then(function (data) {
+			return {
+				'min_seeds': data
+			}
+		}); 
+}
+
+rtorrent.setMinNumberSeeds = function (value) {
+	return methodCall('set_min_peers_seed', [value]);
+}
+
+rtorrent.getMaxNumberPeers = function () {
+	return methodCall('get_max_peers', [])
+		.then(function (data) {
+			return {
+				'max_peers': data
+			}
+		}); 
+}
+
+rtorrent.setMaxNumberPeers = function (value) {
+	return methodCall('set_max_peers', [value]);
+}
+
+rtorrent.getMaxNumberSeeds = function () {
+	return methodCall('get_max_peers_seed', [])
+		.then(function (data) {
+			return {
+				'max_seeds': data
+			}
+		}); 
+}
+
+rtorrent.setMaxNumberSeeds = function (value) {
+	return methodCall('set_max_peers_seed', [value]);
 }
 
 // set_upload_rate
 // requires value in bytes
 rtorrent.setGlobalMaximumUploadRate = function (value) {
 	return methodCall('set_upload_rate', [value]);
+}
+
+rtorrent.getDirectory = function () {
+	return methodCall('get_directory', [])
+		.then(function (data) {
+				return {
+					'download_directory': data
+				}
+			}); 
+}
+
+rtorrent.setDirectory = function (value) {
+	return methodCall('set_directory', [value]);
 }

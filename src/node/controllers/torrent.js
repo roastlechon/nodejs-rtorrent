@@ -1,15 +1,15 @@
 var rtorrent = require("../lib/rtorrent");
 var logger = require("winston");
-var auth = require("./auth")
+var auth = require("../auth/auth")
 
 module.exports = function(app) {
-	app.post("/torrents/:hash/start", auth.ensureAuthenticated, startTorrent);
-	app.post("/torrents/:hash/pause", auth.ensureAuthenticated, pauseTorrent);
-	app.post("/torrents/:hash/stop", auth.ensureAuthenticated, stopTorrent);
-	app.post("/torrents/:hash/remove", auth.ensureAuthenticated, removeTorrent);
-	app.post("/torrents/:hash/delete_data", auth.ensureAuthenticated, deleteTorrentData);
-	app.post("/torrents/load", auth.ensureAuthenticated, loadTorrent);
-	app.post("/torrents/:hash/channel", auth.ensureAuthenticated, setTorrentChannel);
+	app.post("/torrents/:hash/start", startTorrent);
+	app.post("/torrents/:hash/pause", pauseTorrent);
+	app.post("/torrents/:hash/stop", stopTorrent);
+	app.post("/torrents/:hash/remove", removeTorrent);
+	app.post("/torrents/:hash/delete_data", deleteTorrentData);
+	app.post("/torrents/load", loadTorrent);
+	app.post("/torrents/:hash/channel", setTorrentChannel);
 }
 
 function startTorrent(req, res) {
@@ -63,13 +63,26 @@ function deleteTorrentData(req, res) {
 }
 
 function loadTorrent(req, res) {
-	rtorrent.loadTorrentUrl(req.body.url).then(function(data) {
-		logger.info('Successfully loaded torrent', req.body.url);
-		res.json(data);
-	}, function(err) {
-		logger.error(err.message);
-		res.status(500).send(err.message);
-	});
+	var torrent = {};
+
+	if (req.files) {
+		torrent.url = req.files.file.path;
+	} else {
+		torrent.url = req.body.url;
+	}
+
+	if (req.body.path) {
+		torrent.path = req.body.path;
+	}
+
+	rtorrent.loadTorrent(torrent)
+		.then(function(data) {
+			logger.info('Successfully loaded torrent', torrent.url);
+			res.json(data);
+		}, function(err) {
+			logger.error(err.message);
+			res.status(500).send(err.message);
+		});
 }
 
 function setTorrentChannel(req, res) {

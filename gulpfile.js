@@ -2,21 +2,14 @@ var gulp = require('gulp');
 var bump = require('gulp-bump');
 var browserify = require('browserify');
 var watchify = require('watchify');
-
 var source = require('vinyl-source-stream');
-
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var rimraf = require('gulp-rimraf');
 var preprocess = require('gulp-preprocess');
 var gutil = require('gulp-util');
-
 var templateCache = require('gulp-angular-templatecache');
-
 var minifyHTML = require('gulp-minify-html');
-var runSequence = require('run-sequence');
-
 var packageJson = require('./package.json');
-
 var watch = require('gulp-watch');
 
 // Clean tmp folder
@@ -36,13 +29,13 @@ gulp.task('clean_dist', function () {
 });
 
 // Copy assets to dist folder
-gulp.task('copy_assets', function () {
+gulp.task('copy_assets', ['clean', 'clean_dist'], function () {
 	return gulp.src('src/assets/**/*')
 		.pipe(gulp.dest('dist'))
 });
 
 // Copy client scripts to .tmp folder to build
-gulp.task('copy_scripts', function () {
+gulp.task('copy_scripts', ['clean', 'clean_dist'], function () {
 	return gulp.src([
 		'src/client/**/*', 
 		'!src/client/**/*.html'
@@ -50,7 +43,7 @@ gulp.task('copy_scripts', function () {
 		.pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('watch_scripts', function () {
+gulp.task('watch_scripts', ['clean', 'clean_dist'], function () {
 	watch([
 		'src/client/**/*',
 		'!src/client/**/*.html'
@@ -60,29 +53,27 @@ gulp.task('watch_scripts', function () {
 })
 
 // Compile sass from src and copy to dist
-gulp.task('compile_sass', function () {
+gulp.task('compile_sass', ['clean', 'clean_dist'], function () {
 	return gulp.src(['src/sass/styles.scss'])
 		.pipe(sass({
-			style: 'compressed'
+			outputStyle: 'compressed'
 		})
 		.on('error', gutil.log))
 		.pipe(gulp.dest('dist/css'));
 });
 
 // Watches sass files and compiles to dist
-gulp.task('watch_compile_sass', function () {
+gulp.task('watch_compile_sass', ['clean', 'clean_dist'], function () {
 	watch('src/sass/**/*.scss', function () {
 		return gulp.src(['src/sass/styles.scss'])
-			.pipe(sass({
-				style: 'compressed'
-			})
+			.pipe(sass()
 			.on('error', gutil.log))
 			.pipe(gulp.dest('dist/css'));
 	});
 });
 
 // Preprocess index.html from src to dist
-gulp.task('preprocess_index.html', function () {
+gulp.task('preprocess_index.html', ['clean', 'clean_dist'], function () {
 	return gulp.src('src/client/index.html')
 		.pipe(preprocess({
 			context: {
@@ -93,7 +84,7 @@ gulp.task('preprocess_index.html', function () {
 });
 
 // Watch index.html and preprocess index.html from src to dist
-gulp.task('watch_preprocess_index.html', function () {
+gulp.task('watch_preprocess_index.html', ['clean', 'clean_dist'], function () {
 	watch('src/client/index.html', function(file) {
 		return file.pipe(preprocess({
 				context: {
@@ -105,7 +96,7 @@ gulp.task('watch_preprocess_index.html', function () {
 });
 
 // Minify html templates from src to .tmp into templates.js file
-gulp.task('minify_templates', function () {
+gulp.task('minify_templates', ['clean', 'clean_dist'], function () {
 	return gulp.src([
 			'src/client/**/*.html',
 			'!src/client/index.html'
@@ -121,7 +112,7 @@ gulp.task('minify_templates', function () {
 });
 
 // Watch templates from src and minify to .tmp into templates.js file
-gulp.task('watch_templates', function () {
+gulp.task('watch_templates', ['clean', 'clean_dist'], function () {
 	watch([
 		'src/client/**/*.html',
 		'!src/client/index.html'
@@ -141,9 +132,10 @@ gulp.task('watch_templates', function () {
 		});
 });
 
-// Compiles client source from .tmp to dist
-// This has a dependency on minify_templates
-gulp.task('compile_client_src', function () {
+// Compiles client source using browserify. Minifies and pipes everything 
+// to dist folder.
+gulp.task('browserify', ['preprocess_index.html', 'copy_assets', 'copy_scripts', 
+	'compile_sass', 'minify_templates'], function () {
 	return browserify()
 		.add('./.tmp/app.js')
 		.plugin('minifyify', {
@@ -154,27 +146,34 @@ gulp.task('compile_client_src', function () {
 		.pipe(gulp.dest('dist/js'));
 });
 
-
 // Watches file dependencies in app.js in .tmp folder and compiles to
 // the dist folder.
-gulp.task('watchify', function () {
-	var w = watchify(browserify({
-		cache: {},
-		packageCache: {},
-		fullPaths: true
-	})).add('./.tmp/app.js');
+gulp.task('watchify', ['watch_preprocess_index.html', 'preprocess_index.html', 'copy_assets', 
+	'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'], function () {
 
-	w.on('update', function(ids) {
-		gutil.log('[watchify] rebundling files: ', ids);
-		return w.bundle()
+	function bundle (ids) {
+
+		if (ids) {
+			gutil.log('[watchify] rebundling files: ', ids);	
+		}
+		
+		return bundler.bundle()
 			.on('error', gutil.log)
 			.pipe(source('app.js'))
 			.pipe(gulp.dest('./dist/js'));
-	});
+	}
 
-	return w.bundle()
-		.pipe(source('app.js'))
-		.pipe(gulp.dest('./dist/js'));
+	var bundler = watchify(browserify({
+		cache: {},
+		packageCache: {},
+		fullPaths: true,
+		debug: true
+	})).add('./.tmp/app.js');
+
+	bundler.on('update', bundle);
+
+	return bundle();
+
 });
 
 // Update bower, component, npm at once:
@@ -185,19 +184,12 @@ gulp.task('bump', function () {
 });
 
 // Dev task that calls watch functions
-gulp.task('dev', function () {
-	return runSequence('clean', 'clean_dist', 
-		['watch_preprocess_index.html', 'preprocess_index.html', 'copy_assets', 'watch_scripts', 'copy_scripts', 'watch_compile_sass', 'watch_templates', 'minify_templates'],
-		'watchify', function () {
-			gutil.log('Finished executing dev run sequence.')
-		});
+gulp.task('dev', ['watchify'], function () {
+	gutil.log('Finished executing dev run sequence.');
+	gutil.log('Watching for changes...');
 });
 
 // Default task that calls production build
-gulp.task('default', function () {
-	return runSequence('clean', 'clean_dist',
-		['preprocess_index.html', 'copy_assets', 'copy_scripts', 'compile_sass', 'minify_templates'],
-		'compile_client_src', function () {
-			gutil.log('Finished executing prod run sequence.')
-		});
+gulp.task('default', ['browserify'], function () {
+	gutil.log('Finished executing prod run sequence.');
 });

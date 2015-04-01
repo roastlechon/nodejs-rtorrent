@@ -1,8 +1,4 @@
-var log = require('../log/log');
-
 module.exports = angular
-	.module('socket', [
-		log.name
-	]);
+	.module('socket', []);
 
 require('./socket-factory');

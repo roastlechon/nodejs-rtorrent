@@ -1,7 +1,5 @@
 module.exports = angular
-	.module('notification', [
-		
-	]);
+	.module('njrt.notification', []);
 
 require('./notification-factory');
 require('./notification-controller');

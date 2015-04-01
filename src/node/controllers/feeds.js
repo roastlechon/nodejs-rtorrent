@@ -1,16 +1,16 @@
 var feeds = require('../models/feeds');
 var logger = require('winston');
-var auth = require('./auth');
+var auth = require('../auth/auth');
 var Q = require('q');
 
 module.exports = function(app) {
-	app.get('/feeds', auth.ensureAuthenticated, getFeeds);
-	app.get('/feeds/:id', auth.ensureAuthenticated, getFeed);
-	app.post('/feeds', auth.ensureAuthenticated, addFeed);
-	app.put('/feeds/:id', auth.ensureAuthenticated, updateFeed);
-	app.del('/feeds/:id', auth.ensureAuthenticated, deleteFeed);
-	app.post('/feeds/test', auth.ensureAuthenticated, testFeed);
-	app.post('/feeds/:id/refresh', auth.ensureAuthenticated, refreshFeed);
+	app.get('/feeds', getFeeds);
+	app.get('/feeds/:id', getFeed);
+	app.post('/feeds', addFeed);
+	app.put('/feeds/:id', updateFeed);
+	app.delete('/feeds/:id', deleteFeed);
+	app.post('/feeds/test', testFeed);
+	app.post('/feeds/:id/refresh', refreshFeed);
 }
 
 function getFeed(req, res) {
@@ -28,22 +28,7 @@ function getFeed(req, res) {
 function getFeeds(req, res) {
 	feeds.getAll().then(function(data) {
 		logger.info('Successfully retrieved rss feeds');
-		res.json(data.map(function(feed) {
-			return {
-				_id: feed._id,
-				title: feed.title,
-				lastChecked: feed.lastChecked,
-				rss: feed.rss,
-				regexFilter: feed.regexFilter,
-				autoDownload: feed.autoDownload,
-				filters: feed.filters,
-				torrents: feed.torrents.sort(function(a, b) {
-					a = a.date;
-					b = b.date;
-					return a > b ? -1 : a < b ? 1 : 0;
-				})
-			};
-		}));
+		res.json(data);
 	}, function(err) {
 		logger.error(err.message);
 		res.status(500).send(err.message);
@@ -53,13 +38,7 @@ function getFeeds(req, res) {
 function addFeed(req, res) {
 	logger.info('Adding feed', req.body.rss);
 
-	feeds.add({
-		title: req.body.title,
-		rss: req.body.rss,
-		autoDownload: req.body.autoDownload,
-		regexFilter: req.body.regexFilter,
-		filters: req.body.filters
-	}).then(function(data) {
+	feeds.add(req.body).then(function(data) {
 		logger.info('Successfully saved feed.');
 		res.json(data);
 	}, function(err) {
@@ -70,13 +49,14 @@ function addFeed(req, res) {
 }
 
 
-
 function updateFeed(req, res) {
 	logger.info('Updating feed', req.params.id);
 
 	feeds.edit({
 		_id: req.params.id,
 		title: req.body.title,
+		path: req.body.path,
+		changeTorrentLocation: req.body.changeTorrentLocation,
 		autoDownload: req.body.autoDownload,
 		regexFilter: req.body.regexFilter,
 		filters: req.body.filters

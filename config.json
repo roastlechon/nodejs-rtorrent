@@ -1,0 +1,42 @@
+{
+	"authentication": {
+		"secret": "123456789"
+	},
+	"mongodb": {
+		"prefix": "mongodb://",
+		"uri": "localhost",
+		"port": 27017,
+		"database": "nodejs-rtorrent",
+		"user": "",
+		"pass": ""
+	},
+	"rtorrent": {
+		"option": "scgi",
+		"scgi": {
+			"host": "localhost",
+			"port": "5000"
+		},
+		"xmlrpc": {
+			"host": "localhost",
+			"port": "80",
+			"path": "/RPC2"
+		}
+	},
+	"ssl": {
+		"key": "/tmp/server.key",
+		"cert": "/tmp/server.crt"
+	},
+	"app": {
+		"hostname": "localhost",
+		"port": 3000,
+		"ssl": false,
+		"defaultUser": {
+			"email": "admin@localhost",
+			"password": "password"
+		},
+		"checkFeedLoopInterval": 300000,
+		"rtorrentLoopInterval": 2000,
+		"tokenExpireMinutes": 600,
+		"database": "tingodb"
+	}
+}

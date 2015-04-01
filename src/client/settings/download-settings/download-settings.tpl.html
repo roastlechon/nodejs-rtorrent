@@ -1,0 +1,42 @@
+<form ng-submit="downloadSettingsCtrl.updateDownloadSettings(downloadSettingsCtrl.downloadSettings)" name="downloadSettings" novalidate>
+	<div style="overflow-y: auto; height: 350px;">
+		<alert ng-repeat="alert in downloadSettingsCtrl.alerts" type="{{alert.type}}" close="downloadSettingsCtrl.closeAlert($index)">{{alert.msg}}</alert>
+		<fieldset>
+			<legend>Download Settings</legend>
+			<div class="form-group">
+				<label for="downloadDirectory">Default download directory:</label>
+				<input type="text" name="downloadDirectory" id="downloadDirectory" ng-model="downloadSettingsCtrl.downloadSettings.download_directory" class="form-control">
+				<p class="help-block">Make sure path has correct permissions.</p>
+			</div>
+			<div class="form-group">
+				<label for="maxUploads" class="control-label">Number of upload slots:</label>
+				<input type="text" name="maxUploads" id="maxUploads" ng-model="downloadSettingsCtrl.downloadSettings.max_uploads" class="form-control">
+				<p class="help-block">0 means unlimited.</p>
+			</div>
+			<div class="form-group">
+				<label for="minPeers" class="control-label">Minimum number of peers:</label>
+				<input type="text" name="minPeers" id="minPeers" ng-model="downloadSettingsCtrl.downloadSettings.min_peers" class="form-control">
+				<p class="help-block">-1 means unlimited.</p>
+			</div>
+			<div class="form-group">
+				<label for="maxPeers" class="control-label">Maximum number of peers:</label>
+				<input type="text" name="maxPeers" id="maxPeers" ng-model="downloadSettingsCtrl.downloadSettings.max_peers" class="form-control">
+				<p class="help-block">-1 means unlimited.</p>
+			</div>
+			<div class="form-group">
+				<label for="minSeeds" class="control-label">Minimum number of seeds:</label>
+				<input type="text" name="minSeeds" id="minSeeds" ng-model="downloadSettingsCtrl.downloadSettings.min_seeds" class="form-control">
+				<p class="help-block">-1 means unlimited.</p>
+			</div>
+			<div class="form-group">
+				<label for="maxSeeds" class="control-label">Maximum number of seeds:</label>
+				<input type="text" name="maxSeeds" id="maxSeeds" ng-model="downloadSettingsCtrl.downloadSettings.max_seeds" class="form-control">
+				<p class="help-block">-1 means unlimited.</p>
+			</div>
+		</fieldset>
+	</div>
+	<div class="form-group" style="float: right; padding-top: 15px;">
+		<button type="button" class="btn btn-default" ng-click="downloadSettingsCtrl.cancel()">Cancel</button>
+		<button type="submit" class="btn btn-primary" ng-disabled="downloadSettings.$pristine">Save Download Settings</button>
+	</div>
+</div>

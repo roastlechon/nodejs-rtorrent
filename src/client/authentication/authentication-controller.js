@@ -1,13 +1,17 @@
+'use strict';
+
+function AuthenticationCtrl (njrtLog, Authentication) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('AuthenticationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Authentication = Authentication;
+
+}
+
 module.exports = angular
-	.module('authentication')
-	.controller('AuthenticationCtrl', function(njrtLog, Authentication, $previousState) {
-
-		var logger = njrtLog.getInstance('authentication.AuthenticationCtrl');
-
-		logger.debug('AuthenticationCtrl loaded.');
-
-		var vm = this;
-
-		vm.Authentication = Authentication;
-
-	});
+	.module('njrt.authentication')
+	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);
