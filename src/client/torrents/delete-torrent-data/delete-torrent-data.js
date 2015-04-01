@@ -3,7 +3,8 @@ module.exports = angular
 	.config(['$stateProvider', config]);
 
 function resolve (Torrents, $stateParams) {
-	return Torrents.getTorrent($stateParams.id);
+	var hashes = $stateParams.id.split(',');
+	return Torrents.getTorrent(hashes);
 }
 
 function config ($stateProvider) {
