@@ -57,6 +57,10 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
 		$('table.table').trigger('reflow');
 	};
 
+  vm.reconnectSocket = function () {
+    console.log('testtesteststts');
+  };
+
 }
 
 angular

@@ -11,6 +11,12 @@ function NotificationCtrl(njrtLog, Notification, Socket) {
 	Socket.on('notifications', function (data) {
 		Notification.add(data.type, data.message);
 	});
+
+  vm.reconnectSocket = function () {
+    Socket.connect();
+
+    // then remove notification message
+  };
 }
 
 angular

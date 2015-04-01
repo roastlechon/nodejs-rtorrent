@@ -14,7 +14,7 @@ function Socket(njrtLog, $rootScope, $window) {
 
 	Socket.connect = function () {
 		logger.info('Connecting to socket.');
-		socket.open();
+		socket.connect();
 	};
 
 	Socket.disconnect = function () {

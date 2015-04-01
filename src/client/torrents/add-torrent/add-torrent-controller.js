@@ -17,7 +17,7 @@ function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downl
 		Torrents.load(torrent)
 			.then(function (data) {
 				logger.debug(data);
-				$previousState.go('modalInvoker');
+				$state.go('top.torrents');
 			}, function (err) {
 				logger.error(err);
 			});

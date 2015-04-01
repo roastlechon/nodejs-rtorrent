@@ -18,8 +18,13 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 		logger.debug('Connecting to socket.');
 	});
 
+  Socket.on('connection', function () {
+    logger.debug('Connection established.');
+  });
+
 	Socket.on('disconnect', function () {
 		logger.debug('Disconnected from socket.');
+    Notification.add('danger', 'Disconnected from nodejs-rtorrent socket. <a href="javascript: void(0);" ng-click="notificationCtrl.reconnectSocket()">Click to reconnect.</a>', true);
 	});
 
 	Socket.on('connect_failed', function() {

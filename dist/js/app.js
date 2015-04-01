@@ -79559,6 +79559,41 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('login/login.tpl.html',
+    '<form ng-submit="loginCtrl.login()" name="login" novalidate>\n' +
+    '	<div class="modal-header">\n' +
+    '	    <h3>Login</h3>\n' +
+    '	</div>\n' +
+    '	<div class="modal-body">\n' +
+    '		<p class="bg-danger text-danger" ng-if="loginCtrl.error"><strong>Error:</strong> {{loginCtrl.error}}</p>\n' +
+    '		<div class="form-group" ng-class="{\'has-error\': login.email.$invalid && login.email.$touched}">\n' +
+    '			<label class="control-label" for="email">Email</label> <input type="text" name="email" id="email" class="form-control" placeholder="Email" ng-model="loginCtrl.email" required>\n' +
+    '			<div class="help-block" ng-show="login.email.$invalid && login.email.$touched">\n' +
+    '				<p ng-show="login.email.$error.required"><strong>Error:</strong> Email is required!</p>\n' +
+    '			</div>\n' +
+    '		</div>\n' +
+    '		<div class="form-group" ng-class="{\'has-error\': login.password.$invalid && login.password.$touched}">\n' +
+    '			<label class="control-label" for="password">Password</label> <input type="password" name="password" id="password" class="form-control" placeholder="Password" ng-model="loginCtrl.password" required>\n' +
+    '			<p class="help-block" ng-show="login.password.$invalid && login.password.$touched">\n' +
+    '				<span ng-show="login.password.$error.required"><strong>Error:</strong> Password is required!</span>\n' +
+    '			</p>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '	<div class="modal-footer">\n' +
+    '		<button type="button" class="btn btn-default" ng-click="loginCtrl.close()">Cancel</button>\n' +
+    '		<button type="submit" class="btn btn-primary" ng-disabled="login.$invalid">Sign in</button>\n' +
+    '	</div>\n' +
+    '</form>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('settings/settings.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Settings</h3>\n' +
@@ -79619,44 +79654,13 @@ module.run(['$templateCache', function($templateCache) {
     '	</div>\n' +
     '	<div ui-view="content"></div>\n' +
     '	<div class="notifications" ng-controller="njrt.NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 100px; left: 0; right: 0; margin: 0 auto; z-index: 5;" ng-cloak>\n' +
-    '		<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="{{notification.type}}" close="notificationCtrl.Notification.remove($index)">{{notification.msg}}</alert>\n' +
-    '	</div>			\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('login/login.tpl.html',
-    '<form ng-submit="loginCtrl.login()" name="login" novalidate>\n' +
-    '	<div class="modal-header">\n' +
-    '	    <h3>Login</h3>\n' +
+    '		<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="{{notification.type}}" close="notificationCtrl.Notification.remove($index)">\n' +
+    '      <div ng-if="!notification.isHtml">{{notification.msg}}</div>\n' +
+    '      <div ng-if="notification.isHtml" bind-html-compile="notification.msg"></div>\n' +
+    '    </alert>\n' +
     '	</div>\n' +
-    '	<div class="modal-body">\n' +
-    '		<p class="bg-danger text-danger" ng-if="loginCtrl.error"><strong>Error:</strong> {{loginCtrl.error}}</p>\n' +
-    '		<div class="form-group" ng-class="{\'has-error\': login.email.$invalid && login.email.$touched}">\n' +
-    '			<label class="control-label" for="email">Email</label> <input type="text" name="email" id="email" class="form-control" placeholder="Email" ng-model="loginCtrl.email" required>\n' +
-    '			<div class="help-block" ng-show="login.email.$invalid && login.email.$touched">\n' +
-    '				<p ng-show="login.email.$error.required"><strong>Error:</strong> Email is required!</p>\n' +
-    '			</div>\n' +
-    '		</div>\n' +
-    '		<div class="form-group" ng-class="{\'has-error\': login.password.$invalid && login.password.$touched}">\n' +
-    '			<label class="control-label" for="password">Password</label> <input type="password" name="password" id="password" class="form-control" placeholder="Password" ng-model="loginCtrl.password" required>\n' +
-    '			<p class="help-block" ng-show="login.password.$invalid && login.password.$touched">\n' +
-    '				<span ng-show="login.password.$error.required"><strong>Error:</strong> Password is required!</span>\n' +
-    '			</p>\n' +
-    '		</div>\n' +
-    '	</div>\n' +
-    '	<div class="modal-footer">\n' +
-    '		<button type="button" class="btn btn-default" ng-click="loginCtrl.close()">Cancel</button>\n' +
-    '		<button type="submit" class="btn btn-primary" ng-disabled="login.$invalid">Sign in</button>\n' +
-    '	</div>\n' +
-    '</form>');
+    '</div>\n' +
+    '');
 }]);
 })();
 
@@ -79745,6 +79749,27 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '<p>Deleting will remove the feed from the list.</p>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/edit-feed/edit-feed.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3>\n' +
@@ -79818,16 +79843,57 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '<p>Deleting will remove the feed from the list.</p>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
+  $templateCache.put('feeds/view-feeds/view-feeds.tpl.html',
+    '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
+    '	<div class="table-container">\n' +
+    '		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">\n' +
+    '			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">\n' +
+    '				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">\n' +
+    '					<tr>\n' +
+    '						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th>Auto Download?</th>\n' +
+    '						<th>Refresh</th>\n' +
+    '						<th>Edit</th>\n' +
+    '						<th>Delete</th>\n' +
+    '					</tr>\n' +
+    '				</thead>\n' +
+    '				<tbody>\n' +
+    '					<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText">\n' +
+    '						<td>\n' +
+    '							<h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">\n' +
+    '								<a ui-sref="top.feeds.view({id: feed._id})">{{feed.title}}</a>\n' +
+    '							</h5>\n' +
+    '						</td>\n' +
+    '						<td ng-hide="rss_col"><div title="{{feed.rss}}" style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{feed.rss}}</div></td>\n' +
+    '						<td ng-hide="last_checked_col">{{feed.lastChecked * 1000 | date:\'medium\'}}</td>\n' +
+    '						<td>{{feed.autoDownload}}</td>\n' +
+    '						<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>\n' +
+    '						<td><a ui-sref="editFeed({id: feed._id})">Edit</a></td>\n' +
+    '						<td><a ui-sref="deleteFeed({id: feed._id})">Delete</a></td>\n' +
+    '					</tr>\n' +
+    '				</tbody>\n' +
+    '			</table>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">\n' +
+    '		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">\n' +
+    '			<span class="dropdown dropup" dropdown>\n' +
+    '				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>\n' +
+    '				<ul class="dropdown-menu" role="menu">\n' +
+    '					<li class="dropdown-submenu">\n' +
+    '						<a href="javascript: void(0);">Hide Columns</a>\n' +
+    '						<ul class="dropdown-menu">\n' +
+    '							<li><a href="" ng-click="rss_col=!rss_col; feedsCtrl.reflowTable()">RSS <i ng-class="{\'fa fa-check\': !rss_col}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="last_checked_col=!last_checked_col; feedsCtrl.reflowTable()">Last Checked <i ng-class="{\'fa fa-check\': !last_checked_col}"></i></a></li>\n' +
+    '						</ul>\n' +
+    '					</li>\n' +
+    '				</ul>\n' +
+    '			</span>\n' +
+    '			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
+    '		</div>\n' +
+    '	</div>\n' +
     '</div>');
 }]);
 })();
@@ -79949,68 +80015,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/view-feeds/view-feeds.tpl.html',
-    '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
-    '	<div class="table-container">\n' +
-    '		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">\n' +
-    '			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">\n' +
-    '				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">\n' +
-    '					<tr>\n' +
-    '						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th>Auto Download?</th>\n' +
-    '						<th>Refresh</th>\n' +
-    '						<th>Edit</th>\n' +
-    '						<th>Delete</th>\n' +
-    '					</tr>\n' +
-    '				</thead>\n' +
-    '				<tbody>\n' +
-    '					<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText">\n' +
-    '						<td>\n' +
-    '							<h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">\n' +
-    '								<a ui-sref="top.feeds.view({id: feed._id})">{{feed.title}}</a>\n' +
-    '							</h5>\n' +
-    '						</td>\n' +
-    '						<td ng-hide="rss_col"><div title="{{feed.rss}}" style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{feed.rss}}</div></td>\n' +
-    '						<td ng-hide="last_checked_col">{{feed.lastChecked * 1000 | date:\'medium\'}}</td>\n' +
-    '						<td>{{feed.autoDownload}}</td>\n' +
-    '						<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>\n' +
-    '						<td><a ui-sref="editFeed({id: feed._id})">Edit</a></td>\n' +
-    '						<td><a ui-sref="deleteFeed({id: feed._id})">Delete</a></td>\n' +
-    '					</tr>\n' +
-    '				</tbody>\n' +
-    '			</table>\n' +
-    '		</div>\n' +
-    '	</div>\n' +
-    '	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">\n' +
-    '		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">\n' +
-    '			<span class="dropdown dropup" dropdown>\n' +
-    '				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>\n' +
-    '				<ul class="dropdown-menu" role="menu">\n' +
-    '					<li class="dropdown-submenu">\n' +
-    '						<a href="javascript: void(0);">Hide Columns</a>\n' +
-    '						<ul class="dropdown-menu">\n' +
-    '							<li><a href="" ng-click="rss_col=!rss_col; feedsCtrl.reflowTable()">RSS <i ng-class="{\'fa fa-check\': !rss_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="last_checked_col=!last_checked_col; feedsCtrl.reflowTable()">Last Checked <i ng-class="{\'fa fa-check\': !last_checked_col}"></i></a></li>\n' +
-    '						</ul>\n' +
-    '					</li>\n' +
-    '				</ul>\n' +
-    '			</span>\n' +
-    '			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
-    '		</div>\n' +
-    '	</div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('settings/download-settings/download-settings.tpl.html',
     '<form ng-submit="downloadSettingsCtrl.updateDownloadSettings(downloadSettingsCtrl.downloadSettings)" name="downloadSettings" novalidate>\n' +
     '	<div style="overflow-y: auto; height: 350px;">\n' +
@@ -80053,6 +80057,34 @@ module.run(['$templateCache', function($templateCache) {
     '		<button type="button" class="btn btn-default" ng-click="downloadSettingsCtrl.cancel()">Cancel</button>\n' +
     '		<button type="submit" class="btn btn-primary" ng-disabled="downloadSettings.$pristine">Save Download Settings</button>\n' +
     '	</div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
+    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
+    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
+    '		<ul>\n' +
+    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
+    '		</ul>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
     '</div>');
 }]);
 })();
@@ -80107,34 +80139,6 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '	</div>\n' +
     '</form>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
-    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
-    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
-    '		<ul>\n' +
-    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
-    '		</ul>\n' +
-    '	</div>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
-    '</div>');
 }]);
 })();
 
@@ -80322,11 +80326,81 @@ angular
 		$('table.table').trigger('reflow');
 	};
 
+  vm.reconnectSocket = function () {
+    console.log('testtesteststts');
+  };
+
 }
 
 angular
   .module('njrt.torrents.viewTorrents')
   .controller('njrt.ViewTorrentsCtrl', ['njrtLog', '$scope', 'njrt.Torrents', 'torrents', '$interval', ViewTorrentsCtrl]);
+})();
+(function() {'use strict'; function resolve(Settings) {
+	return Settings.getDownloadSettings();
+}
+
+function config($stateProvider) {
+	$stateProvider.state('addTorrent', {
+		url: '/add-torrent',
+		views: {
+			'modal@': {
+				templateUrl: 'torrents/add-torrent/add-torrent.tpl.html',
+				controller: 'njrt.AddTorrentCtrl as torrentsAddCtrl'
+			}
+		},
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			downloadSettings: ['njrt.Settings', resolve]
+		},
+		isModal: true
+	});
+}
+
+angular
+  .module('njrt.torrents.addTorrent', [])
+  .config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
+
+	var logger = njrtLog.getInstance('torrents.add');
+
+	logger.debug('AddTorrentCtrl loaded.');
+
+	var vm = this;
+
+	vm.torrent = {
+		url: '',
+		path: ''
+	};
+
+	vm.defaultDownloadPath = downloadSettings.download_directory;
+
+	vm.loadTorrent = function (torrent) {
+		Torrents.load(torrent)
+			.then(function (data) {
+				logger.debug(data);
+				$state.go('top.torrents');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.fileSelected = function ($files, $event) {
+		vm.torrent.file = $files[0];
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+  .module('njrt.torrents.addTorrent')
+  .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
 })();
 (function() {'use strict'; function resolve(Torrents, $stateParams) {
   var hash = [];
@@ -80402,72 +80476,6 @@ angular
 }
 
 function config($stateProvider) {
-	$stateProvider.state('addTorrent', {
-		url: '/add-torrent',
-		views: {
-			'modal@': {
-				templateUrl: 'torrents/add-torrent/add-torrent.tpl.html',
-				controller: 'njrt.AddTorrentCtrl as torrentsAddCtrl'
-			}
-		},
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			downloadSettings: ['njrt.Settings', resolve]
-		},
-		isModal: true
-	});
-}
-
-angular
-  .module('njrt.torrents.addTorrent', [])
-  .config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
-
-	var logger = njrtLog.getInstance('torrents.add');
-
-	logger.debug('AddTorrentCtrl loaded.');
-
-	var vm = this;
-
-	vm.torrent = {
-		url: '',
-		path: ''
-	};
-
-	vm.defaultDownloadPath = downloadSettings.download_directory;
-
-	vm.loadTorrent = function (torrent) {
-		Torrents.load(torrent)
-			.then(function (data) {
-				logger.debug(data);
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.fileSelected = function ($files, $event) {
-		vm.torrent.file = $files[0];
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-  .module('njrt.torrents.addTorrent')
-  .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
-})();
-(function() {'use strict'; function resolve(Settings) {
-	return Settings.getDownloadSettings();
-}
-
-function config($stateProvider) {
 
 	$stateProvider
 		.state('settings.download', {
@@ -80531,64 +80539,6 @@ angular
 angular
 	.module('njrt.settings.downloadSettings')
 	.controller('njrt.DownloadSettingsCtrl', ['njrtLog', 'downloadSettings', 'njrt.Settings', '$previousState', '$scope', DownloadSettingsCtrl]);
-})();
-(function() {'use strict'; function resolve (Feeds) {
-	return Feeds.getFeeds();
-}
-
-function config ($stateProvider) {
-	$stateProvider
-		.state('top.feeds', {
-			url: 'feeds',
-			views: {
-				'content@top': {
-					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
-					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feeds: ['njrt.Feeds', resolve]
-			}
-		});
-}
-
-angular
-	.module('njrt.feeds.viewFeeds', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('FeedsCtrl loaded.');
-
-	var vm = this;
-
-	vm.Feeds = Feeds;
-
-	vm.reverse = true;
-	vm.predicate = 'lastChecked';
-
-	$scope.floatTheadOptions = {
-		useAbsolutePositioning: true,
-		zIndex: 999,
-		scrollContainer: function(test) {
-			return $('.table-wrapper');
-		}
-	};
-
-	vm.reflowTable = function () {
-		$('table.table').trigger('reflow');
-	};
-
-}
-
-angular
-	.module('njrt.feeds.viewFeeds')
-	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getConnectionSettings();
@@ -80730,61 +80680,63 @@ angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);
 })();
-(function() {'use strict'; function resolve(Feeds, $stateParams) {
-	return Feeds.getFeed($stateParams.id);
+(function() {'use strict'; function resolve (Feeds) {
+	return Feeds.getFeeds();
 }
 
-function config($stateProvider) {
-	$stateProvider.state('deleteFeed', {
-		url: '/delete-feed/:id',
-		views: {
-			'modal@': {
-				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
-				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
+function config ($stateProvider) {
+	$stateProvider
+		.state('top.feeds', {
+			url: 'feeds',
+			views: {
+				'content@top': {
+					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
+					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feeds: ['njrt.Feeds', resolve]
 			}
-		},
-		isModal: true,
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			feed: ['njrt.Feeds', '$stateParams', resolve]
-		}
-	});
+		});
 }
 
 angular
-	.module('njrt.feeds.deleteFeed', [])
+	.module('njrt.feeds.viewFeeds', [])
 	.config(['$stateProvider', config]);
 })();
-(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
+(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
-	logger.debug('DeleteFeedCtrl loaded.');
+	logger.debug('FeedsCtrl loaded.');
 
 	var vm = this;
 
-	vm.feed = feed;
+	vm.Feeds = Feeds;
 
-	vm.deleteFeed = function (feed) {
-		Feeds.deleteFeed(feed)
-			.then(function (data) {
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
+	vm.reverse = true;
+	vm.predicate = 'lastChecked';
+
+	$scope.floatTheadOptions = {
+		useAbsolutePositioning: true,
+		zIndex: 999,
+		scrollContainer: function(test) {
+			return $('.table-wrapper');
+		}
 	};
 
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
+	vm.reflowTable = function () {
+		$('table.table').trigger('reflow');
 	};
 
 }
 
 angular
-	.module('njrt.feeds.deleteFeed')
-	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
+	.module('njrt.feeds.viewFeeds')
+	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
 })();
 (function() {'use strict'; function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
@@ -80915,6 +80867,62 @@ angular
 angular
 	.module('njrt.feeds.editFeed')
 	.controller('njrt.EditFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'feed', 'njrt.Feeds', 'Restangular', EditFeedCtrl]);
+})();
+(function() {'use strict'; function resolve(Feeds, $stateParams) {
+	return Feeds.getFeed($stateParams.id);
+}
+
+function config($stateProvider) {
+	$stateProvider.state('deleteFeed', {
+		url: '/delete-feed/:id',
+		views: {
+			'modal@': {
+				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
+				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
+			}
+		},
+		isModal: true,
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			feed: ['njrt.Feeds', '$stateParams', resolve]
+		}
+	});
+}
+
+angular
+	.module('njrt.feeds.deleteFeed', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('DeleteFeedCtrl loaded.');
+
+	var vm = this;
+
+	vm.feed = feed;
+
+	vm.deleteFeed = function (feed) {
+		Feeds.deleteFeed(feed)
+			.then(function (data) {
+				$previousState.go('modalInvoker');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+	.module('njrt.feeds.deleteFeed')
+	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
@@ -81083,8 +81091,13 @@ angular
 		logger.debug('Connecting to socket.');
 	});
 
+  Socket.on('connection', function () {
+    logger.debug('Connection established.');
+  });
+
 	Socket.on('disconnect', function () {
 		logger.debug('Disconnected from socket.');
+    Notification.add('danger', 'Disconnected from nodejs-rtorrent socket. <a href="javascript: void(0);" ng-click="notificationCtrl.reconnectSocket()">Click to reconnect.</a>', true);
 	});
 
 	Socket.on('connect_failed', function() {
@@ -81401,149 +81414,6 @@ angular
   .module('njrt.torrents')
   .factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', '$interval', Torrents]);
 })();
-(function() {'use strict'; function config($stateProvider) {
-	$stateProvider.state('login', {
-		url: '/login',
-		views: {
-			'modal@': {
-				templateUrl: 'login/login.tpl.html',
-				controller: 'njrt.LoginCtrl as loginCtrl'
-			}
-		},
-		isModal: true
-	});
-}
-
-angular
-	.module('njrt.login', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousState) {
-
-	var logger = njrtLog.getInstance('njrt.login');
-
-	logger.debug('LoginCtrl loaded.');
-
-	var vm = this;
-
-	vm.error = '';
-
-	vm.close = function () {
-		$state.go('top'); // return to previous state
-	};
-
-	vm.login = function () {
-		Authentication.login({
-			email: vm.email,
-			password: vm.password
-		}).then(function (data) {
-
-			if (SessionService.destinationState != '') {
-				$state.go(SessionService.destinationState);
-			} else {
-				$state.go('top');
-			}
-
-		}, function (err) {
-			handleError(err);
-			logger.error(err);
-		});
-	};
-
-	function handleError (err) {
-		console.log(err);
-		if (err.message === 'Unauthorized') {
-			vm.error = 'Username or password is incorrect, please try again.';
-		}
-	}
-}
-
-angular
-	.module('njrt.login')
-	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);
-})();
-(function() {'use strict'; angular
-	.module('njrt.session', []);
-})();
-(function() {'use strict'; function SessionService (njrtLog, $window, Restangular) {
-
-	var logger = njrtLog.getInstance('njrt.session');
-
-	logger.debug('SessionService loaded.');
-
-	var userSession = {};
-
-	// State user is intended to go to if presented with a login screen
-	this.destinationState = '';
-
-	// expects token, expires, id, email
-	this.setUserSession = function (data) {
-		userSession = data;
-
-		$window.sessionStorage.email = data.email;
-		$window.sessionStorage._id = data._id;
-		$window.sessionStorage.token = data.token;
-		$window.sessionStorage.expires = data.expires;
-
-		Restangular.setDefaultHeaders({
-			Authorization: this.getAuthorizationHeader()
-		});
-	}
-
-	this.getUserSession = function () {
-		return userSession;
-	}
-
-	this.clearSession = function () {
-		// Remove default headers when clearing session.
-		Restangular.setDefaultHeaders({});
-
-		$window.sessionStorage.clear();
-		userSession = {};
-	}
-
-	this.isCurrentSessionValid = function () {
-		if (!_.isEmpty(userSession)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	this.getAuthorizationHeader = function () {
-		var authorizationHeader = 'Bearer ' + userSession._id + ':' + userSession.expires + ':' + userSession.token;
-		logger.debug('Authorization header:', authorizationHeader);
-		//config.headers.Authorization = 'Bearer ' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token;
-		return authorizationHeader;
-	}
-
-	function loadExistingSession () {
-
-		if ($window.sessionStorage.length > 0 &&
-			$window.sessionStorage.token) {
-			logger.debug('Session exists.');
-			logger.debug('Saving window session to session service.');
-
-			userSession.email = $window.sessionStorage.email;
-			userSession._id = $window.sessionStorage._id;
-			userSession.token = $window.sessionStorage.token;
-			userSession.expires = $window.sessionStorage.expires;
-
-		} else {
-			logger.info('Session doesn\'t exist');
-		}
-
-	}
-
-	// Load existing window session if it exists
-	loadExistingSession();
-
-}
-
-angular
-	.module('njrt.session')
-	.service('njrt.SessionService', ['njrtLog', '$window', 'Restangular', SessionService]);
-})();
 (function() {'use strict'; function config($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/', '/torrents');
@@ -81562,60 +81432,6 @@ angular
 angular
 	.module('njrt.top', [])
 	.config(['$stateProvider', '$urlRouterProvider', config]);
-})();
-(function() {'use strict'; angular.module('njrt.socket', []);
-})();
-(function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
-
-	var logger = njrtLog.getInstance('socket');
-
-	logger.debug('Socket loaded.');
-
-	var manager = io.Manager('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
-    reconnection: false
-  });
-
-	var socket = manager.socket('/');
-
-	var Socket = {};
-
-	Socket.connect = function () {
-		logger.info('Connecting to socket.');
-		socket.open();
-	};
-
-	Socket.disconnect = function () {
-		logger.info('Disconnecting from socket.');
-		socket.close();
-	};
-
-	Socket.on = function (eventName, callback) {
-		socket.on(eventName, function () {
-			var args = arguments;
-			$rootScope.$apply(function () {
-				callback.apply(socket, args);
-			});
-		});
-	};
-
-	Socket.emit = function (eventName, data, callback) {
-		socket.emit(eventName, data, function () {
-			var args = arguments;
-			$rootScope.$apply(function () {
-				if (callback) {
-					callback.apply(socket, args);
-				}
-			});
-		});
-	};
-
-	return Socket;
-
-}
-
-angular
-	.module('njrt.socket')
-	.factory('Socket', ['njrtLog', '$rootScope', '$window', Socket]);
 })();
 (function() {'use strict'; function config ($stateProvider, $urlRouterProvider) {
 
@@ -81701,20 +81517,28 @@ angular
 
 	Notification.notifications = [];
 
-	Notification.add = function (type, message) {
+	Notification.add = function (type, message, isHtml) {
 		var deferred = $q.defer();
 
 		var notification = {
 			type: type,
-			msg: message
+			msg: message,
+      isHtml: isHtml
 		};
 
 		Notification.notifications.push(notification);
 
-		// need to add animation
-		$timeout(function () {
-			Notification.notifications.splice(0, 1);
-		}, 3000);
+    // dont add timeout to remove notification if it has
+    // html. this means that the notification has an action that
+    // the user can act on and cannot be dismissed until the user
+    // has acted on it.
+    if (!notification.isHtml) {
+      // need to add animation
+      $timeout(function () {
+        Notification.notifications.splice(0, 1);
+      }, 3000);
+    }
+
 
 		deferred.resolve(notification);
 
@@ -81745,11 +81569,153 @@ angular
 	Socket.on('notifications', function (data) {
 		Notification.add(data.type, data.message);
 	});
+
+  vm.reconnectSocket = function () {
+    Socket.connect();
+
+    // then remove notification message
+  };
 }
 
 angular
 	.module('njrt.notification')
 	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
+})();
+(function() {'use strict'; angular.module('njrt.socket', []);
+})();
+(function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
+
+	var logger = njrtLog.getInstance('socket');
+
+	logger.debug('Socket loaded.');
+
+	var manager = io.Manager('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
+    reconnection: false
+  });
+
+	var socket = manager.socket('/');
+
+	var Socket = {};
+
+	Socket.connect = function () {
+		logger.info('Connecting to socket.');
+		socket.connect();
+	};
+
+	Socket.disconnect = function () {
+		logger.info('Disconnecting from socket.');
+		socket.close();
+	};
+
+	Socket.on = function (eventName, callback) {
+		socket.on(eventName, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				callback.apply(socket, args);
+			});
+		});
+	};
+
+	Socket.emit = function (eventName, data, callback) {
+		socket.emit(eventName, data, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				if (callback) {
+					callback.apply(socket, args);
+				}
+			});
+		});
+	};
+
+	return Socket;
+
+}
+
+angular
+	.module('njrt.socket')
+	.factory('Socket', ['njrtLog', '$rootScope', '$window', Socket]);
+})();
+(function() {'use strict'; angular
+	.module('njrt.session', []);
+})();
+(function() {'use strict'; function SessionService (njrtLog, $window, Restangular) {
+
+	var logger = njrtLog.getInstance('njrt.session');
+
+	logger.debug('SessionService loaded.');
+
+	var userSession = {};
+
+	// State user is intended to go to if presented with a login screen
+	this.destinationState = '';
+
+	// expects token, expires, id, email
+	this.setUserSession = function (data) {
+		userSession = data;
+
+		$window.sessionStorage.email = data.email;
+		$window.sessionStorage._id = data._id;
+		$window.sessionStorage.token = data.token;
+		$window.sessionStorage.expires = data.expires;
+
+		Restangular.setDefaultHeaders({
+			Authorization: this.getAuthorizationHeader()
+		});
+	}
+
+	this.getUserSession = function () {
+		return userSession;
+	}
+
+	this.clearSession = function () {
+		// Remove default headers when clearing session.
+		Restangular.setDefaultHeaders({});
+
+		$window.sessionStorage.clear();
+		userSession = {};
+	}
+
+	this.isCurrentSessionValid = function () {
+		if (!_.isEmpty(userSession)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	this.getAuthorizationHeader = function () {
+		var authorizationHeader = 'Bearer ' + userSession._id + ':' + userSession.expires + ':' + userSession.token;
+		logger.debug('Authorization header:', authorizationHeader);
+		//config.headers.Authorization = 'Bearer ' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token;
+		return authorizationHeader;
+	}
+
+	function loadExistingSession () {
+
+		if ($window.sessionStorage.length > 0 &&
+			$window.sessionStorage.token) {
+			logger.debug('Session exists.');
+			logger.debug('Saving window session to session service.');
+
+			userSession.email = $window.sessionStorage.email;
+			userSession._id = $window.sessionStorage._id;
+			userSession.token = $window.sessionStorage.token;
+			userSession.expires = $window.sessionStorage.expires;
+
+		} else {
+			logger.info('Session doesn\'t exist');
+		}
+
+	}
+
+	// Load existing window session if it exists
+	loadExistingSession();
+
+}
+
+angular
+	.module('njrt.session')
+	.service('njrt.SessionService', ['njrtLog', '$window', 'Restangular', SessionService]);
 })();
 (function() {'use strict'; function run($rootScope, $modal, $previousState) {
 
@@ -81817,6 +81783,67 @@ angular
 	.module('njrt.modal', [])
 	.run(['$rootScope', '$modal', '$previousState', run]);
 })();
+(function() {'use strict'; function config($stateProvider) {
+	$stateProvider.state('login', {
+		url: '/login',
+		views: {
+			'modal@': {
+				templateUrl: 'login/login.tpl.html',
+				controller: 'njrt.LoginCtrl as loginCtrl'
+			}
+		},
+		isModal: true
+	});
+}
+
+angular
+	.module('njrt.login', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousState) {
+
+	var logger = njrtLog.getInstance('njrt.login');
+
+	logger.debug('LoginCtrl loaded.');
+
+	var vm = this;
+
+	vm.error = '';
+
+	vm.close = function () {
+		$state.go('top'); // return to previous state
+	};
+
+	vm.login = function () {
+		Authentication.login({
+			email: vm.email,
+			password: vm.password
+		}).then(function (data) {
+
+			if (SessionService.destinationState != '') {
+				$state.go(SessionService.destinationState);
+			} else {
+				$state.go('top');
+			}
+
+		}, function (err) {
+			handleError(err);
+			logger.error(err);
+		});
+	};
+
+	function handleError (err) {
+		console.log(err);
+		if (err.message === 'Unauthorized') {
+			vm.error = 'Username or password is incorrect, please try again.';
+		}
+	}
+}
+
+angular
+	.module('njrt.login')
+	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);
+})();
 (function() {'use strict'; angular
 	.module('njrt.log', [])
 	.run(['$log', function ($log) {
@@ -81843,136 +81870,6 @@ angular
 			return $log.getInstance(context);
 		};
 	});
-})();
-(function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('njrt.authentication module loaded.');
-
-	$rootScope.$on('$stateChangeStart', function (event, toState) {
-
-		if (!toState.data) {
-			logger.debug('State has no data, returning early');
-			return;
-		}
-
-		if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
-			logger.debug(toState.name, 'state has rule: isLoggedIn');
-			if (!SessionService.isCurrentSessionValid()) {
-				// Save to state to session service destination state
-				// so that we can track where the user wants to go
-				// and redirect to that after user is finished logging in
-				SessionService.destinationState = toState.name;
-				$state.go('login');
-				event.preventDefault();
-			}
-		}
-	});
-
-	Restangular.setErrorInterceptor(
-		function (res) {
-			if (res.status === 401) {
-				logger.error(res.status, res.statusText, ':', res.data);
-				$state.go('login');
-				return false; // stop the promise chain
-			} else if (res.status === 404) {
-				logger.error(res.status, res.statusText, ':', res.data);
-				return false; // stop the promise chain
-			}
-			return true;
-		});
-
-	Restangular.setRestangularFields({
-		id: '_id'
-	});
-
-	Restangular.setDefaultHeaders({
-		Authorization: SessionService.getAuthorizationHeader()
-	});
-
-}
-
-angular
-	.module('njrt.authentication', [])
-	.run(['$rootScope', 'njrt.SessionService', '$state', '$previousState', 'njrtLog', 'Restangular', run]);
-})();
-(function() {'use strict'; function Authentication(njrtLog, $http, $state, SessionService, $q, Socket) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('Authentication loaded.');
-
-	var Authentication = {};
-
-	Authentication.login = function (user) {
-		var deferred = $q.defer();
-
-		$http.post("/login", user).then(function (data) {
-
-			data = data.data;
-
-			var userSession = {
-				token: data.token,
-				expires: data.expires,
-				_id: data._id,
-				email: user.email
-			}
-			SessionService.setUserSession(userSession);
-
-			// Connect to socket
-			Socket.connect();
-
-			deferred.resolve(userSession);
-		}, function (err) {
-			SessionService.clearSession();
-			deferred.reject(new Error(err.statusText));
-		});
-
-		return deferred.promise;
-	};
-
-	Authentication.logout = function () {
-		SessionService.clearSession();
-
-		Socket.disconnect();
-		$state.go('top');
-	};
-
-	Authentication.isAuthenticated = function () {
-		if (SessionService.isCurrentSessionValid()) {
-			return true;
-		}
-
-		return false;
-	};
-
-	Authentication.getCurrentUser = function () {
-		return SessionService.getUserSession();
-	};
-
-	return Authentication;
-}
-
-angular
-	.module('njrt.authentication')
-	.factory('njrt.Authentication', ['njrtLog', '$http', '$state', 'njrt.SessionService', '$q', 'Socket', Authentication]);
-})();
-(function() {'use strict'; function AuthenticationCtrl(njrtLog, Authentication) {
-
-	var logger = njrtLog.getInstance('njrt.authentication');
-
-	logger.debug('AuthenticationCtrl loaded.');
-
-	var vm = this;
-
-	vm.Authentication = Authentication;
-
-}
-
-angular
-	.module('njrt.authentication')
-	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);
 })();
 (function() {'use strict'; function config($urlRouterProvider, $stateProvider, $stickyStateProvider) {
   $stickyStateProvider.enableDebug(true);
@@ -82064,6 +81961,98 @@ angular.module('app', [
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
 		};
 	});
+})();
+(function() {'use strict'; angular
+	.module('njrt.feeds', [
+		'njrt.feeds.addFeed',
+		'njrt.feeds.editFeed',
+		'njrt.feeds.viewFeed',
+		'njrt.feeds.deleteFeed',
+		'njrt.feeds.viewFeeds'
+	]);
+})();
+(function() {'use strict'; function Feeds(njrtLog, Restangular, $q) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('Feeds loaded.');
+
+	var Feeds = {};
+
+	Feeds.feeds = [];
+
+	Feeds.getFeeds = function () {
+		return Restangular.all('feeds').getList()
+			.then(function (data) {
+				Feeds.feeds = data;
+				return Feeds.feeds;
+			});
+	};
+
+	Feeds.getFeed = function (id) {
+		return Restangular.one('feeds', id).get();
+	};
+
+	Feeds.addFeed = function (feed) {
+		return Restangular.all('feeds').post(feed)
+			.then(function (data) {
+				Feeds.feeds.push(data);
+				return data;
+			});
+	};
+
+	Feeds.refreshFeed = function (id) {
+		return Restangular.one('feeds', id).post('refresh', {})
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
+					});
+			});
+	};
+
+	Feeds.updateFeed = function (feed) {
+		return feed.put()
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
+					});
+			});
+	};
+
+	Feeds.deleteFeed = function (feed) {
+		var deferred = $q.defer();
+
+		// delete from server
+		feed.remove()
+			.then(function () {
+				var item = _.findWhere(Feeds.feeds, {
+					_id: feed._id
+				});
+
+				var index = Feeds.feeds.indexOf(item);
+
+				// delete from collection
+				if (index > -1) {
+					Feeds.feeds.splice(index, 1);
+				}
+
+				deferred.resolve('deleted');
+			}, function (err) {
+				console.error(err);
+				deferred.reject(err);
+			});
+
+		return deferred.promise;
+	};
+
+	return Feeds;
+}
+
+angular
+	.module('njrt.feeds')
+	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
 })();
 (function() {'use strict'; function torrentUrlValidator() {
 	return {
@@ -82652,6 +82641,24 @@ angular
 	.module('app')
 	.directive('fileValidator', [fileValidator]);
 })();
+(function() {'use strict'; function bindHtmlCompileDirective($compile) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      scope.$watch(function () {
+          return scope.$eval(attrs.bindHtmlCompile);
+      }, function (value) {
+          element.html(value);
+          $compile(element.contents())(scope);
+      });
+    }
+  };
+}
+
+angular
+  .module('app')
+  .directive('bindHtmlCompile', bindHtmlCompileDirective);
+})();
 (function() {'use strict'; function appVersion($document) {
 	return function (scope, element) {
 		element.html($document[0].documentElement.getAttribute('version'));
@@ -82662,95 +82669,133 @@ angular
 	.module('app')
 	.directive('appVersion', ['$document', appVersion]);
 })();
-(function() {'use strict'; angular
-	.module('njrt.feeds', [
-		'njrt.feeds.addFeed',
-		'njrt.feeds.editFeed',
-		'njrt.feeds.viewFeed',
-		'njrt.feeds.deleteFeed',
-		'njrt.feeds.viewFeeds'
-	]);
+(function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('njrt.authentication module loaded.');
+
+	$rootScope.$on('$stateChangeStart', function (event, toState) {
+
+		if (!toState.data) {
+			logger.debug('State has no data, returning early');
+			return;
+		}
+
+		if (toState.data.rule && toState.data.rule.indexOf('isLoggedIn') !== -1) {
+			logger.debug(toState.name, 'state has rule: isLoggedIn');
+			if (!SessionService.isCurrentSessionValid()) {
+				// Save to state to session service destination state
+				// so that we can track where the user wants to go
+				// and redirect to that after user is finished logging in
+				SessionService.destinationState = toState.name;
+				$state.go('login');
+				event.preventDefault();
+			}
+		}
+	});
+
+	Restangular.setErrorInterceptor(
+		function (res) {
+			if (res.status === 401) {
+				logger.error(res.status, res.statusText, ':', res.data);
+				$state.go('login');
+				return false; // stop the promise chain
+			} else if (res.status === 404) {
+				logger.error(res.status, res.statusText, ':', res.data);
+				return false; // stop the promise chain
+			}
+			return true;
+		});
+
+	Restangular.setRestangularFields({
+		id: '_id'
+	});
+
+	Restangular.setDefaultHeaders({
+		Authorization: SessionService.getAuthorizationHeader()
+	});
+
+}
+
+angular
+	.module('njrt.authentication', [])
+	.run(['$rootScope', 'njrt.SessionService', '$state', '$previousState', 'njrtLog', 'Restangular', run]);
 })();
-(function() {'use strict'; function Feeds(njrtLog, Restangular, $q) {
+(function() {'use strict'; function Authentication(njrtLog, $http, $state, SessionService, $q, Socket) {
 
-	var logger = njrtLog.getInstance('njrt.feeds');
+	var logger = njrtLog.getInstance('njrt.authentication');
 
-	logger.debug('Feeds loaded.');
+	logger.debug('Authentication loaded.');
 
-	var Feeds = {};
+	var Authentication = {};
 
-	Feeds.feeds = [];
-
-	Feeds.getFeeds = function () {
-		return Restangular.all('feeds').getList()
-			.then(function (data) {
-				Feeds.feeds = data;
-				return Feeds.feeds;
-			});
-	};
-
-	Feeds.getFeed = function (id) {
-		return Restangular.one('feeds', id).get();
-	};
-
-	Feeds.addFeed = function (feed) {
-		return Restangular.all('feeds').post(feed)
-			.then(function (data) {
-				Feeds.feeds.push(data);
-				return data;
-			});
-	};
-
-	Feeds.refreshFeed = function (id) {
-		return Restangular.one('feeds', id).post('refresh', {})
-			.then(function (data) {
-				return Feeds.getFeeds()
-					.then(function () {
-						return data;
-					});
-			});
-	};
-
-	Feeds.updateFeed = function (feed) {
-		return feed.put()
-			.then(function (data) {
-				return Feeds.getFeeds()
-					.then(function () {
-						return data;
-					});
-			});
-	};
-
-	Feeds.deleteFeed = function (feed) {
+	Authentication.login = function (user) {
 		var deferred = $q.defer();
 
-		// delete from server
-		feed.remove()
-			.then(function () {
-				var item = _.findWhere(Feeds.feeds, {
-					_id: feed._id
-				});
+		$http.post("/login", user).then(function (data) {
 
-				var index = Feeds.feeds.indexOf(item);
+			data = data.data;
 
-				// delete from collection
-				if (index > -1) {
-					Feeds.feeds.splice(index, 1);
-				}
+			var userSession = {
+				token: data.token,
+				expires: data.expires,
+				_id: data._id,
+				email: user.email
+			}
+			SessionService.setUserSession(userSession);
 
-				deferred.resolve('deleted');
-			}, function (err) {
-				console.error(err);
-				deferred.reject(err);
-			});
+			// Connect to socket
+			Socket.connect();
+
+			deferred.resolve(userSession);
+		}, function (err) {
+			SessionService.clearSession();
+			deferred.reject(new Error(err.statusText));
+		});
 
 		return deferred.promise;
 	};
 
-	return Feeds;
+	Authentication.logout = function () {
+		SessionService.clearSession();
+
+		Socket.disconnect();
+		$state.go('top');
+	};
+
+	Authentication.isAuthenticated = function () {
+		if (SessionService.isCurrentSessionValid()) {
+			return true;
+		}
+
+		return false;
+	};
+
+	Authentication.getCurrentUser = function () {
+		return SessionService.getUserSession();
+	};
+
+	return Authentication;
 }
 
 angular
-	.module('njrt.feeds')
-	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
+	.module('njrt.authentication')
+	.factory('njrt.Authentication', ['njrtLog', '$http', '$state', 'njrt.SessionService', '$q', 'Socket', Authentication]);
+})();
+(function() {'use strict'; function AuthenticationCtrl(njrtLog, Authentication) {
+
+	var logger = njrtLog.getInstance('njrt.authentication');
+
+	logger.debug('AuthenticationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Authentication = Authentication;
+
+}
+
+angular
+	.module('njrt.authentication')
+	.controller('njrt.AuthenticationCtrl', ['njrtLog', 'njrt.Authentication', AuthenticationCtrl]);
 })();

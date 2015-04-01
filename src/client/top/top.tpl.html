@@ -32,6 +32,9 @@
 	</div>
 	<div ui-view="content"></div>
 	<div class="notifications" ng-controller="njrt.NotificationCtrl as notificationCtrl" style="position: absolute; width: 50%; bottom: 100px; left: 0; right: 0; margin: 0 auto; z-index: 5;" ng-cloak>
-		<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="{{notification.type}}" close="notificationCtrl.Notification.remove($index)">{{notification.msg}}</alert>
-	</div>			
+		<alert ng-repeat="notification in notificationCtrl.Notification.notifications" type="{{notification.type}}" close="notificationCtrl.Notification.remove($index)">
+      <div ng-if="!notification.isHtml">{{notification.msg}}</div>
+      <div ng-if="notification.isHtml" bind-html-compile="notification.msg"></div>
+    </alert>
+	</div>
 </div>
