@@ -12,34 +12,35 @@
 					<li class="dropdown-submenu">
 						<a href="javascript: void(0);">Filter by Status</a>
 						<ul class="dropdown-menu">
-							<li><a href="" ng-click="torrentsCtrl.status=''">All <i ng-class="{'fa fa-check': torrentsCtrl.status===''}" ng-init="torrentsCtrl.status=''"></i></a></li>
-							<li><a href="" ng-click="torrentsCtrl.status='downloading'">Downloading <i ng-class="{'fa fa-check': torrentsCtrl.status==='downloading'}"></i></a></li>
-							<li><a href="" ng-click="torrentsCtrl.status='finished'">Finished <i ng-class="{'fa fa-check': torrentsCtrl.status==='finished'}"></i></a></li>
-							<li><a href="" ng-click="torrentsCtrl.status='stopped'">Stopped <i ng-class="{'fa fa-check': torrentsCtrl.status==='stopped'}"></i></a></li>
-							<li><a href="" ng-click="torrentsCtrl.status='seeding'">Seeding <i ng-class="{'fa fa-check': torrentsCtrl.status==='seeding'}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.filterByStatus('')">All <i ng-class="{'fa fa-check': torrentsCtrl.filterStatus===''}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.filterByStatus('downloading')">Downloading <i ng-class="{'fa fa-check': torrentsCtrl.filterStatus==='downloading'}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.filterByStatus('finished')">Finished <i ng-class="{'fa fa-check': torrentsCtrl.filterStatus==='finished'}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.filterByStatus('stopped')">Stopped <i ng-class="{'fa fa-check': torrentsCtrl.filterStatus==='stopped'}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.filterByStatus('seeding')">Seeding <i ng-class="{'fa fa-check': torrentsCtrl.filterStatus==='seeding'}"></i></a></li>
 						</ul>
 					</li>
 					<li class="dropdown-submenu">
 						<a href="javascript: void(0);">Hide Columns</a>
 						<ul class="dropdown-menu">
-							<li><a href="" ng-click="status_col=!status_col; torrentsCtrl.reflowTable()">Status <i ng-class="{'fa fa-check': !status_col}"></i></a></li>
-							<li><a href="" ng-click="size_col=!size_col; torrentsCtrl.reflowTable()">Size <i ng-class="{'fa fa-check': !size_col}"></i></a></li>
-							<li><a href="" ng-click="percent_downloaded_col=!percent_downloaded_col; torrentsCtrl.reflowTable()">Done <i ng-class="{'fa fa-check': !percent_downloaded_col}"></i></a></li>
-							<li><a href="" ng-click="downloaded_col=!downloaded_col; torrentsCtrl.reflowTable()">Downloaded <i ng-class="{'fa fa-check': !downloaded_col}"></i></a></li>
-							<li><a href="" ng-click="uploaded_col=!uploaded_col; torrentsCtrl.reflowTable()">Uploaded <i ng-class="{'fa fa-check': !uploaded_col}"></i></a></li>
-							<li><a href="" ng-click="dl_speed_col=!dl_speed_col; torrentsCtrl.reflowTable()">DL Speed <i ng-class="{'fa fa-check': !dl_speed_col}"></i></a></li>
-							<li><a href="" ng-click="ul_speed_col=!ul_speed_col; torrentsCtrl.reflowTable()">UL Speed <i ng-class="{'fa fa-check': !ul_speed_col}"></i></a></li>
-							<li><a href="" ng-click="time_remaining_col=!time_remaining_col; torrentsCtrl.reflowTable()">ETA <i ng-class="{'fa fa-check': !time_remaining_col}"></i></a></li>
-							<li><a href="" ng-click="peers_col=!peers_col; torrentsCtrl.reflowTable()">Peers <i ng-class="{'fa fa-check': !peers_col}"></i></a></li>
-							<li><a href="" ng-click="seeds_col=!seeds_col; torrentsCtrl.reflowTable()">Seeds <i ng-class="{'fa fa-check': !seeds_col}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.status.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.status.visible; torrentsCtrl.reflowTable()">Status <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.status.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.size.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.size.visible; torrentsCtrl.reflowTable()">Size <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.size.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.done.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.done.visible; torrentsCtrl.reflowTable()">Done <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.done.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible; torrentsCtrl.reflowTable()">Downloaded <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible; torrentsCtrl.reflowTable()">Uploaded <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible; torrentsCtrl.reflowTable()">DL Speed <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible; torrentsCtrl.reflowTable()">UL Speed <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible; torrentsCtrl.reflowTable()">ETA <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible}"></i></a></li>
+							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible; torrentsCtrl.reflowTable()">Peers <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible}"></i></a></li>
+							<li><a href="" ng-click="storrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible; torrentsCtrl.reflowTable()">Seeds <i ng-class="{'fa fa-check': torrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible}"></i></a></li>
 						</ul>
 					</li>
 				</ul>
 			</span>
-			<input type="text" ng-model="torrentsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">
+			<input type="text" ng-model="torrentsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;" ng-model-options="{ debounce: 300 }">
 			<div ng-if="torrentsCtrl.Torrents.selectedTorrents.length > 0" style="display: inline-block;">
 				<span style="vertical-align: middle; margin-left: 40px; margin-right: 20px;">{{torrentsCtrl.Torrents.selectedTorrents.length}} selected</span>
-				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.start(torrentsCtrl.Torrents.selectedTorrents)">Play</button>
+        <button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.selectedTorrents = [];">Clear Selected</button>
+				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.start(torrentsCtrl.Torrents.selectedTorrents)" style="margin-left: 40px;">Play</button>
 				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.pause(torrentsCtrl.Torrents.selectedTorrents)">Pause</button>
 				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.stop(torrentsCtrl.Torrents.selectedTorrents)">Stop</button>
 				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.remove(torrentsCtrl.Torrents.selectedTorrents); torrentsCtrl.tableVirtualScrollOptions.deleteRows(torrentsCtrl.Torrents.selectedTorrents);">Remove</button>

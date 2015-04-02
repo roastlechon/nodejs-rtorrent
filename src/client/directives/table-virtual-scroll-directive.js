@@ -10,6 +10,10 @@ function TableVirtualScrollManager() {
 
 function tableVirtualScroll() {
 
+  var ROW_HEIGHT = 46;
+  var MAX_ROW_MULTIPLIER = 3;
+  var MIN_ROW_MULTIPLIER = 2;
+
   function controller() {
 
     var vm = this;
@@ -19,7 +23,7 @@ function tableVirtualScroll() {
       limit: 40,
       sortBy: 'name',
       reverse: false,
-      filter: ''
+      filter: null
     };
 
     vm.dataCache = {
@@ -51,10 +55,50 @@ function tableVirtualScroll() {
           };
 
           vm.params.skip = vm.params.skip + vm.params.limit;
-          vm.begin = 0;
-          vm.end = data.data.length - 1;
 
-          vm.rowCounter = data.data.length;
+          vm.viewableRows = Math.ceil(vm.containerHeight / ROW_HEIGHT) < 10 ? 10 : Math.ceil(vm.containerHeight / ROW_HEIGHT);
+          vm.maxRows = vm.viewableRows * MAX_ROW_MULTIPLIER;
+          vm.minRows = vm.viewableRows * MIN_ROW_MULTIPLIER;
+          vm.dataCache.bottom = vm.tableVirtualScrollOptions.dataSource.data.splice(vm.minRows, vm.dataCache.totalLoaded);
+
+          vm.begin = 0;
+          vm.end = vm.tableVirtualScrollOptions.dataSource.data.length - 1;
+          vm.rowCounter = vm.tableVirtualScrollOptions.dataSource.data.length;
+          vm.resetPadding();
+
+        });
+    };
+
+    vm.tableVirtualScrollOptions.filter = function (filter) {
+      vm.params.filter = filter;
+      vm.params.skip = 0;
+      vm.params.limit = 40;
+
+      vm.tableVirtualScrollOptions
+        .getData(vm.params)
+        .then(function (data) {
+
+          vm.tableVirtualScrollOptions.dataSource = {
+            data: data.data,
+            totalSize: data.total
+          };
+
+          vm.dataCache = {
+            top: [],
+            bottom: [],
+            totalLoaded: data.data.length
+          };
+
+          vm.params.skip = vm.params.skip + vm.params.limit;
+
+          vm.viewableRows = Math.ceil(vm.containerHeight / ROW_HEIGHT) < 10 ? 10 : Math.ceil(vm.containerHeight / ROW_HEIGHT);
+          vm.maxRows = vm.viewableRows * MAX_ROW_MULTIPLIER;
+          vm.minRows = vm.viewableRows * MIN_ROW_MULTIPLIER;
+          vm.dataCache.bottom = vm.tableVirtualScrollOptions.dataSource.data.splice(vm.minRows, vm.dataCache.totalLoaded);
+
+          vm.begin = 0;
+          vm.end = vm.tableVirtualScrollOptions.dataSource.data.length - 1;
+          vm.rowCounter = vm.tableVirtualScrollOptions.dataSource.data.length;
           vm.resetPadding();
 
         });
@@ -137,9 +181,7 @@ function tableVirtualScroll() {
 
   function link(scope, elem, attrs, ctrl) {
 
-    var ROW_HEIGHT = 46;
-    var MAX_ROW_MULTIPLIER = 4;
-    var MIN_ROW_MULTIPLIER = 3;
+
     var V_BOTTOM_PADDING_CLASSNAME = '.table-virtual-bottom';
     var V_TOP_PADDING_CLASSNAME = '.table-virtual-top';
 
@@ -191,22 +233,6 @@ function tableVirtualScroll() {
 
     // set height of bottom padding element
     vBottomPaddingElem.height(ctrl.vBottomPaddingElemHeight);
-
-    // function padBottomRow(scrolledAmount) {
-    //   return vBottomPaddingElemHeight + (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function trimBottomRow(scrolledAmount) {
-    //   return vBottomPaddingElemHeight - (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function padTopRow(scrolledAmount) {
-    //   return vTopPaddingElemHeight + (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function trimTopRow(scrolledAmount) {
-    //   return vTopPaddingElemHeight - (ROW_HEIGHT * scrolledAmount);
-    // }
 
     // add more rows to bottom of list from cache
     function restoreBottomRow() {
@@ -285,7 +311,7 @@ function tableVirtualScroll() {
           cacheBottomRow();
         }
       } else if (ctrl.begin === 0) {
-        if (ctrl.rowCounter > ctrl.maxRows) {
+        if (ctrl.rowCounter > ctrl.minRows) {
           cacheBottomRow();
         }
       } else {
@@ -293,6 +319,74 @@ function tableVirtualScroll() {
       }
       // console.log('row counter after scroll', rowCounter);
     }
+
+
+    scope.$watch(function() {
+      return scrollingContainer[0].offsetHeight;
+    }, function(newValue) {
+      var oldViewableRows = ctrl.viewableRows;
+      ctrl.viewableRows = Math.ceil(newValue / ROW_HEIGHT);
+      ctrl.maxRows = ctrl.viewableRows * MAX_ROW_MULTIPLIER;
+      ctrl.minRows = ctrl.viewableRows * MIN_ROW_MULTIPLIER;
+
+      console.log('viewable rows after resize', ctrl.viewableRows);
+      console.log('max viewable rows after resize', ctrl.maxRows);
+      console.log('minRows viewable rows after resize', ctrl.minRows);
+
+      var count = 0;
+
+      // screen expanded
+      if (ctrl.minRows > oldViewableRows * MIN_ROW_MULTIPLIER) {
+
+        do {
+          console.log('showing more');
+
+          if (ctrl.rowCounter > scope.maxRows) {
+            return;
+          }
+
+          if (ctrl.dataCache.top.length > 0) {
+            restoreTopRow();
+          }
+
+          if (ctrl.dataCache.bottom.length > 0) {
+            restoreBottomRow();
+          }
+
+          count++;
+        } while (count < (ctrl.minRows - oldViewableRows * MIN_ROW_MULTIPLIER));
+
+      }
+
+      // screen shrunk
+      if (oldViewableRows * MIN_ROW_MULTIPLIER > ctrl.minRows) {
+
+        count = 0;
+        do {
+          console.log('showing less');
+
+          if (ctrl.rowCounter > ctrl.maxRows) {
+            return;
+          }
+
+          cacheBottomRow();
+          count++;
+        } while (count < (oldViewableRows * MIN_ROW_MULTIPLIER - ctrl.minRows));
+      }
+
+    });
+
+
+
+
+
+
+    var lastScrollTop = 0;
+
+    // scroll top initial is 0
+    var st = 0;
+
+    var sensitivity = 46;
 
     var loading = false;
 
@@ -322,72 +416,6 @@ function tableVirtualScroll() {
         }
       }
     }
-
-
-
-    // scope.$watch(function() {
-    //   return scrollingContainer[0].offsetHeight;
-    // }, function(newValue) {
-    //   var oldViewableRows = scope.viewableRows;
-    //   scope.viewableRows = Math.ceil(newValue / 46);
-    //   scope.maxRows = scope.viewableRows * 4;
-    //   scope.minRows = scope.viewableRows * 3;
-
-    //   console.log('viewable rows after resize', scope.viewableRows);
-    //   console.log('max viewable rows after resize', scope.maxRows);
-    //   console.log('minRows viewable rows after resize', scope.minRows);
-
-    //   var count = 0;
-
-    //   // screen expanded
-    //   if (scope.minRows > oldViewableRows * 3) {
-
-    //     do {
-    //       console.log('showing more');
-
-    //       if (rowCounter > scope.maxRows) {
-    //         return;
-    //       }
-
-    //       if (scope.topCache.length > 0) {
-    //         restoreTopRow();
-    //       }
-
-    //       if (scope.bottomCache.length > 0) {
-    //         restoreBottomRow();
-    //       }
-
-    //       count++;
-    //     } while (count < (scope.minRows - oldViewableRows * 3));
-
-    //   }
-
-    //   // screen shrunk
-    //   if (oldViewableRows * 2 > scope.minRows) {
-
-    //     count = 0;
-    //     do {
-    //       console.log('showing less');
-
-    //       if (rowCounter > scope.maxRows) {
-    //         return;
-    //       }
-
-    //       cacheBottomRow();
-    //       count++;
-    //     } while (count < (oldViewableRows * 2 - scope.minRows));
-    //   }
-
-    // });
-
-
-
-    var lastScrollTop = 0;
-
-    // scroll top initial is 0
-    var st = 0;
-
-    var sensitivity = 40;
 
     function tableScroll() {
 
@@ -434,6 +462,8 @@ function tableVirtualScroll() {
         } while (count < scrollAmount);
       }
 
+      loadPageData();
+
       lastScrollTop = currentSt;
       ticking = false;
       scope.$digest();
@@ -453,8 +483,6 @@ function tableVirtualScroll() {
       st = scrollingContainer[0].scrollTop;
       requestTick();
     });
-
-    scrollingContainer.bind('scroll', _.debounce(loadPageData, 100));
 
   }
 

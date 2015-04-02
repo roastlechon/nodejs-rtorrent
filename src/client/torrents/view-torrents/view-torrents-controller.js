@@ -24,7 +24,63 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
     },
     getData: function (options) {
       return Torrents.getTorrents(options);
+    },
+    columns: {
+      name: {
+        visible: true
+      },
+      status: {
+        visible: true
+      },
+      size: {
+        visible: true
+      },
+      done: {
+        visible: true
+      },
+      downloaded: {
+        visible: true
+      },
+      uploaded: {
+        visible: true
+      },
+      dl: {
+        visible: true
+      },
+      ul: {
+        visible: true
+      },
+      eta: {
+        visible: true
+      },
+      peers: {
+        visible: true
+      },
+      seeds: {
+        visible: true
+      }
     }
+  };
+
+  $scope.$watch(function() {
+    return vm.searchText;
+  }, function (newVal, oldVal) {
+    if(newVal === oldVal) {
+      return;
+    }
+
+    vm.tableVirtualScrollOptions.filter({
+      status: vm.filterStatus,
+      name: newVal
+    });
+  });
+
+  vm.filterByStatus = function (status) {
+    vm.filterStatus = status;
+    vm.tableVirtualScrollOptions.filter({
+      name: vm.searchText,
+      status: status
+    });
   };
 
   $interval(function () {
@@ -56,10 +112,6 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
 	vm.reflowTable = function () {
 		$('table.table').trigger('reflow');
 	};
-
-  vm.reconnectSocket = function () {
-    console.log('testtesteststts');
-  };
 
 }
 

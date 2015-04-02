@@ -43,7 +43,30 @@ function query(params) {
 
   return rtorrent.getTorrents()
     .then(function (data) {
+      var listTotal = data.length;
       var list = _.sortBy(data, params.sortBy);
+
+      if (params.filter) {
+
+        if ('name' in params.filter) {
+          list = _.filter(list, function (item) {
+            return item.name.toLowerCase().indexOf(params.filter.name) > -1;
+          });
+        }
+
+        if ('status' in params.filter) {
+          if (params.filter.status.trim().length !== 0) {
+            list = _.filter(list, {
+              status: params.filter.status
+            });
+          }
+
+        }
+
+
+        listTotal = list.length;
+      }
+
       if (params.reverse === true) {
         list = list.reverse();
       }
@@ -65,7 +88,7 @@ function query(params) {
       // console.log(results);
       return {
         data: results,
-        total: data.length
+        total: listTotal
       };
     });
 

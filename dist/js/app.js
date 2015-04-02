@@ -79496,33 +79496,33 @@ module.run(['$templateCache', function($templateCache) {
     '    <th>\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'name\')">Name <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'name\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="status_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.status.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'status\')">Status <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'status\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="size_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.size.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'size\')">Size <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'size\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="percent_downloaded_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.done.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'percent_downloaded\')">Done <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'percent_downloaded\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="downloaded_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.downloaded.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'downloaded\')">Downloaded <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'downloaded\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="uploaded_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.uploaded.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'uploaded\')">Uploaded <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'uploaded\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="dl_speed_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.dl.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'dl_speed\')">DL <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'dl_speed\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="ul_speed_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.ul.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'ul_speed\')">UL <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'ul_speed\')"></i></a>\n' +
-    '    <th ng-hide="time_remaining_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.eta.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'time_remaining\')">ETA <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'time_remaining\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="peers_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.peers.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'peers\')">Peers <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'peers\')"></i></a>\n' +
     '    </th>\n' +
-    '    <th ng-hide="seeds_col">\n' +
+    '    <th ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.seeds.visible">\n' +
     '      <a href="javascript: void(0);" ng-click="tableVirtualScrollCtrl.sort(\'seeds\')">Seeds <i class="fa" ng-class="tableVirtualScrollCtrl.isSortAscDesc(\'seeds\')"></i></a>\n' +
     '    </th>\n' +
     '  </tr>\n' +
@@ -79532,20 +79532,20 @@ module.run(['$templateCache', function($templateCache) {
     '    <td>\n' +
     '      <h5 title="{{torrent.name}}" style="width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5>\n' +
     '    </td>\n' +
-    '    <td ng-hide="status_col" style="width: 130px;">{{torrent.status}}</td>\n' +
-    '    <td ng-hide="size_col"><div style="width: 90px;">{{torrent.size | bytes}}</div></td>\n' +
-    '    <td ng-hide="percent_downloaded_col">\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.status.visible"><div style="width: 130px;">{{torrent.status}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.size.visible"><div style="width: 100px;">{{torrent.size | bytes}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.done.visible">\n' +
     '      <div class="progress" style="width: 80px;">\n' +
     '        <div class="progress-bar" style="width: {{torrent.percent_downloaded | percentage}}" ng-class="{\'progress-bar-warning\': torrent.status === \'checking\', \'progress-bar-success\': torrent.status === \'seeding\'}">{{torrent.percent_downloaded  | percentage}}</div>\n' +
     '      </div>\n' +
     '    </td>\n' +
-    '    <td ng-hide="downloaded_col"><div style="width: 90px;">{{torrent.downloaded | bytes}}</div></td>\n' +
-    '    <td ng-hide="uploaded_col"><div style="width: 90px;">{{torrent.uploaded | bytes}}</div></td>\n' +
-    '    <td ng-hide="dl_speed_col"><div style="width: 90px;">{{torrent.dl_speed | dataTransferRate}}</div></td>\n' +
-    '    <td ng-hide="ul_speed_col"><div style="width: 90px;">{{torrent.ul_speed | dataTransferRate}}</div></td>\n' +
-    '    <td ng-hide="time_remaining_col"><div style="width: 120px;">{{torrent.time_remaining | time}}</div></td>\n' +
-    '    <td ng-hide="peers_col"><div style="width: 90px;">{{torrent.peers}} ({{torrent.total_peers}})</div></td>\n' +
-    '    <td ng-hide="seeds_col"><div style="width: 90px;">{{torrent.seeds}} ({{torrent.total_seeds}})</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.downloaded.visible"><div style="width: 110px;">{{torrent.downloaded | bytes}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.uploaded.visible"><div style="width: 100px;">{{torrent.uploaded | bytes}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.dl.visible"><div style="width: 90px;">{{torrent.dl_speed | dataTransferRate}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.ul.visible"><div style="width: 90px;">{{torrent.ul_speed | dataTransferRate}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.eta.visible"><div style="width: 120px;">{{torrent.time_remaining | time}}</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.peers.visible"><div style="width: 90px;">{{torrent.peers}} ({{torrent.total_peers}})</div></td>\n' +
+    '    <td ng-hide="!tableVirtualScrollCtrl.tableVirtualScrollOptions.columns.seeds.visible"><div style="width: 90px;">{{torrent.seeds}} ({{torrent.total_seeds}})</div></td>\n' +
     '  </tr>\n' +
     '</tbody>\n' +
     '');
@@ -79749,27 +79749,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '<p>Deleting will remove the feed from the list.</p>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/edit-feed/edit-feed.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3>\n' +
@@ -79843,57 +79822,16 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/view-feeds/view-feeds.tpl.html',
-    '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
-    '	<div class="table-container">\n' +
-    '		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">\n' +
-    '			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">\n' +
-    '				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">\n' +
-    '					<tr>\n' +
-    '						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse}"></i></a></th>\n' +
-    '						<th>Auto Download?</th>\n' +
-    '						<th>Refresh</th>\n' +
-    '						<th>Edit</th>\n' +
-    '						<th>Delete</th>\n' +
-    '					</tr>\n' +
-    '				</thead>\n' +
-    '				<tbody>\n' +
-    '					<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText">\n' +
-    '						<td>\n' +
-    '							<h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">\n' +
-    '								<a ui-sref="top.feeds.view({id: feed._id})">{{feed.title}}</a>\n' +
-    '							</h5>\n' +
-    '						</td>\n' +
-    '						<td ng-hide="rss_col"><div title="{{feed.rss}}" style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{feed.rss}}</div></td>\n' +
-    '						<td ng-hide="last_checked_col">{{feed.lastChecked * 1000 | date:\'medium\'}}</td>\n' +
-    '						<td>{{feed.autoDownload}}</td>\n' +
-    '						<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>\n' +
-    '						<td><a ui-sref="editFeed({id: feed._id})">Edit</a></td>\n' +
-    '						<td><a ui-sref="deleteFeed({id: feed._id})">Delete</a></td>\n' +
-    '					</tr>\n' +
-    '				</tbody>\n' +
-    '			</table>\n' +
-    '		</div>\n' +
-    '	</div>\n' +
-    '	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">\n' +
-    '		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">\n' +
-    '			<span class="dropdown dropup" dropdown>\n' +
-    '				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>\n' +
-    '				<ul class="dropdown-menu" role="menu">\n' +
-    '					<li class="dropdown-submenu">\n' +
-    '						<a href="javascript: void(0);">Hide Columns</a>\n' +
-    '						<ul class="dropdown-menu">\n' +
-    '							<li><a href="" ng-click="rss_col=!rss_col; feedsCtrl.reflowTable()">RSS <i ng-class="{\'fa fa-check\': !rss_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="last_checked_col=!last_checked_col; feedsCtrl.reflowTable()">Last Checked <i ng-class="{\'fa fa-check\': !last_checked_col}"></i></a></li>\n' +
-    '						</ul>\n' +
-    '					</li>\n' +
-    '				</ul>\n' +
-    '			</span>\n' +
-    '			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
-    '		</div>\n' +
-    '	</div>\n' +
+  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '<p>Deleting will remove the feed from the list.</p>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
     '</div>');
 }]);
 })();
@@ -79949,6 +79887,68 @@ module.run(['$templateCache', function($templateCache) {
     '				</ul>\n' +
     '			</span>\n' +
     '			<input type="text" ng-model="feedCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('feeds/view-feeds/view-feeds.tpl.html',
+    '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
+    '	<div class="table-container">\n' +
+    '		<div class="table-wrapper" style="position: absolute; top: 0; bottom: 0; overflow: auto;">\n' +
+    '			<table class="table table-condensed table-hover" style="margin-bottom: 0; min-width: 1400px;" float-thead="floatTheadOptions" ng-model="feedsCtrl.Feeds.feeds">\n' +
+    '				<thead style="background: #fafafa; border-top: 2px solid #cacaca;">\n' +
+    '					<tr>\n' +
+    '						<th><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'title\';feedsCtrl.reverse=!feedsCtrl.reverse">Title <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'title\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'title\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th ng-hide="rss_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'rss\';feedsCtrl.reverse=!feedsCtrl.reverse">RSS <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'rss\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'rss\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th ng-hide="last_checked_col"><a href="javascript: void(0);" ng-click="feedsCtrl.predicate=\'lastChecked\';feedsCtrl.reverse=!feedsCtrl.reverse">Last Checked <i class="fa" ng-class="{\'fa-caret-up\': feedsCtrl.predicate===\'lastChecked\' && !feedsCtrl.reverse, \'fa-caret-down\': feedsCtrl.predicate===\'lastChecked\' && feedsCtrl.reverse}"></i></a></th>\n' +
+    '						<th>Auto Download?</th>\n' +
+    '						<th>Refresh</th>\n' +
+    '						<th>Edit</th>\n' +
+    '						<th>Delete</th>\n' +
+    '					</tr>\n' +
+    '				</thead>\n' +
+    '				<tbody>\n' +
+    '					<tr ng-repeat="feed in feedsCtrl.Feeds.feeds | orderBy:feedsCtrl.predicate:feedsCtrl.reverse | filter:feedsCtrl.searchText">\n' +
+    '						<td>\n' +
+    '							<h5 title="{{torrent.name}}" style="width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">\n' +
+    '								<a ui-sref="top.feeds.view({id: feed._id})">{{feed.title}}</a>\n' +
+    '							</h5>\n' +
+    '						</td>\n' +
+    '						<td ng-hide="rss_col"><div title="{{feed.rss}}" style="width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{feed.rss}}</div></td>\n' +
+    '						<td ng-hide="last_checked_col">{{feed.lastChecked * 1000 | date:\'medium\'}}</td>\n' +
+    '						<td>{{feed.autoDownload}}</td>\n' +
+    '						<td><a href="javascript: void(0);" ng-click="feedsCtrl.Feeds.refreshFeed(feed._id);">Refresh</a></td>\n' +
+    '						<td><a ui-sref="editFeed({id: feed._id})">Edit</a></td>\n' +
+    '						<td><a ui-sref="deleteFeed({id: feed._id})">Delete</a></td>\n' +
+    '					</tr>\n' +
+    '				</tbody>\n' +
+    '			</table>\n' +
+    '		</div>\n' +
+    '	</div>\n' +
+    '	<div style="position: absolute; bottom: 0; background: #fafafa; width: 100%; border-top: 2px solid #cacaca;">\n' +
+    '		<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px;">\n' +
+    '			<span class="dropdown dropup" dropdown>\n' +
+    '				<button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>Filter</button>\n' +
+    '				<ul class="dropdown-menu" role="menu">\n' +
+    '					<li class="dropdown-submenu">\n' +
+    '						<a href="javascript: void(0);">Hide Columns</a>\n' +
+    '						<ul class="dropdown-menu">\n' +
+    '							<li><a href="" ng-click="rss_col=!rss_col; feedsCtrl.reflowTable()">RSS <i ng-class="{\'fa fa-check\': !rss_col}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="last_checked_col=!last_checked_col; feedsCtrl.reflowTable()">Last Checked <i ng-class="{\'fa fa-check\': !last_checked_col}"></i></a></li>\n' +
+    '						</ul>\n' +
+    '					</li>\n' +
+    '				</ul>\n' +
+    '			</span>\n' +
+    '			<input type="text" ng-model="feedsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
     '		</div>\n' +
     '	</div>\n' +
     '</div>');
@@ -80068,34 +80068,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
-    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
-    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
-    '		<ul>\n' +
-    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
-    '		</ul>\n' +
-    '	</div>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('torrents/add-torrent/add-torrent.tpl.html',
     '<form ng-submit="torrentsAddCtrl.loadTorrent(torrentsAddCtrl.torrent)" name="addTorrent" novalidate>\n' +
     '	<div class="modal-header">\n' +
@@ -80149,6 +80121,34 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
+    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
+    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
+    '		<ul>\n' +
+    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
+    '		</ul>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('torrents/view-torrents/view-torrents.tpl.html',
     '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
     '	<div class="table-container">\n' +
@@ -80164,34 +80164,35 @@ module.run(['$templateCache', function($templateCache) {
     '					<li class="dropdown-submenu">\n' +
     '						<a href="javascript: void(0);">Filter by Status</a>\n' +
     '						<ul class="dropdown-menu">\n' +
-    '							<li><a href="" ng-click="torrentsCtrl.status=\'\'">All <i ng-class="{\'fa fa-check\': torrentsCtrl.status===\'\'}" ng-init="torrentsCtrl.status=\'\'"></i></a></li>\n' +
-    '							<li><a href="" ng-click="torrentsCtrl.status=\'downloading\'">Downloading <i ng-class="{\'fa fa-check\': torrentsCtrl.status===\'downloading\'}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="torrentsCtrl.status=\'finished\'">Finished <i ng-class="{\'fa fa-check\': torrentsCtrl.status===\'finished\'}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="torrentsCtrl.status=\'stopped\'">Stopped <i ng-class="{\'fa fa-check\': torrentsCtrl.status===\'stopped\'}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="torrentsCtrl.status=\'seeding\'">Seeding <i ng-class="{\'fa fa-check\': torrentsCtrl.status===\'seeding\'}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.filterByStatus(\'\')">All <i ng-class="{\'fa fa-check\': torrentsCtrl.filterStatus===\'\'}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.filterByStatus(\'downloading\')">Downloading <i ng-class="{\'fa fa-check\': torrentsCtrl.filterStatus===\'downloading\'}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.filterByStatus(\'finished\')">Finished <i ng-class="{\'fa fa-check\': torrentsCtrl.filterStatus===\'finished\'}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.filterByStatus(\'stopped\')">Stopped <i ng-class="{\'fa fa-check\': torrentsCtrl.filterStatus===\'stopped\'}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.filterByStatus(\'seeding\')">Seeding <i ng-class="{\'fa fa-check\': torrentsCtrl.filterStatus===\'seeding\'}"></i></a></li>\n' +
     '						</ul>\n' +
     '					</li>\n' +
     '					<li class="dropdown-submenu">\n' +
     '						<a href="javascript: void(0);">Hide Columns</a>\n' +
     '						<ul class="dropdown-menu">\n' +
-    '							<li><a href="" ng-click="status_col=!status_col; torrentsCtrl.reflowTable()">Status <i ng-class="{\'fa fa-check\': !status_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="size_col=!size_col; torrentsCtrl.reflowTable()">Size <i ng-class="{\'fa fa-check\': !size_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="percent_downloaded_col=!percent_downloaded_col; torrentsCtrl.reflowTable()">Done <i ng-class="{\'fa fa-check\': !percent_downloaded_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="downloaded_col=!downloaded_col; torrentsCtrl.reflowTable()">Downloaded <i ng-class="{\'fa fa-check\': !downloaded_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="uploaded_col=!uploaded_col; torrentsCtrl.reflowTable()">Uploaded <i ng-class="{\'fa fa-check\': !uploaded_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="dl_speed_col=!dl_speed_col; torrentsCtrl.reflowTable()">DL Speed <i ng-class="{\'fa fa-check\': !dl_speed_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="ul_speed_col=!ul_speed_col; torrentsCtrl.reflowTable()">UL Speed <i ng-class="{\'fa fa-check\': !ul_speed_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="time_remaining_col=!time_remaining_col; torrentsCtrl.reflowTable()">ETA <i ng-class="{\'fa fa-check\': !time_remaining_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="peers_col=!peers_col; torrentsCtrl.reflowTable()">Peers <i ng-class="{\'fa fa-check\': !peers_col}"></i></a></li>\n' +
-    '							<li><a href="" ng-click="seeds_col=!seeds_col; torrentsCtrl.reflowTable()">Seeds <i ng-class="{\'fa fa-check\': !seeds_col}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.status.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.status.visible; torrentsCtrl.reflowTable()">Status <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.status.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.size.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.size.visible; torrentsCtrl.reflowTable()">Size <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.size.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.done.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.done.visible; torrentsCtrl.reflowTable()">Done <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.done.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible; torrentsCtrl.reflowTable()">Downloaded <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.downloaded.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible; torrentsCtrl.reflowTable()">Uploaded <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.uploaded.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible; torrentsCtrl.reflowTable()">DL Speed <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.dl.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible; torrentsCtrl.reflowTable()">UL Speed <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.ul.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible; torrentsCtrl.reflowTable()">ETA <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.eta.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible; torrentsCtrl.reflowTable()">Peers <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.peers.visible}"></i></a></li>\n' +
+    '							<li><a href="" ng-click="storrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible = !torrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible; torrentsCtrl.reflowTable()">Seeds <i ng-class="{\'fa fa-check\': torrentsCtrl.tableVirtualScrollOptions.columns.seeds.visible}"></i></a></li>\n' +
     '						</ul>\n' +
     '					</li>\n' +
     '				</ul>\n' +
     '			</span>\n' +
-    '			<input type="text" ng-model="torrentsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;">\n' +
+    '			<input type="text" ng-model="torrentsCtrl.searchText" placeholder="Filter by text" class="form-control" style="width: 200px; display: inline-block;" ng-model-options="{ debounce: 300 }">\n' +
     '			<div ng-if="torrentsCtrl.Torrents.selectedTorrents.length > 0" style="display: inline-block;">\n' +
     '				<span style="vertical-align: middle; margin-left: 40px; margin-right: 20px;">{{torrentsCtrl.Torrents.selectedTorrents.length}} selected</span>\n' +
-    '				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.start(torrentsCtrl.Torrents.selectedTorrents)">Play</button>\n' +
+    '        <button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.selectedTorrents = [];">Clear Selected</button>\n' +
+    '				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.start(torrentsCtrl.Torrents.selectedTorrents)" style="margin-left: 40px;">Play</button>\n' +
     '				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.pause(torrentsCtrl.Torrents.selectedTorrents)">Pause</button>\n' +
     '				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.stop(torrentsCtrl.Torrents.selectedTorrents)">Stop</button>\n' +
     '				<button type="button" class="btn btn-default" ng-click="torrentsCtrl.Torrents.remove(torrentsCtrl.Torrents.selectedTorrents); torrentsCtrl.tableVirtualScrollOptions.deleteRows(torrentsCtrl.Torrents.selectedTorrents);">Remove</button>\n' +
@@ -80238,10 +80239,10 @@ module.run(['$templateCache', function($templateCache) {
 (function() {'use strict'; function resolve(Torrents) {
 	return Torrents.getTorrents({
     skip: 0,
-    limit: 40,
+    limit: 60,
     sortBy: 'name',
     reverse: false,
-    filter: ''
+    filter: null
   });
 }
 
@@ -80293,7 +80294,63 @@ angular
     },
     getData: function (options) {
       return Torrents.getTorrents(options);
+    },
+    columns: {
+      name: {
+        visible: true
+      },
+      status: {
+        visible: true
+      },
+      size: {
+        visible: true
+      },
+      done: {
+        visible: true
+      },
+      downloaded: {
+        visible: true
+      },
+      uploaded: {
+        visible: true
+      },
+      dl: {
+        visible: true
+      },
+      ul: {
+        visible: true
+      },
+      eta: {
+        visible: true
+      },
+      peers: {
+        visible: true
+      },
+      seeds: {
+        visible: true
+      }
     }
+  };
+
+  $scope.$watch(function() {
+    return vm.searchText;
+  }, function (newVal, oldVal) {
+    if(newVal === oldVal) {
+      return;
+    }
+
+    vm.tableVirtualScrollOptions.filter({
+      status: vm.filterStatus,
+      name: newVal
+    });
+  });
+
+  vm.filterByStatus = function (status) {
+    vm.filterStatus = status;
+    vm.tableVirtualScrollOptions.filter({
+      name: vm.searchText,
+      status: status
+    });
   };
 
   $interval(function () {
@@ -80326,81 +80383,11 @@ angular
 		$('table.table').trigger('reflow');
 	};
 
-  vm.reconnectSocket = function () {
-    console.log('testtesteststts');
-  };
-
 }
 
 angular
   .module('njrt.torrents.viewTorrents')
   .controller('njrt.ViewTorrentsCtrl', ['njrtLog', '$scope', 'njrt.Torrents', 'torrents', '$interval', ViewTorrentsCtrl]);
-})();
-(function() {'use strict'; function resolve(Settings) {
-	return Settings.getDownloadSettings();
-}
-
-function config($stateProvider) {
-	$stateProvider.state('addTorrent', {
-		url: '/add-torrent',
-		views: {
-			'modal@': {
-				templateUrl: 'torrents/add-torrent/add-torrent.tpl.html',
-				controller: 'njrt.AddTorrentCtrl as torrentsAddCtrl'
-			}
-		},
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			downloadSettings: ['njrt.Settings', resolve]
-		},
-		isModal: true
-	});
-}
-
-angular
-  .module('njrt.torrents.addTorrent', [])
-  .config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
-
-	var logger = njrtLog.getInstance('torrents.add');
-
-	logger.debug('AddTorrentCtrl loaded.');
-
-	var vm = this;
-
-	vm.torrent = {
-		url: '',
-		path: ''
-	};
-
-	vm.defaultDownloadPath = downloadSettings.download_directory;
-
-	vm.loadTorrent = function (torrent) {
-		Torrents.load(torrent)
-			.then(function (data) {
-				logger.debug(data);
-				$state.go('top.torrents');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.fileSelected = function ($files, $event) {
-		vm.torrent.file = $files[0];
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-  .module('njrt.torrents.addTorrent')
-  .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
 })();
 (function() {'use strict'; function resolve(Torrents, $stateParams) {
   var hash = [];
@@ -80470,6 +80457,72 @@ angular
 angular
   .module('njrt.torrents.deleteTorrentData')
   .controller('njrt.DeleteTorrentDataCtrl', ['njrtLog', '$stateParams', '$previousState', '$modal', 'njrt.Torrents', 'torrent', DeleteTorrentDataCtrl]);
+})();
+(function() {'use strict'; function resolve(Settings) {
+	return Settings.getDownloadSettings();
+}
+
+function config($stateProvider) {
+	$stateProvider.state('addTorrent', {
+		url: '/add-torrent',
+		views: {
+			'modal@': {
+				templateUrl: 'torrents/add-torrent/add-torrent.tpl.html',
+				controller: 'njrt.AddTorrentCtrl as torrentsAddCtrl'
+			}
+		},
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			downloadSettings: ['njrt.Settings', resolve]
+		},
+		isModal: true
+	});
+}
+
+angular
+  .module('njrt.torrents.addTorrent', [])
+  .config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function AddTorrentCtrl(njrtLog, $state, $previousState, Torrents, $scope, downloadSettings) {
+
+	var logger = njrtLog.getInstance('torrents.add');
+
+	logger.debug('AddTorrentCtrl loaded.');
+
+	var vm = this;
+
+	vm.torrent = {
+		url: '',
+		path: ''
+	};
+
+	vm.defaultDownloadPath = downloadSettings.download_directory;
+
+	vm.loadTorrent = function (torrent) {
+		Torrents.load(torrent)
+			.then(function (data) {
+				logger.debug(data);
+				$state.go('top.torrents');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.fileSelected = function ($files, $event) {
+		vm.torrent.file = $files[0];
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+  .module('njrt.torrents.addTorrent')
+  .controller('njrt.AddTorrentCtrl', ['njrtLog', '$state', '$previousState', 'njrt.Torrents', '$scope', 'downloadSettings', AddTorrentCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
@@ -80609,6 +80662,64 @@ angular
 	.module('njrt.settings.connectionSettings')
 	.controller('njrt.ConnectionSettingsCtrl', ['njrtLog', 'connectionSettings', 'njrt.Settings', '$previousState', '$scope', 'njrt.Notification', ConnectionSettingsCtrl]);
 })();
+(function() {'use strict'; function resolve (Feeds) {
+	return Feeds.getFeeds();
+}
+
+function config ($stateProvider) {
+	$stateProvider
+		.state('top.feeds', {
+			url: 'feeds',
+			views: {
+				'content@top': {
+					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
+					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feeds: ['njrt.Feeds', resolve]
+			}
+		});
+}
+
+angular
+	.module('njrt.feeds.viewFeeds', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('FeedsCtrl loaded.');
+
+	var vm = this;
+
+	vm.Feeds = Feeds;
+
+	vm.reverse = true;
+	vm.predicate = 'lastChecked';
+
+	$scope.floatTheadOptions = {
+		useAbsolutePositioning: true,
+		zIndex: 999,
+		scrollContainer: function(test) {
+			return $('.table-wrapper');
+		}
+	};
+
+	vm.reflowTable = function () {
+		$('table.table').trigger('reflow');
+	};
+
+}
+
+angular
+	.module('njrt.feeds.viewFeeds')
+	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
+})();
 (function() {'use strict'; function resolve(Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
@@ -80680,63 +80791,61 @@ angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);
 })();
-(function() {'use strict'; function resolve (Feeds) {
-	return Feeds.getFeeds();
+(function() {'use strict'; function resolve(Feeds, $stateParams) {
+	return Feeds.getFeed($stateParams.id);
 }
 
-function config ($stateProvider) {
-	$stateProvider
-		.state('top.feeds', {
-			url: 'feeds',
-			views: {
-				'content@top': {
-					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
-					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feeds: ['njrt.Feeds', resolve]
+function config($stateProvider) {
+	$stateProvider.state('deleteFeed', {
+		url: '/delete-feed/:id',
+		views: {
+			'modal@': {
+				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
+				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
 			}
-		});
+		},
+		isModal: true,
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			feed: ['njrt.Feeds', '$stateParams', resolve]
+		}
+	});
 }
 
 angular
-	.module('njrt.feeds.viewFeeds', [])
+	.module('njrt.feeds.deleteFeed', [])
 	.config(['$stateProvider', config]);
 })();
-(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
+(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
 
 	var logger = njrtLog.getInstance('njrt.feeds');
 
-	logger.debug('FeedsCtrl loaded.');
+	logger.debug('DeleteFeedCtrl loaded.');
 
 	var vm = this;
 
-	vm.Feeds = Feeds;
+	vm.feed = feed;
 
-	vm.reverse = true;
-	vm.predicate = 'lastChecked';
-
-	$scope.floatTheadOptions = {
-		useAbsolutePositioning: true,
-		zIndex: 999,
-		scrollContainer: function(test) {
-			return $('.table-wrapper');
-		}
+	vm.deleteFeed = function (feed) {
+		Feeds.deleteFeed(feed)
+			.then(function (data) {
+				$previousState.go('modalInvoker');
+			}, function (err) {
+				logger.error(err);
+			});
 	};
 
-	vm.reflowTable = function () {
-		$('table.table').trigger('reflow');
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
 	};
 
 }
 
 angular
-	.module('njrt.feeds.viewFeeds')
-	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
+	.module('njrt.feeds.deleteFeed')
+	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
 })();
 (function() {'use strict'; function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
@@ -80867,62 +80976,6 @@ angular
 angular
 	.module('njrt.feeds.editFeed')
 	.controller('njrt.EditFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'feed', 'njrt.Feeds', 'Restangular', EditFeedCtrl]);
-})();
-(function() {'use strict'; function resolve(Feeds, $stateParams) {
-	return Feeds.getFeed($stateParams.id);
-}
-
-function config($stateProvider) {
-	$stateProvider.state('deleteFeed', {
-		url: '/delete-feed/:id',
-		views: {
-			'modal@': {
-				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
-				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
-			}
-		},
-		isModal: true,
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			feed: ['njrt.Feeds', '$stateParams', resolve]
-		}
-	});
-}
-
-angular
-	.module('njrt.feeds.deleteFeed', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('DeleteFeedCtrl loaded.');
-
-	var vm = this;
-
-	vm.feed = feed;
-
-	vm.deleteFeed = function (feed) {
-		Feeds.deleteFeed(feed)
-			.then(function (data) {
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-	.module('njrt.feeds.deleteFeed')
-	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
@@ -81433,6 +81486,60 @@ angular
 	.module('njrt.top', [])
 	.config(['$stateProvider', '$urlRouterProvider', config]);
 })();
+(function() {'use strict'; angular.module('njrt.socket', []);
+})();
+(function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
+
+	var logger = njrtLog.getInstance('socket');
+
+	logger.debug('Socket loaded.');
+
+	var manager = io.Manager('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
+    reconnection: false
+  });
+
+	var socket = manager.socket('/');
+
+	var Socket = {};
+
+	Socket.connect = function () {
+		logger.info('Connecting to socket.');
+		socket.connect();
+	};
+
+	Socket.disconnect = function () {
+		logger.info('Disconnecting from socket.');
+		socket.close();
+	};
+
+	Socket.on = function (eventName, callback) {
+		socket.on(eventName, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				callback.apply(socket, args);
+			});
+		});
+	};
+
+	Socket.emit = function (eventName, data, callback) {
+		socket.emit(eventName, data, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+				if (callback) {
+					callback.apply(socket, args);
+				}
+			});
+		});
+	};
+
+	return Socket;
+
+}
+
+angular
+	.module('njrt.socket')
+	.factory('Socket', ['njrtLog', '$rootScope', '$window', Socket]);
+})();
 (function() {'use strict'; function config ($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.when('/settings', '/settings/download');
@@ -81580,60 +81687,6 @@ angular
 angular
 	.module('njrt.notification')
 	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
-})();
-(function() {'use strict'; angular.module('njrt.socket', []);
-})();
-(function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
-
-	var logger = njrtLog.getInstance('socket');
-
-	logger.debug('Socket loaded.');
-
-	var manager = io.Manager('/?token=' + $window.sessionStorage._id + ':' + $window.sessionStorage.expires + ':' + $window.sessionStorage.token, {
-    reconnection: false
-  });
-
-	var socket = manager.socket('/');
-
-	var Socket = {};
-
-	Socket.connect = function () {
-		logger.info('Connecting to socket.');
-		socket.connect();
-	};
-
-	Socket.disconnect = function () {
-		logger.info('Disconnecting from socket.');
-		socket.close();
-	};
-
-	Socket.on = function (eventName, callback) {
-		socket.on(eventName, function () {
-			var args = arguments;
-			$rootScope.$apply(function () {
-				callback.apply(socket, args);
-			});
-		});
-	};
-
-	Socket.emit = function (eventName, data, callback) {
-		socket.emit(eventName, data, function () {
-			var args = arguments;
-			$rootScope.$apply(function () {
-				if (callback) {
-					callback.apply(socket, args);
-				}
-			});
-		});
-	};
-
-	return Socket;
-
-}
-
-angular
-	.module('njrt.socket')
-	.factory('Socket', ['njrtLog', '$rootScope', '$window', Socket]);
 })();
 (function() {'use strict'; angular
 	.module('njrt.session', []);
@@ -81962,98 +82015,6 @@ angular.module('app', [
 		};
 	});
 })();
-(function() {'use strict'; angular
-	.module('njrt.feeds', [
-		'njrt.feeds.addFeed',
-		'njrt.feeds.editFeed',
-		'njrt.feeds.viewFeed',
-		'njrt.feeds.deleteFeed',
-		'njrt.feeds.viewFeeds'
-	]);
-})();
-(function() {'use strict'; function Feeds(njrtLog, Restangular, $q) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('Feeds loaded.');
-
-	var Feeds = {};
-
-	Feeds.feeds = [];
-
-	Feeds.getFeeds = function () {
-		return Restangular.all('feeds').getList()
-			.then(function (data) {
-				Feeds.feeds = data;
-				return Feeds.feeds;
-			});
-	};
-
-	Feeds.getFeed = function (id) {
-		return Restangular.one('feeds', id).get();
-	};
-
-	Feeds.addFeed = function (feed) {
-		return Restangular.all('feeds').post(feed)
-			.then(function (data) {
-				Feeds.feeds.push(data);
-				return data;
-			});
-	};
-
-	Feeds.refreshFeed = function (id) {
-		return Restangular.one('feeds', id).post('refresh', {})
-			.then(function (data) {
-				return Feeds.getFeeds()
-					.then(function () {
-						return data;
-					});
-			});
-	};
-
-	Feeds.updateFeed = function (feed) {
-		return feed.put()
-			.then(function (data) {
-				return Feeds.getFeeds()
-					.then(function () {
-						return data;
-					});
-			});
-	};
-
-	Feeds.deleteFeed = function (feed) {
-		var deferred = $q.defer();
-
-		// delete from server
-		feed.remove()
-			.then(function () {
-				var item = _.findWhere(Feeds.feeds, {
-					_id: feed._id
-				});
-
-				var index = Feeds.feeds.indexOf(item);
-
-				// delete from collection
-				if (index > -1) {
-					Feeds.feeds.splice(index, 1);
-				}
-
-				deferred.resolve('deleted');
-			}, function (err) {
-				console.error(err);
-				deferred.reject(err);
-			});
-
-		return deferred.promise;
-	};
-
-	return Feeds;
-}
-
-angular
-	.module('njrt.feeds')
-	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
-})();
 (function() {'use strict'; function torrentUrlValidator() {
 	return {
 		restrict: 'A',
@@ -82083,6 +82044,10 @@ angular
 
 function tableVirtualScroll() {
 
+  var ROW_HEIGHT = 46;
+  var MAX_ROW_MULTIPLIER = 3;
+  var MIN_ROW_MULTIPLIER = 2;
+
   function controller() {
 
     var vm = this;
@@ -82092,7 +82057,7 @@ function tableVirtualScroll() {
       limit: 40,
       sortBy: 'name',
       reverse: false,
-      filter: ''
+      filter: null
     };
 
     vm.dataCache = {
@@ -82124,10 +82089,50 @@ function tableVirtualScroll() {
           };
 
           vm.params.skip = vm.params.skip + vm.params.limit;
-          vm.begin = 0;
-          vm.end = data.data.length - 1;
 
-          vm.rowCounter = data.data.length;
+          vm.viewableRows = Math.ceil(vm.containerHeight / ROW_HEIGHT) < 10 ? 10 : Math.ceil(vm.containerHeight / ROW_HEIGHT);
+          vm.maxRows = vm.viewableRows * MAX_ROW_MULTIPLIER;
+          vm.minRows = vm.viewableRows * MIN_ROW_MULTIPLIER;
+          vm.dataCache.bottom = vm.tableVirtualScrollOptions.dataSource.data.splice(vm.minRows, vm.dataCache.totalLoaded);
+
+          vm.begin = 0;
+          vm.end = vm.tableVirtualScrollOptions.dataSource.data.length - 1;
+          vm.rowCounter = vm.tableVirtualScrollOptions.dataSource.data.length;
+          vm.resetPadding();
+
+        });
+    };
+
+    vm.tableVirtualScrollOptions.filter = function (filter) {
+      vm.params.filter = filter;
+      vm.params.skip = 0;
+      vm.params.limit = 40;
+
+      vm.tableVirtualScrollOptions
+        .getData(vm.params)
+        .then(function (data) {
+
+          vm.tableVirtualScrollOptions.dataSource = {
+            data: data.data,
+            totalSize: data.total
+          };
+
+          vm.dataCache = {
+            top: [],
+            bottom: [],
+            totalLoaded: data.data.length
+          };
+
+          vm.params.skip = vm.params.skip + vm.params.limit;
+
+          vm.viewableRows = Math.ceil(vm.containerHeight / ROW_HEIGHT) < 10 ? 10 : Math.ceil(vm.containerHeight / ROW_HEIGHT);
+          vm.maxRows = vm.viewableRows * MAX_ROW_MULTIPLIER;
+          vm.minRows = vm.viewableRows * MIN_ROW_MULTIPLIER;
+          vm.dataCache.bottom = vm.tableVirtualScrollOptions.dataSource.data.splice(vm.minRows, vm.dataCache.totalLoaded);
+
+          vm.begin = 0;
+          vm.end = vm.tableVirtualScrollOptions.dataSource.data.length - 1;
+          vm.rowCounter = vm.tableVirtualScrollOptions.dataSource.data.length;
           vm.resetPadding();
 
         });
@@ -82210,9 +82215,7 @@ function tableVirtualScroll() {
 
   function link(scope, elem, attrs, ctrl) {
 
-    var ROW_HEIGHT = 46;
-    var MAX_ROW_MULTIPLIER = 4;
-    var MIN_ROW_MULTIPLIER = 3;
+
     var V_BOTTOM_PADDING_CLASSNAME = '.table-virtual-bottom';
     var V_TOP_PADDING_CLASSNAME = '.table-virtual-top';
 
@@ -82264,22 +82267,6 @@ function tableVirtualScroll() {
 
     // set height of bottom padding element
     vBottomPaddingElem.height(ctrl.vBottomPaddingElemHeight);
-
-    // function padBottomRow(scrolledAmount) {
-    //   return vBottomPaddingElemHeight + (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function trimBottomRow(scrolledAmount) {
-    //   return vBottomPaddingElemHeight - (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function padTopRow(scrolledAmount) {
-    //   return vTopPaddingElemHeight + (ROW_HEIGHT * scrolledAmount);
-    // }
-
-    // function trimTopRow(scrolledAmount) {
-    //   return vTopPaddingElemHeight - (ROW_HEIGHT * scrolledAmount);
-    // }
 
     // add more rows to bottom of list from cache
     function restoreBottomRow() {
@@ -82358,7 +82345,7 @@ function tableVirtualScroll() {
           cacheBottomRow();
         }
       } else if (ctrl.begin === 0) {
-        if (ctrl.rowCounter > ctrl.maxRows) {
+        if (ctrl.rowCounter > ctrl.minRows) {
           cacheBottomRow();
         }
       } else {
@@ -82366,6 +82353,74 @@ function tableVirtualScroll() {
       }
       // console.log('row counter after scroll', rowCounter);
     }
+
+
+    scope.$watch(function() {
+      return scrollingContainer[0].offsetHeight;
+    }, function(newValue) {
+      var oldViewableRows = ctrl.viewableRows;
+      ctrl.viewableRows = Math.ceil(newValue / ROW_HEIGHT);
+      ctrl.maxRows = ctrl.viewableRows * MAX_ROW_MULTIPLIER;
+      ctrl.minRows = ctrl.viewableRows * MIN_ROW_MULTIPLIER;
+
+      console.log('viewable rows after resize', ctrl.viewableRows);
+      console.log('max viewable rows after resize', ctrl.maxRows);
+      console.log('minRows viewable rows after resize', ctrl.minRows);
+
+      var count = 0;
+
+      // screen expanded
+      if (ctrl.minRows > oldViewableRows * MIN_ROW_MULTIPLIER) {
+
+        do {
+          console.log('showing more');
+
+          if (ctrl.rowCounter > scope.maxRows) {
+            return;
+          }
+
+          if (ctrl.dataCache.top.length > 0) {
+            restoreTopRow();
+          }
+
+          if (ctrl.dataCache.bottom.length > 0) {
+            restoreBottomRow();
+          }
+
+          count++;
+        } while (count < (ctrl.minRows - oldViewableRows * MIN_ROW_MULTIPLIER));
+
+      }
+
+      // screen shrunk
+      if (oldViewableRows * MIN_ROW_MULTIPLIER > ctrl.minRows) {
+
+        count = 0;
+        do {
+          console.log('showing less');
+
+          if (ctrl.rowCounter > ctrl.maxRows) {
+            return;
+          }
+
+          cacheBottomRow();
+          count++;
+        } while (count < (oldViewableRows * MIN_ROW_MULTIPLIER - ctrl.minRows));
+      }
+
+    });
+
+
+
+
+
+
+    var lastScrollTop = 0;
+
+    // scroll top initial is 0
+    var st = 0;
+
+    var sensitivity = 46;
 
     var loading = false;
 
@@ -82395,72 +82450,6 @@ function tableVirtualScroll() {
         }
       }
     }
-
-
-
-    // scope.$watch(function() {
-    //   return scrollingContainer[0].offsetHeight;
-    // }, function(newValue) {
-    //   var oldViewableRows = scope.viewableRows;
-    //   scope.viewableRows = Math.ceil(newValue / 46);
-    //   scope.maxRows = scope.viewableRows * 4;
-    //   scope.minRows = scope.viewableRows * 3;
-
-    //   console.log('viewable rows after resize', scope.viewableRows);
-    //   console.log('max viewable rows after resize', scope.maxRows);
-    //   console.log('minRows viewable rows after resize', scope.minRows);
-
-    //   var count = 0;
-
-    //   // screen expanded
-    //   if (scope.minRows > oldViewableRows * 3) {
-
-    //     do {
-    //       console.log('showing more');
-
-    //       if (rowCounter > scope.maxRows) {
-    //         return;
-    //       }
-
-    //       if (scope.topCache.length > 0) {
-    //         restoreTopRow();
-    //       }
-
-    //       if (scope.bottomCache.length > 0) {
-    //         restoreBottomRow();
-    //       }
-
-    //       count++;
-    //     } while (count < (scope.minRows - oldViewableRows * 3));
-
-    //   }
-
-    //   // screen shrunk
-    //   if (oldViewableRows * 2 > scope.minRows) {
-
-    //     count = 0;
-    //     do {
-    //       console.log('showing less');
-
-    //       if (rowCounter > scope.maxRows) {
-    //         return;
-    //       }
-
-    //       cacheBottomRow();
-    //       count++;
-    //     } while (count < (oldViewableRows * 2 - scope.minRows));
-    //   }
-
-    // });
-
-
-
-    var lastScrollTop = 0;
-
-    // scroll top initial is 0
-    var st = 0;
-
-    var sensitivity = 40;
 
     function tableScroll() {
 
@@ -82507,6 +82496,8 @@ function tableVirtualScroll() {
         } while (count < scrollAmount);
       }
 
+      loadPageData();
+
       lastScrollTop = currentSt;
       ticking = false;
       scope.$digest();
@@ -82526,8 +82517,6 @@ function tableVirtualScroll() {
       st = scrollingContainer[0].scrollTop;
       requestTick();
     });
-
-    scrollingContainer.bind('scroll', _.debounce(loadPageData, 100));
 
   }
 
@@ -82668,6 +82657,98 @@ angular
 angular
 	.module('app')
 	.directive('appVersion', ['$document', appVersion]);
+})();
+(function() {'use strict'; angular
+	.module('njrt.feeds', [
+		'njrt.feeds.addFeed',
+		'njrt.feeds.editFeed',
+		'njrt.feeds.viewFeed',
+		'njrt.feeds.deleteFeed',
+		'njrt.feeds.viewFeeds'
+	]);
+})();
+(function() {'use strict'; function Feeds(njrtLog, Restangular, $q) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('Feeds loaded.');
+
+	var Feeds = {};
+
+	Feeds.feeds = [];
+
+	Feeds.getFeeds = function () {
+		return Restangular.all('feeds').getList()
+			.then(function (data) {
+				Feeds.feeds = data;
+				return Feeds.feeds;
+			});
+	};
+
+	Feeds.getFeed = function (id) {
+		return Restangular.one('feeds', id).get();
+	};
+
+	Feeds.addFeed = function (feed) {
+		return Restangular.all('feeds').post(feed)
+			.then(function (data) {
+				Feeds.feeds.push(data);
+				return data;
+			});
+	};
+
+	Feeds.refreshFeed = function (id) {
+		return Restangular.one('feeds', id).post('refresh', {})
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
+					});
+			});
+	};
+
+	Feeds.updateFeed = function (feed) {
+		return feed.put()
+			.then(function (data) {
+				return Feeds.getFeeds()
+					.then(function () {
+						return data;
+					});
+			});
+	};
+
+	Feeds.deleteFeed = function (feed) {
+		var deferred = $q.defer();
+
+		// delete from server
+		feed.remove()
+			.then(function () {
+				var item = _.findWhere(Feeds.feeds, {
+					_id: feed._id
+				});
+
+				var index = Feeds.feeds.indexOf(item);
+
+				// delete from collection
+				if (index > -1) {
+					Feeds.feeds.splice(index, 1);
+				}
+
+				deferred.resolve('deleted');
+			}, function (err) {
+				console.error(err);
+				deferred.reject(err);
+			});
+
+		return deferred.promise;
+	};
+
+	return Feeds;
+}
+
+angular
+	.module('njrt.feeds')
+	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
 })();
 (function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
 

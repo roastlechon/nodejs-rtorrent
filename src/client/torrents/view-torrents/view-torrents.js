@@ -1,10 +1,10 @@
 function resolve(Torrents) {
 	return Torrents.getTorrents({
     skip: 0,
-    limit: 40,
+    limit: 60,
     sortBy: 'name',
     reverse: false,
-    filter: ''
+    filter: null
   });
 }
 
