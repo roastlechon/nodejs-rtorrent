@@ -1,10 +1,7 @@
-var logger = require('winston');
-
-
+var torrentsModel = require('./torrents-model');
 
 function torrentsQueryListener(query, callback) {
-	// var that = this;
-	this.torrentsModel.query(query)
+	torrentsModel.query(query)
 		.then(function (data) {
 			callback(null, data);
 		}, function (err) {
@@ -12,42 +9,13 @@ function torrentsQueryListener(query, callback) {
 		});
 }
 
-function torrentsAllListener(query, callback) {
-	// var that = this;
-	// this.torrentsModel.all()
-	// 	.then(function (data) {
-	// 		callback(null, data);
-	// 	}, function (err) {
-	// 		callback(err);
-	// 	});
-}
-
-function torrentsHashesListener(hashes, callback) {
-  this.torrentsModel.getTorrentsByHashes(hashes)
-    .then(function (data) {
-      callback(null, data);
-    });
-}
-
-function stop() {
-	this.torrentsModel.stopLoop();
-}
-
 function TorrentsSocket(socket) {
 
 	this.socket = socket;
 
 	this.eventHandler = {
-		torrentsQuery: torrentsQueryListener.bind(this),
-    torrentsAll: torrentsAllListener.bind(this),
-		torrentsHashes: torrentsHashesListener.bind(this)
-
+		torrentsQuery: torrentsQueryListener
 	};
-
-	// this.stop = stop;
-	this.torrentsModel = require('./torrents-model');
-
-	// this.torrentsModel.startLoop();
 
 }
 

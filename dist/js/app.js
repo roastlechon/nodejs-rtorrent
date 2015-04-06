@@ -79749,6 +79749,27 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '<p>Deleting will remove the feed from the list.</p>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/edit-feed/edit-feed.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Editing \'{{feedsEditCtrl.feed.title}}\'</h3>\n' +
@@ -79811,27 +79832,6 @@ module.run(['$templateCache', function($templateCache) {
     '		<button type="button" class="btn btn-primary" ng-click="feedsEditCtrl.editFeed(feedsEditCtrl.feed)" ng-disabled="feedsEditCtrl.checkDisabled()">Save changes</button>\n' +
     '		<button type="button" class="btn btn-default" ng-click="feedsEditCtrl.cancel()">Cancel</button>\n' +
     '	</div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '<p>Deleting will remove the feed from the list.</p>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
     '</div>');
 }]);
 })();
@@ -80354,8 +80354,13 @@ angular
   };
 
   $interval(function () {
-    Torrents.getTorrentsByHash(vm.tableVirtualScrollOptions.inViewHashes)
+    Torrents.getTorrents({
+      filter: {
+        hash: vm.tableVirtualScrollOptions.inViewHashes
+      }
+    })
       .then(function (data) {
+        data = data.data;
         for (var i = data.length - 1; i >= 0; i--) {
           var index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.data, function (torrent) {
             return data[i].hash === torrent.hash;
@@ -80791,62 +80796,6 @@ angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);
 })();
-(function() {'use strict'; function resolve(Feeds, $stateParams) {
-	return Feeds.getFeed($stateParams.id);
-}
-
-function config($stateProvider) {
-	$stateProvider.state('deleteFeed', {
-		url: '/delete-feed/:id',
-		views: {
-			'modal@': {
-				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
-				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
-			}
-		},
-		isModal: true,
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			feed: ['njrt.Feeds', '$stateParams', resolve]
-		}
-	});
-}
-
-angular
-	.module('njrt.feeds.deleteFeed', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('DeleteFeedCtrl loaded.');
-
-	var vm = this;
-
-	vm.feed = feed;
-
-	vm.deleteFeed = function (feed) {
-		Feeds.deleteFeed(feed)
-			.then(function (data) {
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-	.module('njrt.feeds.deleteFeed')
-	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
-})();
 (function() {'use strict'; function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
@@ -80976,6 +80925,62 @@ angular
 angular
 	.module('njrt.feeds.editFeed')
 	.controller('njrt.EditFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'feed', 'njrt.Feeds', 'Restangular', EditFeedCtrl]);
+})();
+(function() {'use strict'; function resolve(Feeds, $stateParams) {
+	return Feeds.getFeed($stateParams.id);
+}
+
+function config($stateProvider) {
+	$stateProvider.state('deleteFeed', {
+		url: '/delete-feed/:id',
+		views: {
+			'modal@': {
+				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
+				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
+			}
+		},
+		isModal: true,
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			feed: ['njrt.Feeds', '$stateParams', resolve]
+		}
+	});
+}
+
+angular
+	.module('njrt.feeds.deleteFeed', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('DeleteFeedCtrl loaded.');
+
+	var vm = this;
+
+	vm.feed = feed;
+
+	vm.deleteFeed = function (feed) {
+		Feeds.deleteFeed(feed)
+			.then(function (data) {
+				$previousState.go('modalInvoker');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+	.module('njrt.feeds.deleteFeed')
+	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
 })();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
@@ -81117,6 +81122,25 @@ angular
 	.module('njrt.feeds.addFeed')
 	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);
 })();
+(function() {'use strict'; function config($stateProvider, $urlRouterProvider) {
+
+	$urlRouterProvider.when('/', '/torrents');
+
+	$stateProvider.state('top', {
+		url: '/',
+		views: {
+			'top@': {
+				templateUrl: 'top/top.tpl.html'
+			}
+		},
+		sticky: true
+	});
+}
+
+angular
+	.module('njrt.top', [])
+	.config(['$stateProvider', '$urlRouterProvider', config]);
+})();
 (function() {'use strict'; angular
 	.module('njrt.torrents', [
 		'njrt.torrents.addTorrent',
@@ -81170,7 +81194,6 @@ angular
 		}
 	});
 
-
 	Torrents.getTorrents = function (query) {
 		var deferred = $q.defer();
 
@@ -81184,20 +81207,6 @@ angular
 
 		return deferred.promise;
 	};
-
-  Torrents.getTorrentsByHash = function (hashes) {
-    var deferred = $q.defer();
-
-    Socket.emit('torrentsHashes', hashes, function (err, data) {
-      if (err) {
-        deferred.reject(err);
-      }
-
-      deferred.resolve(data);
-    });
-
-    return deferred.promise;
-  };
 
 	Torrents.isTorrentSelected = function (hash) {
 		var index = Torrents.selectedTorrents.indexOf(hash);
@@ -81467,25 +81476,6 @@ angular
   .module('njrt.torrents')
   .factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', '$interval', Torrents]);
 })();
-(function() {'use strict'; function config($stateProvider, $urlRouterProvider) {
-
-	$urlRouterProvider.when('/', '/torrents');
-
-	$stateProvider.state('top', {
-		url: '/',
-		views: {
-			'top@': {
-				templateUrl: 'top/top.tpl.html'
-			}
-		},
-		sticky: true
-	});
-}
-
-angular
-	.module('njrt.top', [])
-	.config(['$stateProvider', '$urlRouterProvider', config]);
-})();
 (function() {'use strict'; angular.module('njrt.socket', []);
 })();
 (function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
@@ -81616,79 +81606,6 @@ angular
 	.controller('njrt.SettingsCtrl', ['njrtLog', '$state', SettingsCtrl]);
 })();
 (function() {'use strict'; angular
-	.module('njrt.notification', []);
-})();
-(function() {'use strict'; function Notification($q, $timeout) {
-
-	var Notification = {};
-
-	Notification.notifications = [];
-
-	Notification.add = function (type, message, isHtml) {
-		var deferred = $q.defer();
-
-		var notification = {
-			type: type,
-			msg: message,
-      isHtml: isHtml
-		};
-
-		Notification.notifications.push(notification);
-
-    // dont add timeout to remove notification if it has
-    // html. this means that the notification has an action that
-    // the user can act on and cannot be dismissed until the user
-    // has acted on it.
-    if (!notification.isHtml) {
-      // need to add animation
-      $timeout(function () {
-        Notification.notifications.splice(0, 1);
-      }, 3000);
-    }
-
-
-		deferred.resolve(notification);
-
-		return deferred.promise;
-	};
-
-	Notification.remove = function (index) {
-		Notification.notifications.splice(index, 1);
-	};
-
-	return Notification;
-}
-
-angular
-	.module('njrt.notification')
-	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
-})();
-(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
-
-	var logger = njrtLog.getInstance('njrt.notification');
-
-	logger.debug('NotificationCtrl loaded.');
-
-	var vm = this;
-
-	vm.Notification = Notification;
-
-	Socket.on('notifications', function (data) {
-		Notification.add(data.type, data.message);
-	});
-
-  vm.reconnectSocket = function () {
-    Socket.connect();
-
-    // then remove notification message
-  };
-}
-
-angular
-	.module('njrt.notification')
-	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
-})();
-(function() {'use strict'; angular
 	.module('njrt.session', []);
 })();
 (function() {'use strict'; function SessionService (njrtLog, $window, Restangular) {
@@ -81770,6 +81687,140 @@ angular
 	.module('njrt.session')
 	.service('njrt.SessionService', ['njrtLog', '$window', 'Restangular', SessionService]);
 })();
+(function() {'use strict'; angular
+	.module('njrt.notification', []);
+})();
+(function() {'use strict'; function Notification($q, $timeout) {
+
+	var Notification = {};
+
+	Notification.notifications = [];
+
+	Notification.add = function (type, message, isHtml) {
+		var deferred = $q.defer();
+
+		var notification = {
+			type: type,
+			msg: message,
+      isHtml: isHtml
+		};
+
+		Notification.notifications.push(notification);
+
+    // dont add timeout to remove notification if it has
+    // html. this means that the notification has an action that
+    // the user can act on and cannot be dismissed until the user
+    // has acted on it.
+    if (!notification.isHtml) {
+      // need to add animation
+      $timeout(function () {
+        Notification.notifications.splice(0, 1);
+      }, 3000);
+    }
+
+
+		deferred.resolve(notification);
+
+		return deferred.promise;
+	};
+
+	Notification.remove = function (index) {
+		Notification.notifications.splice(index, 1);
+	};
+
+	return Notification;
+}
+
+angular
+	.module('njrt.notification')
+	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
+})();
+(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
+
+	var logger = njrtLog.getInstance('njrt.notification');
+
+	logger.debug('NotificationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Notification = Notification;
+
+	Socket.on('notifications', function (data) {
+		Notification.add(data.type, data.message);
+	});
+
+  vm.reconnectSocket = function () {
+    Socket.connect();
+
+    // then remove notification message
+  };
+}
+
+angular
+	.module('njrt.notification')
+	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
+})();
+(function() {'use strict'; function config($stateProvider) {
+	$stateProvider.state('login', {
+		url: '/login',
+		views: {
+			'modal@': {
+				templateUrl: 'login/login.tpl.html',
+				controller: 'njrt.LoginCtrl as loginCtrl'
+			}
+		},
+		isModal: true
+	});
+}
+
+angular
+	.module('njrt.login', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousState) {
+
+	var logger = njrtLog.getInstance('njrt.login');
+
+	logger.debug('LoginCtrl loaded.');
+
+	var vm = this;
+
+	vm.error = '';
+
+	vm.close = function () {
+		$state.go('top'); // return to previous state
+	};
+
+	vm.login = function () {
+		Authentication.login({
+			email: vm.email,
+			password: vm.password
+		}).then(function (data) {
+
+			if (SessionService.destinationState != '') {
+				$state.go(SessionService.destinationState);
+			} else {
+				$state.go('top');
+			}
+
+		}, function (err) {
+			handleError(err);
+			logger.error(err);
+		});
+	};
+
+	function handleError (err) {
+		console.log(err);
+		if (err.message === 'Unauthorized') {
+			vm.error = 'Username or password is incorrect, please try again.';
+		}
+	}
+}
+
+angular
+	.module('njrt.login')
+	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);
+})();
 (function() {'use strict'; function run($rootScope, $modal, $previousState) {
 
 	var stateBehindModal = {};
@@ -81836,67 +81887,6 @@ angular
 	.module('njrt.modal', [])
 	.run(['$rootScope', '$modal', '$previousState', run]);
 })();
-(function() {'use strict'; function config($stateProvider) {
-	$stateProvider.state('login', {
-		url: '/login',
-		views: {
-			'modal@': {
-				templateUrl: 'login/login.tpl.html',
-				controller: 'njrt.LoginCtrl as loginCtrl'
-			}
-		},
-		isModal: true
-	});
-}
-
-angular
-	.module('njrt.login', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousState) {
-
-	var logger = njrtLog.getInstance('njrt.login');
-
-	logger.debug('LoginCtrl loaded.');
-
-	var vm = this;
-
-	vm.error = '';
-
-	vm.close = function () {
-		$state.go('top'); // return to previous state
-	};
-
-	vm.login = function () {
-		Authentication.login({
-			email: vm.email,
-			password: vm.password
-		}).then(function (data) {
-
-			if (SessionService.destinationState != '') {
-				$state.go(SessionService.destinationState);
-			} else {
-				$state.go('top');
-			}
-
-		}, function (err) {
-			handleError(err);
-			logger.error(err);
-		});
-	};
-
-	function handleError (err) {
-		console.log(err);
-		if (err.message === 'Unauthorized') {
-			vm.error = 'Username or password is incorrect, please try again.';
-		}
-	}
-}
-
-angular
-	.module('njrt.login')
-	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);
-})();
 (function() {'use strict'; angular
 	.module('njrt.log', [])
 	.run(['$log', function ($log) {
@@ -81952,68 +81942,6 @@ angular.module('app', [
 	'njrt.settings'
 ]).config(['$urlRouterProvider', '$stateProvider', '$stickyStateProvider', config]);
 
-})();
-(function() {'use strict'; angular.module('app')
-	.filter('time', function() {
-		return function(value) {
-			if (isNaN(parseFloat(value)) || !isFinite(value) || value === 0) {
-        return '-';
-      }
-			var suffix = "s",
-				day = 86400,
-				hr = 3600,
-				min = 60;
-			var seconds = parseInt(value, 10);
-			var days = Math.floor(seconds / day);
-			var hours = Math.floor((seconds - (days * day)) / hr);
-			var minutes = Math.floor((seconds - (days * day) - (hours * hr)) / min);
-			var seconds = seconds - (days * day) - (hours * hr) - (minutes * min);
-
-			if (value >= min && value <= hr) {
-				return [minutes, "m ", seconds, "s"].join("");
-			} else if (value >= hr && value <= day) {
-				return [hours, "h ", minutes, "m ", seconds, "s"].join("");
-			} else if (value >= day) {
-				return [days, "d ", hours, "h ", minutes, "m ", seconds, "s"].join("");
-			}
-		};
-	});
-})();
-(function() {'use strict'; angular.module('app')
-	.filter('percentage', function() {
-		return function(input) {
-			var rounded = Math.round(input * 10000) / 100;
-			if (rounded == NaN) {
-				return '';
-			}
-			var percentage = '' + rounded + '%';
-			return percentage;
-		};
-	});
-})();
-(function() {'use strict'; angular.module('app')
-	.filter('dataTransferRate', function() {
-		return function(dataTransferRate, precision) {
-			if (isNaN(parseFloat(dataTransferRate)) || !isFinite(dataTransferRate)) return '-';
-			if (dataTransferRate === 0) return '-';
-			if (typeof precision === 'undefined') precision = 1;
-			var units = ['bytes/s', 'kB/s', 'MB/s', 'GB/s', 'TB/s', 'PB/s'],
-				number = Math.floor(Math.log(dataTransferRate) / Math.log(1024));
-			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-		};
-	});
-})();
-(function() {'use strict'; angular.module('app')
-	.filter('bytes', function() {
-		return function(bytes, precision) {
-			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
-			if (bytes === 0) return '-';
-			if (typeof precision === 'undefined') precision = 1;
-			var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-				number = Math.floor(Math.log(bytes) / Math.log(1024));
-			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-		};
-	});
 })();
 (function() {'use strict'; function torrentUrlValidator() {
 	return {
@@ -82749,6 +82677,68 @@ angular
 angular
 	.module('njrt.feeds')
 	.factory('njrt.Feeds', ['njrtLog', 'Restangular', '$q', Feeds]);
+})();
+(function() {'use strict'; angular.module('app')
+	.filter('time', function() {
+		return function(value) {
+			if (isNaN(parseFloat(value)) || !isFinite(value) || value === 0) {
+        return '-';
+      }
+			var suffix = "s",
+				day = 86400,
+				hr = 3600,
+				min = 60;
+			var seconds = parseInt(value, 10);
+			var days = Math.floor(seconds / day);
+			var hours = Math.floor((seconds - (days * day)) / hr);
+			var minutes = Math.floor((seconds - (days * day) - (hours * hr)) / min);
+			var seconds = seconds - (days * day) - (hours * hr) - (minutes * min);
+
+			if (value >= min && value <= hr) {
+				return [minutes, "m ", seconds, "s"].join("");
+			} else if (value >= hr && value <= day) {
+				return [hours, "h ", minutes, "m ", seconds, "s"].join("");
+			} else if (value >= day) {
+				return [days, "d ", hours, "h ", minutes, "m ", seconds, "s"].join("");
+			}
+		};
+	});
+})();
+(function() {'use strict'; angular.module('app')
+	.filter('percentage', function() {
+		return function(input) {
+			var rounded = Math.round(input * 10000) / 100;
+			if (rounded == NaN) {
+				return '';
+			}
+			var percentage = '' + rounded + '%';
+			return percentage;
+		};
+	});
+})();
+(function() {'use strict'; angular.module('app')
+	.filter('dataTransferRate', function() {
+		return function(dataTransferRate, precision) {
+			if (isNaN(parseFloat(dataTransferRate)) || !isFinite(dataTransferRate)) return '-';
+			if (dataTransferRate === 0) return '-';
+			if (typeof precision === 'undefined') precision = 1;
+			var units = ['bytes/s', 'kB/s', 'MB/s', 'GB/s', 'TB/s', 'PB/s'],
+				number = Math.floor(Math.log(dataTransferRate) / Math.log(1024));
+			return (dataTransferRate / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+		};
+	});
+})();
+(function() {'use strict'; angular.module('app')
+	.filter('bytes', function() {
+		return function(bytes, precision) {
+			if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+			if (bytes === 0) return '-';
+			if (typeof precision === 'undefined') precision = 1;
+			var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+				number = Math.floor(Math.log(bytes) / Math.log(1024));
+			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+		};
+	});
 })();
 (function() {'use strict'; function run($rootScope, SessionService, $state, $previousState, njrtLog, Restangular) {
 

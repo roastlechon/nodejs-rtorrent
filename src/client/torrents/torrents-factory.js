@@ -44,7 +44,6 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 		}
 	});
 
-
 	Torrents.getTorrents = function (query) {
 		var deferred = $q.defer();
 
@@ -58,20 +57,6 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 
 		return deferred.promise;
 	};
-
-  Torrents.getTorrentsByHash = function (hashes) {
-    var deferred = $q.defer();
-
-    Socket.emit('torrentsHashes', hashes, function (err, data) {
-      if (err) {
-        deferred.reject(err);
-      }
-
-      deferred.resolve(data);
-    });
-
-    return deferred.promise;
-  };
 
 	Torrents.isTorrentSelected = function (hash) {
 		var index = Torrents.selectedTorrents.indexOf(hash);

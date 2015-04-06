@@ -84,8 +84,13 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
   };
 
   $interval(function () {
-    Torrents.getTorrentsByHash(vm.tableVirtualScrollOptions.inViewHashes)
+    Torrents.getTorrents({
+      filter: {
+        hash: vm.tableVirtualScrollOptions.inViewHashes
+      }
+    })
       .then(function (data) {
+        data = data.data;
         for (var i = data.length - 1; i >= 0; i--) {
           var index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.data, function (torrent) {
             return data[i].hash === torrent.hash;

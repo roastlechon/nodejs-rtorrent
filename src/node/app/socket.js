@@ -31,7 +31,6 @@ module.exports = function (io) {
 			users--;
 
 			if (users === 0) {
-				// socketHandlers.torrents.stop();
 				socketHandlers.notifications.stop();
 			}
 
