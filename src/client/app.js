@@ -1,6 +1,13 @@
-function config($urlRouterProvider, $stateProvider, $stickyStateProvider) {
+function config($urlRouterProvider, $stateProvider, $stickyStateProvider, $translateProvider) {
   $stickyStateProvider.enableDebug(true);
   $urlRouterProvider.otherwise('/');
+  
+  $translateProvider.useLocalStorage();
+  $translateProvider.useStaticFilesLoader({
+    prefix: 'languages/',
+    suffix: '.json'
+  });
+  $translateProvider.preferredLanguage('en');
 }
 
 angular.module('app', [
@@ -21,6 +28,8 @@ angular.module('app', [
 	'njrt.socket',
 	'njrt.torrents',
 	'njrt.feeds',
-	'njrt.settings'
-]).config(['$urlRouterProvider', '$stateProvider', '$stickyStateProvider', config]);
+	'njrt.settings',
+	'ngCookies',
+	'pascalprecht.translate'
+]).config(['$urlRouterProvider', '$stateProvider', '$stickyStateProvider', '$translateProvider', config]);
 

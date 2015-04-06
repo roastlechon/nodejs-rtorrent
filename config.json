@@ -27,7 +27,7 @@
 		"cert": "/tmp/server.crt"
 	},
 	"app": {
-		"hostname": "localhost",
+		"hostname": "192.168.0.27",
 		"port": 3000,
 		"ssl": false,
 		"defaultUser": {

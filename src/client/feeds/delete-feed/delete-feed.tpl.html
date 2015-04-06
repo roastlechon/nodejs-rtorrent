@@ -1,10 +1,10 @@
 <div class="modal-header">
-    <h3>Delete '{{feedsDeleteCtrl.feed.title}}'?</h3>
+    <h3>{{'DELETE_FEED_HEADER_PREFIX'|translate}}{{feedsDeleteCtrl.feed.title}}{{'DELETE_FEED_HEADER_SUFFIX'|translate}}</h3>
 </div>
 <div class="modal-body">
-<p>Deleting will remove the feed from the list.</p>
+<p>{{'DELETE_FEED_WARNING'|translate}}</p>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>
-    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">{{'DELETE_FEED_DELETE'|translate}}</button>
+    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">{{'CANCEL'|translate}}</button>
 </div>
