@@ -427,7 +427,7 @@ function tableVirtualScroll() {
     ctrl.lastScrollTop = 0;
 
     // scroll top initial is 0
-    var st = 0;
+    var currentSt = 0;
 
     var sensitivity = 46;
 
@@ -461,9 +461,6 @@ function tableVirtualScroll() {
     function tableScroll() {
 
       ticking = false;
-
-      // last known scroll top is set to current st
-      var currentSt = st;
 
       // console.log('scrolltop', currentSt);
 
@@ -519,7 +516,7 @@ function tableVirtualScroll() {
     }
 
     scrollingContainer.bind('scroll', function () {
-      st = scrollingContainer[0].scrollTop;
+      currentSt = scrollingContainer[0].scrollTop;
       requestTick();
     });
 

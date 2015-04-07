@@ -79900,6 +79900,59 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('settings/connection-settings/connection-settings.tpl.html',
+    '<form ng-submit="connectionSettingsCtrl.updateConnectionSettings(connectionSettingsCtrl.connectionSettings)" name="connectionSettings" novalidate>\n' +
+    '	<div style="overflow-y: auto; height: 350px;">\n' +
+    '		<alert ng-repeat="alert in connectionSettingsCtrl.alerts" type="{{alert.type}}" close="connectionSettingsCtrl.closeAlert($index)">{{alert.msg}}</alert>\n' +
+    '		<fieldset>\n' +
+    '			<legend>Connection Settings</legend>\n' +
+    '			<div class="checkbox">\n' +
+    '				<label><input type="checkbox" name="portOpen" ng-model="connectionSettingsCtrl.connectionSettings.port_open"> Open listening port.</label>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="portRange" class="control-label">Port used for incoming connections:</label>\n' +
+    '				<input type="text" name="portRange" id="portRange" ng-model="connectionSettingsCtrl.connectionSettings.port_range" class="form-control">\n' +
+    '			</div>\n' +
+    '			<div class="checkbox">\n' +
+    '				<label><input type="checkbox" name="portRandom" ng-model="connectionSettingsCtrl.connectionSettings.port_random"> Randomize port each time rTorrent starts.</label>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="globalMaxUploadRate" class="control-label">Global maximum upload rate (kB/s):</label>\n' +
+    '				<input type="text" name="globalMaxUploadRate" id="globalMaxUploadRate" ng-model="connectionSettingsCtrl.connectionSettings.global_max_upload_rate" class="form-control">\n' +
+    '				<p class="help-block">0 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="globalMaxDownloadRate" class="control-label">Global maximum download rate (kB/s):</label>\n' +
+    '				<input type="text" name="globalMaxDownloadRate" id="globalMaxDownloadRate" ng-model="connectionSettingsCtrl.connectionSettings.global_max_download_rate" class="form-control">\n' +
+    '				<p class="help-block">0 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="uploadSlots" class="control-label">Number of upload slots:</label>\n' +
+    '				<input type="text" name="uploadSlots" id="uploadSlots" ng-model="connectionSettingsCtrl.connectionSettings.max_uploads_global" class="form-control">\n' +
+    '				<p class="help-block">0 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '			<div class="form-group">\n' +
+    '				<label for="downloadSlots" class="control-label">Number of download slots:</label>\n' +
+    '				<input type="text" name="downloadSlots" id="downloadSlots" ng-model="connectionSettingsCtrl.connectionSettings.max_downloads_global" class="form-control">\n' +
+    '				<p class="help-block">0 means unlimited.</p>\n' +
+    '			</div>\n' +
+    '		</fieldset>\n' +
+    '	</div>\n' +
+    '	<div class="form-group" style="float: right; padding-top: 15px;">\n' +
+    '		<button type="button" class="btn btn-default" ng-click="connectionSettingsCtrl.cancel()">Cancel</button>\n' +
+    '		<button type="submit" class="btn btn-primary" ng-disabled="connectionSettings.$pristine">Save Connection Settings</button>\n' +
+    '	</div>\n' +
+    '</form>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/view-feeds/view-feeds.tpl.html',
     '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
     '	<div class="table-container">\n' +
@@ -79952,59 +80005,6 @@ module.run(['$templateCache', function($templateCache) {
     '		</div>\n' +
     '	</div>\n' +
     '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('settings/connection-settings/connection-settings.tpl.html',
-    '<form ng-submit="connectionSettingsCtrl.updateConnectionSettings(connectionSettingsCtrl.connectionSettings)" name="connectionSettings" novalidate>\n' +
-    '	<div style="overflow-y: auto; height: 350px;">\n' +
-    '		<alert ng-repeat="alert in connectionSettingsCtrl.alerts" type="{{alert.type}}" close="connectionSettingsCtrl.closeAlert($index)">{{alert.msg}}</alert>\n' +
-    '		<fieldset>\n' +
-    '			<legend>Connection Settings</legend>\n' +
-    '			<div class="checkbox">\n' +
-    '				<label><input type="checkbox" name="portOpen" ng-model="connectionSettingsCtrl.connectionSettings.port_open"> Open listening port.</label>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="portRange" class="control-label">Port used for incoming connections:</label>\n' +
-    '				<input type="text" name="portRange" id="portRange" ng-model="connectionSettingsCtrl.connectionSettings.port_range" class="form-control">\n' +
-    '			</div>\n' +
-    '			<div class="checkbox">\n' +
-    '				<label><input type="checkbox" name="portRandom" ng-model="connectionSettingsCtrl.connectionSettings.port_random"> Randomize port each time rTorrent starts.</label>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="globalMaxUploadRate" class="control-label">Global maximum upload rate (kB/s):</label>\n' +
-    '				<input type="text" name="globalMaxUploadRate" id="globalMaxUploadRate" ng-model="connectionSettingsCtrl.connectionSettings.global_max_upload_rate" class="form-control">\n' +
-    '				<p class="help-block">0 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="globalMaxDownloadRate" class="control-label">Global maximum download rate (kB/s):</label>\n' +
-    '				<input type="text" name="globalMaxDownloadRate" id="globalMaxDownloadRate" ng-model="connectionSettingsCtrl.connectionSettings.global_max_download_rate" class="form-control">\n' +
-    '				<p class="help-block">0 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="uploadSlots" class="control-label">Number of upload slots:</label>\n' +
-    '				<input type="text" name="uploadSlots" id="uploadSlots" ng-model="connectionSettingsCtrl.connectionSettings.max_uploads_global" class="form-control">\n' +
-    '				<p class="help-block">0 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '			<div class="form-group">\n' +
-    '				<label for="downloadSlots" class="control-label">Number of download slots:</label>\n' +
-    '				<input type="text" name="downloadSlots" id="downloadSlots" ng-model="connectionSettingsCtrl.connectionSettings.max_downloads_global" class="form-control">\n' +
-    '				<p class="help-block">0 means unlimited.</p>\n' +
-    '			</div>\n' +
-    '		</fieldset>\n' +
-    '	</div>\n' +
-    '	<div class="form-group" style="float: right; padding-top: 15px;">\n' +
-    '		<button type="button" class="btn btn-default" ng-click="connectionSettingsCtrl.cancel()">Cancel</button>\n' +
-    '		<button type="submit" class="btn btn-primary" ng-disabled="connectionSettings.$pristine">Save Connection Settings</button>\n' +
-    '	</div>\n' +
-    '</form>');
 }]);
 })();
 
@@ -80121,34 +80121,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
-    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
-    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
-    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
-    '		<ul>\n' +
-    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
-    '		</ul>\n' +
-    '	</div>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('torrents/view-torrents/view-torrents.tpl.html',
     '<div class="content" style="position: relative;" ng-style="style()" njrt-resize>\n' +
     '	<div class="table-container">\n' +
@@ -80236,6 +80208,103 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('torrents/delete-torrent-data/delete-torrent-data.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length == 1">Delete \'{{deleteTorrentDataCtrl.torrent[0].name}}\'?</h3>\n' +
+    '    <h3 ng-if="deleteTorrentDataCtrl.torrent.length > 1">Delete selected torrents?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '	<p ng-if="deleteTorrentDataCtrl.torrent.length == 1">Deleting will remove the torrent from the list along with its data.</p>\n' +
+    '	<div ng-if="deleteTorrentDataCtrl.torrent.length > 1">\n' +
+    '		<p>Deleting will remove the torrents from the list along with their data.</p>\n' +
+    '		<ul>\n' +
+    '			<li ng-repeat="torrent in deleteTorrentDataCtrl.torrent">{{torrent.name}}</li>\n' +
+    '		</ul>\n' +
+    '	</div>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="deleteTorrentDataCtrl.deleteTorrentData(deleteTorrentDataCtrl.torrent)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="deleteTorrentDataCtrl.cancel()">Cancel</button>\n' +
+    '</div>');
+}]);
+})();
+
+(function() {'use strict'; function resolve(Torrents, $stateParams) {
+  var hash = [];
+  if ($stateParams.id) {
+    hash = $stateParams.id.split(',');
+  }
+  return Torrents.getTorrentsByHash(hash);
+}
+
+function config($stateProvider) {
+  $stateProvider.state('deleteTorrentData', {
+    url: '/deleteTorrentData/:id',
+    views: {
+      'modal@': {
+        templateUrl: 'torrents/delete-torrent-data/delete-torrent-data.tpl.html',
+        controller: 'njrt.DeleteTorrentDataCtrl as deleteTorrentDataCtrl'
+      }
+    },
+    isModal: true,
+    data: {
+      rule: ['isLoggedIn']
+    },
+    resolve: {
+      torrent: ['njrt.Torrents', '$stateParams', resolve]
+    }
+  });
+}
+
+angular
+  .module('njrt.torrents.deleteTorrentData', [])
+  .config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function DeleteTorrentDataCtrl (njrtLog, $stateParams, $previousState, $modal, Torrents, torrent) {
+
+	var logger = njrtLog.getInstance('njrt.torrents');
+
+	logger.debug('DeleteTorrentDataCtrl loaded.');
+
+	var vm = this;
+
+	vm.torrent = torrent;
+
+	vm.deleteTorrentData = function (torrents) {
+
+		// Get hashes from torrents array
+		var hash = torrents.map(function (t) {
+			return t.hash;
+		});
+
+		Torrents.deleteData(hash)
+      .then(function () {
+        Array.prototype.push.apply(Torrents.cleanup, hash);
+      })
+			.then(function () {
+				$previousState.go('modalInvoker');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+  .module('njrt.torrents.deleteTorrentData')
+  .controller('njrt.DeleteTorrentDataCtrl', ['njrtLog', '$stateParams', '$previousState', '$modal', 'njrt.Torrents', 'torrent', DeleteTorrentDataCtrl]);
+})();
 (function() {'use strict'; function resolve(Torrents) {
 	return Torrents.getTorrents({
     skip: 0,
@@ -80398,75 +80467,6 @@ angular
   .module('njrt.torrents.viewTorrents')
   .controller('njrt.ViewTorrentsCtrl', ['njrtLog', '$scope', 'njrt.Torrents', 'torrents', '$interval', ViewTorrentsCtrl]);
 })();
-(function() {'use strict'; function resolve(Torrents, $stateParams) {
-  var hash = [];
-  if ($stateParams.id) {
-    hash = $stateParams.id.split(',');
-  }
-  return Torrents.getTorrentsByHash(hash);
-}
-
-function config($stateProvider) {
-  $stateProvider.state('deleteTorrentData', {
-    url: '/deleteTorrentData/:id',
-    views: {
-      'modal@': {
-        templateUrl: 'torrents/delete-torrent-data/delete-torrent-data.tpl.html',
-        controller: 'njrt.DeleteTorrentDataCtrl as deleteTorrentDataCtrl'
-      }
-    },
-    isModal: true,
-    data: {
-      rule: ['isLoggedIn']
-    },
-    resolve: {
-      torrent: ['njrt.Torrents', '$stateParams', resolve]
-    }
-  });
-}
-
-angular
-  .module('njrt.torrents.deleteTorrentData', [])
-  .config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function DeleteTorrentDataCtrl (njrtLog, $stateParams, $previousState, $modal, Torrents, torrent) {
-
-	var logger = njrtLog.getInstance('njrt.torrents');
-
-	logger.debug('DeleteTorrentDataCtrl loaded.');
-
-	var vm = this;
-
-	vm.torrent = torrent;
-
-	vm.deleteTorrentData = function (torrents) {
-
-		// Get hashes from torrents array
-		var hash = torrents.map(function (t) {
-			return t.hash;
-		});
-
-		Torrents.deleteData(hash)
-      .then(function () {
-        Array.prototype.push.apply(Torrents.cleanup, hash);
-      })
-			.then(function () {
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-  .module('njrt.torrents.deleteTorrentData')
-  .controller('njrt.DeleteTorrentDataCtrl', ['njrtLog', '$stateParams', '$previousState', '$modal', 'njrt.Torrents', 'torrent', DeleteTorrentDataCtrl]);
-})();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getDownloadSettings();
 }
@@ -80602,6 +80602,64 @@ angular
 	.module('njrt.settings.downloadSettings')
 	.controller('njrt.DownloadSettingsCtrl', ['njrtLog', 'downloadSettings', 'njrt.Settings', '$previousState', '$scope', DownloadSettingsCtrl]);
 })();
+(function() {'use strict'; function resolve (Feeds) {
+	return Feeds.getFeeds();
+}
+
+function config ($stateProvider) {
+	$stateProvider
+		.state('top.feeds', {
+			url: 'feeds',
+			views: {
+				'content@top': {
+					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
+					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
+				}
+			},
+			data: {
+				rule: ['isLoggedIn']
+			},
+			resolve: {
+				feeds: ['njrt.Feeds', resolve]
+			}
+		});
+}
+
+angular
+	.module('njrt.feeds.viewFeeds', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('FeedsCtrl loaded.');
+
+	var vm = this;
+
+	vm.Feeds = Feeds;
+
+	vm.reverse = true;
+	vm.predicate = 'lastChecked';
+
+	$scope.floatTheadOptions = {
+		useAbsolutePositioning: true,
+		zIndex: 999,
+		scrollContainer: function(test) {
+			return $('.table-wrapper');
+		}
+	};
+
+	vm.reflowTable = function () {
+		$('table.table').trigger('reflow');
+	};
+
+}
+
+angular
+	.module('njrt.feeds.viewFeeds')
+	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
+})();
 (function() {'use strict'; function resolve(Settings) {
 	return Settings.getConnectionSettings();
 }
@@ -80670,64 +80728,6 @@ angular
 angular
 	.module('njrt.settings.connectionSettings')
 	.controller('njrt.ConnectionSettingsCtrl', ['njrtLog', 'connectionSettings', 'njrt.Settings', '$previousState', '$scope', 'njrt.Notification', ConnectionSettingsCtrl]);
-})();
-(function() {'use strict'; function resolve (Feeds) {
-	return Feeds.getFeeds();
-}
-
-function config ($stateProvider) {
-	$stateProvider
-		.state('top.feeds', {
-			url: 'feeds',
-			views: {
-				'content@top': {
-					controller: 'njrt.ViewFeedsCtrl as feedsCtrl',
-					templateUrl: 'feeds/view-feeds/view-feeds.tpl.html'
-				}
-			},
-			data: {
-				rule: ['isLoggedIn']
-			},
-			resolve: {
-				feeds: ['njrt.Feeds', resolve]
-			}
-		});
-}
-
-angular
-	.module('njrt.feeds.viewFeeds', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function FeedsCtrl(njrtLog, $scope, $previousState, $modal, Feeds, feeds) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('FeedsCtrl loaded.');
-
-	var vm = this;
-
-	vm.Feeds = Feeds;
-
-	vm.reverse = true;
-	vm.predicate = 'lastChecked';
-
-	$scope.floatTheadOptions = {
-		useAbsolutePositioning: true,
-		zIndex: 999,
-		scrollContainer: function(test) {
-			return $('.table-wrapper');
-		}
-	};
-
-	vm.reflowTable = function () {
-		$('table.table').trigger('reflow');
-	};
-
-}
-
-angular
-	.module('njrt.feeds.viewFeeds')
-	.controller('njrt.ViewFeedsCtrl', ['njrtLog', '$scope', '$previousState', '$modal', 'njrt.Feeds', 'feeds', FeedsCtrl]);
 })();
 (function() {'use strict'; function resolve(Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
@@ -81894,33 +81894,6 @@ angular
 	.module('njrt.login')
 	.controller('njrt.LoginCtrl', ['njrtLog', 'njrt.Authentication', 'njrt.SessionService', '$state', '$previousState', LoginCtrl]);
 })();
-(function() {'use strict'; angular
-	.module('njrt.log', [])
-	.run(['$log', function ($log) {
-		$log.getInstance = function(context) {
-			return {
-				log: enhanceLogging($log.log, context),
-				info: enhanceLogging($log.info, context),
-				warn: enhanceLogging($log.warn, context),
-				debug: enhanceLogging($log.debug, context),
-				error: enhanceLogging($log.error, context)
-			};
-		};
-
-		function enhanceLogging(logFn, context) {
-			return function() {
-				var modifiedArguments = [].slice.call(arguments);
-				modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
-				logFn.apply(null, modifiedArguments);
-			};
-		}
-	}])
-	.service('njrtLog', function($log) {
-		this.getInstance = function(context) {
-			return $log.getInstance(context);
-		};
-	});
-})();
 (function() {'use strict'; function config($urlRouterProvider, $stateProvider, $stickyStateProvider) {
   $stickyStateProvider.enableDebug(true);
   $urlRouterProvider.otherwise('/');
@@ -82009,6 +81982,33 @@ angular.module('app', [
 			var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
 				number = Math.floor(Math.log(bytes) / Math.log(1024));
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+		};
+	});
+})();
+(function() {'use strict'; angular
+	.module('njrt.log', [])
+	.run(['$log', function ($log) {
+		$log.getInstance = function(context) {
+			return {
+				log: enhanceLogging($log.log, context),
+				info: enhanceLogging($log.info, context),
+				warn: enhanceLogging($log.warn, context),
+				debug: enhanceLogging($log.debug, context),
+				error: enhanceLogging($log.error, context)
+			};
+		};
+
+		function enhanceLogging(logFn, context) {
+			return function() {
+				var modifiedArguments = [].slice.call(arguments);
+				modifiedArguments[0] = [moment().format("dddd h:mm:ss a") + '::[' + context + ']> '] + modifiedArguments[0];
+				logFn.apply(null, modifiedArguments);
+			};
+		}
+	}])
+	.service('njrtLog', function($log) {
+		this.getInstance = function(context) {
+			return $log.getInstance(context);
 		};
 	});
 })();
@@ -82550,7 +82550,7 @@ function tableVirtualScroll() {
     ctrl.lastScrollTop = 0;
 
     // scroll top initial is 0
-    var st = 0;
+    var currentSt = 0;
 
     var sensitivity = 46;
 
@@ -82584,9 +82584,6 @@ function tableVirtualScroll() {
     function tableScroll() {
 
       ticking = false;
-
-      // last known scroll top is set to current st
-      var currentSt = st;
 
       // console.log('scrolltop', currentSt);
 
@@ -82642,7 +82639,7 @@ function tableVirtualScroll() {
     }
 
     scrollingContainer.bind('scroll', function () {
-      st = scrollingContainer[0].scrollTop;
+      currentSt = scrollingContainer[0].scrollTop;
       requestTick();
     });
 
