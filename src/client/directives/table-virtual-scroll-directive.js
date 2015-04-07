@@ -20,7 +20,7 @@ function tableVirtualScroll() {
 
     vm.params = {
       skip: 0,
-      limit: 40,
+      limit: 100,
       sortBy: 'name',
       reverse: false,
       filter: null
@@ -37,7 +37,7 @@ function tableVirtualScroll() {
       vm.params.sortBy = sortBy;
       vm.params.reverse = !vm.params.reverse;
       vm.params.skip = 0;
-      vm.params.limit = 40;
+      vm.params.limit = 100;
 
       vm.tableVirtualScrollOptions
         .getData(vm.params)
@@ -72,7 +72,7 @@ function tableVirtualScroll() {
     vm.tableVirtualScrollOptions.filter = function (filter) {
       vm.params.filter = filter;
       vm.params.skip = 0;
-      vm.params.limit = 40;
+      vm.params.limit = 60;
 
       vm.tableVirtualScrollOptions
         .getData(vm.params)
@@ -391,28 +391,26 @@ function tableVirtualScroll() {
     var loading = false;
 
     function loadPageData() {
-      if (loading) {
-        return;
-      }
-
-      // console.log('top cache length and total loaded', topCache.length, totalLoaded);
-      if (ctrl.dataCache.bottom.length < ctrl.minRows) {
-        if (ctrl.tableVirtualScrollOptions.dataSource.totalSize > ctrl.dataCache.totalLoaded) {
-          console.log('total loaded is less than total size');
-          loading = true;
-          ctrl.tableVirtualScrollOptions
-            .getData(ctrl.params)
-            .then(function (data) {
-              ctrl.params.skip = ctrl.params.skip + ctrl.params.limit;
-              ctrl.dataCache.bottom = ctrl.dataCache.bottom.concat(data.data);
-              ctrl.dataCache.totalLoaded = ctrl.dataCache.totalLoaded + data.data.length;
-              loading = false;
-              // console.log('loaded data amount:', scope.totalLoaded);
-              // console.log('bottom cache amount:', scope.bottomCache.length);
-              // console.log('top cache amount:', scope.topCache.length);
-            });
-        } else if (ctrl.tableVirtualScrollOptions.dataSource.totalSize === ctrl.dataCache.totalLoaded) {
-          console.log('total size is equal to total loaded');
+      if (!loading) {
+        // console.log('top cache length and total loaded', topCache.length, totalLoaded);
+        if (ctrl.dataCache.bottom.length < ctrl.minRows) {
+          if (ctrl.tableVirtualScrollOptions.dataSource.totalSize > ctrl.dataCache.totalLoaded) {
+            console.log('total loaded is less than total size');
+            loading = true;
+            ctrl.tableVirtualScrollOptions
+              .getData(ctrl.params)
+              .then(function (data) {
+                ctrl.params.skip = ctrl.params.skip + ctrl.params.limit;
+                ctrl.dataCache.bottom = ctrl.dataCache.bottom.concat(data.data);
+                ctrl.dataCache.totalLoaded = ctrl.dataCache.totalLoaded + data.data.length;
+                loading = false;
+                // console.log('loaded data amount:', scope.totalLoaded);
+                // console.log('bottom cache amount:', scope.bottomCache.length);
+                // console.log('top cache amount:', scope.topCache.length);
+              });
+          } else if (ctrl.tableVirtualScrollOptions.dataSource.totalSize === ctrl.dataCache.totalLoaded) {
+            console.log('total size is equal to total loaded');
+          }
         }
       }
     }

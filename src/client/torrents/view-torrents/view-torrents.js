@@ -1,7 +1,7 @@
 function resolve(Torrents) {
 	return Torrents.getTorrents({
     skip: 0,
-    limit: 60,
+    limit: 100,
     sortBy: 'name',
     reverse: false,
     filter: null
