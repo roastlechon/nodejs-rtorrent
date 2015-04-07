@@ -72,7 +72,7 @@ function tableVirtualScroll() {
     vm.tableVirtualScrollOptions.filter = function (filter) {
       vm.params.filter = filter;
       vm.params.skip = 0;
-      vm.params.limit = 60;
+      vm.params.limit = 100;
 
       vm.tableVirtualScrollOptions
         .getData(vm.params)
@@ -129,6 +129,48 @@ function tableVirtualScroll() {
         } else {
           return;
         }
+      }
+    };
+
+    vm.tableVirtualScrollOptions.refreshRows = function (refreshRows, callback) {
+      if (!refreshRows) {
+        return;
+      }
+
+      vm.params.skip = 0;
+      vm.params.limit = 100;
+
+      vm.tableVirtualScrollOptions
+        .getData(vm.params)
+        .then(function (data) {
+
+          vm.tableVirtualScrollOptions.dataSource = {
+            data: data.data,
+            totalSize: data.total
+          };
+
+          vm.dataCache = {
+            top: [],
+            bottom: [],
+            totalLoaded: data.data.length
+          };
+
+          vm.params.skip = vm.params.skip + vm.params.limit;
+
+          vm.viewableRows = Math.ceil(vm.containerHeight / ROW_HEIGHT) < 10 ? 10 : Math.ceil(vm.containerHeight / ROW_HEIGHT);
+          vm.maxRows = vm.viewableRows * MAX_ROW_MULTIPLIER;
+          vm.minRows = vm.viewableRows * MIN_ROW_MULTIPLIER;
+          vm.dataCache.bottom = vm.tableVirtualScrollOptions.dataSource.data.splice(vm.minRows, vm.dataCache.totalLoaded);
+
+          vm.begin = 0;
+          vm.end = vm.tableVirtualScrollOptions.dataSource.data.length - 1;
+          vm.rowCounter = vm.tableVirtualScrollOptions.dataSource.data.length;
+          vm.resetPadding();
+
+        });
+
+      if (callback) {
+        callback();
       }
     };
 
@@ -229,6 +271,7 @@ function tableVirtualScroll() {
       vTopPaddingElem.height(ctrl.vTopPaddingElemHeight);
       vBottomPaddingElem.height(ctrl.vBottomPaddingElemHeight);
       scrollingContainer[0].scrollTop = 0;
+      ctrl.lastScrollTop = 0;
     };
 
     // set height of bottom padding element
@@ -381,7 +424,7 @@ function tableVirtualScroll() {
 
 
 
-    var lastScrollTop = 0;
+    ctrl.lastScrollTop = 0;
 
     // scroll top initial is 0
     var st = 0;
@@ -427,11 +470,9 @@ function tableVirtualScroll() {
       var scrollAmount = 0;
       var count = 0;
 
-      if (currentSt > lastScrollTop) {
+      if (currentSt > ctrl.lastScrollTop) {
 
-        // console.log('currentSt', currentSt, 'lastScrollTop', lastScrollTop);
-
-        scrollAmount = Math.floor((currentSt - lastScrollTop) / sensitivity);
+        scrollAmount = Math.floor((currentSt - ctrl.lastScrollTop) / sensitivity);
 
         if (scrollAmount < 1) {
           return;
@@ -446,7 +487,7 @@ function tableVirtualScroll() {
 
       } else {
 
-        scrollAmount = Math.floor((lastScrollTop - currentSt) / sensitivity);
+        scrollAmount = Math.floor((ctrl.lastScrollTop - currentSt) / sensitivity);
 
         if (scrollAmount < 1) {
           return;
@@ -462,7 +503,7 @@ function tableVirtualScroll() {
 
       loadPageData();
 
-      lastScrollTop = currentSt;
+      ctrl.lastScrollTop = currentSt;
       ticking = false;
       scope.$digest();
     }

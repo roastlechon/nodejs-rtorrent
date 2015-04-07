@@ -103,6 +103,10 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
       });
 
       vm.tableVirtualScrollOptions.deleteRows(Torrents.cleanup);
+      vm.tableVirtualScrollOptions.refreshRows(Torrents.refreshRows, function () {
+        Torrents.refreshRows = false;
+      });
+
       Torrents.cleanup = [];
   }, 1000);
 

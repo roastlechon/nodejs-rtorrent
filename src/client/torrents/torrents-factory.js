@@ -11,6 +11,7 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 	Torrents.selectedTorrents = [];
 
   Torrents.cleanup = [];
+  Torrents.refreshRows = false;
 
   Torrents.totalSize = 0;
 
@@ -265,6 +266,7 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 				},
 				file: torrent.file
 			}).then(function (data) {
+        Torrents.refreshRows = true;
 				return Notification.add('success', 'Torrent loaded.');
 			}, function (err) {
 				return Notification.add('danger', 'Torrent failed to load.');
@@ -276,6 +278,7 @@ function Torrents(njrtLog, Restangular, Socket, Notification, $state, SessionSer
 			.all('torrents')
 			.customPOST(torrent, 'load')
 			.then(function (data) {
+        Torrents.refreshRows = true;
 				return Notification.add('success', 'Torrent loaded.');
 			}, function (err) {
 				logger.error(err.data);

@@ -21,7 +21,7 @@ function LoginCtrl(njrtLog, Authentication, SessionService, $state, $previousSta
 			if (SessionService.destinationState != '') {
 				$state.go(SessionService.destinationState);
 			} else {
-				$state.go('top');
+				$state.go('top.torrents');
 			}
 
 		}, function (err) {
