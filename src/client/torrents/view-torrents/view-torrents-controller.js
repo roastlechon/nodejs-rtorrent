@@ -85,30 +85,30 @@ function ViewTorrentsCtrl(njrtLog, $scope, Torrents, torrents, $interval) {
   };
 
   $interval(function () {
-    // Torrents.getTorrents({
-    //   filter: {
-    //     hash: vm.tableVirtualScrollOptions.inViewHashes
-    //   }
-    // })
-    //   .then(function (data) {
-    //     data = data.data;
-    //     for (var i = data.length - 1; i >= 0; i--) {
-    //       var index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.data, {
-    //         hash: data[i].hash
-    //       });
-    //       if (index > -1) {
-    //         vm.tableVirtualScrollOptions.dataSource.data[index] = data[i];
-    //       }
+    Torrents.getTorrents({
+      filter: {
+        hash: vm.tableVirtualScrollOptions.inViewHashes
+      }
+    })
+      .then(function (data) {
+        data = data.data;
+        for (var i = data.length - 1; i >= 0; i--) {
+          var index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.data, {
+            hash: data[i].hash
+          });
+          if (index > -1) {
+            vm.tableVirtualScrollOptions.dataSource.data[index] = data[i];
+          }
 
-    //       index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.displayData, {
-    //         hash: data[i].hash
-    //       });
-    //       if (index > -1) {
-    //         vm.tableVirtualScrollOptions.dataSource.displayData[index] = data[i];
-    //       }
-    //     }
+          index = _.findIndex(vm.tableVirtualScrollOptions.dataSource.displayData, {
+            hash: data[i].hash
+          });
+          if (index > -1) {
+            vm.tableVirtualScrollOptions.dataSource.displayData[index] = data[i];
+          }
+        }
 
-    //   });
+      });
 
       vm.tableVirtualScrollOptions.deleteRows(Torrents.cleanup);
       vm.tableVirtualScrollOptions.refreshRows(Torrents.refreshRows, function () {

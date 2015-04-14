@@ -37,7 +37,6 @@ function tableVirtualScroll() {
       vm.resetScroll();
 
       vm.params.skip = vm.params.skip + vm.params.limit;
-      console.log(vm.tableVirtualScrollOptions.dataSource.data);
     }
 
     // conducting a sort resets the table and caching
