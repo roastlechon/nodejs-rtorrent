@@ -4,7 +4,7 @@ var rtorrent = require('../lib/rtorrent');
 
 function query(params) {
 
-  console.log('Requesting torrents from params:', params);
+  // console.log('Requesting torrents from params:', params);
 
   var limit = params.limit;
   var begin = params.skip;

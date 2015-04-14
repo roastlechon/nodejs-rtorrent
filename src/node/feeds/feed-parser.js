@@ -1,9 +1,9 @@
-var logger = require("winston");
-var Q = require("q");
-var FeedMe = require("feedme");
-var request = require("request");
-
-var torrentFeedParser = module.exports = {};
+var logger = require('winston');
+var FeedMe = require('feedme');
+var Q = require('q');
+var request = require('request');
+var feedsModel = require('./feeds-model');
+var FeedParser = {};
 
 function adaptItemToTorrent(item) {
 	// temporary object
@@ -21,9 +21,9 @@ function adaptItemToTorrent(item) {
 		//console.log(item.enclosure);
 
 		// if item enclosure has url
-		if (item.enclosure["url"]) {
-			// console.log(item.enclosure["url"]);
-			tor.url = item.enclosure["url"];
+		if (item.enclosure['url']) {
+			// console.log(item.enclosure['url']);
+			tor.url = item.enclosure['url'];
 		}
 
 		// if item is link
@@ -57,11 +57,11 @@ function evaluateRules(torrent, includeRules, excludeRules) {
 			saveTorrent = true;
 			break;
 		}
-	};
+	}
 
 	// If torrent name matches any exclude rules,
 	// return false and break loop
-	for (var i = excludeRules.length - 1; i >= 0; i--) {
+	for (i = excludeRules.length - 1; i >= 0; i--) {
 		if (torrent.name.match(new RegExp(excludeRules[i]))) {
 			saveTorrent = false;
 			break;
@@ -69,24 +69,22 @@ function evaluateRules(torrent, includeRules, excludeRules) {
 			saveTorrent = true;
 			break;
 		}
-	};
+	}
 
 	return saveTorrent;
 }
 
-torrentFeedParser.getTorrents = function(feed) {
+FeedParser.getTorrents = function (feed) {
+  var deferred = Q.defer();
 	var rss = feed.rss;
 	var filters = feed.filters;
 	var regexFilter = filters.length > 0;
+  var torrents = [];
 
-	logger.info("Parsing feed: %s", rss);	
-
-	var deferred = Q.defer();
+	logger.info('Parsing feed: %s', rss);
 
 	var parser = new FeedMe();
 
-	var torrents = [];
-	
 	var includeRegexRules = [];
 	var excludeRegexRules = [];
 
@@ -94,17 +92,16 @@ torrentFeedParser.getTorrents = function(feed) {
 		for (var i = filters.length - 1; i >= 0; i--) {
 
 			switch(filters[i].type) {
-				case "include":
+				case 'include':
 					includeRegexRules.push(filters[i].regex);
 				break;
-				case "exclude":
+				case 'exclude':
 					excludeRegexRules.push(filters[i].regex);
 				break;
 				default:
 			}
 		}
 	}
-	
 
 	var r = request({
 		url: rss,
@@ -118,43 +115,44 @@ torrentFeedParser.getTorrents = function(feed) {
 		timeout: 5000
 	});
 
-	r.on("response", function(response) {
-		parser.on('item', function(item) {
+	r.on('response', function () {
+		parser.on('item', function (item) {
 
 			var torrent = adaptItemToTorrent(item);
 
-			if (regexFilter) {
+      if (regexFilter) {
+        // Evaluate rules based on regular expressions and add if
+        if (!evaluateRules(torrent, includeRegexRules, excludeRegexRules)) {
+          return;
+        }
 
-				// Evaluate rules based on regular expressions
-				if (evaluateRules(torrent, includeRegexRules, excludeRegexRules)) {
-					torrents.push(torrent);
-				}
+      }
+      torrents.push(torrent);
+      feedsModel.addTorrent(feed._id, torrent, feed.autoDownload);
 
-			} else {
-
-				torrents.push(torrent);
-			}
 
 		});
 
-		parser.on("error", function(err) {
-			logger.error("Error occurred while parsing feed: " + err.message);
-			deferred.reject(err);
+		parser.on('error', function (err) {
+			logger.error('Error occurred while parsing feed: ' + err.message);
+      deferred.reject(new Error('Error occurred while parsing feed.'));
 		});
 
-		parser.on("end", function() {
-			logger.info("Finished parsing feed: %s", rss);
-			deferred.resolve(torrents);
+		parser.on('end', function () {
+			logger.info('Finished parsing feed: %s', rss);
+      deferred.resolve(torrents);
 		});
 
 	});
 
-	r.on("error", function(err) {
-		logger.error("Error occurred while reading from stream: " + err.message);
-		deferred.reject(new Error(err.message));
+	r.on('error', function (err) {
+		logger.error('Error occurred while reading from stream: ' + err.message);
+    deferred.reject(new Error('Error occurred while reading from stream.'));
 	});
 
 	r.pipe(parser);
 
-	return deferred.promise;
-}
+  return deferred.promise;
+};
+
+module.exports = FeedParser;

@@ -1,6 +1,6 @@
 var logger = require('winston');
 var TorrentsSocket = require('../torrents/torrents-socket');
-var NotificationsSocket = require('../notifications/notifications-socket');
+// var NotificationsSocket = require('../notifications/notifications-socket');
 
 var users = 0;
 var socketHandlers;
@@ -13,7 +13,7 @@ module.exports = function (io) {
 
 		socketHandlers = {
 			torrents: new TorrentsSocket(socket),
-			notifications: new NotificationsSocket(socket)
+			// notifications: new NotificationsSocket(socket)
 		};
 
 		for (var socketHandler in socketHandlers) {
@@ -31,7 +31,7 @@ module.exports = function (io) {
 			users--;
 
 			if (users === 0) {
-				socketHandlers.notifications.stop();
+				// socketHandlers.notifications.stop();
 			}
 
 		});

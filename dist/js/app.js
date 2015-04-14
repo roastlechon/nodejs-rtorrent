@@ -59449,27 +59449,6 @@ try {
   module = angular.module('njrt.templates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
-    '<div class="modal-header">\n' +
-    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
-    '</div>\n' +
-    '<div class="modal-body">\n' +
-    '<p>Deleting will remove the feed from the list.</p>\n' +
-    '</div>\n' +
-    '<div class="modal-footer">\n' +
-    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
-    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('njrt.templates');
-} catch (e) {
-  module = angular.module('njrt.templates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('feeds/add-feed/add-feed.tpl.html',
     '<div class="modal-header">\n' +
     '    <h3>Add Feed</h3>\n' +
@@ -59610,6 +59589,27 @@ module.run(['$templateCache', function($templateCache) {
     '		<button type="button" class="btn btn-primary" ng-click="feedsEditCtrl.editFeed(feedsEditCtrl.feed)" ng-disabled="feedsEditCtrl.checkDisabled()">Save changes</button>\n' +
     '		<button type="button" class="btn btn-default" ng-click="feedsEditCtrl.cancel()">Cancel</button>\n' +
     '	</div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('njrt.templates');
+} catch (e) {
+  module = angular.module('njrt.templates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('feeds/delete-feed/delete-feed.tpl.html',
+    '<div class="modal-header">\n' +
+    '    <h3>Delete \'{{feedsDeleteCtrl.feed.title}}\'?</h3>\n' +
+    '</div>\n' +
+    '<div class="modal-body">\n' +
+    '<p>Deleting will remove the feed from the list.</p>\n' +
+    '</div>\n' +
+    '<div class="modal-footer">\n' +
+    '    <button class="btn btn-primary" ng-click="feedsDeleteCtrl.deleteFeed(feedsDeleteCtrl.feed)">Delete</button>\n' +
+    '    <button class="btn btn-default" ng-click="feedsDeleteCtrl.cancel()">Cancel</button>\n' +
     '</div>');
 }]);
 })();
@@ -60578,6 +60578,62 @@ angular
 	.module('njrt.feeds.viewFeed')
 	.controller('njrt.ViewFeedCtrl', ['njrtLog', '$state', '$scope', 'feed', 'njrt.Torrents', ViewFeedCtrl]);
 })();
+(function() {'use strict'; function resolve(Feeds, $stateParams) {
+	return Feeds.getFeed($stateParams.id);
+}
+
+function config($stateProvider) {
+	$stateProvider.state('deleteFeed', {
+		url: '/delete-feed/:id',
+		views: {
+			'modal@': {
+				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
+				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
+			}
+		},
+		isModal: true,
+		data: {
+			rule: ['isLoggedIn']
+		},
+		resolve: {
+			feed: ['njrt.Feeds', '$stateParams', resolve]
+		}
+	});
+}
+
+angular
+	.module('njrt.feeds.deleteFeed', [])
+	.config(['$stateProvider', config]);
+})();
+(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
+
+	var logger = njrtLog.getInstance('njrt.feeds');
+
+	logger.debug('DeleteFeedCtrl loaded.');
+
+	var vm = this;
+
+	vm.feed = feed;
+
+	vm.deleteFeed = function (feed) {
+		Feeds.deleteFeed(feed)
+			.then(function (data) {
+				$previousState.go('modalInvoker');
+			}, function (err) {
+				logger.error(err);
+			});
+	};
+
+	vm.cancel = function () {
+		$previousState.go('modalInvoker');
+	};
+
+}
+
+angular
+	.module('njrt.feeds.deleteFeed')
+	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
+})();
 (function() {'use strict'; function resolve (Feeds, $stateParams) {
 	return Feeds.getFeed($stateParams.id);
 }
@@ -60847,81 +60903,6 @@ angular
 angular
 	.module('njrt.feeds.addFeed')
 	.controller('njrt.AddFeedCtrl', ['njrtLog', '$state', '$previousState', '$scope', 'njrt.Feeds', 'njrt.Notification', 'downloadSettings', AddFeedCtrl]);
-})();
-(function() {'use strict'; function resolve(Feeds, $stateParams) {
-	return Feeds.getFeed($stateParams.id);
-}
-
-function config($stateProvider) {
-	$stateProvider.state('deleteFeed', {
-		url: '/delete-feed/:id',
-		views: {
-			'modal@': {
-				templateUrl: 'feeds/delete-feed/delete-feed.tpl.html',
-				controller: 'njrt.DeleteFeedCtrl as feedsDeleteCtrl'
-			}
-		},
-		isModal: true,
-		data: {
-			rule: ['isLoggedIn']
-		},
-		resolve: {
-			feed: ['njrt.Feeds', '$stateParams', resolve]
-		}
-	});
-}
-
-angular
-	.module('njrt.feeds.deleteFeed', [])
-	.config(['$stateProvider', config]);
-})();
-(function() {'use strict'; function DeleteFeedCtrl(njrtLog, $state, $previousState, feed, $modal, Feeds) {
-
-	var logger = njrtLog.getInstance('njrt.feeds');
-
-	logger.debug('DeleteFeedCtrl loaded.');
-
-	var vm = this;
-
-	vm.feed = feed;
-
-	vm.deleteFeed = function (feed) {
-		Feeds.deleteFeed(feed)
-			.then(function (data) {
-				$previousState.go('modalInvoker');
-			}, function (err) {
-				logger.error(err);
-			});
-	};
-
-	vm.cancel = function () {
-		$previousState.go('modalInvoker');
-	};
-
-}
-
-angular
-	.module('njrt.feeds.deleteFeed')
-	.controller('njrt.DeleteFeedCtrl', ['njrtLog', '$state', '$previousState', 'feed', '$modal', 'njrt.Feeds', DeleteFeedCtrl]);
-})();
-(function() {'use strict'; function config($stateProvider, $urlRouterProvider) {
-
-	$urlRouterProvider.when('/', '/torrents');
-
-	$stateProvider.state('top', {
-		url: '/',
-		views: {
-			'top@': {
-				templateUrl: 'top/top.tpl.html'
-			}
-		},
-		sticky: true
-	});
-}
-
-angular
-	.module('njrt.top', [])
-	.config(['$stateProvider', '$urlRouterProvider', config]);
 })();
 (function() {'use strict'; angular
 	.module('njrt.torrents', [
@@ -61261,6 +61242,25 @@ angular
   .module('njrt.torrents')
   .factory('njrt.Torrents', ['njrtLog', 'Restangular', 'Socket', 'njrt.Notification', '$state', 'njrt.SessionService', '$q', '$upload', '$interval', Torrents]);
 })();
+(function() {'use strict'; function config($stateProvider, $urlRouterProvider) {
+
+	$urlRouterProvider.when('/', '/torrents');
+
+	$stateProvider.state('top', {
+		url: '/',
+		views: {
+			'top@': {
+				templateUrl: 'top/top.tpl.html'
+			}
+		},
+		sticky: true
+	});
+}
+
+angular
+	.module('njrt.top', [])
+	.config(['$stateProvider', '$urlRouterProvider', config]);
+})();
 (function() {'use strict'; angular.module('njrt.socket', []);
 })();
 (function() {'use strict'; function Socket(njrtLog, $rootScope, $window) {
@@ -61391,6 +61391,79 @@ angular
 	.controller('njrt.SettingsCtrl', ['njrtLog', '$state', SettingsCtrl]);
 })();
 (function() {'use strict'; angular
+	.module('njrt.notification', []);
+})();
+(function() {'use strict'; function Notification($q, $timeout) {
+
+	var Notification = {};
+
+	Notification.notifications = [];
+
+	Notification.add = function (type, message, isHtml) {
+		var deferred = $q.defer();
+
+		var notification = {
+			type: type,
+			msg: message,
+      isHtml: isHtml
+		};
+
+		Notification.notifications.push(notification);
+
+    // dont add timeout to remove notification if it has
+    // html. this means that the notification has an action that
+    // the user can act on and cannot be dismissed until the user
+    // has acted on it.
+    if (!notification.isHtml) {
+      // need to add animation
+      $timeout(function () {
+        Notification.notifications.splice(0, 1);
+      }, 3000);
+    }
+
+
+		deferred.resolve(notification);
+
+		return deferred.promise;
+	};
+
+	Notification.remove = function (index) {
+		Notification.notifications.splice(index, 1);
+	};
+
+	return Notification;
+}
+
+angular
+	.module('njrt.notification')
+	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
+})();
+(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
+
+	var logger = njrtLog.getInstance('njrt.notification');
+
+	logger.debug('NotificationCtrl loaded.');
+
+	var vm = this;
+
+	vm.Notification = Notification;
+
+	Socket.on('notifications', function (data) {
+		Notification.add(data.type, data.message);
+	});
+
+  vm.reconnectSocket = function () {
+    Socket.connect();
+
+    // then remove notification message
+  };
+}
+
+angular
+	.module('njrt.notification')
+	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
+})();
+(function() {'use strict'; angular
 	.module('njrt.session', []);
 })();
 (function() {'use strict'; function SessionService (njrtLog, $window, Restangular) {
@@ -61471,79 +61544,6 @@ angular
 angular
 	.module('njrt.session')
 	.service('njrt.SessionService', ['njrtLog', '$window', 'Restangular', SessionService]);
-})();
-(function() {'use strict'; angular
-	.module('njrt.notification', []);
-})();
-(function() {'use strict'; function Notification($q, $timeout) {
-
-	var Notification = {};
-
-	Notification.notifications = [];
-
-	Notification.add = function (type, message, isHtml) {
-		var deferred = $q.defer();
-
-		var notification = {
-			type: type,
-			msg: message,
-      isHtml: isHtml
-		};
-
-		Notification.notifications.push(notification);
-
-    // dont add timeout to remove notification if it has
-    // html. this means that the notification has an action that
-    // the user can act on and cannot be dismissed until the user
-    // has acted on it.
-    if (!notification.isHtml) {
-      // need to add animation
-      $timeout(function () {
-        Notification.notifications.splice(0, 1);
-      }, 3000);
-    }
-
-
-		deferred.resolve(notification);
-
-		return deferred.promise;
-	};
-
-	Notification.remove = function (index) {
-		Notification.notifications.splice(index, 1);
-	};
-
-	return Notification;
-}
-
-angular
-	.module('njrt.notification')
-	.factory('njrt.Notification', ['$q', '$timeout', Notification]);
-})();
-(function() {'use strict'; function NotificationCtrl(njrtLog, Notification, Socket) {
-
-	var logger = njrtLog.getInstance('njrt.notification');
-
-	logger.debug('NotificationCtrl loaded.');
-
-	var vm = this;
-
-	vm.Notification = Notification;
-
-	Socket.on('notifications', function (data) {
-		Notification.add(data.type, data.message);
-	});
-
-  vm.reconnectSocket = function () {
-    Socket.connect();
-
-    // then remove notification message
-  };
-}
-
-angular
-	.module('njrt.notification')
-	.controller('njrt.NotificationCtrl', ['njrtLog', 'njrt.Notification', 'Socket', NotificationCtrl]);
 })();
 (function() {'use strict'; function run($rootScope, $modal, $previousState) {
 
