@@ -4,11 +4,9 @@ function config($urlRouterProvider, $stateProvider, $stickyStateProvider) {
 }
 
 angular.module('app', [
-  'react',
 	'ui.bootstrap',
 	'ui.router',
 	'ct.ui.router.extras',
-	'floatThead',
 	'angularFileUpload',
 	'restangular',
 	'angular-inview',

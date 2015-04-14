@@ -34,8 +34,8 @@
     </th>
   </tr>
 </thead>
-<tbody data-begin="{{tableVirtualScrollCtrl.begin}}" data-end="{{tableVirtualScrollCtrl.end}}">
-  <tr ng-repeat="torrent in tableVirtualScrollCtrl.tableVirtualScrollOptions.dataSource.data track by torrent.hash" class="torrent" ng-click="tableVirtualScrollCtrl.tableVirtualScrollOptions.selectRow(torrent.hash)" ng-class="{'active': tableVirtualScrollCtrl.tableVirtualScrollOptions.isRowSelected(torrent.hash)}" data-index="{{torrent.index}}" in-view="tableVirtualScrollCtrl.rowInView($inview, torrent.hash)">
+<tbody data-begin="{{tableVirtualScrollCtrl.rowBegin}}" data-end="{{tableVirtualScrollCtrl.rowEnd}}">
+  <tr ng-repeat="torrent in tableVirtualScrollCtrl.tableVirtualScrollOptions.dataSource.displayData track by torrent.hash" class="torrent" ng-click="tableVirtualScrollCtrl.tableVirtualScrollOptions.selectRow(torrent.hash)" ng-class="{'active': tableVirtualScrollCtrl.tableVirtualScrollOptions.isRowSelected(torrent.hash)}" data-index="{{torrent.index}}" in-view="tableVirtualScrollCtrl.rowInView($inview, torrent.hash)">
     <td>
       <h5 title="{{torrent.name}}" style="width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{torrent.name}}</h5>
     </td>
