@@ -93,6 +93,11 @@ gulp.task('watch', ['dev'], function () {
   watch('src/sass/styles.scss', function () {
     gulp.start('scss');
   });
+  
+  // watch the language string files and copy them  
+   watch('src/assets/**/*', function() { 
+    gulp.start('copy');
+   });
 
   // watch js and copy to dist/js/app.js
   watch(mainBowerFiles({
@@ -124,7 +129,6 @@ gulp.task('watch', ['dev'], function () {
       'dist/**/*',
       'node_modules/**/*',
       'src/client/**/*',
-      'src/assets/**/*',
       'src/sass/**/*',
       'src/vendor/**/*',
       'gulpfile.js'
