@@ -1,9 +1,8 @@
 var logger = require('winston');
 var moment = require('moment');
+var Q = require('q');
 
 // Mongoose Schemas
-var Torrent = require('../models/schemas/torrent');
-var Filter = require('../models/schemas/filter');
 var Feed = require('../models/schemas/feed');
 
 var notifications = require('../notifications/notifications-model');
@@ -72,23 +71,16 @@ exports.add = function(feed) {
 				if (!data) {
 					logger.info('Feed does not exist.');
 
+          console.log(feed.filters);
+
           var feedModel = new Feed({
             title: feed.title,
             path: feed.path,
             lastChecked: moment().unix(),
             rss: feed.rss,
             autoDownload: feed.autoDownload,
-            filters: [],
-            torrents: []
+            filters: feed.filters
           });
-
-          for (var i = 0; i < feed.filters.length; i++) {
-            var filter = new Filter({
-              regex: feed.filters[i].regex,
-              type: feed.filters[i].type
-            });
-            feedModel.filters.push(filter);
-          }
 
           logger.info('Saving feed to database.');
           return Feed.create(feedModel);
@@ -96,7 +88,7 @@ exports.add = function(feed) {
 
 				throw new Error('Feed exists.');
 			})
-			.then(function(data) {
+			.then(function (data) {
 				logger.info('Getting torrents from feed.');
         return feedParser.getTorrents(data)
           .then(function () {
@@ -150,12 +142,12 @@ exports.refresh = function (id) {
 
 exports.addTorrent = function(_id, torrent, autoDownload) {
 
-	var torrentFeed = new Torrent({
+	var torrentFeed = {
 		name: torrent.name,
 		url: torrent.url,
 		status: 'RSS',
 		date: torrent.date
-	});
+	};
 
 	return Feed
 		.findOne({

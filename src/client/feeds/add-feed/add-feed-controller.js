@@ -16,7 +16,10 @@ function AddFeedCtrl(njrtLog, $state, $previousState, $scope, Feeds, Notificatio
 
 	vm.defaultDownloadPath = downloadSettings.download_directory;
 
-	vm.newFilter = {};
+	vm.newFilter = {
+    regex: '',
+    type: ''
+  };
 
 	vm.error = false;
 

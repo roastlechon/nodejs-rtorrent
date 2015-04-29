@@ -8,6 +8,7 @@
     "bcrypt": "0.8.0",
     "body-parser": "~1.0.0",
     "connect-multiparty": "^1.2.5",
+    "cron": "^1.0.9",
     "express": "4.11.0",
     "feedme": "0.2.6",
     "jwt-simple": "0.1.0",

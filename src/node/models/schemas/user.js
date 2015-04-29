@@ -1,15 +1,15 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require("bcrypt");
+var bcrypt = require('bcrypt');
 
 var UserSchema = new Schema({
 	email: String,
 	password: String
 });
 
-UserSchema.pre("save", function(next) {
+UserSchema.pre('save', function(next) {
 	var user = this;
-	if (!user.isModified("password")) {
+	if (!user.isModified('password')) {
 		return next();
 	}
 	bcrypt.genSalt(10, function(errors, salt) {
@@ -38,6 +38,6 @@ UserSchema.methods.comparePassword = function(password, callback) {
 	});
 };
 
-mongoose.model("User", UserSchema);
+mongoose.model('User', UserSchema);
 
-module.exports = mongoose.model("User");
+module.exports = mongoose.model('User');

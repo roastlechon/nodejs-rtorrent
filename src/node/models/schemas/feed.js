@@ -1,7 +1,5 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Torrent = require("./torrent");
-var Filter = require("./filter");
 
 var FeedSchema = new Schema({
 	title: String,
@@ -9,8 +7,20 @@ var FeedSchema = new Schema({
 	lastChecked: String,
 	rss: String,
 	autoDownload: Boolean,
-	torrents: [Torrent.schema],
-	filters: [Filter.schema],
+	torrents: [{
+    name: String,
+    url: String,
+    status: String,
+    date: Date
+  }],
+	filters: [{
+    regex: {
+      type: String
+    },
+    type: {
+      type: String
+    }
+  }]
 });
 
-module.exports = mongoose.model("Feed", FeedSchema);
+module.exports = mongoose.model('Feed', FeedSchema);

@@ -34,7 +34,8 @@
 			"email": "admin@localhost",
 			"password": "password"
 		},
-		"checkFeedLoopInterval": 300000,
+    "checkFeedLoopInterval": 300000,
+		"rssSubscriptionCronPattern": "*/5 * * * *",
 		"rtorrentLoopInterval": 2000,
 		"tokenExpireMinutes": 600,
 		"database": "tingodb"
