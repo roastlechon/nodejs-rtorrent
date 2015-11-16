@@ -56,6 +56,7 @@ Development follows standard git work flows: dev is the main development branch,
 ## Support
 * Having issues? [Submit a ticket](https://github.com/roastlechon/nodejs-rtorrent/issues/new)
 * Join us on our IRC channel [#nodejs-rtorrent @ Freenode](http://webchat.freenode.net/?channels=nodejs-rtorrent) 
+* Discuss in the [Nwgat Forums](http://forum.nwgat.ninja/)
 
 ## FAQ
 [Read the wiki here](https://github.com/roastlechon/nodejs-rtorrent/wiki)
