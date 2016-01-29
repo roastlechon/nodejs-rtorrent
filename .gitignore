@@ -9,7 +9,6 @@ npm-debug.log
 .sass-cache
 .vagrant
 package.box
-Vagrantfile
 nodejs-rtorrent.log
 data
 .tmp
