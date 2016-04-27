@@ -64,24 +64,19 @@ describe('rtorrent.js', function () {
   describe('rtorrent methodcall', function () {
 
     it('should return back array of data given api and array of parameters', function (done) {
-      this.timeout(20000);
+      this.timeout(1000);
 
       var rtorrent = new RTorrent({
         type: 'scgi',
         host: 'localhost',
-        port: '3000'
+        port: '5000'
       });
 
       rtorrent.methodCall('d.multicall', ['main', 'd.name='])
         .then(function (data) {
-          console.log('data', data);
-          done();
-        })
-        .catch(function (err) {
-          console.error('error', err);
+          expect(data instanceof Array).to.be.true;
           done();
         });
-
     });
   });
 });
