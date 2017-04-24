@@ -1,3 +1,6 @@
+not updated anymore see
+https://github.com/jfurrow/flood for a nodejs based client or http://deluge-torrent.org/
+
 # nodejs-rtorrent
 nodejs-rtorrent was created as a web gui for rtorrent. I wanted to create an alternative to rutorrent that used Node.js and this is the how far I got. The technologies used are Node.js, Express, MongoDB/TingoDB, Mongoose, tungus (for use with Mongoose), XML-RPC, FeedMe, Q (Promises), Passport, and Socket.IO. For the client side, I am using AngularJS, Browserify, Bower, and Twitter Bootstrap (using Scss). View the package.json and bower.json for more details.
 
