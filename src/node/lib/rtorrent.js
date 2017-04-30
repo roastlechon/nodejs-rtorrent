@@ -74,6 +74,7 @@ function xmlrpcMethodCall (api, array) {
 		host: nconf.get('rtorrent:xmlrpc:host'),
 		port: nconf.get('rtorrent:xmlrpc:port'),
 		path: nconf.get('rtorrent:xmlrpc:path'),
+                basic_auth: nconf.get('rtorrent:xmlrpc:basic_auth'),
 		headers: {
 			'User-Agent': 'NodeJS XML-RPC Client',
 			'Content-Type': 'text/xml',

@@ -20,6 +20,10 @@
 			"host": "localhost",
 			"port": "80",
 			"path": "/RPC2"
+                        "basic_auth": {
+                        	"user": "admin",
+				"password": "password"
+			}
 		}
 	},
 	"ssl": {
